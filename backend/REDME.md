@@ -1,0 +1,1 @@
+server starting  - Open CMD as "run as Admistrator" then paste this command " net start MySQL80 "
