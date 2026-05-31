@@ -1,6 +1,7 @@
 package in.hms.backend.entity;
 
 import in.hms.backend.enums.Role;
+import in.hms.backend.enums.Verification;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,8 +36,15 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Verification verification;
+
+    @Column(nullable = false)
+    private Boolean active;
+
     @Override 
     public String toString() {
-        return "User{" +"id=" + id +", name='" + name + '\'' +", email='" + email + '\'' +", role='" + role + '\'' +'}';
+        return "User{" +"id=" + id +", name='" + name + '\'' +", email='" + email + '\'' +", role='" + role + '\'' +", verification=" + verification +", active=" + active +'}';
     }
 }

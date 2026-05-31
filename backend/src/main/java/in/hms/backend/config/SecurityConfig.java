@@ -35,7 +35,7 @@ public class SecurityConfig {
                             HttpMethod.POST, 
                                 "/api/auth/signup", 
                                 "/api/auth/login",
-                                "/api/auth/staff/signup"
+                                "/api/auth/staff/signup"   //,"/api/auth/admin/signup"     //(one for creating adminsno need )
                         ).permitAll()
                      // Doctor APIs
                     .requestMatchers("/api/doctor/**")
@@ -48,6 +48,10 @@ public class SecurityConfig {
                     // Receptionist APIs
                     .requestMatchers("/api/receptionist/**")
                     .hasRole("RECEPTIONIST")
+                    
+                    // Admin APIs
+                    .requestMatchers("/api/admin/**")
+                    .hasRole("ADMIN")
                         
                     .anyRequest().authenticated()) //. ANY REQUEST THEN AUTHENTICATE
                     
