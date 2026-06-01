@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-// import in.hms.backend.data_transfer_object.admin.AdminSignupRequest;
 import in.hms.backend.data_transfer_object.user.LoginRequest;
 import in.hms.backend.data_transfer_object.user.LoginResponse;
 import in.hms.backend.data_transfer_object.user.SignupRequest;

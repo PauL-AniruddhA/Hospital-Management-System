@@ -1,11 +1,9 @@
 package in.hms.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 
-// import in.hms.backend.data_transfer_object.admin.AdminSignupRequest;
 import in.hms.backend.data_transfer_object.user.LoginRequest;
 import in.hms.backend.data_transfer_object.user.LoginResponse;
 import in.hms.backend.data_transfer_object.user.SignupRequest;
