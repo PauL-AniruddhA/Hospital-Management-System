@@ -3,7 +3,8 @@ import "../../styles/login-page.css";
 import { useState } from 'react';
 import api from '../../api/axiosConfig';
 import { useNavigate } from 'react-router-dom';
-
+import { setToken } from '../../utils/tokenUtils';
+import { setRole } from '../../utils/roleUtils'; 
 
 function LoginPage() {
   const[email , setEmail] = useState(""); // stores dynamic value
@@ -26,13 +27,15 @@ function LoginPage() {
         const token = response.data.token;
         const role = response.data.role;
 
-        localStorage.setItem("token", token);
-        localStorage.setItem("role", role);
+        setToken(token);
+        setRole(role);
 
         alert("Login Success");
-
-        if(role === "PATIENT")navigate("/patient/dashboard");
+        
+        if(role === "ADMIN") navigate("/admin");
+        else if(role === "PATIENT")navigate("/patient/dashboard");
         else if(role === "DOCTOR") navigate("/doctor/dashboard");
+        else alert("Dashboard not available yet");
     } catch (error) {
         console.log(error);
     }
