@@ -1,3 +1,14 @@
+@import "tailwindcss";
+:root {
+  --primary: #0f4c81;
+  --primary-light: #3b82f6;
+  --secondary: #14b8a6;
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --text-dark: #1e293b;
+  --text-light: #64748b;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,17 +16,6 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #385175;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  font-family: "Segoe UI", sans-serif;
+  background: var(--background);
+  color: var(--text-dark);
 }

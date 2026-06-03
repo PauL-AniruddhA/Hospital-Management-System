@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "../../styles/register-page.css";
+import "../../styles/Auth/register-page.css";
 import api from '../../api/axiosConfig';
 
 function RegistrationPage() {  

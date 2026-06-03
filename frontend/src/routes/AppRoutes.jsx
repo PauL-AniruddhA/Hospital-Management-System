@@ -10,7 +10,7 @@ import StaffSignUpPage from "../pages/auth/StaffSignUpPage";
 
 import AdminLayout from "../layouts/AdminLayout";
 import ProtectedRoute from "./ProtectedRoute";
-import HomePage from "../pages/public/HomePage";
+import HomePage from "../pages/public/home/HomePage";
 
 function AppRoutes(){
     return(
@@ -18,7 +18,8 @@ function AppRoutes(){
             <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<HomePage />} />
-
+                
+                {/* Auth Routing */}
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegistrationPage />} />
                 <Route path="/staffRegister" element={<StaffSignUpPage />} />

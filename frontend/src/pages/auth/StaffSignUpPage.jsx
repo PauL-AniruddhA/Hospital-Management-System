@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import api from '../../api/axiosConfig';
+import "../../styles/Auth/register-page.css";
 
 function StaffSignUpPage(){
     const[name,setName] = useState("");

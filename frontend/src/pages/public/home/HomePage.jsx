@@ -1,14 +1,14 @@
 import React from 'react';
-import "../../styles/home.css";
+import "../../../styles/Public/home.css";
 
-import Doctors_Team from "../../assets/Doctors_Team.png";
-import PublicLayout from '../../layouts/PublicLayout';
+import Doctors_Team from "../../../assets/home-Images/Doctors_Team.png";
+import PublicLayout from '../../../layouts/PublicLayout';
 const HomePage = () => {
   return (
     <>
     <PublicLayout>
 
-    <section className="landing-section">
+    {/* <section className="landing-section">
 
       <div className="landing-content">
 
@@ -65,7 +65,7 @@ const HomePage = () => {
 
       </div>
 
-    </section>
+    </section> */}
     </PublicLayout>
     </>
   )

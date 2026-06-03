@@ -1,9 +1,10 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-}
+  background-color: rgb(79, 79, 151);
+} 
 
-.landing-section {
+/*.landing-section {
   min-height: 100vh;
 
   display: flex;
@@ -17,7 +18,7 @@ body {
   background:
     linear-gradient(
       135deg,
-      #eff6ff 0%,
+      #3f5f8a 0%,
       #ffffff 100%
     );
 }
@@ -29,7 +30,7 @@ body {
 .landing-badge {
   display: inline-block;
 
-  background: #dbeafe;
+  background: #2f4b6e;
 
   color: #2563eb;
 
@@ -216,4 +217,4 @@ body {
   .floating-card {
     display: none;
   }
-}
+} */

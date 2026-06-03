@@ -1,15 +1,17 @@
 import React from 'react'
-import PublicNavbar from '../pages/public/Components/PublicNavbar'
-import TopBar from '../pages/public/Components/TopBar'
-import Footer from '../pages/public/Components/Footer';
+import PublicNavbar from '../pages/public/common/PublicNavbar'
+import TopBar from '../pages/public/common/TopBar'
+import Footer from '../pages/public/common/Footer';
 
 function PublicLayout({children}) {
   return (
     <>
-      <TopBar/>
-      <PublicNavbar/>
+      <header>
+        <TopBar/>
+        <PublicNavbar/>
+      </header>
       <main>{children}</main>
-      <Footer />
+      <footer>{/* <Footer /> */}</footer>
     </>
   );
 }

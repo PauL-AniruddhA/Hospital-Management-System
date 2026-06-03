@@ -1,0 +1,128 @@
+   /* ===== NAVBAR ===== */
+
+.navbar {
+  position: fixed;
+  top: 42px;
+  left: 0;
+
+  width: 100%;
+  height: 82px;
+  background: var(--surface);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: center;
+  z-index: 999;
+
+}
+
+.navbar-container {
+  width: 100%;
+  max-width: 1500px;
+  padding: 0 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  
+}
+
+/* ===== LOGO ===== */
+
+.navbar-logo img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ===== LINKS ===== */
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  list-style: none;
+}
+.navbar-links li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.navbar-links li:hover {
+  color: var(--primary);
+}
+/* for AboutUs and Specialities */
+.nav-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 80px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+.nav-dropdown::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 16px;
+  width: 0;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+.nav-dropdown:hover::after {
+  width: 100%;
+}
+.nav-dropdown svg {
+  transition: transform 0.3s ease;
+}
+.nav-dropdown:hover svg {
+  transform: rotate(180deg);
+}
+/* for find a doctor , health Insurance and international patients */
+.nav-linked a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-size: 16px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+.nav-linked a:hover {
+  color: var(--primary);
+}
+
+
+
+
+
+
+
+
+/* ===== BUTTON ===== */
+
+.appointment-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 14px;
+  background: var(--primary);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.appointment-btn:hover {
+  background: var(--primary-light);
+  transform: translateY(-2px);
+}

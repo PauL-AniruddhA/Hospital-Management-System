@@ -1,0 +1,119 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 80px;
+  z-index: 1000;
+  box-sizing: border-box;
+  transition: all 0.35s ease;
+  background: transparent;
+}
+.topbar-scrolled {
+  background: rgba(11, 58, 110, 0.9);
+
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow: 0 2px 15px rgba(0,0,0,0.15);
+}
+
+/* LEFT */
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.8);
+  font-size: 11.5px;
+  margin-left: 10%;
+}
+
+.topbar-left svg {
+  color: #ff4a4a;
+}
+
+.topbar-left strong {
+  color: white;
+  font-weight: 700;
+}
+
+/* RIGHT */
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-right: 11%;
+}
+
+.topbar-right a {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 11.5px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.topbar-right a:hover {
+  color: rgb(95, 41, 41);
+}
+
+/* Divider */
+
+.divider {
+  width: 1px;
+  height: 16px;
+  background: rgba(255,255,255,0.25);
+}
+
+/* Login Button */
+ 
+.login-btn {
+  width: 100px;
+  height: 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  border: none;
+
+  transition: 0.3s ease;
+
+  background: linear-gradient(
+    to bottom right,
+    #2e8eff ,
+    rgba(33, 75, 122, 0)
+  );
+  background-color: rgba(66, 96, 131, 0.938);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-profile-inner {
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  border-radius: 13px;
+  background-color: #172fb8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 12.5 px;
+  
+}
+.user-profile-inner span{
+  margin: 0px 0px -2px 0px;
+}
+
+.user-profile-inner svg {
+  width: 15px;
+  height: 15px;
+}
