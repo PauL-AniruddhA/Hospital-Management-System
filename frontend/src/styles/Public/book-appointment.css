@@ -1,0 +1,74 @@
+.appointment-page {
+    
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.appointment-hero {
+  background: linear-gradient(
+    135deg,
+    #0f4c81,
+    #1e5fa8
+  );
+  color: white;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.appointment-hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.appointment-hero-content p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* Main Container */
+
+.appointment-container {
+  max-width: 1400px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+/* Breadcrumb */
+
+.breadcrumb {
+  margin-bottom: 30px;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+/* Search */
+
+.search-container {
+  margin-bottom: 40px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: 1px solid #dbe2ea;
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #0f4c81;
+}
+
+/* Department Section */
+
+.department-section h2 {
+  color: #0f172a;
+  margin-bottom: 24px;
+}
+
+.department-grid {
+  display: grid;
+  grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
+  gap: 28px;
+}

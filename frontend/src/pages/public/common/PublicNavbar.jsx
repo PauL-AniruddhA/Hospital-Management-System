@@ -1,6 +1,6 @@
 import React from 'react'
 import "../../../styles/Public/public-navbar.css"
-import logo from "../../../assets/home-Images/logo.png";
+import logo from "../../../assets/home/logo.png";
 import { ChevronDown, CalendarDays} from 'lucide-react';
 import { Link } from 'react-router-dom';
 function PublicNavbar() {
@@ -9,7 +9,7 @@ function PublicNavbar() {
       <div className="navbar-container">
         <div className="navbar-logo">
           <img
-            src="/images/logo.png"
+            src={logo}
             alt="AIG Hospitals"
           />
         </div>

@@ -11,13 +11,15 @@ import StaffSignUpPage from "../pages/auth/StaffSignUpPage";
 import AdminLayout from "../layouts/AdminLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import HomePage from "../pages/public/home/HomePage";
+import BookAppointments from "../pages/public/common/BookAppointments";
 
 function AppRoutes(){
     return(
         <BrowserRouter>
             <Routes>
                 {/* Public Routes */}
-                <Route path="/" element={<HomePage />} />
+                {/* <Route path="/" element={<HomePage />} /> */}
+                <Route path="/" element={<BookAppointments />} />
                 
                 {/* Auth Routing */}
                 <Route path="/login" element={<LoginPage />} />

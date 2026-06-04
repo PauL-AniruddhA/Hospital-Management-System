@@ -1,7 +1,7 @@
 import React from 'react';
 import "../../../styles/Public/home.css";
 
-import Doctors_Team from "../../../assets/home-Images/Doctors_Team.png";
+import Doctors_Team from "../../../assets/home/Doctors_Team.png";
 import PublicLayout from '../../../layouts/PublicLayout';
 const HomePage = () => {
   return (

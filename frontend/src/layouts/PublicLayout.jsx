@@ -10,7 +10,7 @@ function PublicLayout({children}) {
         <TopBar/>
         <PublicNavbar/>
       </header>
-      <main>{children}</main>
+      <main style={{ paddingTop: "124px"}}>{children}</main>
       <footer>{/* <Footer /> */}</footer>
     </>
   );

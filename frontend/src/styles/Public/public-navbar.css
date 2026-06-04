@@ -11,7 +11,7 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: center;
-  z-index: 999;
+  z-index: 1000;
 
 }
 
@@ -96,13 +96,6 @@
 .nav-linked a:hover {
   color: var(--primary);
 }
-
-
-
-
-
-
-
 
 /* ===== BUTTON ===== */
 
