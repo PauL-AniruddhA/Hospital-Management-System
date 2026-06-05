@@ -1,6 +1,6 @@
 import React from 'react'
 import "../../../styles/Public/public-navbar.css"
-import logo from "../../../assets/home/logo.png";
+import logo from "../../../assets/Logo-Animation/Logo.png";
 import { ChevronDown, CalendarDays} from 'lucide-react';
 import { Link } from 'react-router-dom';
 function PublicNavbar() {
