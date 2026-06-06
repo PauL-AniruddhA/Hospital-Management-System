@@ -12,31 +12,32 @@
   );
   color: white;
   text-align: center;
-  padding: 80px 20px;
+  padding: 40px 20px;
+  line-height: 25px;
 }
 
 .appointment-hero-content h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: 12px;
 }
 
 .appointment-hero-content p {
-  font-size: 1.1rem;
-  opacity: 0.9;
+  font-size: 14px;
+
 }
 
 /* Main Container */
 
 .appointment-container {
-  max-width: 1400px;
+  max-width: 1280px;
   margin: auto;
-  padding: 40px 20px;
+  padding: 28px 20px;
 }
 
 /* Breadcrumb */
 
 .breadcrumb {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   color: #64748b;
   font-size: 0.95rem;
 }
@@ -44,15 +45,15 @@
 /* Search */
 
 .search-container {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .search-input {
   width: 100%;
-  padding: 16px 20px;
+  padding: 7px 16px;
   border-radius: 12px;
-  border: 1px solid #dbe2ea;
-  font-size: 1rem;
+  border: 1.5px solid #dbe2ea;
+  font-size: 13px;
   outline: none;
 }
 
@@ -65,6 +66,7 @@
 .department-section h2 {
   color: #0f172a;
   margin-bottom: 24px;
+      font-size: 14x;
 }
 
 .department-grid {

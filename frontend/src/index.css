@@ -7,9 +7,8 @@
   --surface: #ffffff;
   --text-dark: #1e293b;
   --text-light: #64748b;
-  --topbar-height: 42px;
-  --navbar-height: 82px;
-  --header-height: 124px;
+  --topbar-height: 38px;
+  --navbar-height: 57px;
 }
 
 * {
