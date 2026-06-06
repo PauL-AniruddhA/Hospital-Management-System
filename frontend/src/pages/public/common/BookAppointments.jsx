@@ -21,19 +21,11 @@ function BookAppointments(){
 
       {/* Main Content */}
       <section className="appointment-container">
+        
+        <div className="breadcrumb">Home / Book Appointment </div>
 
-        {/* Breadcrumb */}
-        <div className="breadcrumb">
-          Home / Book Appointment
-        </div>
-
-        {/* Search Bar */}
         <div className="search-container">
-          <input
-            type="text"
-            placeholder="Search by speciality"
-            className="search-input"
-            />
+          <input type="text" placeholder="Search by speciality" className="search-input" />
         </div>
 
         {/* Department Grid will come here */}
