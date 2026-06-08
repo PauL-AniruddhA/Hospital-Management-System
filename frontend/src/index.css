@@ -9,12 +9,14 @@
   --text-light: #64748b;
   --topbar-height: 38px;
   --navbar-height: 57px;
+  --font-size: 14px;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {

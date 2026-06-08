@@ -53,7 +53,7 @@
   padding: 7px 16px;
   border-radius: 12px;
   border: 1.5px solid #dbe2ea;
-  font-size: 13px;
+  font-size: 14px;
   outline: none;
 }
 
@@ -66,11 +66,11 @@
 .department-section h2 {
   color: #0f172a;
   margin-bottom: 24px;
-      font-size: 14x;
+  font-size: 14px;
 }
 
 .department-grid {
   display: grid;
-  grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
-  gap: 28px;
+  grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));
+  gap: 18px;
 }

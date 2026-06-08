@@ -1,6 +1,6 @@
 import React from 'react'
 import "../../../styles/Public/book-appointment.css"
-import Department from './department';
+import Department from '../../../pages/public/common/Department';
 import departments from '../../../mock/depertment';
 import PublicLayout from '../../../layouts/PublicLayout';
 function BookAppointments(){

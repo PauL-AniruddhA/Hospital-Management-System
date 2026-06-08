@@ -9,9 +9,6 @@ export const removeRole = () => {
 };
 
 export const isAdmin = () => getRole() === "ADMIN";
-
 export const isDoctor = () => getRole() === "DOCTOR";
-
 export const isPatient = () => getRole() === "PATIENT";
-
 export const isReceptionist = () => getRole() === "RECEPTIONIST";

@@ -25,7 +25,9 @@
 }
 
 /* ===== LOGO ===== */
-
+.navbar-logo{
+  margin-left: 40px;
+}
 .navbar-logo img {
   height: 60px;
   width: auto;
@@ -35,6 +37,7 @@
 /* ===== LINKS ===== */
 
 .navbar-links {
+  margin-left: 140px;
   display: flex;
   align-items: center;
   gap: 34px;
@@ -44,7 +47,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 16px;
+  font-size: var(--font-size);
   font-weight: 600;
   color: var(--text-dark);
   cursor: pointer;
@@ -53,6 +56,7 @@
 .navbar-links li:hover {
   color: var(--primary);
 }
+
 /* for AboutUs and Specialities */
 .nav-dropdown {
   position: relative;
@@ -61,7 +65,7 @@
   gap: 6px;
   height: 80px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: var(--font-size);
   font-weight: 600;
   color: var(--text-dark);
 }
@@ -85,11 +89,122 @@
 .nav-dropdown:hover svg {
   transform: rotate(180deg);
 }
+
+/* =====MEGA MENUE===== */
+.mega-menu-header {
+  background: #0f3292;
+  color: white;
+  font-size: var(--font-size);
+  font-weight: 700;
+  padding: 18px 30px;
+  letter-spacing: 1px;
+}
+.mega-menu-header::after {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer {
+  0% {
+    left: -40%;
+  }
+
+  100% {
+    left: 140%;
+  }
+}
+
+.mega-menu {
+  position: absolute;
+  margin-top: -11px;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1180px;
+  max-width: 50vw;
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  z-index: 1000;
+}
+.nav-dropdown:hover .mega-menu {
+  
+  opacity: 1;
+  visibility: visible;
+}
+.mega-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 32px;
+  row-gap: 28px;
+  padding: 34px 36px;
+  max-height: 480px;
+  overflow-y: auto;
+}
+.mega-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #3f4b5f;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  transition: all 0.2s ease;
+}
+.menu-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c7d0db;
+  flex-shrink: 0;
+}
+.mega-menu-item:hover {
+  color: #0f4d92;
+}
+.mega-menu-item:hover .menu-dot {
+  background: #0f4d92;
+}
+.mega-menu-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 30px;
+  border-top: 1px solid #eef2f7;
+}
+.view-all-btn {
+  border: 1px solid #0f4d92;
+  background: transparent;
+  color: #0f4d92;
+  padding: 12px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+
+
+
 /* for find a doctor , health Insurance and international patients */
 .nav-linked a {
   text-decoration: none;
   color: var(--text-dark);
-  font-size: 16px;
+  font-size: var(--font-size);
   font-weight: 600;
   transition: color 0.3s ease;
 }
@@ -100,22 +215,30 @@
 /* ===== BUTTON ===== */
 
 .appointment-btn {
+  margin:0px 30px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  height: 46px;
-  padding: 0 22px;
+  justify-content: center;
+
+  gap: 8px;
+
+  height: 36px;
+  padding: 0 11px;
+
   border: none;
-  border-radius: 14px;
-  background: var(--primary);
-  color: white;
-  font-size: 16px;
+  border-radius: 10px;
+
+  background: #1f5aa6;
+  color: #ffffff;
+
+  font-size: var(--font-size);
   font-weight: 600;
+
   cursor: pointer;
-  transition: 0.3s;
+
+  transition: all 0.2s ease;
 }
 
 .appointment-btn:hover {
-  background: var(--primary-light);
-  transform: translateY(-2px);
+  background: #174b8d;
 }
