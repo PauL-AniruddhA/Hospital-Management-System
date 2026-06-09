@@ -3,6 +3,7 @@
   --primary: #0f4c81;
   --primary-light: #3b82f6;
   --secondary: #14b8a6;
+  --special-background: #dde6f0;
   --background: #f8fafc;
   --surface: #ffffff;
   --text-dark: #1e293b;
@@ -10,6 +11,7 @@
   --topbar-height: 38px;
   --navbar-height: 57px;
   --font-size: 14px;
+  --select-background: #eaf3ff;
 }
 
 * {

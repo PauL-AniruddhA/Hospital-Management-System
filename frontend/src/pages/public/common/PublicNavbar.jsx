@@ -1,13 +1,26 @@
-import React from 'react'
+import React ,{ useEffect, useState } from 'react'
 import "../../../styles/Public/public-navbar.css"
 import logo from "../../../assets/Logo-Animation/Colored-Logo.png";
 import departments from '../../../mock/depertment';
 import { ChevronDown, CalendarDays} from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 function PublicNavbar() {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
-<nav className="navbar">
+    <nav className={`navbar ${ isHomePage && !scrolled ? "navbar-transparent": "navbar-solid" }`}>
       <div className="navbar-container">
+        
         <div className="navbar-logo">
           <img
             src={logo}
@@ -18,9 +31,35 @@ function PublicNavbar() {
         <ul className="navbar-links">
 
           {/* ABOUT US section */}
-          <li className="nav-dropdown">
+          <li className="nav-dropdown about-dropdown">
             <span>About Us</span>
             <ChevronDown size={16} />
+
+            <div className="about-menu">
+              {/* <div className="about-menu-header">
+                ABOUT US
+              </div> */}
+
+              <Link to="/about/overview" className="about-menu-item">
+                <span className="about-arrow">→</span>
+                <span>Overview</span>
+              </Link>
+
+              <Link to="/about/history" className="about-menu-item">
+              <span className="about-arrow">→</span>
+                History
+              </Link>
+
+              <Link to="/about/board-of-directors" className="about-menu-item">
+                <span className="about-arrow">→</span>
+                Board of Directors
+              </Link>
+
+              <Link to="/about/chairman-message" className="about-menu-item">
+                <span className="about-arrow">→</span>
+                Chairman's Message
+              </Link>
+            </div>
           </li>
 
           {/* SPECIALITIES section */}
@@ -41,14 +80,20 @@ function PublicNavbar() {
                     className="mega-menu-item"
                   >
                     <span className="menu-dot"></span>
-                    {department.name}
+                      <span className="menu-text">
+                        {department.name}
+                      </span>
+
+                      <span className="menu-arrow">
+                        →
+                      </span>
                   </Link>
                 ))}
               </div>
 
               <div className="mega-menu-footer">
                 <button className="view-all-btn">
-                  View All Specialities →
+                  <span>View All Specialities →</span>
                 </button>
               </div>
             </div>

@@ -10,7 +10,7 @@ function PublicLayout({children}) {
         <TopBar/>
         <PublicNavbar/>
       </header>
-      <main style={{ paddingTop: "124px"}}>{children}</main>
+      <main style={{paddingTop: "calc(var(--topbar-height) + var(--navbar-height))"}}>{children}</main>
       <footer>{/* <Footer /> */}</footer>
     </>
   );

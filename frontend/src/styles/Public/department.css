@@ -58,3 +58,60 @@
 
   overflow: hidden;
 }
+
+/* ===================================
+   TABLET
+=================================== */
+
+@media (max-width: 992px) {
+
+  .department-card {
+    height: 155px;
+  }
+
+  .department-icon-container {
+    width: 58px;
+    height: 58px;
+  }
+}
+
+/* ===================================
+   MOBILE
+=================================== */
+
+@media (max-width: 768px) {
+
+  .department-card {
+    height: 145px;
+    border-radius: 12px;
+  }
+
+  .department-icon-container {
+    width: 54px;
+    height: 54px;
+  }
+
+  .department-name {
+    font-size: 0.85rem;
+  }
+}
+
+/* ===================================
+   SMALL MOBILE
+=================================== */
+
+@media (max-width: 480px) {
+
+  .department-card {
+    height: 135px;
+  }
+
+  .department-icon-container {
+    width: 48px;
+    height: 48px;
+  }
+
+  .department-name {
+    font-size: 0.8rem;
+  }
+}

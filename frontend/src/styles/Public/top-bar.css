@@ -15,12 +15,9 @@
 }
 .topbar-scrolled {
   background: rgba(11, 58, 110, 0.9);
-
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-
   border-bottom: 1px solid rgba(255,255,255,0.08);
-
   box-shadow: 0 2px 15px rgba(0,0,0,0.15);
 }
 
@@ -77,17 +74,15 @@
  
 .login-btn {
   width: 100px;
-  height: 30px;
+  height: 27px;
   border-radius: 15px;
   cursor: pointer;
   border: none;
-
   transition: 0.3s ease;
-
   background: linear-gradient(
     to bottom right,
     #2e8eff ,
-    rgba(33, 75, 122, 0)
+    rgba(67, 115, 170, 0)
   );
   background-color: rgba(66, 96, 131, 0.938);
   display: flex;
@@ -115,4 +110,96 @@
 .user-profile-inner svg {
   width: 15px;
   height: 15px;
+}
+
+/* =========================
+   LAPTOP
+========================= */
+
+@media (max-width: 1200px) {
+
+  .topbar {
+    padding: 0 40px;
+  }
+
+  .topbar-right {
+    gap: 18px;
+  }
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 992px) {
+
+  .topbar {
+    padding: 0 24px;
+  }
+
+  .topbar-left {
+    font-size: 12px;
+    margin-left: 0;
+  }
+
+  .topbar-right {
+    gap: 12px;
+    margin-right: 0;
+  }
+
+  .topbar-right a {
+    font-size: 11px;
+  }
+
+  .login-btn {
+    width: 90px;
+    height: 28px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .topbar {
+    justify-content: center;
+    padding: 0 12px;
+  }
+
+  .topbar-right {
+    display: none;
+  }
+
+  .topbar-left {
+    margin: 0;
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .topbar-left strong {
+    font-size: 11px;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .topbar {
+    height: 36px;
+  }
+
+  .topbar-left {
+    font-size: 10px;
+    gap: 4px;
+  }
+
+  .topbar-left svg {
+    width: 12px;
+    height: 12px;
+  }
 }

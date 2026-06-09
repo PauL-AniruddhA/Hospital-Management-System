@@ -38,8 +38,9 @@
 
 .breadcrumb {
   margin-bottom: 40px;
-  color: #64748b;
+  color: #0f172a;
   font-size: 0.95rem;
+  font-weight: 600;
 }
 
 /* Search */
@@ -63,14 +64,128 @@
 
 /* Department Section */
 
-.department-section h2 {
-  color: #0f172a;
+.speciality-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
   margin-bottom: 24px;
+}
+
+.speciality-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #eaf3ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.speciality-heading h2 {
   font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+
+  color: #0f172a;
 }
 
 .department-grid {
   display: grid;
   grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));
   gap: 18px;
+}
+
+/* ===================================
+   LAPTOP
+=================================== */
+
+@media (max-width: 1200px) {
+
+  .appointment-container {
+    max-width: 100%;
+    padding: 24px;
+  }
+}
+
+/* ===================================
+   TABLET
+=================================== */
+
+@media (max-width: 992px) {
+
+  .appointment-hero {
+    padding: 32px 20px;
+  }
+
+  .appointment-hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .department-grid {
+    grid-template-columns:
+      repeat(auto-fill, minmax(130px, 1fr));
+  }
+}
+
+/* ===================================
+   MOBILE
+=================================== */
+
+@media (max-width: 768px) {
+
+  .appointment-container {
+    padding: 20px 16px;
+  }
+
+  .appointment-hero {
+    padding: 28px 16px;
+  }
+
+  .appointment-hero-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .appointment-hero-content p {
+    font-size: 13px;
+  }
+
+  .breadcrumb {
+    font-size: 13px;
+  }
+
+  .speciality-heading h2 {
+    font-size: 13px;
+  }
+
+  .department-grid {
+    grid-template-columns:
+      repeat(auto-fill, minmax(120px, 1fr));
+
+    gap: 14px;
+  }
+}
+
+/* ===================================
+   SMALL MOBILE
+=================================== */
+
+@media (max-width: 480px) {
+
+  .appointment-container {
+    padding: 16px 12px;
+  }
+
+  .appointment-hero-content h1 {
+    font-size: 1.3rem;
+  }
+
+  .department-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 12px;
+  }
 }

@@ -3,6 +3,7 @@ import "../../../styles/Public/book-appointment.css"
 import Department from '../../../pages/public/common/Department';
 import departments from '../../../mock/depertment';
 import PublicLayout from '../../../layouts/PublicLayout';
+import { Stethoscope } from 'lucide-react';
 function BookAppointments(){
     
   return (
@@ -30,7 +31,13 @@ function BookAppointments(){
 
         {/* Department Grid will come here */}
         <div className="department-section">
-          <h2>Search by Specialities</h2>
+            <div className="speciality-heading">
+              <div className="speciality-badge">
+                <Stethoscope size={15} strokeWidth={2.2} />
+              </div>
+              
+              <h2>Search by Specialities</h2>
+            </div>
 
           <div className="department-grid">
             {departments.map((department) => (
