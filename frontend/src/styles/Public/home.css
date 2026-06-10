@@ -3,218 +3,86 @@ body {
   font-family: Arial, sans-serif;
   background-color: rgb(79, 79, 151);
 } 
+/* ==========================
+   HERO SECTION
+========================== */
 
-/*.landing-section {
-  min-height: 100vh;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 60px;
-
-  padding: 120px 8% 80px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #3f5f8a 0%,
-      #ffffff 100%
-    );
-}
-
-.landing-content {
-  flex: 1;
-}
-
-.landing-badge {
-  display: inline-block;
-
-  background: #2f4b6e;
-
-  color: #2563eb;
-
-  padding: 10px 18px;
-
-  border-radius: 50px;
-
-  font-weight: 600;
-
-  margin-bottom: 20px;
-}
-
-.landing-content h1 {
-  font-size: 4rem;
-  line-height: 1.1;
-
-  color: #111827;
-
-  margin-bottom: 25px;
-}
-
-.landing-content p {
-  font-size: 1.1rem;
-
-  color: #6b7280;
-
-  line-height: 1.8;
-
-  max-width: 600px;
-
-  margin-bottom: 25px;
-}
-
-.trust-points {
-  display: flex;
-  flex-wrap: wrap;
-
-  gap: 15px;
-
-  margin-bottom: 35px;
-}
-
-.trust-points span {
-  background: white;
-
-  padding: 10px 15px;
-
-  border-radius: 10px;
-
-  box-shadow:
-    0 5px 15px rgba(0,0,0,0.05);
-}
-
-.landing-buttons {
-  display: flex;
-  gap: 20px;
-}
-
-.primary-btn {
-  background:
-    linear-gradient(
-      135deg,
-      #0ea5e9,
-      #2563eb
-    );
-
-  color: white;
-
-  border: none;
-
-  padding: 15px 30px;
-
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  font-size: 1rem;
-
-  font-weight: 600;
-}
-
-.secondary-btn {
-  background: white;
-
-  border: 2px solid #2563eb;
-
-  color: #2563eb;
-
-  padding: 15px 30px;
-
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  font-size: 1rem;
-
-  font-weight: 600;
-}
-
-.landing-image-container {
-  flex: 1;
-
+.hero-section {
   position: relative;
-
-  display: flex;
-  justify-content: center;
+  height: 90vh;
+  overflow: hidden;
 }
 
-.landing-image {
-  width: 100%;
-  max-width: 500px;
+/* ==========================
+   BACKGROUND SLIDES
+========================== */
 
-  border-radius: 25px;
-
-  box-shadow:
-    0 20px 40px rgba(37,99,235,0.15);
-}
-
-.floating-card {
+.hero-slide {
   position: absolute;
-
-  background: white;
-
-  padding: 15px 20px;
-
-  border-radius: 15px;
-
-  font-weight: 600;
-
-  box-shadow:
-    0 10px 25px rgba(0,0,0,0.08);
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  opacity: 0;
+  transform: scale(1);
+  transition:
+    opacity 1.5s ease,
+    transform 8s ease;
 }
 
-.card-rating {
-  top: 10%;
-  left: 0;
+.hero-slide.active {
+  opacity: 1;
 }
 
-.card-emergency {
-  top: 45%;
-  right: 0;
+/* ==========================
+   HERO OVERLAY
+========================== */
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(8, 15, 25, 0.85) 0%,
+      rgba(8, 15, 25, 0.72) 8%,
+      rgba(8, 15, 25, 0.55) 18%,
+      rgba(8, 15, 25, 0.32) 32%,
+      rgba(8, 15, 25, 0.15) 50%,
+      transparent 75%
+    );
 }
 
-.card-doctors {
-  bottom: 10%;
-  left: 10%;
-}
+
+/* ==========================
+   RESPONSIVE
+========================== */
 
 @media (max-width: 992px) {
-
-  .landing-section {
-    flex-direction: column;
-    text-align: center;
+  .hero-content h1 {
+    font-size: 3.5rem;
   }
 
-  .trust-points {
-    justify-content: center;
-  }
-
-  .landing-buttons {
-    justify-content: center;
-  }
-
-  .landing-content h1 {
-    font-size: 3rem;
+  .hero-stats {
+    flex-wrap: wrap;
   }
 }
 
 @media (max-width: 768px) {
-
-  .landing-content h1 {
-    font-size: 2.4rem;
+  .hero-content h1 {
+    font-size: 2.7rem;
   }
 
-  .landing-buttons {
+  .hero-buttons {
     flex-direction: column;
   }
 
-  .primary-btn,
-  .secondary-btn {
-    width: 100%;
+  .hero-stats {
+    flex-direction: column;
   }
-
-  .floating-card {
-    display: none;
-  }
-} */
+}

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Phone, User, ChevronDown, CircleUser } from "lucide-react";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import '../../../styles/Public/top-bar.css';
 
 function TopBar() {
   const [scrolled, setScrolled] = useState(false);
-
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -16,7 +17,7 @@ function TopBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
-    <div className={`topbar ${scrolled ? "topbar-scrolled" : ""}`}>
+    <div className={`topbar ${ isHomePage && !scrolled ? "topbar-home" : "topbar-scrolled"}`}>
       <div className="topbar">
         <div className="topbar-left">
           <Phone size={14} />

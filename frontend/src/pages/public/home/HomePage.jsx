@@ -1,74 +1,60 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import "../../../styles/Public/home.css";
-
-import Doctors_Team from "../../../assets/home/Doctors_Team.png";
+import "../../../styles/Animation.css";
+import hero1 from "../../../assets/home/Hospital Image.png";
+import hero2 from "../../../assets/home/Hoispital Image 2.png";
+import hero3 from "../../../assets/home/Laboratory technician at work.png";
+import hero4 from "../../../assets/home/High-tech clinical laboratory with analyzers.png";
+import hero5 from "../../../assets/home/Medical consultation in a clean clinic.png";
+import hero6 from "../../../assets/home/Doctor explaining medical scans to patient.png";
+import doctor_team from "../../../assets/home/Diverse medical team by waterfront skyline.png";
 import PublicLayout from '../../../layouts/PublicLayout';
+
+const images = [
+  { src: hero1, animation: "zoom-in" },
+  { src: hero2, animation: "pan-left" },
+  { src: hero3, animation: "float-animation" },
+  { src: hero4, animation: "pan-right" },
+  { src: hero5, animation: "rotate-slow" }, 
+  { src: hero6, animation: "rotate-slow" }, 
+
+];
 const HomePage = () => {
+  const [currentImage, setCurrentImage] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
     <PublicLayout>
+      <section className="hero-section">
+      {/* Background Images */}
+      {images.map((image, index) => (
+        <div
+          key={index}
+          className={`hero-slide ${
+            index === currentImage
+              ? `active ${image.animation}`
+              : ""
+          }`}
+          style={{
+            backgroundImage: `url(${image.src})`,
+          }}
+        />
+      ))}
 
-    {/* <section className="landing-section">
+      <div className="hero-overlay" />
 
-      <div className="landing-content">
-
-        <span className="landing-badge">
-          Trusted Healthcare Since 2005
-        </span>
-
-        <h1>
-          Your Health,
-          <br />
-          Our Highest Priority
-        </h1>
-
-        <p>
-          MediCare Hospital provides compassionate healthcare through
-          experienced specialists, advanced medical technology,
-          and patient-centered treatment.
-        </p>
-
-        <div className="trust-points">
-          <span>✓ NABH Certified</span>
-          <span>✓ 24/7 Emergency</span>
-          <span>✓ 50+ Doctors</span>
-          <span>✓ Modern Facilities</span>
-        </div>
-
-        <div className="landing-buttons">
-          <button className="primary-btn">
-            Book Appointment
-          </button>
-
-          <button className="secondary-btn">
-            Explore Services
-          </button>
-        </div>
-
-      </div>
-
-      <div className="landing-image-container">
-
-        <img src={Doctors_Team}alt="Doctors Team"className="landing-image"/>
-
-        <div className="floating-card card-rating">
-          ⭐ 4.9 Rating
-        </div>
-
-        <div className="floating-card card-emergency">
-          🚑 24/7 Service
-        </div>
-
-        <div className="floating-card card-doctors">
-          👨‍⚕️ 50+ Specialists
-        </div>
-
-      </div>
-
-    </section> */}
+    </section>
+    
     </PublicLayout>
     </>
   )
 }
 
-export default HomePage
+export default HomePage;

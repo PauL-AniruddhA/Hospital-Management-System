@@ -4,13 +4,14 @@ import TopBar from '../pages/public/common/TopBar'
 import Footer from '../pages/public/common/Footer';
 
 function PublicLayout({children}) {
+  const isHomePage = location.pathname === "/";
   return (
     <>
       <header>
         <TopBar/>
         <PublicNavbar/>
       </header>
-      <main style={{paddingTop: "calc(var(--topbar-height) + var(--navbar-height))"}}>{children}</main>
+      <main style={{paddingTop: isHomePage? 0 : "calc(var(--topbar-height) + var(--navbar-height))",}}>{children}</main>
       <footer>{/* <Footer /> */}</footer>
     </>
   );
