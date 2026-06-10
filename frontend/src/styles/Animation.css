@@ -1,120 +1,171 @@
-.zoom-in {
-    animation: zoomIn 8s linear forwards;
+.hospital-front {
+  animation: hospitalFront 8s linear forwards;
 }
 
-@keyframes zoomIn {
-    from {
-        transform: scale(1);
-    }
+@keyframes hospitalFront {
+  from {
+    transform: scale(1);
+  }
 
-    to {
-        transform: scale(1.18);
-    }
+  to {
+    transform: scale(1.22);
+  }
+}
+.hospital-drone {
+  animation: hospitalDrone 8s linear forwards;
 }
 
-.zoom-out {
-    animation: zoomOut 8s linear forwards;
+@keyframes hospitalDrone {
+  from {
+    transform:
+      scale(1.05)
+      translate(-30px, 20px);
+  }
+
+  to {
+    transform:
+      scale(1.28)
+      translate(30px, -20px);
+  }
 }
 
-@keyframes zoomOut {
-    from {
-        transform: scale(1.25);
-    }
-
-    to {
-        transform: scale(1);
-    }
+.lab-machines {
+  animation: labMachines 8s linear forwards;
 }
 
-.pan-left {
-    animation: panLeft 8s linear forwards;
+@keyframes labMachines {
+  from {
+    transform:
+      scale(1.15)
+      translateX(-100px);
+  }
+
+  to {
+    transform:
+      scale(1.15)
+      translateX(100px);
+  }
+}
+.lab-tech {
+  animation: labTech 8s linear forwards;
 }
 
-@keyframes panLeft {
-    from {
-        transform: scale(1.15) translateX(0);
-    }
+@keyframes labTech {
+  from {
+    transform: scale(1);
+  }
 
-    to {
-        transform: scale(1.15) translateX(-80px);
-    }
+  to {
+    transform: scale(1.2);
+  }
+}
+.doctor-scan {
+  animation: doctorScan 8s linear forwards;
 }
 
-.pan-right {
-    animation: panRight 8s linear forwards;
+@keyframes doctorScan {
+  from {
+    transform:
+      scale(1.1)
+      translateX(-40px);
+  }
+
+  to {
+    transform:
+      scale(1.25)
+      translateX(40px);
+  }
+}
+.medical-consult {
+  animation: medicalConsult 8s ease-in-out forwards;
 }
 
-@keyframes panRight {
-    from {
-        transform: scale(1.15) translateX(-80px);
-    }
+@keyframes medicalConsult {
+  0% {
+    transform: scale(1.05);
+  }
 
-    to {
-        transform: scale(1.15) translateX(0);
-    }
+  50% {
+    transform: scale(1.12);
+  }
+
+  100% {
+    transform: scale(1.08);
+  }
+}
+.pro-consult {
+  animation: proConsult 8s ease-in-out forwards;
 }
 
-.float-lab {
-    animation: floatLab 8s ease-in-out forwards;
+@keyframes proConsult {
+  from {
+    transform:
+      scale(1.05)
+      translateY(10px);
+  }
+
+  to {
+    transform:
+      scale(1.15)
+      translateY(-10px);
+  }
+}
+.lobby {
+  animation: lobbyReveal 8s linear forwards;
 }
 
-@keyframes floatLab {
-    0% {
-        transform: scale(1.1) translateY(20px);
-    }
+@keyframes lobbyReveal {
+  from {
+    transform:
+      scale(1.1)
+      translateY(80px);
+  }
 
-    50% {
-        transform: scale(1.1) translateY(-20px);
-    }
-
-    100% {
-        transform: scale(1.1) translateY(20px);
-    }
+  to {
+    transform:
+      scale(1.25)
+      translateY(-40px);
+  }
 }
 
-.emergency-motion {
-    animation: emergencyMotion 8s linear forwards;
+.pharmacy {
+  animation: pharmacyMove 8s linear forwards;
 }
 
-@keyframes emergencyMotion {
-    from {
-        transform: scale(1) rotate(0deg);
-    }
+@keyframes pharmacyMove {
+  from {
+    transform:
+      scale(1.1)
+      translateX(-60px);
+  }
 
-    to {
-        transform: scale(1.15) rotate(2deg);
-    }
+  to {
+    transform:
+      scale(1.2)
+      translateX(60px);
+  }
 }
 
-.pan-up {
-    animation: panUp 8s linear forwards;
+.cabin {
+  animation: cabinLuxury 8s linear forwards;
 }
 
-@keyframes panUp {
-    from {
-        transform: scale(1.15) translateY(60px);
-    }
+@keyframes cabinLuxury {
+  from {
+    transform:
+      scale(1)
+      translateX(-20px);
+  }
 
-    to {
-        transform: scale(1.15) translateY(-60px);
-    }
+  to {
+    transform:
+      scale(1.18)
+      translateX(20px);
+  }
 }
 
-.reception-pan {
-    animation: receptionPan 8s linear forwards;
-}
 
-@keyframes receptionPan {
-    from {
-        transform: scale(1.12) translateX(-50px);
-    }
-
-    to {
-        transform: scale(1.12) translateX(50px);
-    }
-}
-
-.ken-burns {
+/* .ken-burns {
     animation: kenBurns 8s linear forwards;
 }
 
@@ -164,7 +215,7 @@
 
 .drone-fly {
   animation: droneFly 8s linear forwards;
-}
+} 
 
 @keyframes droneFly {
   from {
@@ -223,3 +274,4 @@
       translate(40px, -20px);
   }
 }
+*/
