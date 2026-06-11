@@ -13,30 +13,97 @@ body {
   height: 90vh;
   overflow: hidden;
 }
-
 .hero-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transform-origin: center center;
 }
-
 .hero-slide {
   position: absolute;
   inset: 0;
   opacity: 0;
   transition: opacity 2.5s ease-in-out;
 }
-
 .hero-slide.active {
   opacity: 1;
 }
 
+/* =========================
+    Quick Access Section 
+============================*/
+
+.quick-access {
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+.quick-links {
+  padding: 1.46rem 6rem;
+  display: flex;
+  text-decoration: none;
+  color: #334155;
+  border-right: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  gap: 2rem;
+}
+.quick-text{
+  margin-left: -1rem;
+}
+.quick-icon{
+  margin-left: 60px;
+  padding: 1px;
+  color: #0F2744;
+  transition: all 0.3s ease;
+}
+.quick-arrow {
+  margin-left: -15px;
+  transition: all 0.3s ease;
+}
+.quick-links:hover {
+  background-color: #f6faff;
+  box-shadow: inset 0 0 0 1px #cbd5e1;
+}
+.quick-links:hover .quick-icon {
+  color: #0056D6;
+  transform: scale(1.15);
+}
+.quick-links:hover .quick-text {
+  color: #0056D6;
+}
+.quick-links:hover .quick-arrow {
+  color: #0056D6;
+  transform: translateX(6px);
+}
+.quick-links:active {
+  transform: scale(0.97);
+  color: red;
+}
+
+/* =============
+    EXPERTISE
+================ */
+
+.expertise{
+  height: 87vh;
+}
+
+
+
+
+
+
+
+/* ==========================
+   HERO ANIMATION
+========================== */
 .aerial-animation {
   animation: aerialDrone 16s ease-in-out infinite;
   will-change: transform;
 }
-
 @keyframes aerialDrone {
 
   0% {
@@ -79,7 +146,6 @@ body {
   animation: entrancePush 16s ease-in-out infinite;
   will-change: transform;
 }
-
 @keyframes entrancePush {
 
   0% {
@@ -143,9 +209,18 @@ body {
   .hero-content h1 {
     font-size: 3.5rem;
   }
-
   .hero-stats {
     flex-wrap: wrap;
+  }
+
+  .quick-access {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .quick-links {
+    padding: 1.25rem 2rem;
+  }
+  .quick-icon {
+    margin-left: 0;
   }
 }
 
@@ -153,12 +228,24 @@ body {
   .hero-content h1 {
     font-size: 2.7rem;
   }
-
   .hero-buttons {
     flex-direction: column;
   }
-
   .hero-stats {
     flex-direction: column;
+  }
+
+  .quick-access {
+    grid-template-columns: 1fr;
+  }
+  .quick-links {
+    padding: 1.25rem 1.5rem;
+    gap: 1rem;
+  }
+  .quick-text {
+    font-size: 0.95rem;
+  }
+  .quick-arrow {
+    margin-left: auto;
   }
 }

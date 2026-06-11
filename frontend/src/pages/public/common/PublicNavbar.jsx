@@ -36,10 +36,7 @@ function PublicNavbar() {
             <ChevronDown size={16} />
 
             <div className="about-menu">
-              {/* <div className="about-menu-header">
-                ABOUT US
-              </div> */}
-
+              
               <Link to="/about/overview" className="about-menu-item">
                 <span className="about-arrow">→</span>
                 <span>Overview</span>
@@ -92,9 +89,11 @@ function PublicNavbar() {
               </div>
 
               <div className="mega-menu-footer">
+                <Link to={'/book-appointment'}>
                 <button className="view-all-btn">
                   <span>View All Specialities →</span>
                 </button>
+                </Link>
               </div>
             </div>
           </li>
@@ -102,16 +101,18 @@ function PublicNavbar() {
           {/* OTHERS Section */}
           <li className='nav-linked'><Link to ={'/findDoctor'}>Find A Doctor</Link></li>
 
-          <li className='nav-linked'><Link to={'/healthPackages'}>Health Packages</Link></li>
+          <li className='nav-linked'><Link to={'/health-packages'}>Health Packages</Link></li>
 
           <li className='nav-linked'><Link to={'/internationalPatients'}>International Patients</Link></li>
         </ul>
-
-        <button className="appointment-btn">
-          <CalendarDays size={18} />
-          Book Appointment
-        </button>
-
+        
+        {/* BOOK APPOINTMENT BUTTON */}
+         <Link to={'/book-appointment'}>       
+          <button className="appointment-btn">
+            <CalendarDays size={18} />
+            Book Appointment
+          </button>
+         </Link>
       </div>
     </nav>
   );
