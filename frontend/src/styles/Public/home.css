@@ -8,30 +8,109 @@ body {
 ========================== */
 
 .hero-section {
+  background: #081019;
   position: relative;
   height: 90vh;
   overflow: hidden;
 }
 
-/* ==========================
-   BACKGROUND SLIDES
-========================== */
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: center center;
+}
 
 .hero-slide {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
-  z-index: 1;
   opacity: 0;
-  transform: scale(1);
-  transition:
-    opacity 1.5s ease,
-    transform 8s ease;
+  transition: opacity 2.5s ease-in-out;
 }
 
 .hero-slide.active {
   opacity: 1;
+}
+
+.aerial-animation {
+  animation: aerialDrone 16s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes aerialDrone {
+
+  0% {
+    transform:
+      scale(1.05)
+      translateX(0%)
+      translateY(0%);
+  }
+
+  25% {
+    transform:
+      scale(1.08)
+      translateX(1%)
+      translateY(-0.3%);
+  }
+
+  50% {
+    transform:
+      scale(1.12)
+      translateX(2%)
+      translateY(-0.8%);
+  }
+
+  75% {
+    transform:
+      scale(1.08)
+      translateX(1%)
+      translateY(-0.3%);
+  }
+
+  100% {
+    transform:
+      scale(1.05)
+      translateX(0%)
+      translateY(0%);
+  }
+}
+
+.entrance-animation {
+  animation: entrancePush 16s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes entrancePush {
+
+  0% {
+    transform:
+      scale(1.05)
+      translateY(0%);
+  }
+
+  25% {
+    transform:
+      scale(1.08)
+      translateY(-0.2%);
+  }
+
+  50% {
+    transform:
+      scale(1.12)
+      translateY(-0.8%);
+  }
+
+  75% {
+    transform:
+      scale(1.08)
+      translateY(-0.2%);
+  }
+
+  100% {
+    transform:
+      scale(1.05)
+      translateY(0%);
+  }
 }
 
 /* ==========================
@@ -41,11 +120,8 @@ body {
 .hero-overlay {
   position: absolute;
   inset: 0;
-
-  z-index: 2;
-
+  z-index: 5;
   pointer-events: none;
-
   background:
     linear-gradient(
       to bottom,
