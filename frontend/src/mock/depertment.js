@@ -61,6 +61,20 @@ const departments = [
     description: "Brain and nervous system care",
     image: Neurology
   },
+  {
+    id: 2,
+    name: "Neurology",
+    slug: "neurology",
+    description: "Brain and nervous system care",
+    image: Neurology
+  },
+  {
+    id: 2,
+    name: "Neurology",
+    slug: "neurology",
+    description: "Brain and nervous system care",
+    image: Neurology
+  },
 ];
 
 export default departments;

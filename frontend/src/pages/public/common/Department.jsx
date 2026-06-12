@@ -1,8 +1,8 @@
 import "../../../styles/Public/department.css";
 // import departments from "../../../mock/depertment";
-function Department({ department, onClick }) {
+function Department({ department, onClick ,className=""}) {
   return (
-    <div className="department-card" onClick={() => onClick(department)}>
+    <div  className={`department-card ${className}`} onClick={() => onClick(department)}>
       <div className="department-icon-container">
         <img
           src={department.image}
