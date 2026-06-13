@@ -1,5 +1,7 @@
 import React from "react";
-// import "./Footer.css";
+import "../../../styles/Public/footer.css";
+import { TfiEmail } from "react-icons/tfi";
+import { MdEmail } from "react-icons/md";
 
 const FOOTER_LINKS = {
   Services: ["Cardiology", "Neurology", "Orthopedics", "Pediatrics", "Oncology", "Ophthalmology"],
@@ -15,20 +17,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="footer__brand">
             <div className="footer__logo">
-              <div className="footer__logo-icon">
-                <svg viewBox="0 0 36 36" fill="none">
-                  <rect width="36" height="36" rx="10" fill="rgba(255,255,255,0.15)"/>
-                  <path d="M18 8v20M8 18h20" stroke="white" strokeWidth="4" strokeLinecap="round"/>
-                </svg>
-              </div>
               <div>
-                <p className="footer__logo-name">MediCore</p>
-                <p className="footer__logo-tag">Hospital Management System</p>
+                <p className="footer__logo-name">AMS Hospital</p>
+                <p className="footer__logo-tag">Care • Compassion • Excellence</p>
               </div>
             </div>
             <p className="footer__brand-desc">
-              Delivering compassionate, technology-driven healthcare to communities
-              across the globe. NABH & JCI Accredited.
+              Providing world-class healthcare services through advanced medical expertise, compassionate patient care, and clinical excellence.
             </p>
 
             {/* Contact Info */}
@@ -39,11 +34,11 @@ export default function Footer() {
               </div>
               <div className="footer__contact-item">
                 <span>📞</span>
-                <a href="tel:+18001234567">1-800-MEDICORE</a>
+                <a href="tel:+18001234567">24×7 Emergency : +91 98765 43210</a>
               </div>
               <div className="footer__contact-item">
-                <span>✉️</span>
-                <a href="mailto:care@medicore.health">care@medicore.health</a>
+                <span  className="footer__contact-item_1"><MdEmail/></span>
+                <a href="mailto:care@medicore.health">info@amshospital.com</a>
               </div>
             </div>
 
@@ -80,7 +75,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="footer__bottom">
           <p className="footer__copy">
-            © {new Date().getFullYear()} MediCore Hospital Management System. All rights reserved.
+            © {new Date().getFullYear()} © 2026 AMS Hospital. All Rights Reserved.
           </p>
           <div className="footer__legal">
             <a href="#">Privacy Policy</a>

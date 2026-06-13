@@ -101,9 +101,7 @@ const HomePage = () => {
 
       <section className="advertisement">
         <div className="top-showcase">
-
           <div className="bottom-description">
-
           <h2>
             Healthcare That Puts Patients First.
           </h2>
@@ -115,15 +113,15 @@ const HomePage = () => {
             </p>
 
           </div>
+          </div>
 
-        </div>
-
+        <div>
           <div className="advertisement-image">
             <img src={medicalTeam} alt="Medical Team" />
           </div>
-
+          
         </div>
-
+        </div>
       </section>
     </PublicLayout>
     </>

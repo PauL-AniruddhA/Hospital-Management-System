@@ -159,7 +159,7 @@ body {
 =================== */
 
 .advertisement{
-  padding:80px 0;
+  padding:94px 0;
   background:
   linear-gradient(
     135deg,
@@ -185,8 +185,8 @@ body {
 .advertisement-image{
   position:relative;
   overflow:hidden;
-  border-radius:24px;
-  height:90%;
+  border-radius:8px 70px 8px 50px;
+  height:452px;
 }
 .advertisement-image::after{
   content:"";
@@ -212,7 +212,7 @@ body {
 
   display:block;
 
-  border-radius:24px;
+  /* border-radius:24px; */
 
   box-shadow:
   0 20px 40px rgba(15,59,110,.12);
@@ -244,14 +244,10 @@ body {
 }
 
 .bottom-description h2{
-  font-size:52px;
-
+  font-size:44px;
   color:#ffffff;
-
   text-shadow:0 2px 10px rgba(0,0,0,.15);
-
   margin-bottom:25px;
-
   line-height:1.2;
 }
 
@@ -269,7 +265,7 @@ body {
   box-shadow:
   0 10px 30px rgba(0,0,0,.08);
 
-  border-radius:24px;
+  border-radius:50px 10px 50px 10px;
 
   padding:35px;
 }
@@ -281,47 +277,6 @@ body {
   line-height:2;
 }
 
-/* ===================================== */
-/* MOBILE */
-/* ===================================== */
-
-@media(max-width:992px){
-
-  .top-showcase{
-    grid-template-columns:1fr;
-  }
-
-  .hospital-terminal{
-    height:auto;
-  }
-
-  .advertisement-image{
-    height:400px;
-  }
-
-  .bottom-description h2{
-    font-size:38px;
-  }
-}
-
-@media(max-width:768px){
-
-  .advertisement-image{
-    height:300px;
-  }
-
-  .bottom-description h2{
-    font-size:30px;
-  }
-
-  .typewriter-box{
-    padding:20px;
-  }
-
-  .typewriter-box p{
-    font-size:16px;
-  }
-}
 
 /* ==========================
    HERO ANIMATION
@@ -448,6 +403,19 @@ body {
   .quick-icon {
     margin-left: 0;
   }
+
+  .top-showcase{
+    grid-template-columns:1fr;
+  }
+  .hospital-terminal{
+    height:auto;
+  }
+  .advertisement-image{
+    height:400px;
+  }
+  .bottom-description h2{
+    font-size:38px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -473,5 +441,18 @@ body {
   }
   .quick-arrow {
     margin-left: auto;
+  }
+
+  .advertisement-image{
+    height:300px;
+  }
+  .bottom-description h2{
+    font-size:30px;
+  }
+  .typewriter-box{
+    padding:20px;
+  }
+  .typewriter-box p{
+    font-size:16px;
   }
 }
