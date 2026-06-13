@@ -2,9 +2,11 @@ import React,{useState,useEffect} from 'react';
 import "../../../styles/Public/home.css";
 import hero1 from "../../../assets/hero-images/Hoispital Image 3.png";
 import hero2 from "../../../assets/hero-images/Hoispital Image 6.png";
+// import medicalTeam from "../../../assets/home/Diverse medical team by waterfront skyline.png";
+import medicalTeam from "../../../assets/home/Medical team.png";
 import PublicLayout from '../../../layouts/PublicLayout';
 import { Link } from 'react-router-dom';
-import { ShieldPlus, CalendarDays, FlaskConical , Building2,Stethoscope,HeartPulse,Hospital,MapPin,Pill, } from 'lucide-react';
+import { ShieldPlus, CalendarDays, FlaskConical, Stethoscope, Building2 ,HeartPulse, ClipboardList, } from 'lucide-react';
 import Department from '../common/Department';
 import departments from '../../../mock/depertment';
 
@@ -17,7 +19,7 @@ const HomePage = () => {
       }, 15000);
 
       return () => clearInterval(timer);
-    }, []);
+    }, []);  
   return (
     <>
     <PublicLayout>
@@ -97,126 +99,31 @@ const HomePage = () => {
         
       </section>
 
-      <section className="why-aig">
-        <div className="why-aig-header">
-          <h2>Healthcare Excellence</h2>
-          <p>
-            Delivering trusted healthcare through expert specialists,
-            advanced technology, and patient-centered care.
-          </p>
-        </div>
+      <section className="advertisement">
+        <div className="top-showcase">
 
-        <div className="why-aig-grid">
+          <div className="bottom-description">
 
-          {/* Card 1 */}
-          <div className="aig-stat-card">
-            <div className="aig-stat-icon">
-              <Building2 size={52} />
-            </div>
+          <h2>
+            Healthcare That Puts Patients First.
+          </h2>
 
-            <div className="aig-stat-content">
-              <div className="aig-stat-heading">
-                <span className="aig-stat-value">74+</span>
-                <span className="aig-stat-title">Hospitals</span>
-              </div>
+          <div className="typewriter-box">
 
-              <p>
-                India's largest private hospital network delivering advanced healthcare.
-              </p>
-            </div>
-          </div>
+            <p>
+              Delivering world-class healthcare through innovation, expertise, and compassion. HMS Hospital brings together experienced medical professionals, state-of-the-art facilities, and patient-centered care to help individuals and families achieve better health outcomes every day.
+            </p>
 
-          {/* Card 2 */}
-          <div className="aig-stat-card">
-            <div className="aig-stat-icon">
-              <Stethoscope size={52} />
-            </div>
-
-            <div className="aig-stat-content">
-              <div className="aig-stat-heading">
-                <span className="aig-stat-value">13,000+</span>
-                <span className="aig-stat-title">Doctors</span>
-              </div>
-
-              <p>
-                Experienced specialists providing exceptional patient care.
-              </p>
-            </div>
-          </div>
-
-          {/* Card 3 */}
-          <div className="aig-stat-card">
-            <div className="aig-stat-icon">
-              <HeartPulse size={52} />
-            </div>
-
-            <div className="aig-stat-content">
-              <div className="aig-stat-heading">
-                <span className="aig-stat-value">2,300+</span>
-                <span className="aig-stat-title">Diagnostics</span>
-              </div>
-
-              <p>
-                Precision testing and advanced diagnostic facilities.
-              </p>
-            </div>
-          </div>
-
-          {/* Card 4 */}
-          <div className="aig-stat-card">
-            <div className="aig-stat-icon">
-              <Hospital size={52} />
-            </div>
-
-            <div className="aig-stat-content">
-              <div className="aig-stat-heading">
-                <span className="aig-stat-value">700+</span>
-                <span className="aig-stat-title">Clinics</span>
-              </div>
-
-              <p>
-                Accessible healthcare services closer to communities.
-              </p>
-            </div>
-          </div>
-
-          {/* Card 5 */}
-          <div className="aig-stat-card">
-            <div className="aig-stat-icon">
-              <MapPin size={52} />
-            </div>
-
-            <div className="aig-stat-content">
-              <div className="aig-stat-heading">
-                <span className="aig-stat-value">10,000+</span>
-                <span className="aig-stat-title">Locations</span>
-              </div>
-
-              <p>
-                Expanding healthcare reach across the country.
-              </p>
-            </div>
-          </div>
-
-          {/* Card 6 */}
-          <div className="aig-stat-card">
-            <div className="aig-stat-icon">
-              <Pill size={52} />
-            </div>
-
-            <div className="aig-stat-content">
-              <div className="aig-stat-heading">
-                <span className="aig-stat-value">7,000+</span>
-                <span className="aig-stat-title">Pharmacies</span>
-              </div>
-
-              <p>
-                Seamless access to medicines and healthcare essentials.
-              </p>
-            </div>
           </div>
 
         </div>
+
+          <div className="advertisement-image">
+            <img src={medicalTeam} alt="Medical Team" />
+          </div>
+
+        </div>
+
       </section>
     </PublicLayout>
     </>
