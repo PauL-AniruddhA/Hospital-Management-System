@@ -1,9 +1,10 @@
 import React from "react";
 import "../../styles/Admin/admin-dashboard.css";
+import AdminLayout from "../../layouts/AdminLayout";
 function AdminDashboard() {
   return (
-    <div>
-
+    // <AdminLayout>
+    <>
       <h1>Admin Dashboard</h1>
 
       <div className="dashboard-grid">
@@ -27,10 +28,9 @@ function AdminDashboard() {
           <h3>Departments</h3>
           <p>0</p>
         </div>
-
       </div>
-
-    </div>
+    </>
+    // </AdminLayout>
   );
 }
 

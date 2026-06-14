@@ -18,6 +18,7 @@ function AppRoutes(){
         <BrowserRouter>
             <Routes>
                 {/* Public Routes */}
+                {/* <Route path="/" element={<PatientDashboard />} /> */}
                 <Route path="/" element={<HomePage />} />
                 <Route path="/book-appointment" element={<BookAppointments />} />
                 
