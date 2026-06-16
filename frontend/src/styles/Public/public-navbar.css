@@ -344,9 +344,6 @@
   box-shadow:0 0 0 3px rgba(15,77,146,0.18);
 }
 
-
-
-
 /* for find a doctor , health Insurance and international patients */
 .nav-linked a {
   text-decoration: none;
@@ -366,23 +363,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 8px;
-
   height: 36px;
   padding: 0 11px;
-
   border: none;
   border-radius: 10px;
-
   background: #1f5aa6;
   color: #ffffff;
-
   font-size: var(--font-size);
   font-weight: 600;
-
   cursor: pointer;
-
   transition: all 0.2s ease;
 }
 

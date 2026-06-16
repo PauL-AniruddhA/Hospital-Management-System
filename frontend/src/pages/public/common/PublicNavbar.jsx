@@ -107,12 +107,14 @@ function PublicNavbar() {
         </ul>
         
         {/* BOOK APPOINTMENT BUTTON */}
+        <div className="navbar-actions">
          <Link to={'/book-appointment'}>       
           <button className="appointment-btn">
             <CalendarDays size={18} />
             Book Appointment
           </button>
          </Link>
+        </div>
       </div>
     </nav>
   );

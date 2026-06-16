@@ -116,6 +116,77 @@
   width: 15px;
   height: 15px;
 }
+.notification-btn {
+  position: relative;
+  border: none;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ff4d4f;
+  color: white;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-dropdown {
+  position: relative;
+}
+
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.profile-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 220px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.profile-dropdown:hover .profile-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.profile-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  color: #334155;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.profile-menu a:hover {
+  background: #f1f5f9;
+}
 
 /* =========================
    LAPTOP
