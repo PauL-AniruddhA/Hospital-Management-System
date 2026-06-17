@@ -75,3 +75,566 @@
   font-size:13px;
   color:#64748b;
 }
+.patient-health-wrapper{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:24px;
+  margin-top:30px;
+}
+
+.health-summary-card,
+.patient-quick-links{
+  background:#fff;
+  border-radius:20px;
+  padding:24px;
+  border:1px solid #e5e7eb;
+  box-shadow:0 8px 25px rgba(0,0,0,0.05);
+}
+
+.health-summary-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+}
+
+.health-summary-header h2,
+.patient-quick-links h2{
+  font-size:22px;
+  font-weight:600;
+  color:#0f3b6e;
+}
+
+.health-summary-header button{
+  border:none;
+  background:none;
+  color:#2563eb;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.health-stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+}
+
+.health-stat-card{
+  border:1px solid #edf0f4;
+  border-radius:16px;
+  padding:18px;
+}
+
+.health-stat-card p{
+  font-size:14px;
+  color:#64748b;
+  margin-bottom:12px;
+}
+
+.health-value{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.health-value h3{
+  font-size:24px;
+  font-weight:700;
+  color:#111827;
+}
+
+.health-value span{
+  font-size:12px;
+  color:#64748b;
+  margin-left:4px;
+}
+
+.health-stat-card small{
+  color:#22c55e;
+  font-weight:600;
+}
+
+.health-tip{
+  margin-top:20px;
+  padding:14px 18px;
+  border-radius:12px;
+  background:#f8fafc;
+  color:#475569;
+}
+
+.quick-link-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 0;
+  border-bottom:1px solid #edf0f4;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.quick-link-item:last-child{
+  border-bottom:none;
+}
+
+.quick-link-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.quick-link-item:hover{
+  padding-left:8px;
+  color:#2563eb;
+}
+.appointments-section{
+  margin-top:30px;
+  background:#fff;
+  padding:24px;
+  border-radius:20px;
+  border:1px solid #e5e7eb;
+  box-shadow:0 8px 25px rgba(0,0,0,0.05);
+}
+
+.section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+}
+
+.section-header h2{
+  font-size:24px;
+  color:#0f3b6e;
+}
+
+.section-header button{
+  border:none;
+  background:none;
+  color:#2563eb;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.appointment-list{
+  display:grid;
+  gap:18px;
+}
+
+.appointment-card{
+  border:1px solid #edf0f4;
+  border-radius:16px;
+  padding:20px;
+}
+
+.appointment-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+.appointment-top h3{
+  font-size:18px;
+  color:#111827;
+}
+
+.appointment-top p{
+  color:#64748b;
+}
+
+.appointment-status{
+  background:#dcfce7;
+  color:#16a34a;
+  padding:6px 12px;
+  border-radius:50px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.appointment-info{
+  display:flex;
+  gap:20px;
+  margin:15px 0;
+  color:#475569;
+}
+
+.appointment-actions{
+  display:flex;
+  gap:12px;
+}
+
+.primary-btn{
+  padding:10px 18px;
+  border:none;
+  border-radius:10px;
+  background:#0f3b6e;
+  color:white;
+  cursor:pointer;
+}
+
+.secondary-btn{
+  padding:10px 18px;
+  border-radius:10px;
+  border:1px solid #cbd5e1;
+  background:white;
+  cursor:pointer;
+}
+.lab-reports-section{
+  margin-top:30px;
+  background:#fff;
+  padding:24px;
+  border-radius:20px;
+  border:1px solid #e5e7eb;
+  box-shadow:0 8px 25px rgba(0,0,0,0.05);
+}
+
+.lab-report-list{
+  display:grid;
+  gap:18px;
+}
+
+.lab-report-card{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  border:1px solid #edf0f4;
+  border-radius:16px;
+}
+
+.lab-report-content h3{
+  color:#111827;
+  margin-bottom:8px;
+}
+
+.lab-report-content p{
+  color:#64748b;
+  margin-bottom:10px;
+}
+
+.report-status{
+  background:#dcfce7;
+  color:#16a34a;
+  padding:6px 12px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.report-actions{
+  display:flex;
+  gap:12px;
+}
+.medical-records-section{
+  margin-top:30px;
+  background:#fff;
+  padding:24px;
+  border-radius:20px;
+  border:1px solid #e5e7eb;
+  box-shadow:0 8px 25px rgba(0,0,0,0.05);
+}
+
+.record-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  margin-bottom:30px;
+}
+
+.record-stat-card{
+  text-align:center;
+  padding:24px;
+  border:1px solid #edf0f4;
+  border-radius:16px;
+}
+
+.record-stat-card h3{
+  font-size:28px;
+  margin:12px 0 6px;
+  color:#0f3b6e;
+}
+
+.record-stat-card p{
+  color:#64748b;
+}
+
+.recent-records h3{
+  margin-bottom:16px;
+  color:#0f3b6e;
+}
+
+.record-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 0;
+  border-bottom:1px solid #edf0f4;
+}
+
+.record-item:last-child{
+  border-bottom:none;
+}
+
+.record-item h4{
+  margin-bottom:4px;
+}
+
+.record-item p{
+  color:#64748b;
+  font-size:14px;
+}
+.billing-section{
+  margin-top:30px;
+  background:#fff;
+  padding:24px;
+  border-radius:20px;
+  border:1px solid #e5e7eb;
+  box-shadow:0 8px 25px rgba(0,0,0,0.05);
+}
+
+.billing-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  margin-bottom:30px;
+}
+
+.billing-stat-card{
+  display:flex;
+  gap:15px;
+  align-items:center;
+  padding:20px;
+  border:1px solid #edf0f4;
+  border-radius:16px;
+}
+
+.billing-icon{
+  width:55px;
+  height:55px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#eff6ff;
+  color:#0f3b6e;
+}
+
+.billing-stat-card h3{
+  font-size:24px;
+  color:#0f3b6e;
+}
+
+.billing-stat-card p{
+  color:#64748b;
+  margin-top:3px;
+}
+
+.billing-stat-card span{
+  font-size:12px;
+  color:#16a34a;
+  font-weight:600;
+}
+
+.invoice-list{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.invoice-card{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  border:1px solid #edf0f4;
+  border-radius:16px;
+}
+
+.invoice-left h4{
+  color:#111827;
+  margin-bottom:6px;
+}
+
+.invoice-left p{
+  color:#64748b;
+  font-size:14px;
+}
+
+.invoice-right{
+  text-align:right;
+}
+
+.invoice-right h3{
+  color:#0f3b6e;
+  margin-bottom:8px;
+}
+
+.paid-status{
+  display:inline-block;
+  background:#dcfce7;
+  color:#15803d;
+  padding:5px 12px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.pending-status{
+  display:inline-block;
+  background:#fef3c7;
+  color:#b45309;
+  padding:5px 12px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.invoice-actions{
+  margin-top:12px;
+  display:flex;
+  gap:10px;
+  justify-content:flex-end;
+}
+
+.download-btn{
+  border:1px solid #cbd5e1;
+  background:#fff;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.pay-btn{
+  border:none;
+  background:#0f3b6e;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.notifications-section{
+  margin-top:30px;
+  background:#fff;
+  padding:24px;
+  border-radius:20px;
+  border:1px solid #e5e7eb;
+  box-shadow:0 8px 25px rgba(0,0,0,0.05);
+}
+
+.notification-list{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.notification-card{
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+  padding:18px;
+  border:1px solid #edf0f4;
+  border-radius:16px;
+  transition:all 0.3s ease;
+}
+
+.notification-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.notification-icon{
+  width:48px;
+  height:48px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#eff6ff;
+  color:#0f3b6e;
+  flex-shrink:0;
+}
+
+.notification-content{
+  flex:1;
+}
+
+.notification-content h4{
+  color:#111827;
+  font-size:16px;
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.notification-content p{
+  color:#64748b;
+  line-height:1.5;
+  margin-bottom:8px;
+}
+
+.notification-content span{
+  font-size:13px;
+  color:#94a3b8;
+}
+
+.notifications-section .section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+}
+
+.notifications-section .section-header h2{
+  color:#0f3b6e;
+}
+
+.notifications-section .section-header button{
+  border:none;
+  background:none;
+  color:#2563eb;
+  cursor:pointer;
+  font-weight:600;
+}
+
+@media (max-width: 992px){
+
+  .patient-health-wrapper{
+    grid-template-columns:1fr;
+  }
+
+  .health-stats-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media (max-width: 576px){
+
+  .health-stats-grid{
+    grid-template-columns:1fr;
+  }
+
+  .health-summary-header{
+    flex-direction:column;
+    gap:10px;
+    align-items:flex-start;
+  }
+}
+@media(max-width:768px){
+
+  .billing-stats{
+    grid-template-columns:1fr;
+  }
+
+  .invoice-card{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+  }
+
+  .invoice-right{
+    text-align:left;
+    width:100%;
+  }
+
+  .invoice-actions{
+    justify-content:flex-start;
+  }
+}
