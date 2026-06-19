@@ -2,6 +2,7 @@ import React from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
 import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare, } from "lucide-react";
 
+import homeimage from "../../../assets/hero-images/Hoispital Image 2.png";
 const actions = [
   {  title: "Appointments", subtitle: "Manage your visits", icon: CalendarDays  },
   {  title: "Medical Records", subtitle: "View health history", icon: FileText  },
@@ -58,6 +59,7 @@ function PatientHomeSection()  {
    return (
     <div className="patient-home">
 
+      {/* <img src={homeimage} alt="" srcset="" /> */}
       <section className="patient-hero-overlay">
         <div className="patient-glass-card">
           <div className="patient-info">

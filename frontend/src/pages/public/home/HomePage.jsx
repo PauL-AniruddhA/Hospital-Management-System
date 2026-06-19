@@ -31,33 +31,33 @@ const HomePage = () => {
     <>
     <PublicLayout>
       <div className="hero-overlay" />
-        <section className="hero-wrapper">
-          <section className="hero-section">
-            {images.map((image, index) => (
-              <div
-              key={index}
-              className={`hero-slide ${
-                index === current ? "active" : ""
-              }`}
-              >
-                <img
-                  key={`${current}-${index}`}
-                  src={image}
-                  alt={`Hospital ${index}`}
-                  className={`hero-image ${
-                    index === 0
-                    ? "aerial-animation"
-                    : "entrance-animation"
-                  }`}
-                  />
-              </div>
-            ))}
-          </section>
-        
+        {/* <section className="hero-wrapper"> */}
           {authenticated && role === "PATIENT" ? (
             <PatientHomeSection />
           ) : (
             <>
+              <section className="hero-section">
+                {images.map((image, index) => (
+                  <div
+                  key={index}
+                  className={`hero-slide ${
+                    index === current ? "active" : ""
+                  }`}
+                  >
+                    <img
+                      key={`${current}-${index}`}
+                      src={image}
+                      alt={`Hospital ${index}`}
+                      className={`hero-image ${
+                        index === 0
+                        ? "aerial-animation"
+                        : "entrance-animation"
+                      }`}
+                      />
+                  </div>
+                ))}
+              </section>
+
               <section className='quick-access'>
                 <Link className ='quick-links' to={'/health-packages'}>
                   <div className="icon-wrapper">
@@ -137,7 +137,7 @@ const HomePage = () => {
               </section>
             </>
           )}
-        </section>
+        {/* </section> */}
         
     </PublicLayout>
     </>

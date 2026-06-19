@@ -1,3 +1,4 @@
+
 /* ==========================
    HERO OVERLAY
 ========================== */
@@ -19,11 +20,6 @@
     );
 }
 
-.hero-wrapper{
-  position:relative;
-   margin-bottom:calc(-1 * var(--patient-overlap));
-}
-
 /* ==========================
    HERO SECTION
 ========================== */
@@ -32,7 +28,7 @@
   background: #081019;
   position: relative;
   height: 90vh;
-  min-height: 700px;;
+  min-height: 600px;;
   overflow: hidden;
 }
 .hero-image {
