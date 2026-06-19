@@ -1,5 +1,7 @@
 @import "tailwindcss";
 :root {
+  --topbar-height: 38px;
+  --navbar-height: 57px;
   --primary: #0f4c81;
   --primary-light: #3b82f6;
   --secondary: #14b8a6;
@@ -8,11 +10,11 @@
   --surface: #ffffff;
   --text-dark: #1e293b;
   --text-light: #64748b;
-  --topbar-height: 38px;
-  --navbar-height: 57px;
   --font-size: 14px;
   --select-background: #eaf3ff;
   --exp-background-color: rgb(255, 242, 242);
+  --patient-overlap:600px;
+  --portal-width:min(92vw,1600px);
 }
 
 * {

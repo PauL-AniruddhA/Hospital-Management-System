@@ -56,7 +56,50 @@ const notifications = [
 
 function PatientHomeSection()  {
    return (
-    <section className="patient-home">
+    <div className="patient-home">
+
+      <section className="patient-hero-overlay">
+        <div className="patient-glass-card">
+          <div className="patient-info">
+            <span className="welcome-chip">
+              👋 Welcome Back
+            </span>
+            <h1>Good Morning, Aniruddha</h1>
+            <p>
+              Your next appointment is scheduled for tomorrow.
+            </p>
+            <div className="health-stats-grid">
+              {healthStats.map((item, index) => (
+                <div key={index} className="health-stat-card">
+                  <span>{item.title}</span>
+
+                  <h3>
+                    {item.value}
+                    <small>{item.unit}</small>
+                  </h3>
+
+                  <p>{item.status}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="appointment-preview">
+        <h3>Next Appointment</h3>
+        <h2>Dr. Rajesh Sharma</h2>
+        <p>Cardiology Department</p>
+        <div>
+          📅 18 Jun 2026
+        </div>
+        <div>
+          🕒 10:30 AM
+        </div>
+        <button>
+          View Appointment
+        </button>
+      </section>
 
       <section className="patient-dashboard-card">
         <div className="patient-actions-grid">
@@ -83,12 +126,7 @@ function PatientHomeSection()  {
       </section>
 
       <section className="patient-health-wrapper">
-        <div className="health-summary-card">
-
-          <div className="health-summary-header">
-            <h2>Health Summary</h2>
-            <button>View Trends</button>
-          </div>
+        {/* <div className="health-summary-card">
 
           <div className="health-stats-grid">
             {healthStats.map((item, index) => {
@@ -109,10 +147,7 @@ function PatientHomeSection()  {
               );
             })}
           </div>
-          <div className="health-tip">
-            💡 Tip: Keep a balanced diet and regular exercise to stay healthy.
-          </div>
-        </div>
+        </div> */}
 
         {/* Quick Links */}
         <div className="patient-quick-links">
@@ -346,7 +381,7 @@ function PatientHomeSection()  {
         </div>
       </section>
 
-    </section>
+    </div>
   );
 }
 

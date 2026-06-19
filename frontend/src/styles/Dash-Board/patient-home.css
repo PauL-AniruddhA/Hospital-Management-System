@@ -1,42 +1,151 @@
 .patient-home{
   position: relative;
-  z-index: 5;
+  z-index: 20;
+  transform:translateY(calc(-1 * var(--patient-overlap)));
+  /* margin-top: calc(-1 * var(--patient-overlap)); */
+}
+
+.patient-hero-overlay{
+  padding-top:calc(var(--topbar-height) + var(--navbar-height));
+  position: relative;
+  width:var(--portal-width);
+  margin: 0 auto 30px;
+  display:grid;
+  grid-template-columns:
+      minmax(0,1fr)
+      minmax(280px,340px);
+
+  gap:
+    clamp(
+      20px,
+      2vw,
+      40px
+    );
+  align-items:start;
+  z-index:10;
+}
+
+.patient-glass-card{
+  width:100%;
+  max-width:min(60vw,900px);
+  min-height:clamp(320px,45vh,520px);
+  padding:clamp(20px,2vw,40px);
+  border-radius:clamp(20px,2vw,32px);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow: 0 20px 40px rgba(0,0,0,.18);
+  overflow:hidden;
+}
+.patient-info{
+  color:white;
+}
+
+.patient-info h1{
+  font-size:clamp(2rem,3.5vw,4rem);
+  line-height:1.1;
+}
+
+.patient-info p{
+  font-size:clamp(0.9rem,1vw,1.1rem);
+  color:rgba(255,255,255,0.85);
+}
+.health-stats-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:14px;
+
+  margin-top:30px;
+}
+
+.health-stat-card{
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:20px;
+  transition:all .3s ease;
+  padding:clamp(12px,1.5vw,18px);
+}
+
+.health-stat-card p{
+  font-size:14px;
+  color:#64748b;
+  margin-bottom:12px;
+}
+.health-stat-card small{
+  color:#22c55e;
+  font-weight:600;
+}
+
+.appointment-preview{
+  position:absolute;
+  top: 50px;
+  right:0;
+  width:100%;
+  max-width:280px;
+  min-width:180px;
+  padding:clamp(18px,2vw,28px);
+  border-radius:20px;
+  background:
+  linear-gradient(
+    135deg,
+    rgba(255,255,255,.12),
+    rgba(255,255,255,.05)
+  );
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.15);
+  border:1px solid rgba(255,255,255,0.12);
+  color:white;
+}
+
+.appointment-preview h2{
+  margin:10px 0;
+}
+
+.appointment-preview button{
+  width:100%;
+  margin-top:18px;
+  border:none;
+  border-radius:12px;
+  padding:12px;
+  background:white;
+  color:#0f3b6e;
+  font-weight:600;
+}
+
+.welcome-chip{
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:50px;
+  background:rgba(255,255,255,0.15);
+  font-size:14px;
 }
 
 .patient-dashboard-card{
-  width: 88%;
-  margin: -90px auto 0;
-
+  width:var(--portal-width);
+  margin: auto;
   background: white;
-
-  border-radius: 24px;
-
-  padding: 30px;
-
-  box-shadow:
-    0 15px 45px rgba(15,59,110,0.12);
-
+  border-radius: 50px 50px 10px 10px;
+  padding:clamp(20px,2vw,30px);
+  box-shadow: 0 15px 45px rgba(15,59,110,0.12);
   position: relative;
-  z-index: 10;
+  z-index: 7;
 }
 
 .patient-actions-grid{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:0;
+  grid-template-columns:repeat( auto-fit,minmax(220px,1fr));
 }
-
 .patient-action-card{
   display:flex;
   align-items:center;
   gap:16px;
-
-  padding:22px;
-
+  padding:clamp(16px,1.5vw,22px);
   border-right:1px solid #edf2f7;
-
   cursor:pointer;
-
   transition:all .3s ease;
 }
 
@@ -45,23 +154,18 @@
 }
 
 .patient-action-card:hover{
-  background:#f8fbff;
+  background:#edf1f5;
 }
 
 .patient-action-icon{
-  width:60px;
-  height:60px;
-
+  width:clamp(48px,3vw,60px);
+  height:clamp(48px,3vw,60px);
   border-radius:50%;
-
   background:#eef5ff;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   color:#1f5aa6;
-
   flex-shrink:0;
 }
 
@@ -75,20 +179,26 @@
   font-size:13px;
   color:#64748b;
 }
+
 .patient-health-wrapper{
   display:grid;
-  grid-template-columns:2fr 1fr;
+  grid-template-columns:4fr 1fr;
   gap:24px;
-  margin-top:30px;
+  margin-top:10px;
+  width:min(92vw,1600px);
+  margin-left:auto;
+  margin-right:auto;
 }
 
 .health-summary-card,
 .patient-quick-links{
-  background:#fff;
   border-radius:20px;
   padding:24px;
-  border:1px solid #e5e7eb;
-  box-shadow:0 8px 25px rgba(0,0,0,0.05);
+  background:#ffffff;
+  border:1px solid #edf2f7;
+  box-shadow:
+  0 10px 30px rgba(15,59,110,0.05),
+  0 2px 6px rgba(15,59,110,0.04);
 }
 
 .health-summary-header{
@@ -100,7 +210,7 @@
 
 .health-summary-header h2,
 .patient-quick-links h2{
-  font-size:22px;
+  font-size:clamp(1.2rem,1.5vw,1.5rem);
   font-weight:600;
   color:#0f3b6e;
 }
@@ -113,23 +223,7 @@
   cursor:pointer;
 }
 
-.health-stats-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
-}
 
-.health-stat-card{
-  border:1px solid #edf0f4;
-  border-radius:16px;
-  padding:18px;
-}
-
-.health-stat-card p{
-  font-size:14px;
-  color:#64748b;
-  margin-bottom:12px;
-}
 
 .health-value{
   display:flex;
@@ -147,19 +241,6 @@
   font-size:12px;
   color:#64748b;
   margin-left:4px;
-}
-
-.health-stat-card small{
-  color:#22c55e;
-  font-weight:600;
-}
-
-.health-tip{
-  margin-top:20px;
-  padding:14px 18px;
-  border-radius:12px;
-  background:#f8fafc;
-  color:#475569;
 }
 
 .quick-link-item{
@@ -636,5 +717,52 @@
 
   .invoice-actions{
     justify-content:flex-start;
+  }
+}
+
+@media (max-width: 1400px){
+  .patient-hero-overlay{
+    width:90%;
+  }
+
+  .patient-glass-card{
+    padding:24px;
+  }
+}
+
+@media (max-width: 1200px){
+
+  .patient-glass-card{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .appointment-preview{
+    width: 100%;
+    max-width: none;
+  }
+
+  .patient-actions-grid{
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media (max-width: 768px){
+
+  .patient-home{
+    margin-top: -25vh;
+  }
+
+  .patient-actions-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .patient-action-card{
+    border-right: none;
+    border-bottom: 1px solid #edf2f7;
+  }
+
+  .health-stats-grid{
+    grid-template-columns: repeat(2,1fr);
   }
 }

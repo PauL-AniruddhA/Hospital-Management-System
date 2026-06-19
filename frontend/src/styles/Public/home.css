@@ -1,4 +1,30 @@
 /* ==========================
+   HERO OVERLAY
+========================== */
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(8, 15, 25, 0.85) 0%,
+      rgba(8, 15, 25, 0.72) 8%,
+      rgba(8, 15, 25, 0.55) 18%,
+      rgba(8, 15, 25, 0.32) 32%,
+      rgba(8, 15, 25, 0.15) 50%,
+      transparent 75%
+    );
+}
+
+.hero-wrapper{
+  position:relative;
+   margin-bottom:calc(-1 * var(--patient-overlap));
+}
+
+/* ==========================
    HERO SECTION
 ========================== */
 
@@ -6,6 +32,7 @@
   background: #081019;
   position: relative;
   height: 90vh;
+  min-height: 700px;;
   overflow: hidden;
 }
 .hero-image {
@@ -354,28 +381,6 @@
       translateY(0%);
   }
 }
-
-/* ==========================
-   HERO OVERLAY
-========================== */
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(8, 15, 25, 0.85) 0%,
-      rgba(8, 15, 25, 0.72) 8%,
-      rgba(8, 15, 25, 0.55) 18%,
-      rgba(8, 15, 25, 0.32) 32%,
-      rgba(8, 15, 25, 0.15) 50%,
-      transparent 75%
-    );
-}
-
 
 /* ==========================
    RESPONSIVE

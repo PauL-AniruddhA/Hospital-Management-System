@@ -31,111 +31,114 @@ const HomePage = () => {
     <>
     <PublicLayout>
       <div className="hero-overlay" />
-      <section className="hero-section">
-        {images.map((image, index) => (
-          <div
-          key={index}
-          className={`hero-slide ${
-            index === current ? "active" : ""
-          }`}
-          >
-            <img
-              key={`${current}-${index}`}
-              src={image}
-              alt={`Hospital ${index}`}
-              className={`hero-image ${
-                index === 0
-                ? "aerial-animation"
-                : "entrance-animation"
+        <section className="hero-wrapper">
+          <section className="hero-section">
+            {images.map((image, index) => (
+              <div
+              key={index}
+              className={`hero-slide ${
+                index === current ? "active" : ""
               }`}
-              />
-          </div>
-        ))}
-      </section>
-      
-      {authenticated && role === "PATIENT" ? (
-        <PatientHomeSection />
-      ) : (
-        <>
-          <section className='quick-access'>
-            <Link className ='quick-links' to={'/health-packages'}>
-              <div className="icon-wrapper">
-                <ShieldPlus className="quick-icon" />
+              >
+                <img
+                  key={`${current}-${index}`}
+                  src={image}
+                  alt={`Hospital ${index}`}
+                  className={`hero-image ${
+                    index === 0
+                    ? "aerial-animation"
+                    : "entrance-animation"
+                  }`}
+                  />
               </div>
-              <span className='quick-text'>Healh Insurance</span>
-              <span className='quick-arrow'>→</span>
-            </Link>
-            <Link className ='quick-links' to={'/book-appointment'}>
-              <div className="icon-wrapper">
-                <CalendarDays className="quick-icon" />
-              </div>
-              <span className='quick-text'>Book Appointment </span>
-              <span className='quick-arrow'>→</span>
-            </Link>
-            <Link className ='quick-links' to={'/lab-tests'}>
-              <div className="icon-wrapper">
-                <FlaskConical className="quick-icon" />
-              </div>
-              <span className='quick-text'>Lab Reports</span>
-              <span className='quick-arrow'>→</span>
-            </Link>
+            ))}
           </section>
-
-          <section className='exp'>
-            <div className='exp-header'>
-              <h1>Areas of Specialties</h1>
-              <span>Leading specialists providing advanced care for every stage of your health journey</span>
-            </div>
-
-            <div className='exp-body'>
-                <div className="exp-grid">
-                  {departments.map((department) => (
-                    <Department 
-                    key={department.id}
-                    department={department}
-                    onClick={(dept) => console.log(dept)}
-                    />
-                  ))}
-                </div>
-            </div>
-
-            <div className='exp-footer'>
-              <Link to={'/book-appointment'}>
-                <button className="exp-all-btn">
-                  <span>View All Specialities →</span>
-                </button>
+        
+          {authenticated && role === "PATIENT" ? (
+            <PatientHomeSection />
+          ) : (
+            <>
+              <section className='quick-access'>
+                <Link className ='quick-links' to={'/health-packages'}>
+                  <div className="icon-wrapper">
+                    <ShieldPlus className="quick-icon" />
+                  </div>
+                  <span className='quick-text'>Healh Insurance</span>
+                  <span className='quick-arrow'>→</span>
                 </Link>
-            </div>
+                <Link className ='quick-links' to={'/book-appointment'}>
+                  <div className="icon-wrapper">
+                    <CalendarDays className="quick-icon" />
+                  </div>
+                  <span className='quick-text'>Book Appointment </span>
+                  <span className='quick-arrow'>→</span>
+                </Link>
+                <Link className ='quick-links' to={'/lab-tests'}>
+                  <div className="icon-wrapper">
+                    <FlaskConical className="quick-icon" />
+                  </div>
+                  <span className='quick-text'>Lab Reports</span>
+                  <span className='quick-arrow'>→</span>
+                </Link>
+              </section>
 
-            
-          </section>
+              <section className='exp'>
+                <div className='exp-header'>
+                  <h1>Areas of Specialties</h1>
+                  <span>Leading specialists providing advanced care for every stage of your health journey</span>
+                </div>
 
-          <section className="advertisement">
-            <div className="top-showcase">
-              <div className="bottom-description">
-              <h2>
-                Healthcare That Puts Patients First.
-              </h2>
+                <div className='exp-body'>
+                    <div className="exp-grid">
+                      {departments.map((department) => (
+                        <Department 
+                        key={department.id}
+                        department={department}
+                        onClick={(dept) => console.log(dept)}
+                        />
+                      ))}
+                    </div>
+                </div>
 
-              <div className="typewriter-box">
+                <div className='exp-footer'>
+                  <Link to={'/book-appointment'}>
+                    <button className="exp-all-btn">
+                      <span>View All Specialities →</span>
+                    </button>
+                    </Link>
+                </div>
 
-                <p>
-                  Delivering world-class healthcare through innovation, expertise, and compassion. HMS Hospital brings together experienced medical professionals, state-of-the-art facilities, and patient-centered care to help individuals and families achieve better health outcomes every day.
-                </p>
+                
+              </section>
 
-              </div>
-              </div>
+              <section className="advertisement">
+                <div className="top-showcase">
+                  <div className="bottom-description">
+                  <h2>
+                    Healthcare That Puts Patients First.
+                  </h2>
 
-            <div>
-              <div className="advertisement-image">
-                <img src={medicalTeam} alt="Medical Team" />
-              </div>
-              
-            </div>
-            </div>
-          </section>
-        </>
-      )}
+                  <div className="typewriter-box">
+
+                    <p>
+                      Delivering world-class healthcare through innovation, expertise, and compassion. HMS Hospital brings together experienced medical professionals, state-of-the-art facilities, and patient-centered care to help individuals and families achieve better health outcomes every day.
+                    </p>
+
+                  </div>
+                  </div>
+
+                <div>
+                  <div className="advertisement-image">
+                    <img src={medicalTeam} alt="Medical Team" />
+                  </div>
+                  
+                </div>
+                </div>
+              </section>
+            </>
+          )}
+        </section>
+        
     </PublicLayout>
     </>
   )
