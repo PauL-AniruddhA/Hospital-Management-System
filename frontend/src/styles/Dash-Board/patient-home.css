@@ -1,53 +1,106 @@
 .patient-home {
-  background-color: rgb(41, 63, 124);
+  background-color: rgb(16, 20, 31);
   position: relative;
   z-index: 20;
-  /* padding-bottom: 40px; */
-  /* margin-top: calc(var(--topbar-height) + var(--navbar-height)); */
 }
+
 .patient-hero-overlay{
-  padding-top:calc(var(--topbar-height) + var(--navbar-height) + 100px);
+  padding-top:calc(var(--topbar-height) + var(--navbar-height) + 50px);
   position: relative;
   width:var(--portal-width);
-  margin: 0 auto 30px;
-  display:grid;
-  grid-template-columns: minmax(0,1fr) minmax(280px,340px);
-  gap:clamp(20px,2vw,40px);
+  display: grid;
+  grid-template-columns: min-content(1fr 2fr);
+  margin: 0 auto 70px;
   align-items:start;
   z-index:10;
 }
-
 .patient-glass-card{
-  width:100%;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
   min-height:clamp(320px,38vw,520px);
-  padding:clamp(20px,2vw,40px);
   border-radius:clamp(20px,2vw,32px);
   background:rgba(255,255,255,.08);
   backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);
   border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 20px 40px rgba(0,0,0,.18);
 }
+.hero-bg-image{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:right center;
+  z-index:51;
+  mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      transparent 35%,
+      rgba(0,0,0,.4) 50%,
+      rgba(0,0,0,.8) 75%,
+      black 100%
+    );
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      transparent 35%,
+      rgba(0,0,0,.4) 55%,
+      rgba(0,0,0,.8) 65%,
+      black 100%
+    );
+}
+.hero-bg-image-blur{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:right center;
+  filter:blur(25px);
+  transform:scale(1.1);
+  z-index:50;
+}
+
 .patient-info{
-  color:white;
+  position:relative;
+  z-index:52;
+  width:min(55%,800px);
+  padding:32px;
+  border-radius:28px;
 }
 
 .patient-info h1{
   font-size:clamp(2rem,3.5vw,4rem);
   line-height:1.1;
 }
-
 .patient-info p{
   font-size:clamp(0.9rem,1vw,1.1rem);
   color:rgba(255,255,255,0.85);
 }
-.health-stats-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:clamp(10px,1vw,18px);
-  margin-top:24px;
+.welcome-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 20px;
+  border-radius:999px;
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.2);
+  color:white;
+  font-weight:600;
 }
 
+.health-stats-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(2,minmax(180px,30px));
+  gap:14px;
+  margin-top:28px;
+}
 .health-stat-card{
   border:1px solid rgba(255,255,255,0.15);
   border-radius:20px;
@@ -57,17 +110,40 @@
 
 .health-stat-card p{
   font-size:14px;
-  color:#64748b;
+  color:rgba(255,255,255,.8);
   margin-bottom:12px;
 }
 .health-stat-card small{
   color:#22c55e;
   font-weight:600;
 }
+.health-stat-card h3{
+  color:white;
+  font-size:20px;
+}
+.health-stat-card span{
+  color:rgba(255,255,255,.75);
+  font-size:13px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .appointment-preview{
   position:absolute;
-  top:clamp(120px,12vh,180px);
+  /* top:clamp(120px,12vh,180px); */
   right: max(4vw,30px);
   width:clamp(260px,22vw,340px);
   padding:clamp(18px,2vw,28px);
@@ -97,13 +173,50 @@
   font-weight:600;
 }
 
-.welcome-chip{
-  display:inline-block;
-  padding:8px 16px;
-  border-radius:50px;
-  background:rgba(255,255,255,0.15);
-  font-size:14px;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .patient-dashboard-card{
   width:var(--portal-width);
@@ -679,13 +792,6 @@
 }
 @media (max-width:768px){
 
-  :root{
-    --hero-extra: 180px;
-  }
-
-  /* .patient-hero-wrapper height recalculates automatically since it
-     references var(--hero-extra) — no separate number needed here. */
-
   .patient-home{
     margin-top: calc(-1 * min(var(--patient-card-overlap, 100px), var(--hero-extra)));
   }
@@ -696,5 +802,11 @@
 
   .health-stats-grid{
     grid-template-columns:1fr;
+  }
+}
+@media (max-width:900px){
+  .health-stats-grid{
+    grid-template-columns:
+    repeat(2,minmax(0,1fr));
   }
 }

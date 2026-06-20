@@ -16,6 +16,7 @@
   --patient-overlap:600px;
   --portal-width:min(92vw,1600px);
   --hero-scale:clamp(0.85,1vw + 0.8,1.15);
+  --hero-extra: 180px;
 }
 
 * {

@@ -2,7 +2,7 @@ import React from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
 import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare, } from "lucide-react";
 
-import homeimage from "../../../assets/hero-images/Hoispital Image 2.png";
+import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 const actions = [
   {  title: "Appointments", subtitle: "Manage your visits", icon: CalendarDays  },
   {  title: "Medical Records", subtitle: "View health history", icon: FileText  },
@@ -59,9 +59,11 @@ function PatientHomeSection()  {
    return (
     <div className="patient-home">
 
-      {/* <img src={homeimage} alt="" srcset="" /> */}
       <section className="patient-hero-overlay">
         <div className="patient-glass-card">
+          <img src={homeimage} alt="Hospital" className="hero-bg-image-blur" />
+          <img src={homeimage} alt="Hospital" className="hero-bg-image" />
+          <div className="hero-blur-transition" />
           <div className="patient-info">
             <span className="welcome-chip">
               👋 Welcome Back
@@ -128,7 +130,7 @@ function PatientHomeSection()  {
       </section>
 
       <section className="patient-health-wrapper">
-        {/* <div className="health-summary-card">
+        <div className="health-summary-card">
 
           <div className="health-stats-grid">
             {healthStats.map((item, index) => {
@@ -149,7 +151,7 @@ function PatientHomeSection()  {
               );
             })}
           </div>
-        </div> */}
+        </div>
 
         {/* Quick Links */}
         <div className="patient-quick-links">
