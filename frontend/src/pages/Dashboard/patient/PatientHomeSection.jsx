@@ -1,8 +1,8 @@
 import React from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
 import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare, } from "lucide-react";
-
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
+
 const actions = [
   {  title: "Appointments", subtitle: "Manage your visits", icon: CalendarDays  },
   {  title: "Medical Records", subtitle: "View health history", icon: FileText  },
@@ -11,10 +11,12 @@ const actions = [
   {  title: "Bills", subtitle: "Payments & invoices", icon: Receipt  },
 ];
 const healthStats = [
-  { title: "Blood Pressure",value: "120/80",unit: "mmHg",status: "Normal",icon: HeartPulse },
-  { title: "Weight",value: "72",unit: "kg",status: "Normal", icon: Weight },
-  { title: "Blood Sugar", value: "98", unit: "mg/dL", status: "Normal", icon: Droplets },
-  { title: "Cholesterol", value: "165", unit: "mg/dL", status: "Normal", icon: Heart },
+  {  title: "Height",value: "172",unit: "cm",status: ""},
+  {  title: "Weight",value: "72",unit: "kg",status: ""},
+  {  title: "Blood Pressure",value: "120/80",unit: "mmHg",status: "Normal"},
+  {  title: "Blood Sugar",value: "98",unit: "mg/dL",status: "Normal"},
+  {  title: "BMI",value: "24.3",unit: "",status: "Healthy Range" },
+  {  title: "Heart Rate",value: "72",unit: "bpm",status: "Normal"},
 ];
 const quickActions = [
   {  title: "Book an Appointment", icon: CalendarPlus },
@@ -65,13 +67,20 @@ function PatientHomeSection()  {
           <img src={homeimage} alt="Hospital" className="hero-bg-image" />
           <div className="hero-blur-transition" />
           <div className="patient-info">
-            <span className="welcome-chip">
-              👋 Welcome Back
+
+            {/* <div className="profile-badge">
+              AMS Digital Health Record
+            </div> */}
+            <h1>Aniruddha Paul</h1>
+            <span className="patient-id">
+              Patient ID · AMS-2026-001
             </span>
-            <h1>Good Morning, Aniruddha</h1>
-            <p>
-              Your next appointment is scheduled for tomorrow.
-            </p>
+            <div className="patient-meta">
+              <span>Male</span>
+              <span>23 Years</span>
+              <span>O+</span>
+            </div>
+            
             <div className="health-stats-grid">
               {healthStats.map((item, index) => (
                 <div key={index} className="health-stat-card">
@@ -130,29 +139,6 @@ function PatientHomeSection()  {
       </section>
 
       <section className="patient-health-wrapper">
-        <div className="health-summary-card">
-
-          <div className="health-stats-grid">
-            {healthStats.map((item, index) => {
-              const Icon = item.icon;
-
-              return (
-                <div key={index} className="health-stat-card">
-                  <p>{item.title}</p>
-                  <div className="health-value">
-                    <Icon size={20} />
-                    <h3>
-                      {item.value}
-                      <span>{item.unit}</span>
-                    </h3>
-                  </div>
-                  <small>{item.status}</small>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
         {/* Quick Links */}
         <div className="patient-quick-links">
           <h2>Quick Actions</h2>
