@@ -8,8 +8,6 @@
   padding-top:calc(var(--topbar-height) + var(--navbar-height) + 50px);
   position: relative;
   width:var(--portal-width);
-  display: grid;
-  grid-template-columns: min-content(1fr 2fr);
   margin: 0 auto 70px;
   align-items:start;
   z-index:10;
