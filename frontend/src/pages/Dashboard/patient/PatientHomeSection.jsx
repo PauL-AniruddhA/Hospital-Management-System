@@ -25,13 +25,16 @@ const quickActions = [
   {  title: "Chat with Support", icon: MessageCircle },
 ];
 const appointments = [
-  { doctor: "Dr. Rajesh Sharma",department: "Cardiology",date: "18 Jun 2026",time: "10:30 AM",status: "Upcoming" },
-  { doctor: "Dr. Priya Singh",department: "Neurology",date: "22 Jun 2026",time: "02:15 PM",status: "Upcoming" },
+  {  id: 1,doctorName: "Dr. Rajesh Sharma",doctorImage: "/images/doctors/doctor-1.jpg",department: "Cardiology",appointmentDate: "2026-06-18",appointmentTime: "10:30 AM",location: "AMS Hospital, Guwahati",type: "Video Consultation",status: "Upcoming"},
+
+  {  id: 2,doctorName: "Dr. Priya Singh",doctorImage: "/images/doctors/doctor-2.jpg",department: "Neurology",appointmentDate: "2026-06-22",appointmentTime: "02:15 PM",location: "AMS Hospital, Guwahati",type: "In-Person",status: "Upcoming" }
 ];
 const labReports = [
-  { reportName: "Complete Blood Count (CBC)",date: "15 Jun 2026",status: "Available" },
-  { reportName: "Lipid Profile",date: "10 Jun 2026",status: "Available" },
-  { reportName: "Blood Sugar Test",date: "04 Jun 2026",status: "Available" },
+  {  id: 1,reportName: "Complete Blood Count (CBC)",category: "Hematology",uploadedDate: "2026-06-15",doctorName: "Dr. Rajesh Sharma",fileType: "PDF",fileSize: "2.3 MB",status: "Available"},
+
+  {  id: 2,reportName: "Lipid Profile",category: "Cardiology",uploadedDate: "2026-06-10",doctorName: "Dr. Priya Singh",fileType: "PDF",fileSize: "1.8 MB",status: "Available"},
+
+  {  id: 3,reportName: "Blood Sugar Test",category: "Diabetes",uploadedDate: "2026-06-04",doctorName: "Dr. Ankit Das",fileType: "PDF",fileSize: "1.1 MB",status: "Available"}
 ];
 const medicalRecords = { diagnoses: 12,surgeries: 2,allergies: 3 };
 const recentRecords = [
@@ -58,6 +61,14 @@ const notifications = [
 ];
 
 function PatientHomeSection()  {
+  const nextAppointment = appointments[0];
+  const appointmentDate = new Date(nextAppointment.appointmentDate);
+  const day = appointmentDate.getDate();
+  const month = appointmentDate.toLocaleString(
+      "en-US",
+      { month: "short" }
+    ).toUpperCase();
+  const year = appointmentDate.getFullYear();
    return (
     <div className="patient-home">
 
@@ -125,10 +136,106 @@ function PatientHomeSection()  {
           })}
         </div>
       </section>
+      
+      <section className="patient-dashboard-widgets">
+        
+        {/* Appointments */}
+        <section className="appointment-widget">
+          <div className="appointment-header">
+            <h3>📅 Appointments </h3>
+            <button> View All </button>
+          </div>
+
+          <div className="appointment-divider" />
+
+          <div className="appointment-body">
+
+            <div className="appointment-date-box">
+              <span className="day">{day}</span>
+              <span className="month">{month}</span>
+              <span className="year">{year}</span>
+            </div>
+
+            <div className="appointment-details">
+              <h4> {nextAppointment.doctorName}</h4>
+              <p className="department"> {nextAppointment.department}</p>
+
+              <div className="appointment-meta">
+                <span> 🕒 {nextAppointment.appointmentTime}</span>
+                <span>📍 {nextAppointment.location}</span>
+              </div>
+
+            </div>
+
+            <div className="doctor-avatar">
+              <img
+                  src={nextAppointment.doctorImage}
+                  alt={nextAppointment.doctorName}
+              />
+            </div>
+
+          </div>
+
+          <div className="appointment-actions">
+
+            <button className="join-btn">
+              Join Consultation
+            </button>
+
+            <button className="details-btn">
+              View Details
+            </button>
+          </div>
+        </section>
+
+        {/* Lab Reports */}
+        <section className="lab-widget">
+          <div className="widget-header">
+            <h3>Recent Lab Reports</h3>
+            <button>View All</button>
+          </div>
+
+          <div className="mini-report-list">
+
+            {labReports.slice(0,3).map((report)=>(
+
+              <div key={report.id} className="mini-report-item">
+                <div className="report-content">
+                  <div className="report-icon">
+                    🧪
+                  </div>
+
+                  <div className="report-details">
+
+                    <h4>
+                      {report.reportName}
+                    </h4>
+
+                    <p>
+                      {report.category}
+                    </p>
+
+                    <span>
+                      {report.uploadedDate}
+                    </span>
+
+                  </div>
+                </div>
+                <button className="report-download" >↓</button>
+
+              </div>
+
+            ))}
+
+          </div>
+
+        </section>
+
+      </section>
 
       <section className="patient-health-wrapper">
         {/* Quick Links */}
-        <div className="patient-quick-links">
+        <section className="patient-quick-links">
           <h2>Quick Actions</h2>
           {quickActions.map((item, index) => {
             const Icon = item.icon;
@@ -142,74 +249,7 @@ function PatientHomeSection()  {
               </div>
             );
           })}
-        </div>
-      </section>
-      
-      <section className="appointments-section">
-        <div className="section-header">
-          <h2>Upcoming Appointments</h2>
-          <button>View All</button>
-        </div>
-
-        <div className="appointment-list">
-          {appointments.map((appointment, index) => (
-            <div className="appointment-card" key={index}>
-              <div className="appointment-top">
-                <div>
-                  <h3>{appointment.doctor}</h3>
-                  <p>{appointment.department}</p>
-                </div>
-                <span className="appointment-status">
-                  {appointment.status}
-                </span>
-              </div>
-              <div className="appointment-info">
-                <span>📅 {appointment.date}</span>
-                <span>🕒 {appointment.time}</span>
-              </div>
-              <div className="appointment-actions">
-                <button className="primary-btn">
-                  View Details
-                </button>
-                <button className="secondary-btn">
-                  Reschedule
-                </button>
-              </div>
-            </div>
-          ))}
-
-        </div>
-
-      </section>
-
-      <section className="lab-reports-section">
-        <div className="section-header">
-          <h2>Recent Lab Reports</h2>
-          <button>View All</button>
-        </div>
-        <div className="lab-report-list">
-          {labReports.map((report, index) => (
-            <div className="lab-report-card" key={index}>
-              <div className="lab-report-content">
-                <h3>{report.reportName}</h3>
-                <p>
-                  Uploaded on {report.date}
-                </p>
-                <span className="report-status">
-                  {report.status}
-                </span>
-              </div>
-              <div className="report-actions">
-                <button className="primary-btn">
-                  View Report
-                </button>
-                <button className="secondary-btn">
-                  Download PDF
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+        </section>
       </section>
 
       <section className="medical-records-section">
