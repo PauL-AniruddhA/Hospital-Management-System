@@ -67,21 +67,24 @@ function PatientHomeSection()  {
           <img src={homeimage} alt="Hospital" className="hero-bg-image" />
           <div className="hero-blur-transition" />
           <div className="patient-info">
+            <div className="patient-profile-card">
+              <h1>Aniruddha Paul</h1>
+              <div className='patient-profile-divider' />
+              <div className='patient-header-row'>
+                <div className="patient-id">
+                  Patient ID - AMS-2026-001
+                </div>
+                <div className="patient-meta">
+                  <span>Male</span><div className="meta-divider"/>
+                  <span>23 Years</span><div className="meta-divider"/>
+                  <span>O+</span>
+                </div>
+              </div>
 
-            {/* <div className="profile-badge">
-              AMS Digital Health Record
-            </div> */}
-            <h1>Aniruddha Paul</h1>
-            <span className="patient-id">
-              Patient ID · AMS-2026-001
-            </span>
-            <div className="patient-meta">
-              <span>Male</span>
-              <span>23 Years</span>
-              <span>O+</span>
             </div>
-            
+            <div className="patient-divider" />
             <div className="health-stats-grid">
+
               {healthStats.map((item, index) => (
                 <div key={index} className="health-stat-card">
                   <span>{item.title}</span>
@@ -97,21 +100,6 @@ function PatientHomeSection()  {
             </div>
           </div>
         </div>
-      </section>
-
-      <section className="appointment-preview">
-        <h3>Next Appointment</h3>
-        <h2>Dr. Rajesh Sharma</h2>
-        <p>Cardiology Department</p>
-        <div>
-          📅 18 Jun 2026
-        </div>
-        <div>
-          🕒 10:30 AM
-        </div>
-        <button>
-          View Appointment
-        </button>
       </section>
 
       <section className="patient-dashboard-card">
