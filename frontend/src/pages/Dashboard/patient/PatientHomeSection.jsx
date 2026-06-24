@@ -2,6 +2,7 @@ import React from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
 import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare, } from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
+import doc1 from "../../../assets/home/doc1.png";
 
 const actions = [
   {  title: "Appointments", subtitle: "Manage your visits", icon: CalendarDays  },
@@ -25,7 +26,7 @@ const quickActions = [
   {  title: "Chat with Support", icon: MessageCircle },
 ];
 const appointments = [
-  {  id: 1,doctorName: "Dr. Rajesh Sharma",doctorImage: "/images/doctors/doctor-1.jpg",department: "Cardiology",appointmentDate: "2026-06-18",appointmentTime: "10:30 AM",location: "AMS Hospital, Guwahati",type: "Video Consultation",status: "Upcoming"},
+  {  id: 1,doctorName: "Dr. Rajesh Sharma",doctorImage: doc1,department: "Cardiology",appointmentDate: "2026-06-18",appointmentTime: "10:30 AM",location: "AMS Hospital, Guwahati",type: "Video Consultation",status: "Upcoming"},
 
   {  id: 2,doctorName: "Dr. Priya Singh",doctorImage: "/images/doctors/doctor-2.jpg",department: "Neurology",appointmentDate: "2026-06-22",appointmentTime: "02:15 PM",location: "AMS Hospital, Guwahati",type: "In-Person",status: "Upcoming" }
 ];
@@ -141,15 +142,11 @@ function PatientHomeSection()  {
         
         {/* Appointments */}
         <section className="appointment-widget">
-          <div className="appointment-header">
-            <h3>📅 Appointments </h3>
-            <button> View All </button>
-          </div>
-
-          <div className="appointment-divider" />
 
           <div className="appointment-body">
-
+            {/* <div className="appointment-header">
+              <button> View All </button>
+            </div> */}
             <div className="appointment-date-box">
               <span className="day">{day}</span>
               <span className="month">{month}</span>
@@ -157,6 +154,9 @@ function PatientHomeSection()  {
             </div>
 
             <div className="appointment-details">
+              <div className="appointment-badge">
+                ⏱ Upcoming Appointment
+              </div>
               <h4> {nextAppointment.doctorName}</h4>
               <p className="department"> {nextAppointment.department}</p>
 
@@ -164,9 +164,6 @@ function PatientHomeSection()  {
                 <span> 🕒 {nextAppointment.appointmentTime}</span>
                 <span>📍 {nextAppointment.location}</span>
               </div>
-
-            </div>
-
             <div className="doctor-avatar">
               <img
                   src={nextAppointment.doctorImage}
@@ -174,6 +171,13 @@ function PatientHomeSection()  {
               />
             </div>
 
+            </div>
+
+            <div className="appointment-date-box">
+              <span className="day">T36</span>
+              <span className="month">Address</span>
+              <span className="year"></span>
+            </div>
           </div>
 
           <div className="appointment-actions">
@@ -185,13 +189,18 @@ function PatientHomeSection()  {
             <button className="details-btn">
               View Details
             </button>
+
+            <button className="details-btn">
+              View More
+            </button>
           </div>
+          
         </section>
 
         {/* Lab Reports */}
         <section className="lab-widget">
           <div className="widget-header">
-            <h3>Recent Lab Reports</h3>
+            <h3>Lab Reports</h3>
             <button>View All</button>
           </div>
 
