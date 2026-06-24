@@ -1,6 +1,12 @@
 import React from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
-import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare, } from "lucide-react";
+import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  
+  Clock3,
+  Ticket,
+  MapPin,
+  Video,
+  ChevronDown,
+  CheckCircle2 } from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../../assets/home/doc1.png";
 
@@ -142,59 +148,116 @@ function PatientHomeSection()  {
         
         {/* Appointments */}
         <section className="appointment-widget">
-
-          <div className="appointment-body">
-            {/* <div className="appointment-header">
-              <button> View All </button>
-            </div> */}
-            <div className="appointment-date-box">
-              <span className="day">{day}</span>
-              <span className="month">{month}</span>
-              <span className="year">{year}</span>
+          {/* Header */}
+          <div className="appointment-status">
+            <div className="appointment-title">
+              <CalendarDays size={16} />
+              <span>Upcoming Appointment</span>
             </div>
 
-            <div className="appointment-details">
-              <div className="appointment-badge">
-                ⏱ Upcoming Appointment
-              </div>
-              <h4> {nextAppointment.doctorName}</h4>
-              <p className="department"> {nextAppointment.department}</p>
+            <div className="appointment-badge">
+              <CheckCircle2 size={14} />
+              Confirmed
+            </div>
+          </div>
+          {/* Main Content */}
+          <div className="appointment-body">
+            {/* LEFT */}
+            <div className="appointment-side">
 
-              <div className="appointment-meta">
-                <span> 🕒 {nextAppointment.appointmentTime}</span>
-                <span>📍 {nextAppointment.location}</span>
+              <div className="icon-circle">
+                <CalendarDays size={20}/>
               </div>
-            <div className="doctor-avatar">
-              <img
+
+              <span className="day">{day}</span>
+
+              {/* <h2 className="date-number">{date}</h2> */}
+
+              <span className="month">{month}</span>
+
+              <span className="year">{year}</span>
+
+              <div className="side-divider"/>
+
+              <div className="icon-circle small">
+                <Clock3 size={18}/>
+              </div>
+
+              <span className="label">
+                TIME
+              </span>
+
+              <h4 className="time">
+                {nextAppointment.appointmentTime}
+              </h4>
+
+            </div>
+
+            {/* CENTER */}
+            <div className="appointment-details">
+
+              <div className="doctor-avatar">
+                <img
                   src={nextAppointment.doctorImage}
                   alt={nextAppointment.doctorName}
-              />
-            </div>
+                />
+              </div>
+
+              <h4>{nextAppointment.doctorName}</h4>
+
+              <p className="department">
+                {nextAppointment.department}
+              </p>
+
+              <div className="center-divider"/>
+
+              <button className="join-btn">
+                Join Consultation
+              </button>
+
+              <button className="details-btn">
+                View Details
+              </button>
 
             </div>
 
-            <div className="appointment-date-box">
-              <span className="day">T36</span>
-              <span className="month">Address</span>
-              <span className="year"></span>
+            {/* RIGHT */}
+            <div className="appointment-side">
+
+              <div className="icon-circle">
+                <Ticket size={20}/>
+              </div>
+
+              <span className="day">
+                TOKEN NO.
+              </span>
+
+              <h2 className="token-number">
+                T36
+              </h2>
+
+              <div className="side-divider"/>
+
+              <div className="icon-circle small">
+                <MapPin size={18}/>
+              </div>
+
+              <span className="label">
+                ADDRESS
+              </span>
+
+              <p className="address">
+                {nextAppointment.location}
+              </p>
+
             </div>
+
           </div>
 
-          <div className="appointment-actions">
+          <button className="view-more-btn">
+            View More
+          </button>
 
-            <button className="join-btn">
-              Join Consultation
-            </button>
-
-            <button className="details-btn">
-              View Details
-            </button>
-
-            <button className="details-btn">
-              View More
-            </button>
-          </div>
-          
         </section>
 
         {/* Lab Reports */}

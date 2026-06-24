@@ -246,14 +246,6 @@
   font-size:13px;
   color:rgba(250, 250, 250, 0.65);
 }
-
-
-
-
-
-
-
-
 .patient-health-wrapper{
   display:grid;
   grid-template-columns:4fr 1fr;
@@ -304,9 +296,6 @@
   color:#2563eb;
 }
 
-
-
-
 /* ===========================
    SHARED WIDGET STYLES
 =========================== */
@@ -317,6 +306,12 @@
   gap: 12px;
   margin: 70px auto;
 }
+
+
+
+
+
+
 
 
 
@@ -337,7 +332,6 @@
   display:flex;
   justify-content:space-between;
   align-items:center;
-
   margin-bottom:20px;
 }
 
@@ -350,18 +344,13 @@
 .appointment-header button{
   border:none;
   background:none;
-
   color:#2563eb;
-
   font-weight:600;
-
   cursor:pointer;
 }
 .appointment-divider{
   height:1px;
-
   background:#edf2f7;
-
   margin-bottom:22px;
 }
 
@@ -384,16 +373,12 @@
     #2962ff,
     #1d4ed8
   );
-
   color:white;
-
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-
-  box-shadow:
-  0 20px 40px rgba(37,99,235,.25);
+  box-shadow:0 20px 40px rgba(37,99,235,.25);
 }
 
 .day{
@@ -411,6 +396,13 @@
   opacity:.9;
 }
 
+
+
+
+
+
+
+
 .appointment-details{
   display: grid;
   justify-content: center;
@@ -421,6 +413,38 @@
   color:#142c63;
   margin-bottom:8px;
 }
+.appointment-status {
+  width: fit-content;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f7faff;
+  padding: 12px 18px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+}
+
+.appointment-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1f5eff;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.appointment-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #dff7e6;
+  color: #14804a;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
 
 .department{
   color:#64748b;
@@ -456,50 +480,53 @@
 }
 .appointment-actions{
   display:grid;
-
   grid-template-columns:1fr 1fr;
-
   gap:18px;
-
   margin-top:28px;
 }
 .join-btn{
   height:56px;
-
   border:none;
-
   border-radius:14px;
-
   background:
     linear-gradient(
       90deg,
       #2563eb,
       #0d6efd
     );
-
   color:white;
 
   font-size:1rem;
   font-weight:600;
-
   cursor:pointer;
 }
 .details-btn{
   height:56px;
-
   border:2px solid #d6e4ff;
-
   border-radius:14px;
-
   background:#fff;
-
   color:#2563eb;
-
   font-size:1rem;
   font-weight:600;
-
   cursor:pointer;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ===========================
    LAB REPORT WIDGET
