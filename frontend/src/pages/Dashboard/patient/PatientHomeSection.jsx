@@ -1,14 +1,13 @@
 import React from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
 import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  
-  Clock3,
   Ticket,
   MapPin,
   Video,
   ChevronDown,
   CheckCircle2 } from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
-import doc1 from "../../../assets/home/doc1.png";
+import doc1 from "../../../assets/home/doc3.png";
 
 const actions = [
   {  title: "Appointments", subtitle: "Manage your visits", icon: CalendarDays  },
@@ -32,7 +31,7 @@ const quickActions = [
   {  title: "Chat with Support", icon: MessageCircle },
 ];
 const appointments = [
-  {  id: 1,doctorName: "Dr. Rajesh Sharma",doctorImage: doc1,department: "Cardiology",appointmentDate: "2026-06-18",appointmentTime: "10:30 AM",location: "AMS Hospital, Guwahati",type: "Video Consultation",status: "Upcoming"},
+  {  id: 1,doctorName: "Dr. Rajesh Sharma",doctorImage: doc1,department: "Cardiology",appointmentDate: "2026-06-18",appointmentDay:"Wednesday",appointmentTime: "10:30 AM",location: "AMS Hospital, Guwahati",type: "Video Consultation",status: "Upcoming"},
 
   {  id: 2,doctorName: "Dr. Priya Singh",doctorImage: "/images/doctors/doctor-2.jpg",department: "Neurology",appointmentDate: "2026-06-22",appointmentTime: "02:15 PM",location: "AMS Hospital, Guwahati",type: "In-Person",status: "Upcoming" }
 ];
@@ -70,7 +69,11 @@ const notifications = [
 function PatientHomeSection()  {
   const nextAppointment = appointments[0];
   const appointmentDate = new Date(nextAppointment.appointmentDate);
-  const day = appointmentDate.getDate();
+  const day = appointmentDate.toLocaleDateString(
+    "en-US",
+    { weekday: "long" }
+  ).toUpperCase();
+  const date = appointmentDate.getDate();
   const month = appointmentDate.toLocaleString(
       "en-US",
       { month: "short" }
@@ -148,43 +151,38 @@ function PatientHomeSection()  {
         
         {/* Appointments */}
         <section className="appointment-widget">
-          {/* Header */}
-          <div className="appointment-status">
-            <div className="appointment-title">
-              <CalendarDays size={16} />
-              <span>Upcoming Appointment</span>
-            </div>
-
-            <div className="appointment-badge">
-              <CheckCircle2 size={14} />
-              Confirmed
-            </div>
-          </div>
-          {/* Main Content */}
           <div className="appointment-body">
-            {/* LEFT */}
+
+            {/* LEFT DATE RAIL */}
             <div className="appointment-side">
 
               <div className="icon-circle">
-                <CalendarDays size={20}/>
+                <CalendarDays size={22}/>
               </div>
 
-              <span className="day">{day}</span>
+              <span className="day">
+                {day}
+              </span>
+              <span className="date-number">
+                {date}
+              </span>
 
-              {/* <h2 className="date-number">{date}</h2> */}
+              <span className="month">
+                {month}
+              </span>
 
-              <span className="month">{month}</span>
-
-              <span className="year">{year}</span>
+              <span className="year">
+                {year}
+              </span>
 
               <div className="side-divider"/>
 
-              <div className="icon-circle small">
+              {/* <div className="icon-circle small">
                 <Clock3 size={18}/>
-              </div>
+              </div> */}
 
               <span className="label">
-                TIME
+                Appointment
               </span>
 
               <h4 className="time">
@@ -196,6 +194,20 @@ function PatientHomeSection()  {
             {/* CENTER */}
             <div className="appointment-details">
 
+              <div className="appointment-status">
+
+                <div className="appointment-title">
+                  <CalendarDays size={16}/>
+                  <span>Upcoming Appointment</span>
+                </div>
+
+                <div className="appointment-badge">
+                  <CheckCircle2 size={14}/>
+                  Confirmed
+                </div>
+
+              </div>
+
               <div className="doctor-avatar">
                 <img
                   src={nextAppointment.doctorImage}
@@ -203,63 +215,38 @@ function PatientHomeSection()  {
                 />
               </div>
 
-              <h4>{nextAppointment.doctorName}</h4>
+              <h3>{nextAppointment.doctorName}</h3>
 
               <p className="department">
                 {nextAppointment.department}
               </p>
 
+              <div className="appointment-info-row">
+
+                <div className="info-pill">
+                  <Ticket size={14}/>
+                  <span>T36</span>
+                </div>
+
+                <div className="info-pill">
+                  <MapPin size={14}/>
+                  <span>{nextAppointment.location}</span>
+                </div>
+              </div>
               <div className="center-divider"/>
-
-              <button className="join-btn">
-                Join Consultation
-              </button>
-
-              <button className="details-btn">
-                View Details
-              </button>
-
-            </div>
-
-            {/* RIGHT */}
-            <div className="appointment-side">
-
-              <div className="icon-circle">
-                <Ticket size={20}/>
+              <div className="appointment-actions">
+                <button className="join-btn">
+                  Join Consultation
+                </button>
+                <button className="details-btn">
+                  View Details
+                </button>
               </div>
-
-              <span className="day">
-                TOKEN NO.
-              </span>
-
-              <h2 className="token-number">
-                T36
-              </h2>
-
-              <div className="side-divider"/>
-
-              <div className="icon-circle small">
-                <MapPin size={18}/>
-              </div>
-
-              <span className="label">
-                ADDRESS
-              </span>
-
-              <p className="address">
-                {nextAppointment.location}
-              </p>
-
             </div>
-
           </div>
 
-          <button className="view-more-btn">
-            View More
-          </button>
-
         </section>
-
+        <section> </section>
         {/* Lab Reports */}
         <section className="lab-widget">
           <div className="widget-header">
