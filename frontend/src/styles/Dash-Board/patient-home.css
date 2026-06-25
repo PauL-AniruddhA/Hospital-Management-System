@@ -305,7 +305,7 @@
 .patient-dashboard-widgets{
   width: var(--portal-width);
   display: grid;
-  grid-template-columns: 690px 250px 415px;
+  grid-template-columns: 2fr 1.2fr 0.9fr;
   gap: 12px;
   margin: 70px auto;
 }
@@ -327,73 +327,32 @@
 }
 .appointment-body{
   display:grid;
-  grid-template-columns:200px 1fr ;
+  /* grid-template-columns: 175px 472px; */
+  grid-template-columns: 0fr 1fr;
   /* gap:16px; */
 }
 .appointment-side{
-  width:180px;
-  min-height:380px;
-  margin: 10px 10px;
+  width:145px;
+  min-height:330px;
+  margin: 10px;
   background:linear-gradient(
     180deg,
-    #4a7dff 0%,
-    #2f5eea 55%,
-    #1f43c8 100%
+    #0e3a6c 0%,
+    #225aa3 50%,
+    #0e3a6c 100%
   );
-
-  border-radius:20px;
-
+  border-radius:25px;
   display:flex;
   flex-direction:column;
   align-items:center;
-
-  padding:20px 15px;
-
+  padding:10px;
   position:relative;
   overflow:hidden;
-
   box-shadow:
     0 15px 35px rgba(37,99,235,.25);
 }
-.appointment-side::before{
-  content:"";
 
-  position:absolute;
 
-  top:-40px;
-  left:-40px;
-
-  width:120px;
-  height:120px;
-
-  background:
-    radial-gradient(
-      rgba(255,255,255,.25),
-      transparent 70%
-    );
-
-  border-radius:50%;
-}
-.appointment-side::after{
-  content:"";
-
-  position:absolute;
-
-  bottom:-35px;
-  left:-10%;
-
-  width:120%;
-  height:80px;
-
-  background:
-    rgba(255,255,255,.12);
-
-  border-radius:50%;
-}
-.appointment-side > *{
-  position:relative;
-  z-index:2;
-}
 
 .icon-circle{
   width:56px;
@@ -406,21 +365,21 @@
 }
 
 .day{
-  font-size:14px;
-  font-weight:600;
-  text-decoration: underline;
-  color:rgba(255,255,255,.95);
+  font-size:15px;
+  font-weight:500;
+  /* text-decoration: underline; */
+  color:rgba(225, 209, 209, 0.95);
 
   margin-top:8px;
 }
 .date-number{
-  font-size:48px;
+  font-size:40px;
   line-height:1;
   color:yellow;
   margin:6px 0;
 }
 .month{
-  font-size:35px;
+  font-size:30px;
   font-weight:700;
 
   line-height:1;
@@ -434,9 +393,7 @@
 }
 .side-divider{
   width:80%;
-
-  margin:28px 0;
-
+  margin:15px ;
   border-top:1px dashed rgba(255,255,255,.35);
 }
 .label{
@@ -456,55 +413,9 @@
 .appointment-details{
   display:flex;
   flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-
-.appointment-details h3{
-  margin-top:10px;
-  font-size:20px;
-  font-weight:700;
-  color:#1e3a8a;
-}
-
-.doctor-avatar{
-  width:140px;
-  height:140px;
-
-  margin-top:16px;
-
-  padding:4px;
-  border-radius:50%;
-position: relative;
-  background:#edf4ff;
-
-  box-shadow:
-      0 0 0 8px rgba(37,99,235,.05),
-      0 10px 30px rgba(37,99,235,.12);
-}
-
-.doctor-avatar img{
+  justify-content:space-between;
   width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:50%;
 }
-.doctor-avatar::before{
-    content:"";
-
-    position:absolute;
-    inset:-15px;
-
-    background:
-      radial-gradient(
-        rgba(37,99,235,.18),
-        transparent 70%
-      );
-
-    border-radius:50%;
-}
-
-
 .appointment-status{
   display:flex;
   justify-content:center;
@@ -538,19 +449,78 @@ position: relative;
   font-size:12px;
   font-weight:600;
 }
+
+.doctor-profile{
+    display:grid;
+    grid-template-columns:1fr 140px;
+    gap:10px;
+    align-items:center;
+    width:100%;
+    margin-top:12px;
+    margin-left: 7px;
+}
+.doctor-content{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:100%;
+}
+.doctor-content h3{
+  margin-top:10px;
+  font-size:30px;
+  font-weight:600;
+  color:#1e3a8a;
+  text-align: center;
+}
+
+
+.doctor-avatar{
+  width:140px;
+  height:140px;
+
+  margin-top:16px;
+
+  padding:4px;
+  border-radius:50%;
+  position: relative;
+  background:#edf4ff;
+
+  box-shadow:
+      0 0 0 8px rgba(37,99,235,.05),
+      0 10px 30px rgba(37,99,235,.12);
+}
+
+.doctor-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:50%;
+}
+.doctor-avatar::before{
+    content:"";
+
+    position:absolute;
+    inset:-15px;
+
+    background:
+      radial-gradient(
+        rgba(37,99,235,.18),
+        transparent 70%
+      );
+
+    border-radius:50%;
+}
+
 .department{
   color:#64748b;
   font-size:13px;
+  text-align: center;
 }
-.center-divider{
-  height:1px;
-  background:#dbe5ff;
-  margin:12px 0;
-}
+
 .appointment-actions{
   display:flex;
   gap:14px;
-
   width:100%;
   max-width:520px;
 }
@@ -570,7 +540,13 @@ position: relative;
   margin-bottom:10px;
   
 }
-
+.center-divider{
+  width: 100%;
+  max-width:520px;
+  height:1px;
+  background:#dbe5ff;
+  margin:24px 0;
+}
 .details-btn{
   width:100%;
   height:42px;
@@ -597,36 +573,21 @@ position: relative;
 
   justify-content:center;
 
-  margin-top:18px;
+  margin-top:50px;
 }
 .info-pill{
   display:flex;
   align-items:center;
   gap:8px;
-
   background:#f4f8ff;
-
   border:1px solid #e5efff;
-
-  padding:10px 16px;
-
+  padding: 10px 13px;
   border-radius:999px;
-
   color:#2563eb;
-
   font-size:13px;
   font-weight:600;
 }
-.center-divider{
-  width:100%;
-  max-width:520px;
 
-  height:1px;
-
-  background:#dbe5ff;
-
-  margin:24px 0;
-}
 
 
 

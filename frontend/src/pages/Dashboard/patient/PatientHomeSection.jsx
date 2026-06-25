@@ -193,7 +193,7 @@ function PatientHomeSection()  {
 
             {/* CENTER */}
             <div className="appointment-details">
-
+              {/* Header */}
               <div className="appointment-status">
 
                 <div className="appointment-title">
@@ -208,31 +208,32 @@ function PatientHomeSection()  {
 
               </div>
 
-              <div className="doctor-avatar">
-                <img
-                  src={nextAppointment.doctorImage}
-                  alt={nextAppointment.doctorName}
-                />
-              </div>
-
-              <h3>{nextAppointment.doctorName}</h3>
-
-              <p className="department">
-                {nextAppointment.department}
-              </p>
-
-              <div className="appointment-info-row">
-
-                <div className="info-pill">
-                  <Ticket size={14}/>
-                  <span>T36</span>
+              <div className="doctor-profile">
+                <div className="doctor-content">
+                    <h3>{nextAppointment.doctorName}</h3>
+                    <p className="department">
+                        {nextAppointment.department} Specialist
+                    </p>
+                    <div className="appointment-info-row">
+                      <div className="info-pill">
+                          <Ticket size={14}/>
+                          <span>T36</span>
+                      </div>
+                      <div className="info-pill">
+                          <MapPin size={14}/>
+                          <span>{nextAppointment.location}</span>
+                      </div>
+                    </div>
                 </div>
-
-                <div className="info-pill">
-                  <MapPin size={14}/>
-                  <span>{nextAppointment.location}</span>
+                <div className="doctor-avatar">
+                    <img
+                        src={nextAppointment.doctorImage}
+                        alt={nextAppointment.doctorName}
+                    />
                 </div>
               </div>
+              
+
               <div className="center-divider"/>
               <div className="appointment-actions">
                 <button className="join-btn">
@@ -246,7 +247,7 @@ function PatientHomeSection()  {
           </div>
 
         </section>
-        <section> </section>
+
         {/* Lab Reports */}
         <section className="lab-widget">
           <div className="widget-header">
@@ -290,10 +291,6 @@ function PatientHomeSection()  {
 
         </section>
 
-      </section>
-
-      <section className="patient-health-wrapper">
-        {/* Quick Links */}
         <section className="patient-quick-links">
           <h2>Quick Actions</h2>
           {quickActions.map((item, index) => {
@@ -309,6 +306,12 @@ function PatientHomeSection()  {
             );
           })}
         </section>
+
+      </section>
+
+      <section className="patient-health-wrapper">
+        {/* Quick Links */}
+
       </section>
 
       <section className="medical-records-section">
