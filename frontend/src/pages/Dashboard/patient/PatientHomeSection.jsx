@@ -149,6 +149,32 @@ function PatientHomeSection()  {
       
       <section className="patient-dashboard-widgets">
         
+        {/* <section className="notifications-section">
+          <div className="section-header">
+            <h2>Notifications</h2>
+            <button>Mark All Read</button>
+          </div>
+          <div className="notification-list">
+            {notifications.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={index}
+                  className="notification-card"
+                >
+                  <div className="notification-icon">
+                    <Icon size={22} />
+                  </div>
+                  <div className="notification-content">
+                    <h4>{item.title}</h4>
+                    <p>{item.message}</p>
+                    <span>{item.time}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section> */}
         {/* Appointments */}
         <section className="appointment-widget">
           <div className="appointment-body">
@@ -291,6 +317,11 @@ function PatientHomeSection()  {
 
         </section>
 
+
+      </section>
+
+      <section className="patient-health-wrapper">
+        {/* Quick Links */}
         <section className="patient-quick-links">
           <h2>Quick Actions</h2>
           {quickActions.map((item, index) => {
@@ -306,12 +337,6 @@ function PatientHomeSection()  {
             );
           })}
         </section>
-
-      </section>
-
-      <section className="patient-health-wrapper">
-        {/* Quick Links */}
-
       </section>
 
       <section className="medical-records-section">
@@ -434,32 +459,7 @@ function PatientHomeSection()  {
 
       </section>
 
-      <section className="notifications-section">
-        <div className="section-header">
-          <h2>Notifications</h2>
-          <button>Mark All Read</button>
-        </div>
-        <div className="notification-list">
-          {notifications.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={index}
-                className="notification-card"
-              >
-                <div className="notification-icon">
-                  <Icon size={22} />
-                </div>
-                <div className="notification-content">
-                  <h4>{item.title}</h4>
-                  <p>{item.message}</p>
-                  <span>{item.time}</span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      
 
     </div>
   );

@@ -255,20 +255,35 @@
   margin-left:auto;
   margin-right:auto;
 }
+
+
+
+
+
+
+
+/* ==========================
+   QUICK ACTIONS
+========================== */
+
 .patient-quick-links{
-  border-radius:20px;
+  background:#fff;
+  border-radius:22px;
+  border:1px solid #e8eef7;
   padding:24px;
-  background:#ffffff;
-  border:1px solid #edf2f7;
-  box-shadow:
-  0 10px 30px rgba(15,59,110,0.05),
-  0 2px 6px rgba(15,59,110,0.04);
+  box-shadow: 0 8px 28px rgba(15,59,110,.05);
 }
 
 .patient-quick-links h2{
-  font-size:clamp(1.2rem,1.5vw,1.5rem);
-  font-weight:600;
+  font-size:1.65rem;
   color:#0f3b6e;
+  margin-bottom:22px;
+  font-weight:700;
+}
+
+.quick-actions-list{
+  display:flex;
+  flex-direction:column;
 }
 
 .quick-link-item{
@@ -276,23 +291,59 @@
   justify-content:space-between;
   align-items:center;
   padding:18px 0;
-  border-bottom:1px solid #edf0f4;
   cursor:pointer;
-  transition:0.3s;
+  border-bottom:1px solid #edf2f7;
+  transition:.3s;
 }
 
 .quick-link-item:last-child{
-  border-bottom:none;
+  border:none;
 }
 
 .quick-link-left{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:15px;
+}
+
+.quick-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:#f3f7ff;
+  color:#2563eb;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  transition:.3s;
+}
+
+.quick-link-left span{
+  color:#203659;
+  font-size:1rem;
+  font-weight:500;
+}
+
+.quick-arrow{
+  color:#64748b;
+  transition:.3s;
 }
 
 .quick-link-item:hover{
   padding-left:8px;
+}
+
+.quick-link-item:hover .quick-icon{
+  background:#2563eb;
+  color:#fff;
+}
+
+.quick-link-item:hover .quick-arrow{
+  transform:translateX(5px);
+  color:#2563eb;
+}
+
+.quick-link-item:hover span{
   color:#2563eb;
 }
 
@@ -305,7 +356,7 @@
 .patient-dashboard-widgets{
   width: var(--portal-width);
   display: grid;
-  grid-template-columns: 2fr 1.2fr 0.9fr;
+  grid-template-columns: 2fr 1.2fr 0.9fr ;
   gap: 12px;
   margin: 70px auto;
 }
@@ -514,7 +565,8 @@
 
 .department{
   color:#64748b;
-  font-size:13px;
+  margin-top: 10px;
+  font-size:15px;
   text-align: center;
 }
 
@@ -587,21 +639,6 @@
   font-size:13px;
   font-weight:600;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
