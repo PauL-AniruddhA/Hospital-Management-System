@@ -67,6 +67,7 @@ const notifications = [
 ];
 
 function PatientHomeSection()  {
+
   const nextAppointment = appointments[0];
   const appointmentDate = new Date(nextAppointment.appointmentDate);
   const day = appointmentDate.toLocaleDateString(
@@ -77,7 +78,7 @@ function PatientHomeSection()  {
   const month = appointmentDate.toLocaleString(
       "en-US",
       { month: "short" }
-    ).toUpperCase();
+  ).toUpperCase();
   const year = appointmentDate.getFullYear();
    return (
     <div className="patient-home">
@@ -149,8 +150,6 @@ function PatientHomeSection()  {
       
       <section className="patient-dashboard-widgets">
         
-        <section></section>
-        
         {/* Appointments */}
         <section className="appointment-widget">
           <div className="appointment-body">
@@ -216,22 +215,21 @@ function PatientHomeSection()  {
                     <p className="department">
                         {nextAppointment.department} Specialist
                     </p>
-                    <div className="appointment-info-row">
-                      <div className="info-pill">
-                          <Ticket size={14}/>
-                          <span>T36</span>
-                      </div>
-                      <div className="info-pill">
-                          <MapPin size={14}/>
-                          <span>{nextAppointment.location}</span>
-                      </div>
-                    </div>
                 </div>
                 <div className="doctor-avatar">
                     <img
                         src={nextAppointment.doctorImage}
                         alt={nextAppointment.doctorName}
                     />
+                </div>
+                
+                <div className="info-pill">
+                  <MapPin size={14}/>
+                    <span>{nextAppointment.location}</span>
+                </div>
+                <div className="info-pill">
+                  <Ticket size={14}/>
+                  <span>T36</span>
                 </div>
               </div>
               
@@ -248,50 +246,53 @@ function PatientHomeSection()  {
             </div>
           </div>
 
+          <div>
+            <button type="button"> View More </button>
+          </div>
+
         </section>
 
+        <section></section>
         {/* Lab Reports */}
-        <section className="lab-widget">
-          <div className="widget-header">
-            <h3>Lab Reports</h3>
-            <button>View All</button>
+        <div className="lab-report-card">
+          <div className="lab-card-header">
+            <div className="lab-title">
+              <div className="lab-logo"> 🧪  </div>
+              <h3>Lab Reports</h3>
+            </div>
+            <div className="report-counter">2 / 4 Reports</div>
           </div>
 
-          <div className="mini-report-list">
+          <div className="lab-card-body">
+            <div className="report-image">
+                🧪
+            </div>
 
-            {labReports.slice(0,3).map((report)=>(
+            <div className="report-info">
+              <span className="latest-badge">
+                  Latest Report
+              </span>
 
-              <div key={report.id} className="mini-report-item">
-                <div className="report-content">
-                  <div className="report-icon">
-                    🧪
-                  </div>
+              <h2>Liver Function Test (LFT)</h2>
 
-                  <div className="report-details">
+              <p>Biochemistry</p>
 
-                    <h4>
-                      {report.reportName}
-                    </h4>
-
-                    <p>
-                      {report.category}
-                    </p>
-
-                    <span>
-                      {report.uploadedDate}
-                    </span>
-
-                  </div>
-                </div>
-                <button className="report-download" >↓</button>
-
+              <div className="report-date">
+                <span>📅</span>
+                <span>20 Jun 2026</span>
+                <span>•</span>
+                <span>09:15 AM</span>
               </div>
-
-            ))}
-
+              <div className="report-status abnormal">⚠ Abnormal</div>
+            </div>
           </div>
 
-        </section>
+          <div className="lab-card-footer">
+            <button className="footer-btn">⬇ Download</button>
+            <div className="divider"></div>
+            <button className="footer-btn">↗ Explore All</button>
+          </div>
+        </div>
 
 
       </section>
@@ -322,6 +323,7 @@ function PatientHomeSection()  {
           })}
         </div>
       </section>
+
 
       <section className="patient-health-wrapper">
         {/* Quick Links */}
@@ -461,8 +463,6 @@ function PatientHomeSection()  {
         </div>
 
       </section>
-
-      
 
     </div>
   );
