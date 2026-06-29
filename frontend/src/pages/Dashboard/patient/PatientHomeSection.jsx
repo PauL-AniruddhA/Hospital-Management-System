@@ -150,6 +150,7 @@ function PatientHomeSection()  {
       
       <section className="patient-dashboard-widgets">
         
+        <section></section>
         {/* Appointments */}
         <section className="appointment-widget">
           <div className="appointment-body">
@@ -253,8 +254,9 @@ function PatientHomeSection()  {
         </section>
 
         <section></section>
+
         {/* Lab Reports */}
-        <div className="lab-report-card">
+        {/* <section className="lab-report-card">
           <div className="lab-card-header">
             <div className="lab-title">
               <div className="lab-logo"> 🧪  </div>
@@ -292,96 +294,9 @@ function PatientHomeSection()  {
             <div className="divider"></div>
             <button className="footer-btn">↗ Explore All</button>
           </div>
-        </div>
+        </section> */}
 
 
-      </section>
-
-      <section className="notifications-section">
-        <div className="section-header">
-          <h2>Notifications</h2>
-          <button>Mark All Read</button>
-        </div>
-        <div className="notification-list">
-          {notifications.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={index}
-                className="notification-card"
-              >
-                <div className="notification-icon">
-                  <Icon size={22} />
-                </div>
-                <div className="notification-content">
-                  <h4>{item.title}</h4>
-                  <p>{item.message}</p>
-                  <span>{item.time}</span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-
-      <section className="patient-health-wrapper">
-        {/* Quick Links */}
-        <section className="patient-quick-links">
-          <h2>Quick Actions</h2>
-          {quickActions.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div key={index} className="quick-link-item">
-                <div className="quick-link-left">
-                  <Icon size={20} />
-                  <span>{item.title}</span>
-                </div>
-                <ChevronRight size={18} />
-              </div>
-            );
-          })}
-        </section>
-      </section>
-
-      <section className="medical-records-section">
-        <div className="section-header">
-          <h2>Medical Records</h2>
-          <button>View Complete</button>
-        </div>
-        <div className="record-stats">
-
-          <div className="record-stat-card">
-            <FileText size={24} />
-            <h3>{medicalRecords.diagnoses}</h3>
-            <p>Diagnoses</p>
-          </div>
-
-          <div className="record-stat-card">
-            <Stethoscope size={24} />
-            <h3>{medicalRecords.surgeries}</h3>
-            <p>Surgeries</p>
-          </div>
-
-          <div className="record-stat-card">
-            <ShieldAlert size={24} />
-            <h3>{medicalRecords.allergies}</h3>
-            <p>Allergies</p>
-          </div>
-
-        </div>
-        <div className="recent-records">
-          <h3>Recent Records</h3>
-          {recentRecords.map((record, index) => (
-            <div className="record-item" key={index}>
-              <div>
-                <h4>{record.title}</h4>
-                <p>{record.date}</p>
-              </div>
-              <button>View</button>
-            </div>
-          ))}
-        </div>
       </section>
 
       <section className="billing-section">
@@ -463,6 +378,93 @@ function PatientHomeSection()  {
         </div>
 
       </section>
+
+      <section className="notifications-section">
+        <div className="section-header">
+          <h2>Notifications</h2>
+          <button>Mark All Read</button>
+        </div>
+        <div className="notification-list">
+          {notifications.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={index}
+                className="notification-card"
+              >
+                <div className="notification-icon">
+                  <Icon size={22} />
+                </div>
+                <div className="notification-content">
+                  <h4>{item.title}</h4>
+                  <p>{item.message}</p>
+                  <span>{item.time}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="patient-health-wrapper">
+        {/* Quick Links */}
+        <section className="patient-quick-links">
+          <h2>Quick Actions</h2>
+          {quickActions.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div key={index} className="quick-link-item">
+                <div className="quick-link-left">
+                  <Icon size={20} />
+                  <span>{item.title}</span>
+                </div>
+                <ChevronRight size={18} />
+              </div>
+            );
+          })}
+        </section>
+      </section>
+
+      <section className="medical-records-section">
+        <div className="section-header">
+          <h2>Medical Records</h2>
+          <button>View Complete</button>
+        </div>
+        <div className="record-stats">
+
+          <div className="record-stat-card">
+            <FileText size={24} />
+            <h3>{medicalRecords.diagnoses}</h3>
+            <p>Diagnoses</p>
+          </div>
+
+          <div className="record-stat-card">
+            <Stethoscope size={24} />
+            <h3>{medicalRecords.surgeries}</h3>
+            <p>Surgeries</p>
+          </div>
+
+          <div className="record-stat-card">
+            <ShieldAlert size={24} />
+            <h3>{medicalRecords.allergies}</h3>
+            <p>Allergies</p>
+          </div>
+
+        </div>
+        <div className="recent-records">
+          <h3>Recent Records</h3>
+          {recentRecords.map((record, index) => (
+            <div className="record-item" key={index}>
+              <div>
+                <h4>{record.title}</h4>
+                <p>{record.date}</p>
+              </div>
+              <button>View</button>
+            </div>
+          ))}
+        </div>
+      </section>
+
 
     </div>
   );
