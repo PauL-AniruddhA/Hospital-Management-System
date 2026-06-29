@@ -3,9 +3,9 @@ import "../../../styles/Dash-Board/patient-home.css";
 import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  
   Ticket,
   MapPin,
-  Video,
+
   ChevronDown,
-  CheckCircle2 } from "lucide-react";
+  CheckCircle2, ArrowRight } from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../../assets/home/doc3.png";
 
@@ -150,7 +150,51 @@ function PatientHomeSection()  {
       
       <section className="patient-dashboard-widgets">
         
-        <section></section>
+        {/* Billing Preview */}
+        <section className="bill-card">
+          <div className="bill-card-header">
+            <div className="bill-header-left">
+              <div className="bill-icon-tile">
+                <Receipt size={18} />
+              </div>
+              <div>
+                <h3>Billing</h3>
+              </div>
+            </div>
+            <span className="bill-badge">3 Unpaid</span>
+          </div>
+
+          <div className="bill-hero">
+            <div className="bill-hero-text">
+              <span className="bill-hero-label">Total due across all bills</span>
+              <span className="bill-hero-value">₹6,280</span>
+              <span className="bill-hero-sub">Due by Jul 5, 2026</span>
+            </div>
+          </div>
+
+          <div className="bill-stat-grid">
+            <div className="bill-stat-chip">
+              <span className="bill-stat-num">3</span>
+              <span className="bill-stat-label">Unpaid bills</span>
+            </div>
+            <div className="bill-stat-chip">
+              <span className="bill-stat-num">₹18,700</span>
+              <span className="bill-stat-label">Paid this year</span>
+            </div>
+            <div className="bill-stat-chip">
+              <span className="bill-stat-num">4</span>
+              <span className="bill-stat-label">Claims processed</span>
+            </div>
+          </div>
+
+          <div className="bill-footer">
+            <button className="bill-btn-solid">
+              Pay now <ArrowRight size={16} />
+            </button>
+          </div>
+
+        </section>
+        
         {/* Appointments */}
         <section className="appointment-widget">
           <div className="appointment-body">
@@ -253,9 +297,72 @@ function PatientHomeSection()  {
 
         </section>
 
-        <section></section>
+        {/* Lab Report Card */}
+        <section className="lab-report-card-v2">
+          <div className="lrc-status-strip abnormal">
+            <FlaskConical size={15} />
+            <span> Report </span>
+          </div>
 
-        {/* Lab Reports */}
+          <div className="lrc-body">
+
+            <div className="lrc-header">
+              <div className="lrc-icon-tile">
+                <FlaskConical size={22} />
+              </div>
+              <div className="lrc-title-block">
+                <h3>{labReports[1].reportName}</h3>
+                <p>{labReports[1].category} &middot; {labReports[1].doctorName}</p>
+              </div>
+            </div>
+
+            <div className="lrc-divider" />
+
+            {/* <div className="lrc-range-section">
+              <div className="lrc-range-top">
+                <span className="lrc-range-name">LDL Cholesterol</span>
+                <span className="lrc-range-value">142 <small>mg/dL</small></span>
+              </div>
+
+              <div className="lrc-range-track">
+                <div className="lrc-zone normal" style={{ width: "55%" }} />
+                <div className="lrc-zone borderline" style={{ width: "25%" }} />
+                <div className="lrc-zone high" style={{ width: "20%" }} />
+                <div className="lrc-marker" style={{ left: "78%" }} />
+              </div>
+
+              <div className="lrc-range-labels">
+                <span>Normal</span>
+                <span>Borderline</span>
+                <span>High</span>
+              </div>
+            </div> */}
+
+            <div className="lrc-divider" />
+
+            <div className="lrc-meta-row">
+              <div className="lrc-meta-item">
+                <CalendarDays size={14} />
+                <span>{labReports[1].uploadedDate}</span>
+              </div>
+              <div className="lrc-meta-item">
+                <FileText size={14} />
+                <span>{labReports[1].fileType} &middot; {labReports[1].fileSize}</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="lrc-footer">
+            <button className="lrc-btn-ghost">View full report</button>
+            <button className="lrc-btn-solid">Download</button>
+          </div>
+          <div className="lrc-footer lrc-footer-single">
+            <button className="lrc-btn-solid full">View more reports</button>
+          </div>
+
+        </section>
+
         {/* <section className="lab-report-card">
           <div className="lab-card-header">
             <div className="lab-title">
