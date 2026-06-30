@@ -1,11 +1,6 @@
 import React from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
-import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  
-  Ticket,
-  MapPin,
-
-  ChevronDown,
-  CheckCircle2, ArrowRight } from "lucide-react";
+import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee } from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../../assets/home/doc3.png";
 
@@ -155,10 +150,10 @@ function PatientHomeSection()  {
           <div className="bill-card-header">
             <div className="bill-header-left">
               <div className="bill-icon-tile">
-                <Receipt size={18} />
+                <IndianRupee size={24} />
               </div>
               <div>
-                <h3>Billing</h3>
+                <h3>Payment</h3>
               </div>
             </div>
             <span className="bill-badge">3 Unpaid</span>
@@ -195,6 +190,72 @@ function PatientHomeSection()  {
 
         </section>
         
+        <section className="lab-report-card-v2">
+          <div className="lrc-status-strip abnormal">
+            <div className="lrc-icon-badge">
+              <FlaskConical size={24} />
+            </div>
+            <span>Report</span>
+          </div>
+
+          <div className="lrc-body">
+
+            <div className="lrc-header">
+              <div className="lrc-icon-tile">
+                <FlaskConical size={22} />
+              </div>
+              <div className="lrc-title-block">
+                <h3>{labReports[1].reportName}</h3>
+                <p>{labReports[1].category} &middot; {labReports[1].doctorName}</p>
+              </div>
+            </div>
+
+            <div className="lrc-divider" />
+
+            {/* <div className="lrc-range-section">
+              <div className="lrc-range-top">
+              <span className="lrc-range-name">LDL Cholesterol</span>
+              <span className="lrc-range-value">142 <small>mg/dL</small></span>
+              </div>
+              
+              <div className="lrc-range-track">
+              <div className="lrc-zone normal" style={{ width: "55%" }} />
+              <div className="lrc-zone borderline" style={{ width: "25%" }} />
+              <div className="lrc-zone high" style={{ width: "20%" }} />
+              <div className="lrc-marker" style={{ left: "78%" }} />
+              </div>
+              
+              <div className="lrc-range-labels">
+              <span>Normal</span>
+              <span>Borderline</span>
+              <span>High</span>
+              </div>
+              </div> */}
+
+            <div className="lrc-meta-row">
+              <div className="lrc-meta-item">
+                <CalendarDays size={14} />
+                <span>{labReports[1].uploadedDate}</span>
+              </div>
+              <div className="lrc-meta-item">
+                <FileText size={14} />
+                <span>{labReports[1].fileType} &middot; {labReports[1].fileSize}</span>
+              </div>
+            </div>
+
+          <div className="lrc-divider" />
+          </div>
+          
+
+          <div className="lrc-footer">
+            <button className="lrc-btn-ghost">View full report</button>
+            <button className="lrc-btn-solid">Download</button>
+          </div>
+          <div className="lrc-footer lrc-footer-single">
+            <button className="lrc-btn-solid full">View more reports</button>
+          </div>
+
+        </section>
         {/* Appointments */}
         <section className="appointment-widget">
           <div className="appointment-body">
@@ -298,191 +359,7 @@ function PatientHomeSection()  {
         </section>
 
         {/* Lab Report Card */}
-        <section className="lab-report-card-v2">
-          <div className="lrc-status-strip abnormal">
-            <FlaskConical size={15} />
-            <span> Report </span>
-          </div>
-
-          <div className="lrc-body">
-
-            <div className="lrc-header">
-              <div className="lrc-icon-tile">
-                <FlaskConical size={22} />
-              </div>
-              <div className="lrc-title-block">
-                <h3>{labReports[1].reportName}</h3>
-                <p>{labReports[1].category} &middot; {labReports[1].doctorName}</p>
-              </div>
-            </div>
-
-            <div className="lrc-divider" />
-
-            {/* <div className="lrc-range-section">
-              <div className="lrc-range-top">
-                <span className="lrc-range-name">LDL Cholesterol</span>
-                <span className="lrc-range-value">142 <small>mg/dL</small></span>
-              </div>
-
-              <div className="lrc-range-track">
-                <div className="lrc-zone normal" style={{ width: "55%" }} />
-                <div className="lrc-zone borderline" style={{ width: "25%" }} />
-                <div className="lrc-zone high" style={{ width: "20%" }} />
-                <div className="lrc-marker" style={{ left: "78%" }} />
-              </div>
-
-              <div className="lrc-range-labels">
-                <span>Normal</span>
-                <span>Borderline</span>
-                <span>High</span>
-              </div>
-            </div> */}
-
-            <div className="lrc-divider" />
-
-            <div className="lrc-meta-row">
-              <div className="lrc-meta-item">
-                <CalendarDays size={14} />
-                <span>{labReports[1].uploadedDate}</span>
-              </div>
-              <div className="lrc-meta-item">
-                <FileText size={14} />
-                <span>{labReports[1].fileType} &middot; {labReports[1].fileSize}</span>
-              </div>
-            </div>
-
-          </div>
-
-          <div className="lrc-footer">
-            <button className="lrc-btn-ghost">View full report</button>
-            <button className="lrc-btn-solid">Download</button>
-          </div>
-          <div className="lrc-footer lrc-footer-single">
-            <button className="lrc-btn-solid full">View more reports</button>
-          </div>
-
-        </section>
-
-        {/* <section className="lab-report-card">
-          <div className="lab-card-header">
-            <div className="lab-title">
-              <div className="lab-logo"> 🧪  </div>
-              <h3>Lab Reports</h3>
-            </div>
-            <div className="report-counter">2 / 4 Reports</div>
-          </div>
-
-          <div className="lab-card-body">
-            <div className="report-image">
-                🧪
-            </div>
-
-            <div className="report-info">
-              <span className="latest-badge">
-                  Latest Report
-              </span>
-
-              <h2>Liver Function Test (LFT)</h2>
-
-              <p>Biochemistry</p>
-
-              <div className="report-date">
-                <span>📅</span>
-                <span>20 Jun 2026</span>
-                <span>•</span>
-                <span>09:15 AM</span>
-              </div>
-              <div className="report-status abnormal">⚠ Abnormal</div>
-            </div>
-          </div>
-
-          <div className="lab-card-footer">
-            <button className="footer-btn">⬇ Download</button>
-            <div className="divider"></div>
-            <button className="footer-btn">↗ Explore All</button>
-          </div>
-        </section> */}
-
-
-      </section>
-
-      <section className="billing-section">
-        <div className="section-header">
-          <h2>Billing & Payments</h2>
-          <button>View All</button>
-        </div>
-
-        <div className="billing-stats">
-
-          {billingStats.map((item, index) => {
-            const Icon = item.icon;
-
-            return (
-              <div
-                key={index}
-                className="billing-stat-card"
-              >
-                <div className="billing-icon">
-                  <Icon size={24} />
-                </div>
-
-                <div>
-                  <h3>{item.value}</h3>
-                  <p>{item.title}</p>
-                  <span>{item.status}</span>
-                </div>
-              </div>
-            );
-          })}
-
-        </div>
-
-        <div className="invoice-list">
-
-          {invoices.map((invoice, index) => (
-            <div
-              key={index}
-              className="invoice-card"
-            >
-              <div className="invoice-left">
-                <h4>{invoice.service}</h4>
-
-                <p>
-                  {invoice.id} • {invoice.date}
-                </p>
-              </div>
-
-              <div className="invoice-right">
-
-                <h3>{invoice.amount}</h3>
-
-                <span
-                  className={
-                    invoice.status === "Paid"
-                      ? "paid-status"
-                      : "pending-status"
-                  }
-                >
-                  {invoice.status}
-                </span>
-
-                <div className="invoice-actions">
-                  <button className="download-btn">
-                    Download
-                  </button>
-
-                  {invoice.status === "Pending" && (
-                    <button className="pay-btn">
-                      Pay Now
-                    </button>
-                  )}
-                </div>
-
-              </div>
-            </div>
-          ))}
-
-        </div>
+        
 
       </section>
 
