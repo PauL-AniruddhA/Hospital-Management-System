@@ -1,6 +1,6 @@
 import React from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
-import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video} from "lucide-react";
+import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing} from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../../assets/home/doc3.png";
 
@@ -26,9 +26,47 @@ const quickActions = [
   {  title: "Chat with Support", icon: MessageCircle },
 ];
 const appointments = [
-  {  id: 1, doctorName: "Dr. Rajesh Sharma",doctorImage: doc1,department: "Cardiology",appointmentDate: "2026-06-18",appointmentDay:"Wednesday",appointmentTime: "10:30 AM",location: "AMS Hospital, Guwahati",type: "Video Consultation",status: "Upcoming", TokenNo :"T30" ,progress:"Confirmed"},
+  {  id: 1, doctorName: "Dr. Rajesh Sharma",doctorImage: doc1,department: "Cardiology",appointmentDate: "2026-06-18",appointmentDay:"Wednesday",appointmentTime: "10:30 AM",location: "AMS Hospital, Guwahati",type: "Video Consultation",status: "Upcoming", TokenNo :"T30" ,progress:"Confirmed", degree:"MBBS | MD | MS "},
 
   {  id: 2,doctorName: "Dr. Priya Singh",doctorImage: "/images/doctors/doctor-2.jpg",department: "Neurology",appointmentDate: "2026-06-22",appointmentTime: "02:15 PM",location: "AMS Hospital, Guwahati",type: "In-Person",status: "Upcoming",TokenNo :"T5",progress:"Pending" }
+];
+const medicines = [
+  {
+    id: 1,
+    name: "Amlodipine",
+    dose: "5mg",
+    schedule: "1 tablet · once daily, morning",
+    instruction: "Take after breakfast, with water",
+    status: "30 days",
+    refill: false,
+  },
+  {
+    id: 2,
+    name: "Atorvastatin",
+    dose: "10mg",
+    schedule: "1 tablet · once daily, night",
+    instruction: "Take before sleep",
+    status: "30 days",
+    refill: false,
+  },
+  {
+    id: 3,
+    name: "Metformin",
+    dose: "500mg",
+    schedule: "1 tablet · twice daily",
+    instruction: "Morning and night, after meals",
+    status: "Refill soon",
+    refill: true,
+  },
+  {
+    id: 4,
+    name: "Aspirin",
+    dose: "75mg",
+    schedule: "1 tablet · once daily, afternoon",
+    instruction: "Take after lunch",
+    status: "30 days",
+    refill: false,
+  },
 ];
 const labReports = [
   {  id: 1,reportName: "Complete Blood Count (CBC)",category: "Hematology",uploadedDate: "2026-06-15",doctorName: "Dr. Rajesh Sharma",fileType: "PDF",fileSize: "2.3 MB",status: "Available"},
@@ -48,11 +86,11 @@ const billingStats = [
   { title: "Paid This Year",value: "₹18,700",icon: CircleCheckBig,status: "Completed" },
   { title: "Insurance Claims",value: "4",icon: ShieldCheck,status: "Processed" },
 ];
-const invoices = [
-  { id: "INV-2026-101",service: "Cardiology Consultation",amount: "₹1,200",date: "12 Jun 2026",status: "Paid" },
-  { id: "INV-2026-102",service: "Blood Test Package",amount: "₹850",date: "15 Jun 2026",status: "Pending" },
-  { id: "INV-2026-103",service: "MRI Scan",amount: "₹4,500",date: "20 Jun 2026",status: "Paid" },
-];
+// const invoices = [
+//   { id: "INV-2026-101",service: "Cardiology Consultation",amount: "₹1,200",date: "12 Jun 2026",status: "Paid" },
+//   { id: "INV-2026-102",service: "Blood Test Package",amount: "₹850",date: "15 Jun 2026",status: "Pending" },
+//   { id: "INV-2026-103",service: "MRI Scan",amount: "₹4,500",date: "20 Jun 2026",status: "Paid" },
+// ];
 const notifications = [
   {icon: CalendarCheck,title: "Appointment Confirmed",message: "Your appointment with Dr. Sharma is scheduled for 18 Jun at 10:30 AM.",time: "2 hours ago" },
   {icon: FlaskConical,title: "Lab Report Available",message: "Your Complete Blood Count (CBC) report is ready to view.",time: "Yesterday" },
@@ -264,8 +302,8 @@ function PatientHomeSection()  {
               <div className="doctor-profile">
                 <div className="doctor-content">
                   <h3>{nextAppointment.doctorName}</h3>
-                  <p className="department">
-                    {nextAppointment.department} Specialist
+                  <p className="degree">
+                    {nextAppointment.degree} 
                   </p>
                   <p className="department">
                     {nextAppointment.department} Specialist
@@ -390,33 +428,128 @@ function PatientHomeSection()  {
         </section>
 
       </section>
+      
+      <section className="patient-prescription-notification">
+        {/* Prescription */}
+        <section className="prescription-card">
 
-      <section className="notifications-section">
-        <div className="section-header">
-          <h2>Notifications</h2>
-          <button>Mark All Read</button>
+        {/* HEADER */}
+
+        <div className="prescription-header">
+          <div className="header-left">
+            <div className="icon-circle">
+              <FileText size={20} />
+            </div>
+            <h2>Prescription</h2>
+          </div>
+          <div className="rx-number">
+            Rx-2026-0417
+          </div>
+          
         </div>
-        <div className="notification-list">
-          {notifications.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={index}
-                className="notification-card"
-              >
-                <div className="notification-icon">
-                  <Icon size={22} />
+
+        {/* DOCTOR */}
+
+        {/* <div className="doctor-section">
+          <div className="doctor-left">
+            <div className="icon-circle doctor">
+              <Stethoscope size={22} />
+            </div>
+            <div>
+              <h3>Dr. Rajesh Sharma</h3>
+              <p>MBBS, MD · Cardiology</p>
+            </div>
+          </div>
+
+          <div className="issued-date">
+
+            <span>Issued</span>
+
+            <strong>18 Jun 2026</strong>
+
+          </div>
+
+        </div> */}
+
+        {/* MEDICINES */}
+
+        {/* <div className="medicine-title">
+          Medicines · {medicines.length}
+        </div> */}
+
+        <div className="medicine-list">
+
+          {medicines.map((medicine) => (
+
+            <div key={medicine.id} className="medicine-card" >
+              <div className="medicine-top">
+                <div>
+                  <h4>
+                    {medicine.name}
+                    <span>{medicine.dose}</span>
+                  </h4>
                 </div>
-                <div className="notification-content">
-                  <h4>{item.title}</h4>
-                  <p>{item.message}</p>
-                  <span>{item.time}</span>
+                <div className={`status ${ medicine.refill ? "warning" : "green" }`}>
+                  {medicine.status}
                 </div>
               </div>
-            );
-          })}
+              <p>{medicine.schedule}</p>
+              <small>{medicine.instruction}</small>
+            </div>
+          ))}
         </div>
+
+        {/* FOOTER */}
+
+        <div className="prescription-footer">
+
+          <button className="outline-btn">
+            View Full Prescription
+          </button>
+
+          <button className="download-btn">
+            <Download size={18} />
+            Download
+          </button>
+
+        </div>
+        </section>
+
+        {/* Notification */}
+        <section className="notifications-section">
+          <div className="section-header">
+            <div className="ing-left">
+              <div className="ing-icon">
+                <BellRing  size={20} strokeWidth={2.2}  />
+              </div>
+
+              <h2>Notifications</h2>
+            </div>
+            <button>Mark All Read</button>
+          </div>
+          <div className="notification-list">
+            {notifications.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={index}
+                  className="notification-card"
+                >
+                  <div className="notification-icon">
+                    <Icon size={22} />
+                  </div>
+                  <div className="notification-content">
+                    <h4>{item.title}</h4>
+                    <p>{item.message}</p>
+                    <span>{item.time}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
       </section>
+
 
       <section className="patient-health-wrapper">
         {/* Quick Links */}
@@ -476,7 +609,6 @@ function PatientHomeSection()  {
           ))}
         </div>
       </section>
-
 
     </div>
   );
