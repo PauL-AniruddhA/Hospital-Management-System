@@ -1,6 +1,6 @@
 import React from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
-import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock } from "lucide-react";
+import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video} from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../../assets/home/doc3.png";
 
@@ -26,9 +26,9 @@ const quickActions = [
   {  title: "Chat with Support", icon: MessageCircle },
 ];
 const appointments = [
-  {  id: 1,doctorName: "Dr. Rajesh Sharma",doctorImage: doc1,department: "Cardiology",appointmentDate: "2026-06-18",appointmentDay:"Wednesday",appointmentTime: "10:30 AM",location: "AMS Hospital, Guwahati",type: "Video Consultation",status: "Upcoming"},
+  {  id: 1, doctorName: "Dr. Rajesh Sharma",doctorImage: doc1,department: "Cardiology",appointmentDate: "2026-06-18",appointmentDay:"Wednesday",appointmentTime: "10:30 AM",location: "AMS Hospital, Guwahati",type: "Video Consultation",status: "Upcoming", TokenNo :"T30" ,progress:"Confirmed"},
 
-  {  id: 2,doctorName: "Dr. Priya Singh",doctorImage: "/images/doctors/doctor-2.jpg",department: "Neurology",appointmentDate: "2026-06-22",appointmentTime: "02:15 PM",location: "AMS Hospital, Guwahati",type: "In-Person",status: "Upcoming" }
+  {  id: 2,doctorName: "Dr. Priya Singh",doctorImage: "/images/doctors/doctor-2.jpg",department: "Neurology",appointmentDate: "2026-06-22",appointmentTime: "02:15 PM",location: "AMS Hospital, Guwahati",type: "In-Person",status: "Upcoming",TokenNo :"T5",progress:"Pending" }
 ];
 const labReports = [
   {  id: 1,reportName: "Complete Blood Count (CBC)",category: "Hematology",uploadedDate: "2026-06-15",doctorName: "Dr. Rajesh Sharma",fileType: "PDF",fileSize: "2.3 MB",status: "Available"},
@@ -63,18 +63,24 @@ const notifications = [
 
 function PatientHomeSection()  {
 
-  const nextAppointment = appointments[0];
-  const appointmentDate = new Date(nextAppointment.appointmentDate);
-  const day = appointmentDate.toLocaleDateString(
-    "en-US",
-    { weekday: "long" }
-  ).toUpperCase();
+  const nextAppointment = appointments
+    .filter((a) => a.status === "Upcoming")
+    .sort((a, b) => new Date(a.appointmentDate) - new Date(b.appointmentDate))[0];
+
+  if (!nextAppointment) {
+    return <div className="patient-home">{/* empty-state UI */}</div>;
+  }
+
+  const [year, month0, dateNum] = nextAppointment.appointmentDate
+    .split("-")
+    .map(Number);
+  const appointmentDate = new Date(year, month0 - 1, dateNum);
+
+  const day = appointmentDate.toLocaleDateString("en-US", { weekday: "long" }).toUpperCase();
   const date = appointmentDate.getDate();
-  const month = appointmentDate.toLocaleString(
-      "en-US",
-      { month: "short" }
-  ).toUpperCase();
-  const year = appointmentDate.getFullYear();
+  const month = appointmentDate.toLocaleString("en-US", { month: "short" }).toUpperCase();
+  const displayYear = appointmentDate.getFullYear(); // renamed — don't shadow the destructured `year`
+
    return (
     <div className="patient-home">
 
@@ -164,8 +170,11 @@ function PatientHomeSection()  {
 
           <div className="bill-hero">
             <div className="bill-hero-text">
-              <span className="bill-hero-label">Total due across all bills</span>
-              <span className="bill-hero-value">₹6,280</span>
+              <span className="bill-hero-label">Outstanding Balance </span>
+              <span className="bill-hero-value">
+                <IndianRupee className="rupee-icon"/>
+                <div>6,280</div>
+                </span>
               <span className="bill-hero-sub">Due by Jul 5, 2026</span>
             </div>
           </div>
@@ -193,7 +202,6 @@ function PatientHomeSection()  {
 
         </section>
         
-       
         {/* Appointments */}
         <section className="appointment-widget">
           <div className="appointment-body">
@@ -248,17 +256,20 @@ function PatientHomeSection()  {
 
                 <div className="appointment-badge">
                   <CheckCircle2 size={14}/>
-                  Confirmed
+                  {nextAppointment.progress}
                 </div>
 
               </div>
 
               <div className="doctor-profile">
                 <div className="doctor-content">
-                    <h3>{nextAppointment.doctorName}</h3>
-                    <p className="department">
-                        {nextAppointment.department} Specialist
-                    </p>
+                  <h3>{nextAppointment.doctorName}</h3>
+                  <p className="department">
+                    {nextAppointment.department} Specialist
+                  </p>
+                  <p className="department">
+                    {nextAppointment.department} Specialist
+                  </p>
                 </div>
                 <div className="doctor-avatar">
                     <img
@@ -267,13 +278,14 @@ function PatientHomeSection()  {
                     />
                 </div>
                 
-                <div className="info-pill">
+                <div className="info-pill-1">
                   <MapPin size={14}/>
-                    <span>{nextAppointment.location}</span>
+                  <span>{nextAppointment.location}</span>
                 </div>
-                <div className="info-pill">
+                
+                <div className="info-pill-2">
                   <Ticket size={14}/>
-                  <span>T36</span>
+                  <span>{nextAppointment.TokenNo}</span>
                 </div>
               </div>
               
@@ -281,17 +293,22 @@ function PatientHomeSection()  {
               <div className="center-divider"/>
               <div className="appointment-actions">
                 <button className="join-btn">
+                  <Video size={16} />
                   Join Consultation
                 </button>
                 <button className="details-btn">
+                  <FileText size={16} />
                   View Details
                 </button>
               </div>
+              <div className="view-more">
+                <button className="view-more-btn">
+                  <CalendarDays size={18}/>
+                  <span>View Upcoming Appointments</span>
+                  <ArrowRight size={16}/>
+                </button>
+              </div>
             </div>
-          </div>
-
-          <div>
-            <button type="button"> View More </button>
           </div>
 
         </section>
