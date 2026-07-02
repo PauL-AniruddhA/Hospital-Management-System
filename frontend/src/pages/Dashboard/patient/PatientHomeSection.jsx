@@ -30,43 +30,49 @@ const appointments = [
 
   {  id: 2,doctorName: "Dr. Priya Singh",doctorImage: "/images/doctors/doctor-2.jpg",department: "Neurology",appointmentDate: "2026-06-22",appointmentTime: "02:15 PM",location: "AMS Hospital, Guwahati",type: "In-Person",status: "Upcoming",TokenNo :"T5",progress:"Pending" }
 ];
+// const medicines = [
+//   {
+//     id: 1,
+//     name: "Amlodipine",
+//     dose: "5mg",
+//     schedule: "1 tablet · once daily, morning",
+//     instruction: "Take after breakfast, with water",
+//     status: "30 days",
+//     refill: false,
+//   },
+//   {
+//     id: 2,
+//     name: "Atorvastatin",
+//     dose: "10mg",
+//     schedule: "1 tablet · once daily, night",
+//     instruction: "Take before sleep",
+//     status: "30 days",
+//     refill: false,
+//   },
+//   {
+//     id: 3,
+//     name: "Metformin",
+//     dose: "500mg",
+//     schedule: "1 tablet · twice daily",
+//     instruction: "Morning and night, after meals",
+//     status: "Refill ",
+//     refill: true,
+//   },
+//   {
+//     id: 4,
+//     name: "Aspirin",
+//     dose: "75mg",
+//     schedule: "1 tablet · once daily, afternoon",
+//     instruction: "Take after lunch",
+//     status: "30 days",
+//     refill: false,
+//   },
+// ];
 const medicines = [
-  {
-    id: 1,
-    name: "Amlodipine",
-    dose: "5mg",
-    schedule: "1 tablet · once daily, morning",
-    instruction: "Take after breakfast, with water",
-    status: "30 days",
-    refill: false,
-  },
-  {
-    id: 2,
-    name: "Atorvastatin",
-    dose: "10mg",
-    schedule: "1 tablet · once daily, night",
-    instruction: "Take before sleep",
-    status: "30 days",
-    refill: false,
-  },
-  {
-    id: 3,
-    name: "Metformin",
-    dose: "500mg",
-    schedule: "1 tablet · twice daily",
-    instruction: "Morning and night, after meals",
-    status: "Refill soon",
-    refill: true,
-  },
-  {
-    id: 4,
-    name: "Aspirin",
-    dose: "75mg",
-    schedule: "1 tablet · once daily, afternoon",
-    instruction: "Take after lunch",
-    status: "30 days",
-    refill: false,
-  },
+  { id: 1, name: "Amlodipine", dose: "5mg", times: ["morning"], foodTiming: "After food", supply: "30 days" },
+  { id: 2, name: "Atorvastatin", dose: "10mg", times: ["night"], foodTiming: "Bedtime", supply: "30 days" },
+  { id: 3, name: "Metformin", dose: "500mg", times: ["morning", "night"], foodTiming: "After food", refill: true },
+  { id: 4, name: "Aspirin", dose: "75mg", times: ["afternoon"], foodTiming: "After food", supply: "30 days" },
 ];
 const labReports = [
   {  id: 1,reportName: "Complete Blood Count (CBC)",category: "Hematology",uploadedDate: "2026-06-15",doctorName: "Dr. Rajesh Sharma",fileType: "PDF",fileSize: "2.3 MB",status: "Available"},
@@ -445,6 +451,9 @@ function PatientHomeSection()  {
           <div className="rx-number">
             Rx-2026-0417
           </div>
+          <div className="rx-number">
+            Rx-2026-0417
+          </div>
           
         </div>
 
@@ -482,19 +491,36 @@ function PatientHomeSection()  {
           {medicines.map((medicine) => (
 
             <div key={medicine.id} className="medicine-card" >
-              <div className="medicine-top">
+              <div className="medicine-name">
                 <div>
                   <h4>
                     {medicine.name}
                     <span>{medicine.dose}</span>
                   </h4>
                 </div>
-                <div className={`status ${ medicine.refill ? "warning" : "green" }`}>
-                  {medicine.status}
+
+              </div>
+              <div className="dose-timeline">
+                <div className="dose-stack">
+                  <span className={`dose-node ${medicine.times.includes("morning") ? "active" : ""}`} />
+                  <span className="dose-label">M</span>
+                </div>
+                <span className="dose-line" />
+                <div className="dose-stack">
+                  <span className={`dose-node ${medicine.times.includes("afternoon") ? "active" : ""}`} />
+                  <span className="dose-label">A</span>
+                </div>
+                <span className="dose-line" />
+                <div className="dose-stack">
+                  <span className={`dose-node ${medicine.times.includes("night") ? "active" : ""}`} />
+                  <span className="dose-label">N</span>
                 </div>
               </div>
-              <p>{medicine.schedule}</p>
-              <small>{medicine.instruction}</small>
+              
+              <span className="food-tag">{medicine.foodTiming}</span>
+              <div className={medicine.refill ? "status warning" : "status green"}>
+                {medicine.refill ? "Refill" : medicine.supply}
+              </div>
             </div>
           ))}
         </div>
