@@ -1,8 +1,18 @@
 import React from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
-import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing} from "lucide-react";
+import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan} from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../../assets/home/doc3.png";
+
+const ICON_REGISTRY = {
+  tablet: Pill,
+  capsule: Tablets,
+  syrup: GlassWater,
+  injection: Syringe,
+  drops: Droplet,
+  inhaler: SprayCan,
+  ointment: FlaskConical,
+};
 
 const actions = [
   {  title: "Appointments", subtitle: "Manage your visits", icon: CalendarDays  },
@@ -69,11 +79,13 @@ const appointments = [
 //   },
 // ];
 const medicines = [
-  { id: 1, name: "Amlodipine", dose: "5mg", times: ["morning"], foodTiming: "After food", supply: "30 days" },
-  { id: 2, name: "Atorvastatin", dose: "10mg", times: ["night"], foodTiming: "Bedtime", supply: "30 days" },
-  { id: 3, name: "Metformin", dose: "500mg", times: ["morning", "night"], foodTiming: "After food", refill: true },
-  { id: 4, name: "Aspirin", dose: "75mg", times: ["afternoon"], foodTiming: "After food", supply: "30 days" },
+  { id: 1, name: "Amlodipine", dose: "5mg", type: "tablet", schedule: { AM: "1 tab" }, foodTiming: "After food ", supply: "30 days" },
+  { id: 2, name: "Atorvastatin", dose: "10mg", type: "inhaler", schedule: { PM: "15ml" }, foodTiming: "Bedtime", supply: "30 days" },
+  { id: 3, name: "Metformin", dose: "500mg", type: "injection", schedule: { AM: "1 tab", PM: "1 tab" }, foodTiming: "After food", refill: true },
+  { id: 4, name: "Aspirin", dose: "75mg", type: "drops", schedule: { Noon: "1 tbsp" }, foodTiming: "After food", supply: "30 days" },
+  { id: 4, name: "Aspirin", dose: "75mg", type: "drops", schedule: { Noon: "1 tbsp" }, foodTiming: "After food", supply: "30 days" },
 ];
+const slots = ["AM", "Noon", "PM"];
 const labReports = [
   {  id: 1,reportName: "Complete Blood Count (CBC)",category: "Hematology",uploadedDate: "2026-06-15",doctorName: "Dr. Rajesh Sharma",fileType: "PDF",fileSize: "2.3 MB",status: "Available"},
 
@@ -105,8 +117,9 @@ const notifications = [
   { icon: MessageSquare,title: "Doctor Message",message: "Please schedule a follow-up consultation next week.",time: "5 days ago" },
 ];
 
-function PatientHomeSection()  {
 
+function PatientHomeSection()  {
+const Icon = ICON_REGISTRY[medicines.type] ?? Pill;
   const nextAppointment = appointments
     .filter((a) => a.status === "Upcoming")
     .sort((a, b) => new Date(a.appointmentDate) - new Date(b.appointmentDate))[0];
@@ -451,9 +464,9 @@ function PatientHomeSection()  {
           <div className="rx-number">
             Rx-2026-0417
           </div>
-          <div className="rx-number">
+          {/* <div className="rx-number">
             Rx-2026-0417
-          </div>
+          </div> */}
           
         </div>
 
@@ -485,44 +498,50 @@ function PatientHomeSection()  {
         {/* <div className="medicine-title">
           Medicines · {medicines.length}
         </div> */}
+        <div className="medicine-list-wrapper">
+          <div className="medicine-list">
 
-        <div className="medicine-list">
+            {medicines.map((medicine) => {
+              const Icon = ICON_REGISTRY[medicine.type] ?? Pill;   // now scoped per-iteration
+              return (
+                <div key={medicine.id} className="medicine-card" >
+                  <div className="medicine-name">
+                    <div className={`medicine-icon medicine-icon--${medicine.type}`}>
+                      <Icon size={18} strokeWidth={2} />
+                    </div>
+                    <div>
+                      <h4>
+                        {medicine.name}
+                        <span>{medicine.dose}</span>
+                      </h4>
+                    </div>
+                  </div>
 
-          {medicines.map((medicine) => (
-
-            <div key={medicine.id} className="medicine-card" >
-              <div className="medicine-name">
-                <div>
-                  <h4>
-                    {medicine.name}
-                    <span>{medicine.dose}</span>
-                  </h4>
+                  <div className="dose-timeline">
+                    {slots.map((slot, i) => (
+                      <React.Fragment key={slot}>
+                        <div className="dose-stack">
+                          <span className={`dose-pill ${medicine.schedule[slot] ? "active" : ""}`}>
+                            {slot}
+                          </span>
+                          <span className={`dose-qty ${medicine.schedule[slot] ? "" : "empty"}`}>
+                            {medicine.schedule[slot] || "x"}
+                          </span>
+                        </div>
+                        {i < slots.length - 1 && <span className="dose-line" />}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                  <div className="food-tag">
+                    <span > {medicine.foodTiming} </span>
+                  </div>
+                  <div className={medicine.refill ? "status warning" : "status green"}>
+                    {medicine.refill ? "Refill" : medicine.supply}
+                  </div>
                 </div>
-
-              </div>
-              <div className="dose-timeline">
-                <div className="dose-stack">
-                  <span className={`dose-node ${medicine.times.includes("morning") ? "active" : ""}`} />
-                  <span className="dose-label">M</span>
-                </div>
-                <span className="dose-line" />
-                <div className="dose-stack">
-                  <span className={`dose-node ${medicine.times.includes("afternoon") ? "active" : ""}`} />
-                  <span className="dose-label">A</span>
-                </div>
-                <span className="dose-line" />
-                <div className="dose-stack">
-                  <span className={`dose-node ${medicine.times.includes("night") ? "active" : ""}`} />
-                  <span className="dose-label">N</span>
-                </div>
-              </div>
-              
-              <span className="food-tag">{medicine.foodTiming}</span>
-              <div className={medicine.refill ? "status warning" : "status green"}>
-                {medicine.refill ? "Refill" : medicine.supply}
-              </div>
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
 
         {/* FOOTER */}
@@ -562,12 +581,15 @@ function PatientHomeSection()  {
                   className="notification-card"
                 >
                   <div className="notification-icon">
-                    <Icon size={22} />
+                    <Icon size={20} />
                   </div>
                   <div className="notification-content">
-                    <h4>{item.title}</h4>
+                    <div className="notification-time">
+                      <h4>{item.title}</h4>
+                      <span>{item.time}</span>
+                    </div>
                     <p>{item.message}</p>
-                    <span>{item.time}</span>
+                    
                   </div>
                 </div>
               );
