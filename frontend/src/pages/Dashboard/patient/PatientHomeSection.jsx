@@ -1,6 +1,6 @@
 import React from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
-import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan} from "lucide-react";
+import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan,Apple,Dumbbell,Moon,HeartHandshake,ChevronLeft,BadgeCheck,Hospital,UserRound} from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../../assets/home/doc3.png";
 
@@ -93,6 +93,32 @@ const labReports = [
 
   {  id: 3,reportName: "Blood Sugar Test",category: "Diabetes",uploadedDate: "2026-06-04",doctorName: "Dr. Ankit Das",fileType: "PDF",fileSize: "1.1 MB",status: "Available"}
 ];
+const healthAdvice = [
+  {  id: 1,  title: "Stay Hydrated",  description: "Drink 8–10 glasses of water daily to maintain proper hydration and body functions.",  icon: Droplets,  category: "Daily Habit",  color: "#E8F7FF" },
+
+  {  id: 2,  title: "Eat Healthy",  description: "Include fruits, vegetables, whole grains and lean proteins in your daily meals.",  icon: Apple,  category: "Nutrition",  color: "#FFF4E6"   },
+
+  {  id: 3,  title: "Exercise Daily",  description: "Aim for at least 30 minutes of moderate physical activity every day.",  icon: Dumbbell,  category: "Fitness",  color: "#F3F0FF"   },
+
+  {  id: 4,  title: "Sleep Well",  description: "Maintain a consistent sleep schedule and get 7–8 hours of quality sleep.",  icon: Moon,  category: "Wellness",  color: "#EEF5FF"   },
+
+  {  id: 5,  title: "Manage Stress",  description: "Practice meditation, breathing exercises or mindfulness for better mental health.",  icon: HeartHandshake,  category: "Mental Health",  color: "#FFF0F3"   },
+
+  {  id: 6,  title: "Regular Checkup",  description: "Visit your doctor regularly for preventive health screenings and early diagnosis.",  icon: Stethoscope,  category: "Prevention",  color: "#ECFFF3"   },
+
+];
+const insurance = {
+  provider: "HealthCare Plus Insurance",
+  policyNo: "HC-45789-AX",
+  memberId: "PT-458921",
+  validity: "31 Dec 2027",
+  coverage: "₹5,00,000",
+  type: "Cashless",
+  hospital: "AMS Hospital",
+  room: "Private Room",
+  status: "Active"
+};
+
 const medicalRecords = { diagnoses: 12,surgeries: 2,allergies: 3 };
 const recentRecords = [
   { title: "Annual Health Checkup", date: "12 Jun 2026" },
@@ -452,112 +478,106 @@ const Icon = ICON_REGISTRY[medicines.type] ?? Pill;
         {/* Prescription */}
         <section className="prescription-card">
 
-        {/* HEADER */}
-
-        <div className="prescription-header">
-          <div className="header-left">
-            <div className="icon-circle">
-              <FileText size={20} />
+          {/* HEADER */}
+          <div className="prescription-header">
+            <div className="header-left">
+              <div className="icon-circle">
+                <FileText size={20} />
+              </div>
+              <h2>Prescription</h2>
             </div>
-            <h2>Prescription</h2>
-          </div>
-          <div className="rx-number">
-            Rx-2026-0417
-          </div>
-          {/* <div className="rx-number">
-            Rx-2026-0417
-          </div> */}
-          
-        </div>
-
-        {/* DOCTOR */}
-
-        {/* <div className="doctor-section">
-          <div className="doctor-left">
-            <div className="icon-circle doctor">
-              <Stethoscope size={22} />
+            <div className="rx-number">
+              Rx-2026-0417
             </div>
-            <div>
-              <h3>Dr. Rajesh Sharma</h3>
-              <p>MBBS, MD · Cardiology</p>
-            </div>
+            {/* <div className="rx-number">
+              Rx-2026-0417
+            </div> */}
+            
           </div>
 
-          <div className="issued-date">
+                {/* DOCTOR */}
 
-            <span>Issued</span>
-
-            <strong>18 Jun 2026</strong>
-
-          </div>
-
-        </div> */}
-
-        {/* MEDICINES */}
-
-        {/* <div className="medicine-title">
-          Medicines · {medicines.length}
-        </div> */}
-        <div className="medicine-list-wrapper">
-          <div className="medicine-list">
-
-            {medicines.map((medicine) => {
-              const Icon = ICON_REGISTRY[medicine.type] ?? Pill;   // now scoped per-iteration
-              return (
-                <div key={medicine.id} className="medicine-card" >
-                  <div className="medicine-name">
-                    <div className={`medicine-icon medicine-icon--${medicine.type}`}>
-                      <Icon size={18} strokeWidth={2} />
+                {/* <div className="doctor-section">
+                  <div className="doctor-left">
+                    <div className="icon-circle doctor">
+                      <Stethoscope size={22} />
                     </div>
                     <div>
-                      <h4>
-                        {medicine.name}
-                        <span>{medicine.dose}</span>
-                      </h4>
+                      <h3>Dr. Rajesh Sharma</h3>
+                      <p>MBBS, MD · Cardiology</p>
                     </div>
                   </div>
 
-                  <div className="dose-timeline">
-                    {slots.map((slot, i) => (
-                      <React.Fragment key={slot}>
-                        <div className="dose-stack">
-                          <span className={`dose-pill ${medicine.schedule[slot] ? "active" : ""}`}>
-                            {slot}
-                          </span>
-                          <span className={`dose-qty ${medicine.schedule[slot] ? "" : "empty"}`}>
-                            {medicine.schedule[slot] || "x"}
-                          </span>
-                        </div>
-                        {i < slots.length - 1 && <span className="dose-line" />}
-                      </React.Fragment>
-                    ))}
+                  <div className="issued-date">
+
+                    <span>Issued</span>
+
+                    <strong>18 Jun 2026</strong>
+
                   </div>
-                  <div className="food-tag">
-                    <span > {medicine.foodTiming} </span>
+
+                </div> */}
+
+          {/* MEDICINES */}
+          <div className="medicine-list-wrapper">
+            <div className="medicine-list">
+
+              {medicines.map((medicine) => {
+                const Icon = ICON_REGISTRY[medicine.type] ?? Pill;   // now scoped per-iteration
+                return (
+                  <div key={medicine.id} className="medicine-card" >
+                    <div className="medicine-name">
+                      <div className={`medicine-icon medicine-icon--${medicine.type}`}>
+                        <Icon size={18} strokeWidth={2} />
+                      </div>
+                      <div>
+                        <h4>
+                          {medicine.name}
+                          <span>{medicine.dose}</span>
+                        </h4>
+                      </div>
+                    </div>
+
+                    <div className="dose-timeline">
+                      {slots.map((slot, i) => (
+                        <React.Fragment key={slot}>
+                          <div className="dose-stack">
+                            <span className={`dose-pill ${medicine.schedule[slot] ? "active" : ""}`}>
+                              {slot}
+                            </span>
+                            <span className={`dose-qty ${medicine.schedule[slot] ? "" : "empty"}`}>
+                              {medicine.schedule[slot] || "x"}
+                            </span>
+                          </div>
+                          {i < slots.length - 1 && <span className="dose-line" />}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                    <div className="food-tag">
+                      <span > {medicine.foodTiming} </span>
+                    </div>
+                    <div className={medicine.refill ? "status warning" : "status green"}>
+                      {medicine.refill ? "Refill" : medicine.supply}
+                    </div>
                   </div>
-                  <div className={medicine.refill ? "status warning" : "status green"}>
-                    {medicine.refill ? "Refill" : medicine.supply}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
 
-        {/* FOOTER */}
+          {/* FOOTER */}
+          <div className="prescription-footer">
 
-        <div className="prescription-footer">
+            <button className="outline-btn">
+              View Full Prescription
+            </button>
 
-          <button className="outline-btn">
-            View Full Prescription
-          </button>
+            <button className="download-btn">
+              <Download size={18} />
+              Download
+            </button>
 
-          <button className="download-btn">
-            <Download size={18} />
-            Download
-          </button>
-
-        </div>
+          </div>
         </section>
 
         {/* Notification */}
@@ -598,9 +618,96 @@ const Icon = ICON_REGISTRY[medicines.type] ?? Pill;
         </section>
       </section>
 
-
       <section className="patient-health-wrapper">
-        {/* Quick Links */}
+        
+        {/* Insurance  */}
+        <section className="insurance-card">
+          <div className="insurance-header">
+            <div className="insurance-title">
+              <div className="insurance-icon">
+                <ShieldCheck size={18}/>
+              </div>
+
+              <div>
+                <h3>Insurance</h3>
+                <span>Medical Coverage</span>
+              </div>
+            </div>
+
+            <span className="insurance-status">
+              <BadgeCheck size={14}/>
+              {insurance.status}
+            </span>
+          </div>
+
+          <div className="insurance-provider">
+            {insurance.provider}
+          </div>
+
+          <div className="insurance-grid">
+
+            <div className="insurance-item">
+              <CreditCard size={16}/>
+              <div>
+                <label>Policy No.</label>
+                <span>{insurance.policyNo}</span>
+              </div>
+            </div>
+
+            <div className="insurance-item">
+              <UserRound size={16}/>
+              <div>
+                <label>Member ID</label>
+                <span>{insurance.memberId}</span>
+              </div>
+            </div>
+
+            <div className="insurance-item">
+              <ShieldCheck size={16}/>
+              <div>
+                <label>Coverage</label>
+                <span>{insurance.type}</span>
+              </div>
+            </div>
+
+            <div className="insurance-item">
+              <CalendarDays size={16}/>
+              <div>
+                <label>Valid Till</label>
+                <span>{insurance.validity}</span>
+              </div>
+            </div>
+
+            <div className="insurance-item">
+              <Hospital size={16}/>
+              <div>
+                <label>Network Hospital</label>
+                <span>{insurance.hospital}</span>
+              </div>
+            </div>
+
+            <div className="insurance-item">
+              <ShieldCheck size={16}/>
+              <div>
+                <label>Room</label>
+                <span>{insurance.room}</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="insurance-footer">
+            <div className="coverage">
+              <IndianRupee size={16}/>
+              <span>{insurance.coverage}</span>
+            </div>
+            <button>
+              View Policy →
+            </button>
+          </div>
+        </section>
+
+        {/* Quick Links */}    
         <section className="patient-quick-links">
           <h2>Quick Actions</h2>
           {quickActions.map((item, index) => {
@@ -616,6 +723,52 @@ const Icon = ICON_REGISTRY[medicines.type] ?? Pill;
             );
           })}
         </section>
+
+        {/* Health Advice */}
+        <section className="health-carousel">
+
+          <div className="health-carousel-header">
+            <div>
+                <h2>Health Advice</h2>
+                <p>Simple tips for a healthier lifestyle</p>
+            </div>
+            <button>View All</button>
+          </div>
+
+          <div className="carousel-wrapper">
+              <button className="arrow left"> <ChevronLeft /></button>
+              <div className="carousel-track">
+                  {healthAdvice.map((item)=>{
+                      const Icon = item.icon;
+                      return(
+                        <div className="health-card" key={item.id} >
+                            <div className="health-image" style={{background:item.color}} >
+                                <Icon size={56}/>
+                            </div>
+
+                            <div className="health-body">
+                                <h3>{item.title}</h3>
+                                <p>{item.description}</p>
+                                <span>{item.category}</span>
+                            </div>
+                        </div>
+                      )
+                  })}
+              </div>
+              <button className="arrow right">
+                  <ChevronRight />
+              </button>
+          </div>
+
+          <div className="carousel-dots">
+              <span className="active"></span>
+              <span></span>
+              <span></span>
+              <span></span>
+          </div>
+        </section>
+        
+
       </section>
 
       <section className="medical-records-section">

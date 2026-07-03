@@ -246,15 +246,7 @@
   font-size:13px;
   color:rgba(250, 250, 250, 0.65);
 }
-.patient-health-wrapper{
-  display:grid;
-  grid-template-columns:4fr 1fr;
-  gap:24px;
-  margin-top:10px;
-  width:min(92vw,1600px);
-  margin-left:auto;
-  margin-right:auto;
-}
+
 
 /* ===========================
    SHARED WIDGET STYLES
@@ -1092,19 +1084,14 @@
   grid-template-columns: 1.9fr 1fr;
   gap: 20px;
 }
-
-
 .prescription-card{
     background:#c6d2eb;
     border-radius:36px;
     overflow:hidden;
     /* border:2px solid #2858b8; */
 }
-
 /* HEADER */
-
 .prescription-header{
-
     height:85px;
     background:#0f3b6e;
     color:#fff;
@@ -1114,7 +1101,6 @@
     padding: 25px 50px;
     position:relative;
 }
-
 .prescription-header::after{
     content:"";
     position:absolute;
@@ -1203,18 +1189,6 @@
     color:#12396d;
 } */
 
-/* TITLE */
-
-/* .medicine-title{
-    border-top:1px solid rgba(0,0,0,.08);
-    padding:28px 36px 10px;
-    text-transform:uppercase;
-    letter-spacing:1px;
-    color:#45638d;
-    font-size:18px;
-    font-weight:700;
-} */
-
 /* LIST */
 .medicine-list-wrapper {
   padding: 30px 20px 10px 30px;   /* the fixed spacing, now OUTSIDE the scroll boundary */
@@ -1255,13 +1229,13 @@
   background: #fff;
   border-radius: 18px;
   border: 1px solid #eef2f7;
-  box-shadow: 0 3px 12px rgba(15, 23, 42, .05);
+  /* box-shadow: 0 3px 12px rgba(15, 23, 42, .05); */
   transition: .25s;
 }
 
 .medicine-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(15, 23, 42, .08);
+  /* box-shadow: 0 10px 24px rgba(15, 23, 42, .08); */
 }
 
 .medicine-card h4 {
@@ -1368,7 +1342,7 @@
 
 .status {
   padding: 8px 14px;
-  border-radius: 30px;
+  border-radius: 10px;
   font-weight: 500;
   text-align: center;
   font-size: 13px;
@@ -1377,7 +1351,7 @@
 
 .status.green{
   padding:8px 0px;
-  border-radius:30px;
+  border-radius:10px;
   font-weight:500;
   align-items: center;
   background: #dff7ee;
@@ -1437,34 +1411,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .notifications-section{
     position: relative;
     overflow: hidden;
@@ -1490,8 +1436,6 @@
     position: relative;
     z-index: 2;
 }
-
-
 .notification-list {
   display: flex;
   flex-direction: column;
@@ -1502,7 +1446,6 @@
   overflow-x: hidden;
   padding-right: 6px; /* Prevent scrollbar overlap */
 }
-
 /* Modern Scrollbar */
 .notification-list::-webkit-scrollbar {
   width: 6px;
@@ -1626,6 +1569,408 @@
 
 
 
+.patient-health-wrapper{
+  display:grid;
+  grid-template-columns:1fr  0.8fr 1fr;
+  gap:24px;
+  margin-top:10px;
+  width:min(92vw,1600px);
+  margin-left:auto;
+  margin-right:auto;
+}
+
+
+
+
+
+
+.insurance-card{
+    background:#fff;
+    border-radius:22px;
+    padding:22px;
+    box-shadow:0 12px 35px rgba(0,0,0,.06);
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    border:1px solid #eef2f7;
+}
+
+/* ---------- Header ---------- */
+
+.insurance-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.insurance-title{
+    display:flex;
+    gap:14px;
+    align-items:center;
+}
+
+.insurance-icon{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    background:#edf7ff;
+    color:#1b84ff;
+    display:grid;
+    place-items:center;
+}
+
+.insurance-title h3{
+    font-size:18px;
+    color:#22324d;
+    font-weight:700;
+    margin:0;
+}
+
+.insurance-title span{
+    font-size:13px;
+    color:#7a889d;
+}
+
+.insurance-status{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:#ecfdf3;
+    color:#0c8f4d;
+    font-size:13px;
+    font-weight:600;
+    padding:7px 12px;
+    border-radius:50px;
+}
+
+/* ---------- Provider ---------- */
+
+.insurance-provider{
+    font-size:17px;
+    font-weight:700;
+    color:#28466b;
+}
+
+/* ---------- Grid ---------- */
+
+.insurance-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+}
+
+.insurance-item{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+}
+
+.insurance-item svg{
+    color:#1b84ff;
+    margin-top:2px;
+    flex-shrink:0;
+}
+
+.insurance-item label{
+    display:block;
+    font-size:12px;
+    color:#7f8ea3;
+    margin-bottom:4px;
+}
+
+.insurance-item span{
+    font-size:14px;
+    color:#2a3d57;
+    font-weight:600;
+}
+
+/* ---------- Footer ---------- */
+
+.insurance-footer{
+    border-top:1px solid #eef3f7;
+    padding-top:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.coverage{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#0c8f4d;
+    font-weight:700;
+    font-size:17px;
+}
+
+.coverage svg{
+    color:#0c8f4d;
+}
+
+.insurance-footer button{
+    border:none;
+    background:#eaf4ff;
+    color:#1976d2;
+    padding:10px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.25s;
+}
+
+.insurance-footer button:hover{
+    background:#d9ebff;
+}
+
+@media(max-width:700px){
+
+.insurance-grid{
+    grid-template-columns:1fr;
+}
+
+.insurance-footer{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+/* ===========================================
+   HEALTH ADVICE CAROUSEL
+=========================================== */
+
+.health-carousel {
+    width: 100%;
+    background: #fff;
+    border-radius: 24px;
+    padding: 2rem;
+    border: 1px solid #edf1f7;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+    overflow: hidden;
+}
+
+/* ================= HEADER ================= */
+
+.health-carousel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.health-carousel-header h2 {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: .35rem;
+}
+
+.health-carousel-header p {
+    color: #6b7280;
+    font-size: .96rem;
+}
+
+.health-carousel-header button {
+    height: 46px;
+    padding: 0 1.3rem;
+    border-radius: 14px;
+    border: 1px solid #d7e5ff;
+    background: white;
+    color: #2563eb;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.health-carousel-header button:hover {
+    background: #2563eb;
+    color: white;
+}
+
+/* ================= WRAPPER ================= */
+
+.carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* ================= ARROWS ================= */
+
+.arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    box-shadow: 0 6px 20px rgba(0,0,0,.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .25s;
+    flex-shrink: 0;
+}
+
+.arrow:hover {
+    background: #2563eb;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* ================= TRACK ================= */
+
+.carousel-track {
+    display: flex;
+    gap: 1.3rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: .4rem;
+
+    scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar{
+    display:none;
+}
+
+/* ================= CARD ================= */
+
+.health-card {
+    min-width: clamp(240px,22vw,285px);
+    max-width: 285px;
+    border-radius: 22px;
+    overflow: hidden;
+    background: white;
+    border: 1px solid #edf2f7;
+    transition: .3s;
+    flex-shrink:0;
+}
+
+.health-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 18px 35px rgba(37,99,235,.12);
+}
+
+/* ================= TOP ================= */
+
+.health-image{
+    height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.health-image svg{
+    color:#2563eb;
+}
+
+/* ================= BODY ================= */
+
+.health-body{
+    padding:1.4rem;
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
+}
+
+.health-body h3{
+    font-size:1.25rem;
+    color:#1f2937;
+    font-weight:700;
+}
+
+.health-body p{
+    color:#6b7280;
+    font-size:.94rem;
+    line-height:1.65;
+    min-height:95px;
+}
+
+/* ================= CATEGORY ================= */
+
+.health-body span{
+    align-self:flex-start;
+    padding:.45rem .9rem;
+    border-radius:999px;
+    background:#eef4ff;
+    color:#2563eb;
+    font-size:.82rem;
+    font-weight:600;
+}
+
+/* ================= DOTS ================= */
+
+.carousel-dots{
+    display:flex;
+    justify-content:center;
+    gap:.65rem;
+    margin-top:2rem;
+}
+
+.carousel-dots span{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#d5d9e2;
+    transition:.25s;
+}
+
+.carousel-dots .active{
+    width:34px;
+    border-radius:999px;
+    background:#2563eb;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width:1200px){
+    .health-card{
+        min-width:260px;
+    }
+}
+
+@media (max-width:992px){
+    .health-carousel{
+        padding:1.5rem;
+    }
+}
+
+@media (max-width:768px){
+    .health-carousel-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:1rem;
+    }
+    .arrow{
+        display:none;
+    }
+}
+
+@media (max-width:576px){
+    .health-card{
+        min-width:100%;
+        max-width:100%;
+    }
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -1686,6 +2031,11 @@
 .quick-link-item:hover span{
   color:#2563eb;
 }
+
+
+
+
+
 
 
 
