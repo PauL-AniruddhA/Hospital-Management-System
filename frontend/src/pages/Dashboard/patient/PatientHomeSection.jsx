@@ -1,6 +1,6 @@
-import React from 'react';
+import React , { useRef, useState, useEffect } from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
-import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan,Apple,Dumbbell,Moon,HeartHandshake,ChevronLeft,BadgeCheck,Hospital,UserRound} from "lucide-react";
+import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan,Apple,Dumbbell,Moon,HeartHandshake,ChevronLeft,BadgeCheck,Hospital,UserRound,BedDouble } from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../../assets/home/doc3.png";
 
@@ -108,15 +108,15 @@ const healthAdvice = [
 
 ];
 const insurance = {
+  status: "Active",
   provider: "HealthCare Plus Insurance",
-  policyNo: "HC-45789-AX",
   memberId: "PT-458921",
-  validity: "31 Dec 2027",
-  coverage: "₹5,00,000",
+  policyNo: "HC-45789-AX",
   type: "Cashless",
+  validity: "31 Dec 2027",
   hospital: "AMS Hospital",
   room: "Private Room",
-  status: "Active"
+  coverage: "5,00,000",
 };
 
 const medicalRecords = { diagnoses: 12,surgeries: 2,allergies: 3 };
@@ -145,14 +145,45 @@ const notifications = [
 
 
 function PatientHomeSection()  {
-const Icon = ICON_REGISTRY[medicines.type] ?? Pill;
+
+  const trackRef = useRef(null);
+  const cardRefs = useRef([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeItem = healthAdvice[activeIndex];
+  const ActiveIcon = activeItem.icon;
+ 
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+ 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const mostVisible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+ 
+        if (mostVisible) {
+          const idx = cardRefs.current.indexOf(mostVisible.target);
+          if (idx !== -1) setActiveIndex(idx);
+        }
+      },
+      { root: track, threshold: [0.5, 0.75, 1] }
+    );
+ 
+    cardRefs.current.forEach((card) => card && observer.observe(card));
+    return () => observer.disconnect();
+  }, []);
+ 
+  const scrollToIndex = (index) => {
+    const card = cardRefs.current[index];
+    card?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+  };
+
   const nextAppointment = appointments
     .filter((a) => a.status === "Upcoming")
     .sort((a, b) => new Date(a.appointmentDate) - new Date(b.appointmentDate))[0];
 
-  if (!nextAppointment) {
-    return <div className="patient-home">{/* empty-state UI */}</div>;
-  }
+  if (!nextAppointment) {return <div className="patient-home">{/* empty-state UI */}</div>; }
 
   const [year, month0, dateNum] = nextAppointment.appointmentDate
     .split("-")
@@ -622,89 +653,87 @@ const Icon = ICON_REGISTRY[medicines.type] ?? Pill;
         
         {/* Insurance  */}
         <section className="insurance-card">
+          {/* Header */}
           <div className="insurance-header">
             <div className="insurance-title">
               <div className="insurance-icon">
-                <ShieldCheck size={18}/>
+                <ShieldCheck size={20} />
               </div>
-
               <div>
                 <h3>Insurance</h3>
-                <span>Medical Coverage</span>
               </div>
             </div>
-
+    
             <span className="insurance-status">
-              <BadgeCheck size={14}/>
+              <span className="status-dot" />
               {insurance.status}
             </span>
           </div>
-
-          <div className="insurance-provider">
-            {insurance.provider}
+    
+          {/* ID band */}
+          <div className="insurance-id-band">
+            <p className="id-label">Provider</p>
+            <p className="id-provider">{insurance.provider}</p>
+    
+            <div className="id-row">
+              <div>
+                <p className="id-label">Member ID</p>
+                <p className="id-value">{insurance.memberId}</p>
+              </div>
+              <div className="id-right">
+                <p className="id-label">Policy No.</p>
+                <p className="id-value">{insurance.policyNo}</p>
+              </div>
+            </div>
           </div>
-
+    
+          {/* Detail grid */}
           <div className="insurance-grid">
-
             <div className="insurance-item">
-              <CreditCard size={16}/>
-              <div>
-                <label>Policy No.</label>
-                <span>{insurance.policyNo}</span>
-              </div>
+              <p className="item-label">
+                <ShieldCheck size={13} /> Coverage
+              </p>
+              <p className="item-value">{insurance.type}</p>
             </div>
-
+    
+            <div className="insurance-item bordered-left">
+              <p className="item-label">
+                <CalendarDays size={13} /> Valid Till
+              </p>
+              <p className="item-value">{insurance.validity}</p>
+            </div>
+    
             <div className="insurance-item">
-              <UserRound size={16}/>
-              <div>
-                <label>Member ID</label>
-                <span>{insurance.memberId}</span>
-              </div>
+              <p className="item-label">
+                <Hospital size={13} /> Network Hospital
+              </p>
+              <p className="item-value">{insurance.hospital}</p>
             </div>
-
-            <div className="insurance-item">
-              <ShieldCheck size={16}/>
-              <div>
-                <label>Coverage</label>
-                <span>{insurance.type}</span>
-              </div>
+    
+            <div className="insurance-item bordered-left">
+              <p className="item-label">
+                <BedDouble size={13} /> Room
+              </p>
+              <p className="item-value">{insurance.room}</p>
             </div>
-
-            <div className="insurance-item">
-              <CalendarDays size={16}/>
-              <div>
-                <label>Valid Till</label>
-                <span>{insurance.validity}</span>
-              </div>
-            </div>
-
-            <div className="insurance-item">
-              <Hospital size={16}/>
-              <div>
-                <label>Network Hospital</label>
-                <span>{insurance.hospital}</span>
-              </div>
-            </div>
-
-            <div className="insurance-item">
-              <ShieldCheck size={16}/>
-              <div>
-                <label>Room</label>
-                <span>{insurance.room}</span>
-              </div>
-            </div>
-
           </div>
-
+    
+          {/* Footer */}
           <div className="insurance-footer">
-            <div className="coverage">
-              <IndianRupee size={16}/>
-              <span>{insurance.coverage}</span>
+            <div>
+              <p className="coverage-label">Total coverage</p>
+              <p className="coverage-value">
+                <IndianRupee size={16} />
+                {insurance.coverage}
+              </p>
             </div>
-            <button>
-              View Policy →
+    
+            <button className="view-policy-btn">
+              View Policy
+              <ArrowRight size={15} />
             </button>
           </div>
+    
         </section>
 
         {/* Quick Links */}    
@@ -726,45 +755,52 @@ const Icon = ICON_REGISTRY[medicines.type] ?? Pill;
 
         {/* Health Advice */}
         <section className="health-carousel">
-
           <div className="health-carousel-header">
-            <div>
-                <h2>Health Advice</h2>
-                <p>Simple tips for a healthier lifestyle</p>
+            <div className="carousel-header">
+              <div className="header-icon-tile" style={{ background: activeItem.color }}>
+                <ActiveIcon size={20} />
+              </div>
+              <h2>Health Advice</h2>
             </div>
             <button>View All</button>
           </div>
-
+    
           <div className="carousel-wrapper">
-              <button className="arrow left"> <ChevronLeft /></button>
-              <div className="carousel-track">
-                  {healthAdvice.map((item)=>{
-                      const Icon = item.icon;
-                      return(
-                        <div className="health-card" key={item.id} >
-                            <div className="health-image" style={{background:item.color}} >
-                                <Icon size={56}/>
-                            </div>
-
-                            <div className="health-body">
-                                <h3>{item.title}</h3>
-                                <p>{item.description}</p>
-                                <span>{item.category}</span>
-                            </div>
-                        </div>
-                      )
-                  })}
-              </div>
-              <button className="arrow right">
-                  <ChevronRight />
-              </button>
+            <div className="carousel-track" ref={trackRef}>
+              {healthAdvice.map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    className="health-card"
+                    key={item.id}
+                    ref={(el) => (cardRefs.current[i] = el)}
+                  >
+                    <div className="health-image" style={{ background: item.color }}>
+                      <Icon size={56} />
+                    </div>
+    
+                    <div className="health-body">
+                      <h3>{item.title}</h3>
+                      <p>{item.description}</p>
+                      <span>{item.category}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-
+    
           <div className="carousel-dots">
-              <span className="active"></span>
-              <span></span>
-              <span></span>
-              <span></span>
+            {healthAdvice.map((item, i) => (
+              <span
+                key={item.id}
+                className={i === activeIndex ? "active" : ""}
+                onClick={() => scrollToIndex(i)}
+                role="button"
+                tabIndex={0}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
           </div>
         </section>
         
