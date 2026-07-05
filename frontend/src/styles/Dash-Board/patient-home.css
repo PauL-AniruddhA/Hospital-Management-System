@@ -1810,263 +1810,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-/* ===========================================
-   HEALTH ADVICE CAROUSEL
-=========================================== */
-
-/* .health-carousel {
-  width: 100%;
-  background: #c6d2eb;
-  border-radius: 24px;
-  border: 1px solid #c6d2eb;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
-  overflow: hidden;
-} */
-
-/* ================= HEADER ================= */
-
-/* .health-carousel-header {
-  padding: 20px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  position: relative;
-  overflow: hidden;
-}
-.health-carousel-header::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:#0f3b6e;
-  clip-path: polygon(0 0, 70% 0, 0 269%);
-  z-index: 16;
-}
-.carousel-header{
-    display: flex;
-    gap: 17px;
-    align-items: center;
-    z-index: 17;
-    position: relative;
-}
-.header-icon-tile {
-  width: 38px;
-  height: 38px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: background-color 0.3s ease;
-}
-
-.header-icon-tile svg {
-  color: #2563eb;
-}
-
-.carousel-header h2 {
-  font-size: 20px;
-  color: #fff;
-  margin-bottom: 0.35rem;
-}
-
-.health-carousel-header button {
-  height: 46px;
-  padding: 0 1.3rem;
-  border-radius: 30px;
-  border: 1px solid #d7e5ff;
-  background: white;
-  color: #2563eb;
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-.health-carousel-header button:hover {
-  background: #2563eb;
-  color: white;
-} */
-
-/* ================= WRAPPER ================= */
-
-/* .carousel-wrapper {
-  margin: 20px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-} */
-
-
-/* ================= TRACK ================= */
-
-/* .carousel-track {
-  display: flex;
-  gap: 0;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding-bottom: 0.4rem;
-  scrollbar-width: none;
-  scroll-snap-type: x mandatory;
-  width: 100%;
-}
-
-.carousel-track::-webkit-scrollbar {
-  display: none;
-} */
-
-/* ================= CARD ================= */
-
-/* .health-card {
-  margin-top: 11px;
-  flex: 0 0 100%;  
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;   
-  border-radius: 22px;
-  overflow: hidden;
-  background: white;
-  border: 1px solid #edf2f7;
-  transition: transform 0.3s, box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
-}
-
-.health-card:hover {
-  transform: translateY(-8px);
-} */
-
-/* ================= TOP ================= */
-
-/* .health-image {
-  aspect-ratio: 30 / 10; height derives from width, so it never mismatches on resize */
-  /* width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-}
-
-.health-image svg {
-  width: clamp(36px, 18%, 56px); 
-  height: auto;
-  color: #2563eb;
-} */
-
-/* ================= BODY ================= */
-
-/* .health-body {
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  flex: 1;
-} 
-
-.health-body h3 {
-  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
-  color: #1f2937;
-  font-weight: 700;
-}
-
-.health-body p {
-  color: #6b7280;
-  font-size: 0.92rem;
-  line-height: 1.6;
-  flex: 1;
-  display: -webkit-box;
-  line-clamp: 3;
-  -webkit-line-clamp: 3; clamps overflow instead of reserving a fixed min-height
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* ================= CATEGORY ================= */
-
-/* .health-body span {
-  align-self: flex-start;
-  padding: 0.45rem 0.9rem;
-  border-radius: 999px;
-  background: #eef4ff;
-  color: #2563eb;
-  font-size: 0.82rem;
-  font-weight: 600;
-  margin-top: auto; /* pins the chip to the card bottom regardless of description length */
-/* } */ 
-
-/* ================= DOTS ================= */
-
-/* .carousel-dots {
-  padding: 10px 2rem;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 0.65rem;
-}
-
-.carousel-dots span {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #d5d9e2;
-  transition: 0.25s;
-  cursor: pointer;
-}
-
-.carousel-dots .active {
-  width: 10px;
-  border-radius: 999px;
-  background: #2563eb;
-} */
-
-/* ================= RESPONSIVE ================= */
-/* 
-@media (max-width:1200px){
-    .health-card{
-        min-width:260px;
-    }
-}
-
-@media (max-width:992px){
-    .health-carousel{
-        padding:1.5rem;
-    }
-}
-
-@media (max-width:768px){
-    .health-carousel-header{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:1rem;
-    }
-    .arrow{
-        display:none;
-    }
-}
-
-@media (max-width:576px){
-    .health-card{
-        min-width:100%;
-        max-width:100%;
-    }
-} */
-
-
-/* ===========================================
-   HEALTH ADVICE CAROUSEL
-=========================================== */
-
 /* ===========================================
    HEALTH ADVICE CAROUSEL
 =========================================== */
@@ -2075,7 +1818,7 @@
   width: 100%;
   background: #eef1fb; /* light page background so the floating stats bar reads as raised */
   border-radius: 24px;
-  border: 1px solid #e4e9f7;
+  /* border: 1px solid #e4e9f7; */
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
   overflow: hidden;
 }
@@ -2083,16 +1826,28 @@
 /* ================= HEADER ================= */
 
 .health-carousel-header {
-  padding: 20px 24px 0;
+  padding: 20px 24px 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 19;
+}
+.health-carousel-header::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:#0f3b6e;
+  clip-path: polygon(0 0, 70% 0, 0 270%);
+  z-index:18;
 }
 
 .carousel-header {
   display: flex;
   gap: 12px;
   align-items: center;
+  z-index: 19;
 }
 
 .header-icon-tile {
@@ -2107,9 +1862,9 @@
 }
 
 .carousel-header h2 {
-  font-size: 17px;
-  font-weight: 700;
-  color: #1f2937;
+  font-size: 20px;
+  /* font-weight: 700; */
+  color: #fff;
   margin: 0;
 }
 
@@ -2135,7 +1890,7 @@
 /* ================= WRAPPER ================= */
 
 .carousel-wrapper {
-  margin: 18px 20px 0;
+  margin: 0px 20px 0;
   position: relative;
   display: flex;
   align-items: center;
@@ -2159,8 +1914,6 @@
 }
 
 /* ================= CARD ================= */
-/* Extra bottom padding reserves room for the floating stats bar to overlap into */
-
 .health-card {
   flex: 0 0 100%;
   width: 100%;
@@ -2169,34 +1922,39 @@
   scroll-snap-align: start;
   scroll-snap-stop: always;
   border-radius: 22px;
-  padding: 20px 20px 34px;
+  padding: 20px 20px 25px;
   /* box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05); */
 }
 
-/* ================= TOP: image-left / content-right ================= */
-
 .health-card-top {
-  display: flex;
+    display: flex;
   align-items: center;
   gap: 16px;
+  container-type: inline-size;
+  container-name: health-row;
+  min-width: 0; 
 }
-
-.health-image {
-  flex: 0 0 34%;
-  aspect-ratio: 1 / 1.15;
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* Once a real asset replaces the icon placeholder, drop it in as:
-   <img className="health-illustration-img" ... /> — this fills the same box */
+ 
 .health-illustration-img {
-  width: 100%;
-  height: 100%;
+  flex: 0 0 auto;
+  width: 42cqi;   
+  height: 42cqi;  
+  min-width: 0;   
+  border-radius: 18px;
   object-fit: cover;
+}
+@container health-row (min-width: 500px) {
+  .health-illustration-img {
+    width: 46cqi;
+    height: 46cqi;
+  }
+}
+ 
+@container health-row (min-width: 700px) {
+  .health-illustration-img {
+    width: 50cqi;
+    height: 50cqi;
+  }
 }
 
 .health-content {
@@ -2266,7 +2024,7 @@
 
 .health-stats-bar {
   position: relative;
-  margin: 40px 6px 0;
+  margin: 20px 6px 0;
   background: #ffffff;
   border-radius: 18px;
   /* box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1); */
@@ -2304,7 +2062,7 @@
 /* ================= DOTS ================= */
 
 .carousel-dots {
-  padding: 16px 2rem 20px;
+  padding: 15px 2rem 15px;
   display: flex;
   justify-content: center;
   gap: 0.5rem;
@@ -2330,9 +2088,6 @@
 @media (max-width: 480px) {
   .health-card-top {
     gap: 12px;
-  }
-  .health-image {
-    flex-basis: 30%;
   }
   .health-stat-label {
     font-size: 0.6rem;

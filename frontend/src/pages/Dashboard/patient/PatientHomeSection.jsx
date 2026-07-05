@@ -3,6 +3,11 @@ import "../../../styles/Dash-Board/patient-home.css";
 import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan,Apple,Dumbbell,Moon,HeartHandshake,ChevronLeft,BadgeCheck,Hospital,UserRound,BedDouble } from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../../assets/home/doc3.png";
+import cc1 from "../../../assets/carousel cards/1-stay-hydrated-copy.png";
+import cc2 from "../../../assets/carousel cards/2-eat-healthy-copy.png";
+import cc3 from "../../../assets/carousel cards/3-move-every-day-copy.png";
+import cc4 from "../../../assets/carousel cards/4-get-quality-sleep-copy.png";
+import cc5 from "../../../assets/carousel cards/5-take-time-to-relax-copy.png";
 
 const ICON_REGISTRY = {
   tablet: Pill,
@@ -111,15 +116,14 @@ const healthAdvice = [
   {
     id: 1,
     title: "Stay Hydrated",
-    description:
-      "Drink 8–10 glasses of water daily to maintain proper hydration and body functions.",
+    description:"Drink 8–10 glasses of water daily to maintain proper hydration and body functions.",
     icon: Droplets,
     category: "Daily Wellness",
     backgroundColor:"yellow",
     color: "#EAF6FF",
     accent: "#2F9BE8",
     // Placeholder for illustration — drop the real asset in and swap the div below for <img src={...} alt={...} />
-    image: null,
+    image: cc1,
     stats: [
       { icon: Droplets, label: "Prevents Dehydration" },
       { icon: HeartHandshake, label: "Supports Heart Health" },
@@ -137,7 +141,7 @@ const healthAdvice = [
     backgroundColor:"#b3660f",
     color: "#FFF1E6",
     accent: "#F08A3C",
-    image: null,
+    image: cc2,
     stats: [
       { icon: Apple, label: "Rich in Vitamins" },
       { icon: Droplets, label: "High Fiber" },
@@ -155,7 +159,7 @@ const healthAdvice = [
     backgroundColor:"Blue",
     color: "#F2EEFF",
     accent: "#7C5CFC",
-    image: null,
+    image: cc3,
     stats: [
       { icon: Dumbbell, label: "Strong Muscles" },
       { icon: HeartHandshake, label: "Better Circulation" },
@@ -173,7 +177,7 @@ const healthAdvice = [
     backgroundColor:"Brown",
     color: "#EAF0FF",
     accent: "#4C6FE7",
-    image: null,
+    image: cc4,
     stats: [
       { icon: HeartHandshake, label: "Better Recovery" },
       { icon: Stethoscope, label: "Sharper Memory" },
@@ -191,7 +195,7 @@ const healthAdvice = [
     backgroundColor:"red",
     color: "#E9FBF1",
     accent: "#2FBE72",
-    image: null,
+    image: cc5,
     stats: [
       { icon: Stethoscope, label: "Better Focus" },
       { icon: HeartHandshake, label: "Lower Blood Pressure" },
@@ -211,7 +215,6 @@ const insurance = {
   room: "Private Room",
   coverage: "5,00,000",
 };
-
 const medicalRecords = { diagnoses: 12,surgeries: 2,allergies: 3 };
 const recentRecords = [
   { title: "Annual Health Checkup", date: "12 Jun 2026" },
@@ -847,92 +850,78 @@ function PatientHomeSection()  {
         </section>
 
         {/* Health Advice */}
-{/* Health Advice */}
-<section className="health-carousel">
-  <div className="health-carousel-header">
-    <div className="carousel-header">
-      <div className="header-icon-tile" style={{ background: activeItem.color }}>
-        <ActiveIcon size={20} color={activeItem.accent} />
-      </div>
-      <h2>Health Advice</h2>
-    </div>
-    <button className="view-all-btn">
-      View All <ChevronRight size={14} />
-    </button>
-  </div>
-
-  <div className="carousel-wrapper">
-    <div className="carousel-track" ref={trackRef}>
-      {healthAdvice.map((item, i) => {
-        const Icon = item.icon;
-        return (
-          <div
-            className="health-card"
-            key={item.id}
-            ref={(el) => (cardRefs.current[i] = el)}
-          >
-            <div className="health-card-top">
-              {/* Illustration placeholder — swap for
-                  <img src={item.image} alt={item.title} className="health-illustration-img" />
-                  Keep the parent's aspect-ratio/border-radius on the <img> itself. */}
-              <div className="health-image" style={{ background: item.color }}>
-                <Icon size={40} color={item.accent} />
+        <section className="health-carousel">
+          <div className="health-carousel-header">
+            <div className="carousel-header">
+              <div className="header-icon-tile" style={{ background: activeItem.color }}>
+                <ActiveIcon size={20} color={activeItem.accent} />
               </div>
-
-              <div className="health-content">
-                <span className="health-tag" style={{ background: item.color, color: item.accent }}>
-                  {item.category}
-                </span>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                <button
-                  className="health-learn-more"
-                  style={{ color: item.accent, borderColor: item.accent }}
-                >
-                  Learn More
-                  <span className="health-learn-more-arrow" style={{ background: item.accent }}>
-                    <ArrowRight size={13} color="#fff" />
-                  </span>
-                </button>
-              </div>
+              <h2>Health Advice</h2>
             </div>
+            <button className="view-all-btn"> View All <ChevronRight size={14} /> </button>
+          </div>
 
-            <div className="health-stats-bar">
-              {item.stats.map((stat, si) => {
-                const StatIcon = stat.icon;
+          <div className="carousel-wrapper">
+            <div className="carousel-track" ref={trackRef}>
+              {healthAdvice.map((item, i) => {
+                const Icon = item.icon;
                 return (
-                  <div className="health-stat-chip" key={si}>
-                    <span className="health-stat-icon" style={{ background: item.color }}>
-                      <StatIcon size={16} color={item.accent} />
-                    </span>
-                    <span className="health-stat-label">{stat.label}</span>
+                  <div className="health-card" key={item.id} ref={(el) => (cardRefs.current[i] = el)}
+                  >
+                    <div className="health-card-top">
+                      <img src={item.image} alt={item.title} className="health-illustration-img" />
+                      <div className="health-content">
+                        <span className="health-tag" style={{ background: item.color, color: item.accent }}>
+                          {item.category}
+                        </span>
+                        <h3>{item.title}</h3>
+                        <p>{item.description}</p>
+                        <button
+                          className="health-learn-more"
+                          style={{ color: item.accent, borderColor: item.accent }}
+                        >
+                          Learn More
+                          <span className="health-learn-more-arrow" style={{ background: item.accent }}>
+                            <ArrowRight size={13} color="#fff" />
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="health-stats-bar">
+                      {item.stats.map((stat, si) => {
+                        const StatIcon = stat.icon;
+                        return (
+                          <div className="health-stat-chip" key={si}>
+                            <span className="health-stat-icon" style={{ background: item.color }}>
+                              <StatIcon size={16} color={item.accent} />
+                            </span>
+                            <span className="health-stat-label">{stat.label}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 );
               })}
             </div>
+
           </div>
-        );
-      })}
-    </div>
 
-
-  </div>
-
-  <div className="carousel-dots">
-    {healthAdvice.map((item, i) => (
-      <span
-        key={item.id}
-        className={i === activeIndex ? "active" : ""}
-        onClick={() => scrollToIndex(i)}
-        role="button"
-        tabIndex={0}
-        aria-label={`Go to slide ${i + 1}`}
-      />
-    ))}
-  </div>
-</section>
+          <div className="carousel-dots">
+            {healthAdvice.map((item, i) => (
+              <span
+                key={item.id}
+                className={i === activeIndex ? "active" : ""}
+                onClick={() => scrollToIndex(i)}
+                role="button"
+                tabIndex={0}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        </section>
         
-
       </section>
 
       <section className="medical-records-section">
