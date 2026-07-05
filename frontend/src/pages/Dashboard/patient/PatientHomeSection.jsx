@@ -93,19 +93,112 @@ const labReports = [
 
   {  id: 3,reportName: "Blood Sugar Test",category: "Diabetes",uploadedDate: "2026-06-04",doctorName: "Dr. Ankit Das",fileType: "PDF",fileSize: "1.1 MB",status: "Available"}
 ];
+// const healthAdvice = [
+//   {  id: 1,  title: "Stay Hydrated",  description: "Drink 8–10 glasses of water daily to maintain proper hydration and body functions.",  icon: Droplets,  category: "Daily Habit",  color: "#E8F7FF" },
+
+//   {  id: 2,  title: "Eat Healthy",  description: "Include fruits, vegetables, whole grains and lean proteins in your daily meals.",  icon: Apple,  category: "Nutrition",  color: "#FFF4E6"   },
+
+//   {  id: 3,  title: "Exercise Daily",  description: "Aim for at least 30 minutes of moderate physical activity every day.",  icon: Dumbbell,  category: "Fitness",  color: "#F3F0FF"   },
+
+//   {  id: 4,  title: "Sleep Well",  description: "Maintain a consistent sleep schedule and get 7–8 hours of quality sleep.",  icon: Moon,  category: "Wellness",  color: "#EEF5FF"   },
+
+//   {  id: 5,  title: "Manage Stress",  description: "Practice meditation, breathing exercises or mindfulness for better mental health.",  icon: HeartHandshake,  category: "Mental Health",  color: "#FFF0F3"   },
+
+//   {  id: 6,  title: "Regular Checkup",  description: "Visit your doctor regularly for preventive health screenings and early diagnosis.",  icon: Stethoscope,  category: "Prevention",  color: "#ECFFF3"   },
+
+// ];
 const healthAdvice = [
-  {  id: 1,  title: "Stay Hydrated",  description: "Drink 8–10 glasses of water daily to maintain proper hydration and body functions.",  icon: Droplets,  category: "Daily Habit",  color: "#E8F7FF" },
-
-  {  id: 2,  title: "Eat Healthy",  description: "Include fruits, vegetables, whole grains and lean proteins in your daily meals.",  icon: Apple,  category: "Nutrition",  color: "#FFF4E6"   },
-
-  {  id: 3,  title: "Exercise Daily",  description: "Aim for at least 30 minutes of moderate physical activity every day.",  icon: Dumbbell,  category: "Fitness",  color: "#F3F0FF"   },
-
-  {  id: 4,  title: "Sleep Well",  description: "Maintain a consistent sleep schedule and get 7–8 hours of quality sleep.",  icon: Moon,  category: "Wellness",  color: "#EEF5FF"   },
-
-  {  id: 5,  title: "Manage Stress",  description: "Practice meditation, breathing exercises or mindfulness for better mental health.",  icon: HeartHandshake,  category: "Mental Health",  color: "#FFF0F3"   },
-
-  {  id: 6,  title: "Regular Checkup",  description: "Visit your doctor regularly for preventive health screenings and early diagnosis.",  icon: Stethoscope,  category: "Prevention",  color: "#ECFFF3"   },
-
+  {
+    id: 1,
+    title: "Stay Hydrated",
+    description:
+      "Drink 8–10 glasses of water daily to maintain proper hydration and body functions.",
+    icon: Droplets,
+    category: "Daily Wellness",
+    backgroundColor:"yellow",
+    color: "#EAF6FF",
+    accent: "#2F9BE8",
+    // Placeholder for illustration — drop the real asset in and swap the div below for <img src={...} alt={...} />
+    image: null,
+    stats: [
+      { icon: Droplets, label: "Prevents Dehydration" },
+      { icon: HeartHandshake, label: "Supports Heart Health" },
+      { icon: Stethoscope, label: "Improves Focus" },
+      { icon: Dumbbell, label: "Boosts Energy" },
+    ],
+  },
+  {
+    id: 2,
+    title: "Eat Healthy",
+    description:
+      "Fill half your plate with vegetables and fruits while including lean proteins and whole grains for a balanced diet.",
+    icon: Apple,
+    category: "Nutrition",
+    backgroundColor:"#b3660f",
+    color: "#FFF1E6",
+    accent: "#F08A3C",
+    image: null,
+    stats: [
+      { icon: Apple, label: "Rich in Vitamins" },
+      { icon: Droplets, label: "High Fiber" },
+      { icon: HeartHandshake, label: "Heart Friendly" },
+      { icon: Dumbbell, label: "More Energy" },
+    ],
+  },
+  {
+    id: 3,
+    title: "Move Every Day",
+    description:
+      "Aim for 30 minutes of walking, cycling, or moderate exercise daily to strengthen your heart and improve overall fitness.",
+    icon: Dumbbell,
+    category: "Fitness",
+    backgroundColor:"Blue",
+    color: "#F2EEFF",
+    accent: "#7C5CFC",
+    image: null,
+    stats: [
+      { icon: Dumbbell, label: "Strong Muscles" },
+      { icon: HeartHandshake, label: "Better Circulation" },
+      { icon: Stethoscope, label: "Healthy Weight" },
+      { icon: Moon, label: "Improves Mood" },
+    ],
+  },
+  {
+    id: 4,
+    title: "Get Quality Sleep",
+    description:
+      "Adults should sleep 7–9 hours every night to improve immunity, memory, and physical recovery.",
+    icon: Moon,
+    category: "Healthy Sleep",
+    backgroundColor:"Brown",
+    color: "#EAF0FF",
+    accent: "#4C6FE7",
+    image: null,
+    stats: [
+      { icon: HeartHandshake, label: "Better Recovery" },
+      { icon: Stethoscope, label: "Sharper Memory" },
+      { icon: Droplets, label: "Strong Immunity" },
+      { icon: Moon, label: "Reduces Stress" },
+    ],
+  },
+  {
+    id: 5,
+    title: "Take Time to Relax",
+    description:
+      "Practice meditation, breathing exercises or mindfulness for better mental health.",
+    icon: HeartHandshake,
+    category: "Mental Wellness",
+    backgroundColor:"red",
+    color: "#E9FBF1",
+    accent: "#2FBE72",
+    image: null,
+    stats: [
+      { icon: Stethoscope, label: "Better Focus" },
+      { icon: HeartHandshake, label: "Lower Blood Pressure" },
+      { icon: Moon, label: "Positive Mood" },
+      { icon: Droplets, label: "Better Sleep" },
+    ],
+  },
 ];
 const insurance = {
   status: "Active",
@@ -754,55 +847,90 @@ function PatientHomeSection()  {
         </section>
 
         {/* Health Advice */}
-        <section className="health-carousel">
-          <div className="health-carousel-header">
-            <div className="carousel-header">
-              <div className="header-icon-tile" style={{ background: activeItem.color }}>
-                <ActiveIcon size={20} />
+{/* Health Advice */}
+<section className="health-carousel">
+  <div className="health-carousel-header">
+    <div className="carousel-header">
+      <div className="header-icon-tile" style={{ background: activeItem.color }}>
+        <ActiveIcon size={20} color={activeItem.accent} />
+      </div>
+      <h2>Health Advice</h2>
+    </div>
+    <button className="view-all-btn">
+      View All <ChevronRight size={14} />
+    </button>
+  </div>
+
+  <div className="carousel-wrapper">
+    <div className="carousel-track" ref={trackRef}>
+      {healthAdvice.map((item, i) => {
+        const Icon = item.icon;
+        return (
+          <div
+            className="health-card"
+            key={item.id}
+            ref={(el) => (cardRefs.current[i] = el)}
+          >
+            <div className="health-card-top">
+              {/* Illustration placeholder — swap for
+                  <img src={item.image} alt={item.title} className="health-illustration-img" />
+                  Keep the parent's aspect-ratio/border-radius on the <img> itself. */}
+              <div className="health-image" style={{ background: item.color }}>
+                <Icon size={40} color={item.accent} />
               </div>
-              <h2>Health Advice</h2>
+
+              <div className="health-content">
+                <span className="health-tag" style={{ background: item.color, color: item.accent }}>
+                  {item.category}
+                </span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <button
+                  className="health-learn-more"
+                  style={{ color: item.accent, borderColor: item.accent }}
+                >
+                  Learn More
+                  <span className="health-learn-more-arrow" style={{ background: item.accent }}>
+                    <ArrowRight size={13} color="#fff" />
+                  </span>
+                </button>
+              </div>
             </div>
-            <button>View All</button>
-          </div>
-    
-          <div className="carousel-wrapper">
-            <div className="carousel-track" ref={trackRef}>
-              {healthAdvice.map((item, i) => {
-                const Icon = item.icon;
+
+            <div className="health-stats-bar">
+              {item.stats.map((stat, si) => {
+                const StatIcon = stat.icon;
                 return (
-                  <div
-                    className="health-card"
-                    key={item.id}
-                    ref={(el) => (cardRefs.current[i] = el)}
-                  >
-                    <div className="health-image" style={{ background: item.color }}>
-                      <Icon size={56} />
-                    </div>
-    
-                    <div className="health-body">
-                      <h3>{item.title}</h3>
-                      <p>{item.description}</p>
-                      <span>{item.category}</span>
-                    </div>
+                  <div className="health-stat-chip" key={si}>
+                    <span className="health-stat-icon" style={{ background: item.color }}>
+                      <StatIcon size={16} color={item.accent} />
+                    </span>
+                    <span className="health-stat-label">{stat.label}</span>
                   </div>
                 );
               })}
             </div>
           </div>
-    
-          <div className="carousel-dots">
-            {healthAdvice.map((item, i) => (
-              <span
-                key={item.id}
-                className={i === activeIndex ? "active" : ""}
-                onClick={() => scrollToIndex(i)}
-                role="button"
-                tabIndex={0}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
-          </div>
-        </section>
+        );
+      })}
+    </div>
+
+
+  </div>
+
+  <div className="carousel-dots">
+    {healthAdvice.map((item, i) => (
+      <span
+        key={item.id}
+        className={i === activeIndex ? "active" : ""}
+        onClick={() => scrollToIndex(i)}
+        role="button"
+        tabIndex={0}
+        aria-label={`Go to slide ${i + 1}`}
+      />
+    ))}
+  </div>
+</section>
         
 
       </section>

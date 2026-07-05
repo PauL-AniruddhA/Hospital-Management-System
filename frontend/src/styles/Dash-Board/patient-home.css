@@ -1822,18 +1822,18 @@
    HEALTH ADVICE CAROUSEL
 =========================================== */
 
-.health-carousel {
+/* .health-carousel {
   width: 100%;
   background: #c6d2eb;
   border-radius: 24px;
   border: 1px solid #c6d2eb;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
   overflow: hidden;
-}
+} */
 
 /* ================= HEADER ================= */
 
-.health-carousel-header {
+/* .health-carousel-header {
   padding: 20px 30px;
   display: flex;
   justify-content: space-between;
@@ -1894,49 +1894,24 @@
 .health-carousel-header button:hover {
   background: #2563eb;
   color: white;
-}
+} */
 
 /* ================= WRAPPER ================= */
 
-.carousel-wrapper {
+/* .carousel-wrapper {
   margin: 20px;
   position: relative;
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-/* right-edge fade — signals more content ahead */
-/* .carousel-wrapper::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 48px;
-  background: linear-gradient(to right, transparent, #c6d2eb);
-  pointer-events: none;
-  z-index: 1;
 } */
 
-/* left-edge fade — mirrors ::after, signals content behind */
-/* .carousel-wrapper::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 48px;
-  background: linear-gradient(to left, transparent, #c6d2eb);
-  pointer-events: none;
-  z-index: 1;
-} */
 
 /* ================= TRACK ================= */
 
-.carousel-track {
+/* .carousel-track {
   display: flex;
-  gap: 0; /* gap was eating into the 100% and causing peek-through — see note below */
+  gap: 0;
   overflow-x: auto;
   scroll-behavior: smooth;
   padding-bottom: 0.4rem;
@@ -1947,11 +1922,11 @@
 
 .carousel-track::-webkit-scrollbar {
   display: none;
-}
+} */
 
 /* ================= CARD ================= */
 
-.health-card {
+/* .health-card {
   margin-top: 11px;
   flex: 0 0 100%;  
   width: 100%;
@@ -1970,13 +1945,13 @@
 
 .health-card:hover {
   transform: translateY(-8px);
-}
+} */
 
 /* ================= TOP ================= */
 
-.health-image {
-  aspect-ratio: 30 / 10; /* height derives from width, so it never mismatches on resize */
-  width: 100%;
+/* .health-image {
+  aspect-ratio: 30 / 10; height derives from width, so it never mismatches on resize */
+  /* width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1984,20 +1959,20 @@
 }
 
 .health-image svg {
-  width: clamp(36px, 18%, 56px); /* icon scales with the card instead of staying fixed at 56px */
+  width: clamp(36px, 18%, 56px); 
   height: auto;
   color: #2563eb;
-}
+} */
 
 /* ================= BODY ================= */
 
-.health-body {
+/* .health-body {
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   flex: 1;
-}
+} 
 
 .health-body h3 {
   font-size: clamp(1.05rem, 1.5vw, 1.25rem);
@@ -2012,14 +1987,14 @@
   flex: 1;
   display: -webkit-box;
   line-clamp: 3;
-  -webkit-line-clamp: 3; /* clamps overflow instead of reserving a fixed min-height */
+  -webkit-line-clamp: 3; clamps overflow instead of reserving a fixed min-height
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
 /* ================= CATEGORY ================= */
 
-.health-body span {
+/* .health-body span {
   align-self: flex-start;
   padding: 0.45rem 0.9rem;
   border-radius: 999px;
@@ -2028,11 +2003,11 @@
   font-size: 0.82rem;
   font-weight: 600;
   margin-top: auto; /* pins the chip to the card bottom regardless of description length */
-}
+/* } */ 
 
 /* ================= DOTS ================= */
 
-.carousel-dots {
+/* .carousel-dots {
   padding: 10px 2rem;
   margin: 20px;
   display: flex;
@@ -2050,13 +2025,13 @@
 }
 
 .carousel-dots .active {
-  width: 34px;
+  width: 10px;
   border-radius: 999px;
   background: #2563eb;
-}
+} */
 
 /* ================= RESPONSIVE ================= */
-
+/* 
 @media (max-width:1200px){
     .health-card{
         min-width:260px;
@@ -2085,11 +2060,284 @@
         min-width:100%;
         max-width:100%;
     }
+} */
+
+
+/* ===========================================
+   HEALTH ADVICE CAROUSEL
+=========================================== */
+
+/* ===========================================
+   HEALTH ADVICE CAROUSEL
+=========================================== */
+
+.health-carousel {
+  width: 100%;
+  background: #eef1fb; /* light page background so the floating stats bar reads as raised */
+  border-radius: 24px;
+  border: 1px solid #e4e9f7;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
 }
 
+/* ================= HEADER ================= */
 
+.health-carousel-header {
+  padding: 20px 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.carousel-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
 
+.header-icon-tile {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-header h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.view-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #6b7280;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.view-all-btn:hover {
+  color: #2563eb;
+}
+
+/* ================= WRAPPER ================= */
+
+.carousel-wrapper {
+  margin: 18px 20px 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ================= TRACK ================= */
+
+.carousel-track {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  width: 100%;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* ================= CARD ================= */
+/* Extra bottom padding reserves room for the floating stats bar to overlap into */
+
+.health-card {
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  border-radius: 22px;
+  padding: 20px 20px 34px;
+  /* box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05); */
+}
+
+/* ================= TOP: image-left / content-right ================= */
+
+.health-card-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.health-image {
+  flex: 0 0 34%;
+  aspect-ratio: 1 / 1.15;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Once a real asset replaces the icon placeholder, drop it in as:
+   <img className="health-illustration-img" ... /> — this fills the same box */
+.health-illustration-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.health-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.health-tag {
+  align-self: flex-start;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.health-content h3 {
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  color: #1f2937;
+  font-weight: 700;
+  margin: 0;
+}
+
+.health-content p {
+  color: #6b7280;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  margin: 0;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ================= LEARN MORE (pill, outlined, circular arrow chip) ================= */
+
+.health-learn-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 6px 6px 6px 16px;
+  border-radius: 999px;
+  border: 1.5px solid;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.health-learn-more-arrow {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ================= FLOATING STATS BAR ================= */
+/* Negative margin + shadow pulls it up so it overlaps the card's bottom edge */
+
+.health-stats-bar {
+  position: relative;
+  margin: 40px 6px 0;
+  background: #ffffff;
+  border-radius: 18px;
+  /* box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1); */
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 8px;
+}
+
+.health-stat-chip {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.health-stat-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.health-stat-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: #6b7280;
+  line-height: 1.25;
+}
+
+/* ================= DOTS ================= */
+
+.carousel-dots {
+  padding: 16px 2rem 20px;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.carousel-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d5d9e2;
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+.carousel-dots .active {
+  width: 20px;
+  border-radius: 999px;
+  background: #2563eb;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 480px) {
+  .health-card-top {
+    gap: 12px;
+  }
+  .health-image {
+    flex-basis: 30%;
+  }
+  .health-stat-label {
+    font-size: 0.6rem;
+  }
+}
 
 
 
