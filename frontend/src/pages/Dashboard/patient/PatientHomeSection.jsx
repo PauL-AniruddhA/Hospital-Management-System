@@ -1,6 +1,6 @@
 import React , { useRef, useState, useEffect } from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
-import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan,Apple,Dumbbell,Moon,HeartHandshake,ChevronLeft,BadgeCheck,Hospital,UserRound,BedDouble } from "lucide-react";
+import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan,Apple,Dumbbell,Moon,HeartHandshake,ChevronLeft,BadgeCheck,Hospital,UserRound,BedDouble,Activity ,Sparkles, Smile, Glasses,Monitor,Eye}  from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../../assets/home/doc3.png";
 import cc1 from "../../../assets/carousel cards/1-stay-hydrated-copy.png";
@@ -119,10 +119,11 @@ const healthAdvice = [
     description:"Drink 8–10 glasses of water daily to maintain proper hydration and body functions.",
     icon: Droplets,
     category: "Daily Wellness",
-    backgroundColor:"yellow",
+    headerGradient: "linear-gradient(135deg, #0B4F92 0%, #1C6BC5 100%)",
+    themes:"linear-gradient(135deg, #F9FCFF 0%, #CFE8FF 45%, #79B9FF 100%)",
     color: "#EAF6FF",
     accent: "#2F9BE8",
-    // Placeholder for illustration — drop the real asset in and swap the div below for <img src={...} alt={...} />
+    btn:"#135caa",
     image: cc1,
     stats: [
       { icon: Droplets, label: "Prevents Dehydration" },
@@ -138,9 +139,11 @@ const healthAdvice = [
       "Fill half your plate with vegetables and fruits while including lean proteins and whole grains for a balanced diet.",
     icon: Apple,
     category: "Nutrition",
-    backgroundColor:"#b3660f",
+    headerGradient: "linear-gradient(135deg, #B85A00 0%, #D97706 100%)",
+    themes:"linear-gradient(135deg, #FFFDF8 0%, #FFE3B6 45%, #FFBE63 100%)",
     color: "#FFF1E6",
     accent: "#F08A3C",
+    btn:"#c96903",
     image: cc2,
     stats: [
       { icon: Apple, label: "Rich in Vitamins" },
@@ -156,9 +159,11 @@ const healthAdvice = [
       "Aim for 30 minutes of walking, cycling, or moderate exercise daily to strengthen your heart and improve overall fitness.",
     icon: Dumbbell,
     category: "Fitness",
-    backgroundColor:"Blue",
+    headerGradient:"linear-gradient(135deg, #4C2FC4 0%, #6D52EB 100%)",
+    themes:"linear-gradient(135deg, #FCFAFF 0%, #E3D8FF 45%, #AA8FFF 100%)",
     color: "#F2EEFF",
     accent: "#7C5CFC",
+    btn:"#5d41d8",
     image: cc3,
     stats: [
       { icon: Dumbbell, label: "Strong Muscles" },
@@ -169,38 +174,42 @@ const healthAdvice = [
   },
   {
     id: 4,
-    title: "Get Quality Sleep",
-    description:
-      "Adults should sleep 7–9 hours every night to improve immunity, memory, and physical recovery.",
-    icon: Moon,
-    category: "Healthy Sleep",
-    backgroundColor:"Brown",
-    color: "#EAF0FF",
-    accent: "#4C6FE7",
-    image: cc4,
-    stats: [
-      { icon: HeartHandshake, label: "Better Recovery" },
-      { icon: Stethoscope, label: "Sharper Memory" },
-      { icon: Droplets, label: "Strong Immunity" },
-      { icon: Moon, label: "Reduces Stress" },
-    ],
-  },
-  {
-    id: 5,
     title: "Take Time to Relax",
     description:
       "Practice meditation, breathing exercises or mindfulness for better mental health.",
     icon: HeartHandshake,
     category: "Mental Wellness",
-    backgroundColor:"red",
+    headerGradient: "linear-gradient(135deg, #167447 0%, #28A768 100%)",
+    themes:"linear-gradient(135deg, #F8FFF9 0%, #D8F8E6 45%, #6FD49D 100%)",
     color: "#E9FBF1",
     accent: "#2FBE72",
+    btn:"#1b8250",
     image: cc5,
     stats: [
       { icon: Stethoscope, label: "Better Focus" },
       { icon: HeartHandshake, label: "Lower Blood Pressure" },
       { icon: Moon, label: "Positive Mood" },
       { icon: Droplets, label: "Better Sleep" },
+    ],
+  },
+  {
+    id: 5,
+    title: "Get Quality Sleep",
+    description:
+      "Adults should sleep 7–9 hours every night to improve immunity, memory, and physical recovery.",
+    icon: Moon,
+    category: "Healthy Sleep",
+    headerGradient: "linear-gradient(135deg, #2549A7 0%, #3D6FE3 100%)",
+    themes:"linear-gradient(135deg, #FAFCFF 0%, #D6E3FF 45%, #95B5FF 100%)",
+    color: "#EAF0FF",
+    accent: "#4C6FE7",
+    btn:"#305bc4",
+    image: cc4,
+    stats: [
+      { icon: HeartHandshake, label: "Better Recovery" },
+      { icon: Stethoscope, label: "Sharper Memory" },
+      { icon: Droplets, label: "Strong Immunity" },
+      { icon: Moon, label: "Reduces Stress" },
     ],
   },
 ];
@@ -850,15 +859,15 @@ function PatientHomeSection()  {
         </section>
 
         {/* Health Advice */}
-        <section className="health-carousel">
-          <div className="health-carousel-header">
+        <section className="health-carousel"style={{ background: activeItem.themes }}>
+          <div className="health-carousel-header" style={{ "--header-gradient": activeItem.headerGradient }} >
             <div className="carousel-header">
               <div className="header-icon-tile" style={{ background: activeItem.color }}>
                 <ActiveIcon size={20} color={activeItem.accent} />
               </div>
               <h2>Health Advice</h2>
             </div>
-            <button className="view-all-btn"> View All <ChevronRight size={14} /> </button>
+            <button className="health-card-view-all-btn" style={{ "--header-btn": activeItem.btn}}> View All <ChevronRight size={14} /> </button>
           </div>
 
           <div className="carousel-wrapper">

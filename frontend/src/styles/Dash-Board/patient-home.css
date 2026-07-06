@@ -1838,10 +1838,11 @@
   content:"";
   position:absolute;
   inset:0;
-  background:#0f3b6e;
+  background:var(--header-gradient);
   clip-path: polygon(0 0, 70% 0, 0 270%);
   z-index:18;
 }
+
 
 .carousel-header {
   display: flex;
@@ -1868,7 +1869,7 @@
   margin: 0;
 }
 
-.view-all-btn {
+.health-card-view-all-btn {
   display: flex;
   align-items: center;
   gap: 2px;
@@ -1881,10 +1882,23 @@
   font-size: 13px;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+  transition: all 0.25s ease;
 }
 
-.view-all-btn:hover {
-  color: #2563eb;
+.health-card-view-all-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:0 8px 20px rgba(15,77,146,0.12);
+  color: #f5f8ff;
+  background: var(--header-btn);
+  /* border-color: #0f4d92; */
+}
+
+.health-card-view-all-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+.health-card-view-all-btn:focus-visible {
+  outline: none;
+  box-shadow:0 0 0 3px rgba(15,77,146,0.18);
 }
 
 /* ================= WRAPPER ================= */
@@ -2024,10 +2038,9 @@
 
 .health-stats-bar {
   position: relative;
-  margin: 20px 6px 0;
+  margin: 40px 6px 0;
   background: #ffffff;
   border-radius: 18px;
-  /* box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1); */
   display: flex;
   justify-content: space-between;
   padding: 12px 8px;
@@ -2062,7 +2075,7 @@
 /* ================= DOTS ================= */
 
 .carousel-dots {
-  padding: 15px 2rem 15px;
+  padding: 5px 2rem 30px;
   display: flex;
   justify-content: center;
   gap: 0.5rem;
@@ -2072,7 +2085,8 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #d5d9e2;
+  /* background: #d5d9e2; */
+  background: #ffffff;
   transition: 0.25s;
   cursor: pointer;
 }
