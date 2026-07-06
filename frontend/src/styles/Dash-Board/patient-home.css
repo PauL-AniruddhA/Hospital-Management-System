@@ -1571,7 +1571,7 @@
 
 .patient-health-wrapper{
   display:grid;
-  grid-template-columns: 1fr  0.7fr 1fr;
+  grid-template-columns: 1fr  0.8fr 1fr;
   gap:24px;
   margin-top:10px;
   width:min(92vw,1600px);
@@ -1913,14 +1913,39 @@
 
 /* ================= TRACK ================= */
 
+/* remove scroll-snap properties, now driven by transform */
 .carousel-track {
   display: flex;
-  gap: 0;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  scroll-snap-type: x mandatory;
   width: 100%;
+  will-change: transform;
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 22px;
+}
+
+.carousel-arrow {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, .12);
+  transition: .2s ease;
+  z-index: 5;
+}
+.carousel-arrow:hover {
+  background: #2563eb;
+  color: #fff;
+  transform: scale(1.06);
 }
 
 .carousel-track::-webkit-scrollbar {

@@ -250,40 +250,58 @@ const notifications = [
 
 
 function PatientHomeSection()  {
+  const CARD_COUNT = healthAdvice.length;
+  const [current, setCurrent] = useState(1);          // 1..CARD_COUNT are real slides
+  const [withTransition, setWithTransition] = useState(true);
+  const isHoveringRef = useRef(false);
+  const autoplayTimerRef = useRef(null);
 
-  const trackRef = useRef(null);
-  const cardRefs = useRef([]);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activeItem = healthAdvice[activeIndex];
+  const realIndex = (current - 1 + CARD_COUNT) % CARD_COUNT;
+  const activeItem = healthAdvice[realIndex];
   const ActiveIcon = activeItem.icon;
  
+  const extendedAdvice = [ healthAdvice[CARD_COUNT - 1], ...healthAdvice, healthAdvice[0] ]
+
+
+  const goToSlide = (index) => {
+    setWithTransition(true);
+    setCurrent(index);
+  };
+  const goNext = () => goToSlide(current + 1);
+  const goPrev = () => goToSlide(current - 1);
+  const goToDot = (dotIndex) => goToSlide(dotIndex + 1);
+
+  // autoplay
   useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
- 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const mostVisible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
- 
-        if (mostVisible) {
-          const idx = cardRefs.current.indexOf(mostVisible.target);
-          if (idx !== -1) setActiveIndex(idx);
-        }
-      },
-      { root: track, threshold: [0.5, 0.75, 1] }
-    );
- 
-    cardRefs.current.forEach((card) => card && observer.observe(card));
-    return () => observer.disconnect();
+    autoplayTimerRef.current = setInterval(() => {
+      if (!isHoveringRef.current) {
+        setWithTransition(true);
+        setCurrent((c) => c + 1);
+      }
+    }, 4000);
+    return () => clearInterval(autoplayTimerRef.current);
   }, []);
- 
-  const scrollToIndex = (index) => {
-    const card = cardRefs.current[index];
-    card?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+
+  // when we land on a cloned slide, snap invisibly back to the real one
+  const handleTransitionEnd = () => {
+    if (current === 0) {
+      setWithTransition(false);
+      setCurrent(CARD_COUNT);
+    } else if (current === CARD_COUNT + 1) {
+      setWithTransition(false);
+      setCurrent(1);
+    }
   };
 
+  // re-enable transition on the next frame after a silent jump
+  useEffect(() => {
+    if (!withTransition) {
+      const raf = requestAnimationFrame(() => setWithTransition(true));
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [withTransition]);
+
+  
   const nextAppointment = appointments
     .filter((a) => a.status === "Upcoming")
     .sort((a, b) => new Date(a.appointmentDate) - new Date(b.appointmentDate))[0];
@@ -756,6 +774,94 @@ function PatientHomeSection()  {
 
       <section className="patient-health-wrapper">
         
+        {/* Health Advice */}
+        <section className="health-carousel"style={{ background: activeItem.themes }}>
+          <div className="health-carousel-header" style={{ "--header-gradient": activeItem.headerGradient }} >
+            <div className="carousel-header">
+              <div className="header-icon-tile" style={{ background: activeItem.color }}>
+                <ActiveIcon size={20} color={activeItem.accent} />
+              </div>
+              <h2>Health Advice</h2>
+            </div>
+            <button className="health-card-view-all-btn" style={{ "--header-btn": activeItem.btn}}> View All <ChevronRight size={14} /> </button>
+          </div>
+
+          <div className="carousel-wrapper" onMouseEnter={() => (isHoveringRef.current = true)} onMouseLeave={() => (isHoveringRef.current = false)} >
+
+            <div className="carousel-viewport">
+              <div className="carousel-track" style={{ transform: `translateX(-${current * 100}%)`, transition: withTransition ? "transform 0.5s ease" : "none" ,}} onTransitionEnd={handleTransitionEnd}>
+                {extendedAdvice.map((item, i) => {
+                  const Icon = item.icon;
+                  return (
+                    <div className="health-card" key={`${item.id}-${i}`}>
+                      <div className="health-card-top">
+                        <img src={item.image} alt={item.title} className="health-illustration-img" />
+                        <div className="health-content">
+                          <span className="health-tag" style={{ background: item.color, color: item.accent }}>
+                            {item.category}
+                          </span>
+                          <h3>{item.title}</h3>
+                          <p>{item.description}</p>
+                          <button className="health-learn-more" style={{ color: item.accent, borderColor: item.accent }}>
+                            Learn More
+                            <span className="health-learn-more-arrow" style={{ background: item.accent }}>
+                              <ArrowRight size={13} color="#fff" />
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="health-stats-bar">
+                        {item.stats.map((stat, si) => {
+                          const StatIcon = stat.icon;
+                          return (
+                            <div className="health-stat-chip" key={si}>
+                              <span className="health-stat-icon" style={{ background: item.color }}>
+                                <StatIcon size={16} color={item.accent} />
+                              </span>
+                              <span className="health-stat-label">{stat.label}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div className="carousel-dots">
+            {healthAdvice.map((item, i) => (
+              <span
+                key={item.id}
+                className={i === realIndex ? "active" : ""}
+                onClick={() => goToDot(i)}
+                role="button"
+                tabIndex={0}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Links */}    
+        <section className="patient-quick-links">
+          <h2>Quick Actions</h2>
+          {quickActions.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div key={index} className="quick-link-item">
+                <div className="quick-link-left">
+                  <Icon size={20} />
+                  <span>{item.title}</span>
+                </div>
+                <ChevronRight size={18} />
+              </div>
+            );
+          })}
+        </section>
+
         {/* Insurance  */}
         <section className="insurance-card">
           {/* Header */}
@@ -839,96 +945,6 @@ function PatientHomeSection()  {
             </button>
           </div>
     
-        </section>
-
-        {/* Quick Links */}    
-        <section className="patient-quick-links">
-          <h2>Quick Actions</h2>
-          {quickActions.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div key={index} className="quick-link-item">
-                <div className="quick-link-left">
-                  <Icon size={20} />
-                  <span>{item.title}</span>
-                </div>
-                <ChevronRight size={18} />
-              </div>
-            );
-          })}
-        </section>
-
-        {/* Health Advice */}
-        <section className="health-carousel"style={{ background: activeItem.themes }}>
-          <div className="health-carousel-header" style={{ "--header-gradient": activeItem.headerGradient }} >
-            <div className="carousel-header">
-              <div className="header-icon-tile" style={{ background: activeItem.color }}>
-                <ActiveIcon size={20} color={activeItem.accent} />
-              </div>
-              <h2>Health Advice</h2>
-            </div>
-            <button className="health-card-view-all-btn" style={{ "--header-btn": activeItem.btn}}> View All <ChevronRight size={14} /> </button>
-          </div>
-
-          <div className="carousel-wrapper">
-            <div className="carousel-track" ref={trackRef}>
-              {healthAdvice.map((item, i) => {
-                const Icon = item.icon;
-                return (
-                  <div className="health-card" key={item.id} ref={(el) => (cardRefs.current[i] = el)}
-                  >
-                    <div className="health-card-top">
-                      <img src={item.image} alt={item.title} className="health-illustration-img" />
-                      <div className="health-content">
-                        <span className="health-tag" style={{ background: item.color, color: item.accent }}>
-                          {item.category}
-                        </span>
-                        <h3>{item.title}</h3>
-                        <p>{item.description}</p>
-                        <button
-                          className="health-learn-more"
-                          style={{ color: item.accent, borderColor: item.accent }}
-                        >
-                          Learn More
-                          <span className="health-learn-more-arrow" style={{ background: item.accent }}>
-                            <ArrowRight size={13} color="#fff" />
-                          </span>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="health-stats-bar">
-                      {item.stats.map((stat, si) => {
-                        const StatIcon = stat.icon;
-                        return (
-                          <div className="health-stat-chip" key={si}>
-                            <span className="health-stat-icon" style={{ background: item.color }}>
-                              <StatIcon size={16} color={item.accent} />
-                            </span>
-                            <span className="health-stat-label">{stat.label}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-          </div>
-
-          <div className="carousel-dots">
-            {healthAdvice.map((item, i) => (
-              <span
-                key={item.id}
-                className={i === activeIndex ? "active" : ""}
-                onClick={() => scrollToIndex(i)}
-                role="button"
-                tabIndex={0}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
-          </div>
         </section>
         
       </section>
