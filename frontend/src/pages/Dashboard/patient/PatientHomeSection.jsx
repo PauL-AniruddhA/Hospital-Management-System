@@ -1,6 +1,6 @@
 import React , { useRef, useState, useEffect } from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
-import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan,Apple,Dumbbell,Moon,HeartHandshake,ChevronLeft,BadgeCheck,Hospital,UserRound,BedDouble,Activity ,Sparkles, Smile, Glasses,Monitor,Eye}  from "lucide-react";
+import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan,Apple,Dumbbell,Moon,HeartHandshake,ChevronLeft,BadgeCheck,Hospital,UserRound,BedDouble,Activity ,Sparkles, Smile, Glasses,Monitor,Eye,Zap}  from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../../assets/home/doc3.png";
 import cc1 from "../../../assets/carousel cards/1-stay-hydrated-copy.png";
@@ -34,11 +34,28 @@ const healthStats = [
   {  title: "BMI",value: "24.3",unit: "",status: "Healthy Range" },
   {  title: "Heart Rate",value: "72",unit: "bpm",status: "Normal"},
 ];
+;
 const quickActions = [
-  {  title: "Book an Appointment", icon: CalendarPlus },
-  {  title: "Book a Lab Test", icon: FlaskConical },
-  {  title: "Find a Doctor", icon: UserRoundSearch},
-  {  title: "Chat with Support", icon: MessageCircle },
+  {
+    icon: CalendarPlus, // lucide-react
+    title: "Book Appointment",
+    color: "blue",
+  },
+  {
+    icon: FlaskConical,
+    title: "Book a Lab Test",
+    color: "purple",
+  },
+  {
+    icon: UserRoundSearch,
+    title: "Find a Doctor",
+    color: "teal",
+  },
+  {
+    icon: MessageCircle,
+    title: "Chat with Support",
+    color: "orange",
+  },
 ];
 const appointments = [
   {  id: 1, doctorName: "Dr. Rajesh Sharma",doctorImage: doc1,department: "Cardiology",appointmentDate: "2026-06-18",appointmentDay:"Wednesday",appointmentTime: "10:30 AM",location: "AMS Hospital, Guwahati",type: "Video Consultation",status: "Upcoming", TokenNo :"T30" ,progress:"Confirmed", degree:"MBBS | MD | MS "},
@@ -847,17 +864,54 @@ function PatientHomeSection()  {
 
         {/* Quick Links */}    
         <section className="patient-quick-links">
-          <div className="quick-links-header">
-            <div className="quick-links-header-left">
+          {/* Header card */}
+          <div className="quick-header-card">
+            <div className="quick-header-icon">
+              <Zap size={22} />
+            </div>
+            <div className="quick-header-text">
               <h2>Quick Actions</h2>
-              <div className="quick-links-header-line" />
             </div>
           </div>
+        
+          {/* Tree connector-1*/}
+          <div className="tree-connector">
+            <span className="line line-trunk-top" />
+            <span className="dot dot-junction" />
+            <span className="elbow-left" />
+            <span className="elbow-right" />
+            <span className="dot dot-left" />
+            <span className="dot dot-right" />
+          </div>
+            
           <div className="quick-link-grid">
-            {quickActions.map((item, index) => {
+            {/* Row 1 tiles */}
+            {quickActions.slice(0, 2).map((item, index) => {
               const Icon = item.icon;
               return (
                 <div key={index} className="quick-tile">
+                  <div className="quick-tile-icon">
+                    <Icon size={22} />
+                  </div>
+                  <span>{item.title}</span>
+                </div>
+              );
+            })}
+        
+            {/* Tree connector-2*/}
+            <div className="tree-connector-2">
+              <span className="dot dot-junction-2" />
+              <span className="elbow-left-2" />
+              <span className="elbow-right-2" />
+              <span className="dot dot-left-2" />
+              <span className="dot dot-right-2" />
+            </div>
+        
+            {/* Row 2 tiles */}
+            {quickActions.slice(2, 4).map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index + 2} className="quick-tile">
                   <div className="quick-tile-icon">
                     <Icon size={22} />
                   </div>
