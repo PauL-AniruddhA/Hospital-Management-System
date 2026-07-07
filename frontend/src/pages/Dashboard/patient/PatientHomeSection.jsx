@@ -847,19 +847,25 @@ function PatientHomeSection()  {
 
         {/* Quick Links */}    
         <section className="patient-quick-links">
-          <h2>Quick Actions</h2>
-          {quickActions.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div key={index} className="quick-link-item">
-                <div className="quick-link-left">
-                  <Icon size={20} />
+          <div className="quick-links-header">
+            <div className="quick-links-header-left">
+              <h2>Quick Actions</h2>
+              <div className="quick-links-header-line" />
+            </div>
+          </div>
+          <div className="quick-link-grid">
+            {quickActions.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="quick-tile">
+                  <div className="quick-tile-icon">
+                    <Icon size={22} />
+                  </div>
                   <span>{item.title}</span>
                 </div>
-                <ChevronRight size={18} />
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </section>
 
         {/* Insurance  */}
