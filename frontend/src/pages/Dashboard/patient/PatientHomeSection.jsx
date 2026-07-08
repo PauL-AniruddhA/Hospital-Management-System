@@ -867,7 +867,7 @@ function PatientHomeSection()  {
           {/* Header card */}
           <div className="quick-header-card">
             <div className="quick-header-icon">
-              <Zap size={22} />
+              <Zap size={20} />
             </div>
             <div className="quick-header-text">
               <h2>Quick Actions</h2>

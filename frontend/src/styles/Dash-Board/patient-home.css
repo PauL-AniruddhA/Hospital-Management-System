@@ -1,8 +1,8 @@
 .patient-home{
   position:relative;
   z-index:20;
-  /* background-color: #5f6904; */
-  background:
+  background-color: rgb(248, 219, 219);
+  /* background:
     linear-gradient(
       180deg,
       rgba(44,26,124,.08) 0%,
@@ -11,7 +11,7 @@
       rgba(18,58,115,.65) 45%,
       #0b3a6e 60%,
       #0b3a6e 100%
-    );
+    ); */
 }
 
 .patient-hero-overlay{
@@ -269,7 +269,7 @@
   margin-bottom: 65px;
   background: #c6d2eb;
   border-radius:24px;
-  border:1px solid #1b1c3e;
+  /* border:1px solid #1b1c3e; */
   box-shadow: 0 14px 40px rgba(15,59,110,.10);
   overflow:hidden;
   display:flex;
@@ -476,7 +476,7 @@
   background:#c6d2eb;
   border-radius:20px;
   padding:15px 20px;
-  border:1px solid #e8eef7;
+  /* border:1px solid #e8eef7; */
   box-shadow: 0 8px 30px rgba(15,59,110,.05);
   width:100%;
 }
@@ -803,7 +803,7 @@
   /* background:#fff; */
   background:#c6d2eb;
   border-radius:24px;
-  border:1px solid #0f3b6e;
+  /* border:1px solid #0f3b6e; */
   box-shadow: 0 10px 35px rgba(124,58,237,.07);
   overflow:hidden;
   display:flex;
@@ -1581,10 +1581,6 @@
 }
 
 
-
-
-
-
 .insurance-card {
   background: #c6d2eb;
   border-radius: 20px;
@@ -1844,15 +1840,12 @@
   clip-path: polygon(0 0, 70% 0, 0 270%);
   z-index:18;
 }
-
-
 .carousel-header {
   display: flex;
   gap: 12px;
   align-items: center;
   z-index: 19;
 }
-
 .header-icon-tile {
   width: 38px;
   height: 38px;
@@ -2005,7 +1998,6 @@
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .health-tag {
   align-self: flex-start;
   padding: 0.3rem 0.75rem;
@@ -2013,14 +2005,12 @@
   font-size: 0.75rem;
   font-weight: 600;
 }
-
 .health-content h3 {
   font-size: clamp(1.05rem, 1.5vw, 1.3rem);
   color: #1f2937;
   font-weight: 700;
   margin: 0;
 }
-
 .health-content p {
   color: #6b7280;
   font-size: 0.85rem;
@@ -2032,9 +2022,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 /* ================= LEARN MORE (pill, outlined, circular arrow chip) ================= */
-
 .health-learn-more {
   display: inline-flex;
   align-items: center;
@@ -2154,11 +2142,11 @@
 .quick-header-card{
   display:flex;
   align-items:center;
-  gap:16px;
+  gap:12px;
   background:orange;
   border-radius:16px;
   padding: 10px 12px;
-  margin: 0px 70px 0px 70px;
+  margin: 0px 65px 0px 65px;
   box-shadow: 0 8px 28px rgba(15,59,110,.05);
 }
 .quick-header-icon{
@@ -2172,8 +2160,9 @@
   justify-content:center;
 }
 .quick-header-text h2{
-  font-size:20px;
+  font-size:18px;
   color:#0f2445;
+  /* font-weight: 400; */
   /* margin:0 0 6px 0; */
 }
 
