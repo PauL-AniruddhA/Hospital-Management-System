@@ -1,6 +1,6 @@
-import React , { useRef, useState, useEffect } from 'react';
+import React , { useRef, useState, useEffect,useMemo } from 'react';
 import "../../../styles/Dash-Board/patient-home.css";
-import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan,Apple,Dumbbell,Moon,HeartHandshake,ChevronLeft,BadgeCheck,Hospital,UserRound,BedDouble,Activity ,Sparkles, Smile, Glasses,Monitor,Eye,Zap}  from "lucide-react";
+import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan,Apple,Dumbbell,Moon,HeartHandshake,ChevronLeft,BadgeCheck,Hospital,UserRound,BedDouble,Activity ,Sparkles, Smile, Glasses,Monitor,Eye,Zap,Bone,ClipboardList,Search}  from "lucide-react";
 import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../../assets/home/doc3.png";
 import cc1 from "../../../assets/carousel cards/1-stay-hydrated-copy.png";
@@ -37,13 +37,13 @@ const healthStats = [
 ;
 const quickActions = [
   {
-    icon: CalendarPlus, // lucide-react
-    title: "Book Appointment",
+    icon: FlaskConical,
+    title: "Book a Lab Test",
     color: "blue",
   },
   {
-    icon: FlaskConical,
-    title: "Book a Lab Test",
+    icon: Pill,
+    title: "Order Medicines",
     color: "purple",
   },
   {
@@ -265,8 +265,59 @@ const notifications = [
   { icon: MessageSquare,title: "Doctor Message",message: "Please schedule a follow-up consultation next week.",time: "5 days ago" },
 ];
 
+const medicalHistory = [
+  {
+    diagnosis: "Type 2 Diabetes",
+    doctorName: "Dr. Meera Nair",
+    department: "Endocrinology",
+    diagnosedDate: "2024-03-04",
+    hospital: "AMS Main Campus",
+    status: "ongoing",
+    severity: "moderate",
+    icon: Activity,
+  },
+  {
+    diagnosis: "Fractured Radius (Left arm)",
+    doctorName: "Dr. Karan Vohra",
+    department: "Orthopedics",
+    diagnosedDate: "2023-11-12",
+    hospital: "AMS City Branch",
+    status: "resolved",
+    severity: "mild",
+    icon: Bone,
+  },
+  {
+    diagnosis: "Hypertension",
+    doctorName: "Dr. Rajesh Sharma",
+    department: "Cardiology",
+    diagnosedDate: "2026-01-18",
+    hospital: "AMS Main Campus",
+    status: "monitoring",
+    severity: "moderate",
+    icon: HeartPulse,
+  },
+  {
+    diagnosis: "Routine ECG Check",
+    doctorName: "Dr. Rajesh Sharma",
+    department: "Cardiology",
+    diagnosedDate: "2026-01-05",
+    hospital: "AMS Main Campus",
+    status: "resolved",
+    severity: "mild",
+    icon: HeartPulse,
+  },
+];
+
+function formatMonthDay(dateStr) {
+  return new Date(dateStr).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+function formatYear(dateStr) {
+  return new Date(dateStr).getFullYear();
+}
 
 function PatientHomeSection()  {
+const [searchQuery, setSearchQuery] = useState("");
+const [statusFilter, setStatusFilter] = useState("all");
   const CARD_COUNT = healthAdvice.length;
   const [current, setCurrent] = useState(1);          // 1..CARD_COUNT are real slides
   const [withTransition, setWithTransition] = useState(true);
@@ -279,6 +330,23 @@ function PatientHomeSection()  {
  
   const extendedAdvice = [ healthAdvice[CARD_COUNT - 1], ...healthAdvice, healthAdvice[0] ]
 
+  const sortedHistory = useMemo(
+    () => [...medicalHistory].sort((a, b) => new Date(b.diagnosedDate) - new Date(a.diagnosedDate)),
+    []
+  );
+
+  const filteredHistory = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    return sortedHistory.filter((item) => {
+      const matchesStatus = statusFilter === "all" || item.status === statusFilter;
+      const matchesSearch =
+        query === "" ||
+        item.diagnosis.toLowerCase().includes(query) ||
+        item.doctorName.toLowerCase().includes(query) ||
+        item.department.toLowerCase().includes(query);
+      return matchesStatus && matchesSearch;
+    });
+  }, [sortedHistory, searchQuery, statusFilter]);
 
   const goToSlide = (index) => {
     setWithTransition(true);
@@ -410,7 +478,7 @@ function PatientHomeSection()  {
           <div className="bill-card-header">
             <div className="bill-header-left">
               <div className="bill-icon-tile">
-                <IndianRupee size={24} />
+                <IndianRupee size={22} />
               </div>
               <div>
                 <h3>Payment</h3>
@@ -571,7 +639,7 @@ function PatientHomeSection()  {
          <section className="lab-report-card-v2">
           <div className="lrc-status-strip abnormal">
             <div className="lrc-icon-badge">
-              <FlaskConical size={24} />
+              <FlaskConical size={22} />
             </div>
             <span>Report</span>
 
@@ -653,7 +721,7 @@ function PatientHomeSection()  {
           <div className="prescription-header">
             <div className="header-left">
               <div className="icon-circle">
-                <FileText size={20} />
+                <FileText size={22} />
               </div>
               <h2>Prescription</h2>
             </div>
@@ -666,28 +734,28 @@ function PatientHomeSection()  {
             
           </div>
 
-                {/* DOCTOR */}
+            {/* DOCTOR */}
 
-                {/* <div className="doctor-section">
-                  <div className="doctor-left">
-                    <div className="icon-circle doctor">
-                      <Stethoscope size={22} />
-                    </div>
-                    <div>
-                      <h3>Dr. Rajesh Sharma</h3>
-                      <p>MBBS, MD · Cardiology</p>
-                    </div>
-                  </div>
+            {/* <div className="doctor-section">
+              <div className="doctor-left">
+                <div className="icon-circle doctor">
+                  <Stethoscope size={22} />
+                </div>
+                <div>
+                  <h3>Dr. Rajesh Sharma</h3>
+                  <p>MBBS, MD · Cardiology</p>
+                </div>
+              </div>
 
-                  <div className="issued-date">
+              <div className="issued-date">
 
-                    <span>Issued</span>
+                <span>Issued</span>
 
-                    <strong>18 Jun 2026</strong>
+                <strong>18 Jun 2026</strong>
 
-                  </div>
+              </div>
 
-                </div> */}
+            </div> */}
 
           {/* MEDICINES */}
           <div className="medicine-list-wrapper">
@@ -756,7 +824,7 @@ function PatientHomeSection()  {
           <div className="section-header">
             <div className="ing-left">
               <div className="ing-icon">
-                <BellRing  size={20} strokeWidth={2.2}  />
+                <BellRing  size={22} strokeWidth={2.2}  />
               </div>
 
               <h2>Notifications</h2>
@@ -787,6 +855,7 @@ function PatientHomeSection()  {
             })}
           </div>
         </section>
+        
       </section>
 
       <section className="patient-health-wrapper">
@@ -796,7 +865,7 @@ function PatientHomeSection()  {
           <div className="health-carousel-header" style={{ "--header-gradient": activeItem.headerGradient }} >
             <div className="carousel-header">
               <div className="header-icon-tile" style={{ background: activeItem.color }}>
-                <ActiveIcon size={20} color={activeItem.accent} />
+                <ActiveIcon size={22} color={activeItem.accent} />
               </div>
               <h2>Health Advice</h2>
             </div>
@@ -867,7 +936,7 @@ function PatientHomeSection()  {
           {/* Header card */}
           <div className="quick-header-card">
             <div className="quick-header-icon">
-              <Zap size={20} />
+              <Zap size={22} />
             </div>
             <div className="quick-header-text">
               <h2>Quick Actions</h2>
@@ -928,7 +997,7 @@ function PatientHomeSection()  {
           <div className="insurance-header">
             <div className="insurance-title">
               <div className="insurance-icon">
-                <ShieldCheck size={20} />
+                <ShieldCheck size={22} />
               </div>
               <div>
                 <h3>Insurance</h3>
@@ -961,42 +1030,56 @@ function PatientHomeSection()  {
           {/* Detail grid */}
           <div className="insurance-grid">
             <div className="insurance-item">
-              <p className="item-label">
-                <ShieldCheck size={13} /> Coverage
-              </p>
-              <p className="item-value">{insurance.type}</p>
-            </div>
-    
-            <div className="insurance-item bordered-left">
-              <p className="item-label">
-                <CalendarDays size={13} /> Valid Till
-              </p>
-              <p className="item-value">{insurance.validity}</p>
+              <span className="item-icon">
+                <ShieldCheck size={15} />
+              </span>
+              <div className="item-text">
+                <p className="item-label">Coverage</p>
+                <p className="item-value">{insurance.type}</p>
+              </div>
             </div>
     
             <div className="insurance-item">
-              <p className="item-label">
-                <Hospital size={13} /> Network Hospital
-              </p>
-              <p className="item-value">{insurance.hospital}</p>
+              <span className="item-icon">
+                <CalendarDays size={15} />
+              </span>
+              <div className="item-text">
+                <p className="item-label">Valid Till</p>
+                <p className="item-value">{insurance.validity}</p>
+              </div>
             </div>
     
-            <div className="insurance-item bordered-left">
-              <p className="item-label">
-                <BedDouble size={13} /> Room
-              </p>
-              <p className="item-value">{insurance.room}</p>
+            <div className="insurance-item">
+              <span className="item-icon">
+                <Hospital size={15} />
+              </span>
+              <div className="item-text">
+                <p className="item-label">Network Hospital</p>
+                <p className="item-value">{insurance.hospital}</p>
+              </div>
+            </div>
+    
+            <div className="insurance-item">
+              <span className="item-icon">
+                <BedDouble size={15} />
+              </span>
+              <div className="item-text">
+                <p className="item-label">Room</p>
+                <p className="item-value">{insurance.room}</p>
+              </div>
             </div>
           </div>
     
-          {/* Footer */}
+          {/* Footer - redesigned: coverage as a highlighted pill, button balanced beside it */}
           <div className="insurance-footer">
-            <div>
-              <p className="coverage-label">Total coverage</p>
-              <p className="coverage-value">
+            <div className="coverage-box">
+              <span className="coverage-icon">
                 <IndianRupee size={16} />
-                {insurance.coverage}
-              </p>
+              </span>
+              <div>
+                <p className="coverage-label">Total coverage</p>
+                <p className="coverage-value">₹{insurance.coverage}</p>
+              </div>
             </div>
     
             <button className="view-policy-btn">
@@ -1004,51 +1087,94 @@ function PatientHomeSection()  {
               <ArrowRight size={15} />
             </button>
           </div>
-    
         </section>
-        
+            
       </section>
 
-      <section className="medical-records-section">
+      <section className="medical-history-section">
         <div className="section-header">
-          <h2>Medical Records</h2>
-          <button>View Complete</button>
-        </div>
-        <div className="record-stats">
-
-          <div className="record-stat-card">
-            <FileText size={24} />
-            <h3>{medicalRecords.diagnoses}</h3>
-            <p>Diagnoses</p>
-          </div>
-
-          <div className="record-stat-card">
-            <Stethoscope size={24} />
-            <h3>{medicalRecords.surgeries}</h3>
-            <p>Surgeries</p>
-          </div>
-
-          <div className="record-stat-card">
-            <ShieldAlert size={24} />
-            <h3>{medicalRecords.allergies}</h3>
-            <p>Allergies</p>
-          </div>
-
-        </div>
-        <div className="recent-records">
-          <h3>Recent Records</h3>
-          {recentRecords.map((record, index) => (
-            <div className="record-item" key={index}>
-              <div>
-                <h4>{record.title}</h4>
-                <p>{record.date}</p>
-              </div>
-              <button>View</button>
+          <div className="ing-left">
+            <div className="ing-icon">
+              <ClipboardList size={22} strokeWidth={2.2} />
             </div>
-          ))}
+            <h2>Medical History</h2>
+          </div>
+          <button className="history-view-all">View All</button>
+        </div>
+        <div className="medical-header-divider"/>
+
+        <div className="history-toolbar">
+          <div className="history-search">
+            <Search size={15} />
+            <input
+              type="text"
+              placeholder="Search diagnosis or doctor"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+
+          <div className="history-status-pills">
+            {["all", "ongoing", "monitoring", "resolved"].map((status) => (
+              <button
+                key={status}
+                className={`history-pill ${statusFilter === status ? "active" : ""}`}
+                onClick={() => setStatusFilter(status)}
+              >
+                {status === "all" ? "All" : status.charAt(0).toUpperCase() + status.slice(1)}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="history-list">
+          {filteredHistory.length === 0 ? (
+            <p className="history-empty">No records match your search.</p>
+          ) : (
+            filteredHistory.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="history-card">
+                  <div className="history-card-top">
+                    <div className={`history-icon history-icon--${item.severity}`}>
+                      <Icon size={18} />
+                    </div>
+                    <span className={`history-status history-status--${item.status}`}>
+                      {item.status}
+                    </span>
+                  </div>
+
+                  <h4 className="history-title">{item.diagnosis}</h4>
+                  <p className="history-doctor">
+                    {item.department} &middot; {item.doctorName}
+                  </p>
+
+                  <div className="history-date-row">
+                    <span className="history-date-badge">
+                      <CalendarDays size={12} />
+                      {formatMonthDay(item.diagnosedDate)}, {formatYear(item.diagnosedDate)}
+                    </span>
+                  </div>
+
+                  <div className="history-meta">
+                    <div className="history-meta-item">
+                      <Hospital size={12} />
+                      <span>{item.hospital}</span>
+                    </div>
+                  </div>
+
+                  <button className="history-view-btn" aria-label="View diagnosis details">
+                    <FileText size={14} />
+                    View details
+                  </button>
+                </div>
+              );
+            })
+          )}
         </div>
       </section>
 
+      {/* <section className="Empty"/> */}
     </div>
   );
 }
