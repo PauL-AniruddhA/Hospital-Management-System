@@ -1651,7 +1651,7 @@
   background: linear-gradient(135deg, #1b6fe0 0%, #124faf 100%);
   border-radius: 14px;
   padding: 16px 18px 18px;
-  margin: 20px;
+  margin: 20px 35px 20px 35px;
 }
 
 .id-label {
@@ -1696,7 +1696,7 @@
 .insurance-grid {
   background: #ffffff;
   border-radius: 14px;
-  margin: 0 20px 16px;
+  margin: 0 20px 25px;
   padding: 4px 16px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1758,7 +1758,7 @@
   display: flex;
   align-items: stretch;
   gap: 5px;
-  margin: 0 90px 20px;
+  margin: 0 90px 25px;
 }
 
 .coverage-box {
@@ -2126,7 +2126,7 @@
 /* ================= DOTS ================= */
 
 .carousel-dots {
-  padding: 5px 2rem 30px;
+  padding: 15px 2rem 30px;
   display: flex;
   justify-content: center;
   gap: 0.5rem;
