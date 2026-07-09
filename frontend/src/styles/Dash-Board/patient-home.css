@@ -1,8 +1,9 @@
 .patient-home{
   position:relative;
   z-index:20;
-  background-color: rgb(248, 219, 219);
-  background:
+  /* background-color: #000000; */
+  /* background-color: rgb(65, 100, 149); */
+  /* background:
     linear-gradient(
       180deg,
       rgba(44,26,124,.08) 0%,
@@ -11,30 +12,57 @@
       rgba(18,58,115,.65) 45%,
       #0b3a6e 60%,
       #0b3a6e 100%
-    );
-    padding-bottom: 70px;
+    ); */
+  background:
+    linear-gradient(
+    180deg,
+    #091b2d 0%,
+    #143654 15%,
+    #f8fafc 40%,
+    #ffffff 100%
+  );
+  padding-bottom: 70px;
+}
+.patient-hero-overlay{
+  padding-top:calc(var(--topbar-height) + var(--navbar-height) + 50px);
+  position: relative;
+  width:var(--portal-width); 
+  margin: 0 auto 60px; 
+  align-items:start;
+  z-index:10;
 }
 
-.patient-hero-overlay{
+.patient-glass-card{
+  /* margin:calc(var(--topbar-height) + var(--navbar-height) + 5px) 0px; */
+  padding: 35px 0px 20px 40px;
+  /* padding: 180px 0px 20px 40px;  */
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height:clamp(320px,38vw,520px);
+  border-radius:0px 0px 30px 30px;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+
+/* .patient-hero-overlay{
   padding-top:calc(var(--topbar-height) + var(--navbar-height) + 50px);
   position: relative;
   width:var(--portal-width);
   margin: 0 auto 50px;
   align-items:start;
   z-index:10;
-}
-.patient-glass-card{
-  padding: 35px 0px 20px 40px;
+} */
+/* .patient-glass-card{
+  padding: calc(var(--topbar-height) + var(--navbar-height) + 70px) 0px 20px 40px;
   position: relative;
   overflow: hidden;
   width: 100%;
   min-height:clamp(320px,38vw,520px);
-  border-radius:5px 50px 50px 50px;
-  background:rgba(255,255,255,.08);
+  border-radius:5px 5px 50px 50px;
   backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);
-  border:1px solid rgba(255,255,255,.12);
-}
+} */
 .hero-bg-image{
   position:absolute;
   inset:0;
@@ -205,7 +233,8 @@
   padding:14px 20px;
   position:relative;
   z-index:7;
-  border:1px solid rgba(255,255,255,0.08);
+  /* border:1px solid rgba(255,255,255,0.08); */
+  border:7px solid yellow;
 }
 .patient-actions-grid{
   display:grid;

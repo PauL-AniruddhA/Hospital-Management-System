@@ -404,8 +404,8 @@ const [statusFilter, setStatusFilter] = useState("all");
   const displayYear = appointmentDate.getFullYear(); // renamed — don't shadow the destructured `year`
 
    return (
+    <>
     <div className="patient-home">
-
       <section className="patient-hero-overlay">
         <div className="patient-glass-card">
           <img src={homeimage} alt="Hospital" className="hero-bg-image-blur" />
@@ -1176,6 +1176,7 @@ const [statusFilter, setStatusFilter] = useState("all");
 
       {/* <section className="Empty"/> */}
     </div>
+    </>
   );
 }
 
