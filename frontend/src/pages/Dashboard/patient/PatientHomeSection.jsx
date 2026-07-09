@@ -406,6 +406,7 @@ const [statusFilter, setStatusFilter] = useState("all");
    return (
     <>
     <div className="patient-home">
+      
       <section className="patient-hero-overlay">
         <div className="patient-glass-card">
           <img src={homeimage} alt="Hospital" className="hero-bg-image-blur" />
@@ -414,7 +415,6 @@ const [statusFilter, setStatusFilter] = useState("all");
           <div className="patient-info">
             <div className="patient-profile-card">
               <h1>Aniruddha Paul</h1>
-              <div className='patient-profile-divider' />
               <div className='patient-header-row'>
                 <div className="patient-id">
                   Patient ID - AMS-2026-001
@@ -470,7 +470,7 @@ const [statusFilter, setStatusFilter] = useState("all");
           })}
         </div>
       </section>
-      
+
       <section className="patient-dashboard-widgets">
         
         {/* Billing Preview */}

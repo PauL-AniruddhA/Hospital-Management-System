@@ -1,33 +1,23 @@
 .patient-home{
   position:relative;
   z-index:20;
-  /* background-color: #000000; */
-  /* background-color: rgb(65, 100, 149); */
-  /* background:
-    linear-gradient(
-      180deg,
-      rgba(44,26,124,.08) 0%,
-      rgba(44,26,124,.08) 15%,
-      rgba(29,44,112,.25) 30%,
-      rgba(18,58,115,.65) 45%,
-      #0b3a6e 60%,
-      #0b3a6e 100%
-    ); */
   background:
     linear-gradient(
     180deg,
     #091b2d 0%,
     #143654 15%,
-    #f8fafc 40%,
+    #f8fafc 34%,
     #ffffff 100%
   );
   padding-bottom: 70px;
 }
+
 .patient-hero-overlay{
   padding-top:calc(var(--topbar-height) + var(--navbar-height) + 50px);
+  padding-bottom: 120px;
   position: relative;
   width:var(--portal-width); 
-  margin: 0 auto 60px; 
+  margin: 0 auto 0px; 
   align-items:start;
   z-index:10;
 }
@@ -227,20 +217,22 @@
 }
 .patient-dashboard-card{
   width:var(--portal-width);
-  margin: auto;
-  background:#0e3a6c;
-  border-radius: 55px 55px 55px 55px;
+  margin: -50px auto 0px;
+  background:#c6d2eb;
+  border-radius: 25px 25px 25px 25px;
   padding:14px 20px;
   position:relative;
   z-index:7;
   /* border:1px solid rgba(255,255,255,0.08); */
-  border:7px solid yellow;
+  /* border:10px solid rgb(13 32 58); */
 }
 .patient-actions-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap: 20px;
 }
 .patient-action-card{
+  background: #f4f8ff;
   display:flex;
   align-items:center;
   gap:14px;
@@ -270,12 +262,12 @@
 .patient-action-content h3{
   font-size:15px;
   font-weight:600;
-  color:#fdfeff;
+  color:#000;
   margin-bottom:4px;
 }
 .patient-action-content p{
   font-size:13px;
-  color:rgba(250, 250, 250, 0.65);
+  color:#0f3b6e;
 }
 
 

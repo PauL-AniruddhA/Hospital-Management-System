@@ -18,6 +18,14 @@
   --hero-scale:clamp(0.85,1vw + 0.8,1.15);
   --hero-extra: 180px;
   --tree-blue: #4169e1;
+
+  --icon-sm: clamp(30px, 8cqi, 36px);   /* notification / prescription / insurance icons */
+  --icon-md: clamp(34px, 9cqi, 40px);   /* bill / lab-report icon tiles */
+  --icon-lg: clamp(44px, 10cqi, 58px);  /* patient action icons */
+
+  --heading-sm: clamp(1rem, 3.5cqi, 1.3rem);
+  --heading-md: clamp(1.1rem, 4cqi, 1.6rem);
+  --heading-lg: clamp(2rem, 6cqi, 3.9rem);
 }
 
 * {
