@@ -458,7 +458,7 @@ const [statusFilter, setStatusFilter] = useState("all");
                 className="patient-action-card"
               >
                 <div className="patient-action-icon">
-                  <Icon size={28} />
+                  <Icon size={27} />
                 </div>
 
                 <div className="patient-action-content">
