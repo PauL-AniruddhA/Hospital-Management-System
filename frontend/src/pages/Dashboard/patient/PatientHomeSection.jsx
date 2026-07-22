@@ -406,8 +406,6 @@ const [statusFilter, setStatusFilter] = useState("all");
    return (
     <>
     <div className="patient-home">
-      
-
         <section className="patient-hero-overlay">
           <div className="patient-glass-card">
             <img src={homeimage} alt="Hospital" className="hero-bg-image-blur" />
