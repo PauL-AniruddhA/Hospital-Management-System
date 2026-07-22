@@ -36,24 +36,6 @@
   -webkit-backdrop-filter:blur(16px);
 }
 
-/* .patient-hero-overlay{
-  padding-top:calc(var(--topbar-height) + var(--navbar-height) + 50px);
-  position: relative;
-  width:var(--portal-width);
-  margin: 0 auto 50px;
-  align-items:start;
-  z-index:10;
-} */
-/* .patient-glass-card{
-  padding: calc(var(--topbar-height) + var(--navbar-height) + 70px) 0px 20px 40px;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  min-height:clamp(320px,38vw,520px);
-  border-radius:5px 5px 50px 50px;
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-} */
 .hero-bg-image{
   position:absolute;
   inset:0;

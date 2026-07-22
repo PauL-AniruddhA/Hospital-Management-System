@@ -1,6 +1,5 @@
 .patient-home{
   background-color: #e7e7e7;
-  /* background: linear-gradient(180deg, #0B2A4A 0%, #17456F 15%, #F8FAFC 34%, #ffffff 100%); */
   padding-bottom: 70px;
 }
 .patient-hero-overlay{
@@ -19,180 +18,235 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  min-height:clamp(280px,32vw,420px);
+  min-height:clamp(300px,34vw,560px); /* 460, not 560 — see below */
   background:#0B2A4A;
-  border-radius:16px;
+  border-radius:20px;
   padding:0;
-  backdrop-filter:none;
-  -webkit-backdrop-filter:none;
+}
+
+/* premium accent line across the top */
+.patient-glass-card::after{
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0;
+  height:3px;
+  background:linear-gradient(90deg,#2563EB 0%,#38BDF8 45%,#2563EB 100%);
+  z-index:60;
 }
 
 .hero-bg-image-blur{
-  display:none;
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:right center;
+  filter:blur(25px) brightness(.4);
+  transform:scale(1.1);
+  z-index:50;
 }
 
-.hero-blur-transition{
-  display:none;
-}
+.hero-blur-transition{ display:none; }
 
 .hero-bg-image{
-  position:relative;
-  inset:auto;
-  width:36%;
-  height:auto;
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
   object-fit:cover;
-  object-position:center;
-  z-index:auto;
-  mask-image:none;
-  -webkit-mask-image:none;
-  order:2;
+  object-position: 78% center;
+  z-index:51;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, transparent 44%,
+      rgba(0,0,0,.35) 58%, rgba(0,0,0,.8) 74%, black 100%);
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, transparent 44%,
+      rgba(0,0,0,.35) 58%, rgba(0,0,0,.8) 74%, black 100%);
 }
 
 .patient-info{
   position:relative;
-  z-index:1;
-  width:64%;
+  z-index:52;
+  width:42%;
   order:1;
-  padding:32px 36px;
-  border-radius:0;
+  padding:52px 48px 44px;
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+  box-sizing:border-box;
+}
+
+/* eyebrow label above name */
+.patient-info::before{
+  content:"PATIENT DASHBOARD";
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:2.5px;
+  color:#5FA8FF;
+}
+
+.patient-profile-card{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
 }
 
 .patient-profile-card h1{
-  font-size:2.2rem;
+  font-size:2.9rem;
   font-weight:600;
-  line-height:1.15;
-  margin-bottom:10px;
+  line-height:1.1;
   color:white;
-  text-shadow:none;
-  padding-left:0;
+  letter-spacing:-0.5px;
+  margin:0;
 }
 
-.patient-profile-divider{
-  width: clamp(200px, 100%, 450px);
-  height:2px;
-  margin:10px 0 25px;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(59,130,246,.10),
-      rgba(221, 225, 231, 0.55)
-    );
+/* status badge with pulsing dot */
+.patient-status-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 14px;
+  border-radius:999px;
+  background:rgba(74,222,128,.12);
+  border:1px solid rgba(74,222,128,.3);
+  color:#4ADE80;
+  font-size:12px;
+  font-weight:600;
+}
+.pulse-dot{
+  width:7px; height:7px;
+  border-radius:50%;
+  background:#4ADE80;
+  box-shadow:0 0 0 rgba(74,222,128,.5);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{ box-shadow:0 0 0 0 rgba(74,222,128,.5); }
+  70%{ box-shadow:0 0 0 8px rgba(74,222,128,0); }
+  100%{ box-shadow:0 0 0 0 rgba(74,222,128,0); }
 }
 
+/* meta row — dot-separated, not boxed pills */
 .patient-header-row{
-  display:grid;
-  grid-template-columns: minmax(140px, 230px) minmax(120px, 220px);
-  grid-template-rows:auto auto;
-  row-gap:12px;
-  margin-bottom:23px;
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  color:rgba(255,255,255,.65);
+  font-size:14.5px;
 }
 
 .patient-id{
-  grid-column:1;
-  grid-row:1;
-  color:rgba(255,255,255,.7);
-  font-size:15px;
-  letter-spacing:.5px;
-  font-family:'Outfit',sans-serif;
-  padding:10px 18px;
-  border-radius:10px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.85);
+  font-weight:600;
+  font-size:14.5px;
+  background:none;
+  border:none;
+  padding:0;
 }
-
 .patient-meta{
-  grid-column:2;
-  grid-row:2;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  margin:0;
-  padding:10px 18px;
-  border-radius:10px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.12);
-  color:rgba(255,255,255,.9);
-  font-size:14px;
+  gap:10px;
+  background:none;
+  border:none;
+  padding:0;
+  color:rgba(255,255,255,.65);
+  font-size:14.5px;
 }
-
 .meta-divider{
-  width:1px;
-  height:20px;
-  background:
-  linear-gradient(
-    to bottom,
-    transparent,
-    rgba(255,255,255,.55),
-    transparent
-  );
+  width:4px; height:4px;
+  border-radius:50%;
+  background:rgba(255,255,255,.35);
 }
 
-.patient-divider{
-  width: clamp(200px, 100%, 450px);
-  height:2px;
-  margin:10px 0 30px;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(221, 225, 231, 0.55),
-      rgba(59,130,246,.10)
-    );
-}
+.patient-divider{ display:none; }
 
+/* ===== FLOATING GLASS STAT BAR ===== */
 .health-stats-grid{
+  margin-top:auto;
+  width:100%;
+  z-index:53;
   display:grid;
-  grid-template-columns:repeat(3,minmax(16px,1fr));
-  gap:13px;
-  margin-top:40px;
-  max-width:440px;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:rgba(255,255,255,.09);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 20px 40px -12px rgba(0,0,0,.35);
 }
-
 .health-stat-card{
-  min-height:85px;
-  position:relative;
-  padding-left:16px 18px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 16px;
+  background:rgba(255,255,255,.03);
 }
 
-.health-stat-card p{
-  font-size:14px;
-  color:rgba(255,255,255,.8);
+.health-stat-icon-tile{
+  width:32px; height:32px;
+  flex-shrink:0;
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.1);
+  color:#5FA8FF;
 }
 
-.health-stat-card small{
-  color:inherit;
-  font-weight:600;
-  margin-left:4px;
-}
-
-.health-stat-card h3{
-  color:white;
-  font-size:25px;
-}
+.health-stat-text{ min-width:0; }
 
 .health-stat-card span{
   display:block;
-  font-size:12px;
+  font-size:10px;
   font-weight:600;
-  letter-spacing:1px;
+  letter-spacing:.8px;
   text-transform:uppercase;
+  color:rgba(255,255,255,.5);
+}
+.health-stat-card h3{
+  color:white;
+  font-size:17px;
+  font-weight:600;
+  margin:2px 0 0;
+  white-space:nowrap;
+}
+.health-stat-card small{
+  font-size:11px;
+  font-weight:500;
   color:rgba(255,255,255,.55);
+  margin-left:3px;
+}
+.health-stat-card p{
+  font-size:11px;
+  color:#4ADE80;
+  margin-top:1px;
 }
 
 @media (max-width:1100px){
-  .patient-glass-card{
-    flex-direction:column;
-  }
-  .hero-bg-image{
-    width:100%;
-    height:180px;
-    order:1;
-  }
-  .patient-info{
-    width:100%;
-    order:2;
+  .patient-glass-card{ flex-direction:column; }
+  .hero-bg-image{ width:100%; height:180px; order:1; }
+  .patient-info{ width:100%; order:2; padding-bottom:36px; }
+  .health-stats-grid{
+    position:relative;
+    left:0; right:0; bottom:0;
+    margin:16px 44px 0;
+    grid-template-columns:repeat(2,1fr);
   }
 }
+
+
+
+
+
+
+
+
+
 .patient-dashboard-card{
   width:var(--portal-width);
   margin: -40px auto 0px;
@@ -2600,3 +2654,6 @@
     margin: 0 auto;
   }
 }
+
+
+

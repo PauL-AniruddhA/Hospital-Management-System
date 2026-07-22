@@ -26,13 +26,14 @@ const actions = [
   {  title: "Lab Reports", subtitle: "Download reports", icon: FlaskConical  },
   {  title: "Bills", subtitle: "Payments & invoices", icon: Receipt  },
 ];
+
 const healthStats = [
-  {  title: "Height",value: "172",unit: "cm",status: ""},
-  {  title: "Weight",value: "72",unit: "kg",status: ""},
-  {  title: "Blood Pressure",value: "120/80",unit: "mmHg",status: "Normal"},
-  {  title: "Blood Sugar",value: "98",unit: "mg/dL",status: "Normal"},
-  {  title: "BMI",value: "24.3",unit: "",status: "Healthy Range" },
-  {  title: "Heart Rate",value: "72",unit: "bpm",status: "Normal"},
+  { title: "Height", value: "172", unit: "cm", status: "", icon: Weight },
+  { title: "Weight", value: "72", unit: "kg", status: "", icon: Weight },
+  { title: "Blood Pressure", value: "120/80", unit: "mmHg", status: "Normal", icon: HeartPulse },
+  { title: "Blood Sugar", value: "98", unit: "mg/dL", status: "Normal", icon: Droplets },
+  { title: "BMI", value: "24.3", unit: "", status: "Healthy Range", icon: Activity },
+  { title: "Heart Rate", value: "72", unit: "bpm", status: "Normal", icon: Heart },
 ];
 ;
 const quickActions = [
@@ -406,45 +407,48 @@ const [statusFilter, setStatusFilter] = useState("all");
    return (
     <>
     <div className="patient-home">
-        <section className="patient-hero-overlay">
-          <div className="patient-glass-card">
-            <img src={homeimage} alt="Hospital" className="hero-bg-image-blur" />
-            <img src={homeimage} alt="Hospital" className="hero-bg-image" />
-            <div className="hero-blur-transition" />
-            <div className="patient-info">
-              <div className="patient-profile-card">
-                <h1>Aniruddha Paul</h1>
-                <div className='patient-header-row'>
-                  <div className="patient-id">
-                    Patient ID - AMS-2026-001
-                  </div>
-                  <div className="patient-meta">
-                    <span>Male</span><div className="meta-divider"/>
-                    <span>23 Years</span><div className="meta-divider"/>
-                    <span>O+</span>
-                  </div>
+
+      <section className="patient-hero-overlay">
+        <div className="patient-glass-card">
+          <img src={homeimage} alt="Hospital" className="hero-bg-image-blur" />
+          <img src={homeimage} alt="Hospital" className="hero-bg-image" />
+          <div className="hero-blur-transition" />
+          <div className="patient-info">
+            <div className="patient-profile-card">
+              <h1>Aniruddha Paul</h1>
+              <div className="patient-status-badge"><span className="pulse-dot"/>Active Patient</div>
+              <div className='patient-header-row'>
+                <div className="patient-id">
+                  Patient ID - AMS-2026-001
                 </div>
-
+                <div className="patient-meta">
+                  <span>Male</span><div className="meta-divider"/>
+                  <span>23 Years</span><div className="meta-divider"/>
+                  <span>O+</span>
+                </div>
               </div>
-              <div className="patient-divider" />
-              <div className="health-stats-grid">
 
-                {healthStats.map((item, index) => (
+            </div>
+            <div className="patient-divider" />
+            <div className="health-stats-grid">
+
+              {healthStats.map((item, index) => {
+                const Icon = item.icon;
+                return (
                   <div key={index} className="health-stat-card">
-                    <span>{item.title}</span>
-
-                    <h3>
-                      {item.value}
-                      <small>{item.unit}</small>
-                    </h3>
-
-                    <p>{item.status}</p>
+                    <div className="health-stat-icon-tile"><Icon size={16}/></div>
+                    <div className="health-stat-text">
+                      <span>{item.title}</span>
+                      <h3>{item.value}<small>{item.unit}</small></h3>
+                      <p>{item.status}</p>
+                    </div>
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
       <section className="patient-dashboard-card">
         <div className="patient-actions-grid">
