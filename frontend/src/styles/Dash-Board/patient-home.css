@@ -3,8 +3,8 @@
   padding-bottom: 70px;
 }
 .patient-hero-overlay{
-  padding-top:calc(var(--topbar-height) + var(--navbar-height) + 50px);
-  padding-bottom: 120px;
+  padding-top:calc(var(--topbar-height) + var(--navbar-height) + calc(40px * var(--scale)));
+  padding-bottom:calc(60px * var(--scale));
   position: relative;
   width:var(--portal-width);
   margin: 0 auto 0px;
@@ -18,20 +18,10 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  min-height:clamp(300px,34vw,560px); /* 460, not 560 — see below */
+  min-height:clamp(300px,34vw,445px); /* layout-level fluid sizing — left as-is */
   background:#0B2A4A;
-  border-radius:20px;
+  border-radius:var(--radius-20);
   padding:0;
-}
-
-/* premium accent line across the top */
-.patient-glass-card::after{
-  content:"";
-  position:absolute;
-  top:0; left:0; right:0;
-  height:3px;
-  background:linear-gradient(90deg,#2563EB 0%,#38BDF8 45%,#2563EB 100%);
-  z-index:60;
 }
 
 .hero-bg-image-blur{
@@ -41,13 +31,23 @@
   height:100%;
   object-fit:cover;
   object-position:right center;
-  filter:blur(25px) brightness(.4);
+  filter:blur(5px) brightness(.4); /* visual effect, not scaled */
   transform:scale(1.1);
   z-index:50;
 }
-
 .hero-blur-transition{ display:none; }
 
+/* premium accent line across the top */
+/* .patient-glass-card::after{
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0;
+  height:3px;
+  background:linear-gradient(90deg,#2563EB 0%,#38BDF8 45%,#2563EB 100%);
+  z-index:60;
+} */
+
+/* 
 .hero-bg-image{
   position:absolute;
   inset:0;
@@ -62,24 +62,23 @@
   -webkit-mask-image:
     linear-gradient(90deg, transparent 0%, transparent 44%,
       rgba(0,0,0,.35) 58%, rgba(0,0,0,.8) 74%, black 100%);
-}
+} */
 
 .patient-info{
   position:relative;
   z-index:52;
   width:42%;
   order:1;
-  padding:52px 48px 44px;
+  padding:var(--s50);
   display:flex;
   flex-direction:column;
-  gap:24px;
+  gap:var(--s24);
   box-sizing:border-box;
 }
 
-/* eyebrow label above name */
 .patient-info::before{
   content:"PATIENT DASHBOARD";
-  font-size:11px;
+  font-size:var(--font-11);
   font-weight:700;
   letter-spacing:2.5px;
   color:#5FA8FF;
@@ -88,12 +87,12 @@
 .patient-profile-card{
   display:flex;
   align-items:center;
-  gap:16px;
+  gap:var(--s16);
   flex-wrap:wrap;
 }
 
 .patient-profile-card h1{
-  font-size:2.9rem;
+  font-size:var(--font-46); /* was 2.9rem/46.4px — matches your token closely */
   font-weight:600;
   line-height:1.1;
   color:white;
@@ -101,26 +100,27 @@
   margin:0;
 }
 
-/* status badge with pulsing dot */
 .patient-status-badge{
   display:inline-flex;
   align-items:center;
-  gap:8px;
-  padding:7px 14px;
-  border-radius:999px;
+  gap:var(--s8);
+  padding:var(--s6) var(--s14); /* was 7px 14px — 7 snapped to 6 */
+  border-radius:999px; /* pill shape, not scale-sensitive */
   background:rgba(74,222,128,.12);
-  border:1px solid rgba(74,222,128,.3);
+  border:1px solid rgba(74,222,128,.3); /* hairline — stays px */
   color:#4ADE80;
-  font-size:12px;
+  font-size:var(--font-12);
   font-weight:600;
 }
+
 .pulse-dot{
-  width:7px; height:7px;
+  width:calc(7px * var(--scale)); height:calc(7px * var(--scale));
   border-radius:50%;
   background:#4ADE80;
   box-shadow:0 0 0 rgba(74,222,128,.5);
   animation:pulse 2s infinite;
 }
+
 @keyframes pulse{
   0%{ box-shadow:0 0 0 0 rgba(74,222,128,.5); }
   70%{ box-shadow:0 0 0 8px rgba(74,222,128,0); }
@@ -132,15 +132,15 @@
   display:flex;
   align-items:center;
   flex-wrap:wrap;
-  gap:12px;
+  gap:var(--s12);
   color:rgba(255,255,255,.65);
-  font-size:14.5px;
+  font-size:calc(14.5px * var(--scale));
 }
 
 .patient-id{
   color:rgba(255,255,255,.85);
   font-weight:600;
-  font-size:14.5px;
+  font-size:calc(14.5px * var(--scale));
   background:none;
   border:none;
   padding:0;
@@ -148,18 +148,19 @@
 .patient-meta{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:var(--s10);
   background:none;
   border:none;
   padding:0;
   color:rgba(255,255,255,.65);
-  font-size:14.5px;
+  font-size:calc(14.5px * var(--scale));
 }
 .meta-divider{
-  width:4px; height:4px;
+  width:var(--s4); height:var(--s4);
   border-radius:50%;
   background:rgba(255,255,255,.35);
 }
+
 
 .patient-divider{ display:none; }
 
@@ -170,27 +171,27 @@
   z-index:53;
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:1px;
+  gap:1px; /* hairline — stays px */
   background:rgba(255,255,255,.09);
-  backdrop-filter:blur(24px);
+  backdrop-filter:blur(24px); /* effect radius — not scaled */
   -webkit-backdrop-filter:blur(24px);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:16px;
+  border:1px solid rgba(255,255,255,.15); /* hairline — stays px */
+  border-radius:var(--radius-16);
   overflow:hidden;
-  box-shadow:0 20px 40px -12px rgba(0,0,0,.35);
+  box-shadow:0 20px 40px -12px rgba(0,0,0,.35); /* shadow offsets — stays px */
 }
 .health-stat-card{
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:14px 16px;
+  gap:var(--s10);
+  padding:var(--s14) var(--s16);
   background:rgba(255,255,255,.03);
 }
 
 .health-stat-icon-tile{
-  width:32px; height:32px;
+  width:var(--icon-32); height:var(--icon-32);
   flex-shrink:0;
-  border-radius:9px;
+  border-radius:calc(9px * var(--scale));
   display:flex;
   align-items:center;
   justify-content:center;
@@ -202,7 +203,7 @@
 
 .health-stat-card span{
   display:block;
-  font-size:10px;
+  font-size:var(--font-10);
   font-weight:600;
   letter-spacing:.8px;
   text-transform:uppercase;
@@ -210,22 +211,23 @@
 }
 .health-stat-card h3{
   color:white;
-  font-size:17px;
+  font-size:var(--font-17);
   font-weight:600;
   margin:2px 0 0;
   white-space:nowrap;
 }
 .health-stat-card small{
-  font-size:11px;
+  font-size:var(--font-11);
   font-weight:500;
   color:rgba(255,255,255,.55);
   margin-left:3px;
 }
 .health-stat-card p{
-  font-size:11px;
+  font-size:var(--font-11);
   color:#4ADE80;
   margin-top:1px;
 }
+
 
 @media (max-width:1100px){
   .patient-glass-card{ flex-direction:column; }

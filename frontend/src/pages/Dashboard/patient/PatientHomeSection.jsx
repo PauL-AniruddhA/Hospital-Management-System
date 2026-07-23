@@ -411,7 +411,7 @@ const [statusFilter, setStatusFilter] = useState("all");
       <section className="patient-hero-overlay">
         <div className="patient-glass-card">
           <img src={homeimage} alt="Hospital" className="hero-bg-image-blur" />
-          <img src={homeimage} alt="Hospital" className="hero-bg-image" />
+          {/* <img src={homeimage} alt="Hospital" className="hero-bg-image" /> */}
           <div className="hero-blur-transition" />
           <div className="patient-info">
             <div className="patient-profile-card">
@@ -448,6 +448,7 @@ const [statusFilter, setStatusFilter] = useState("all");
             </div>
           </div>
         </div>
+        
       </section>
 
       <section className="patient-dashboard-card">

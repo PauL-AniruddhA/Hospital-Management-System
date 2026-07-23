@@ -1,7 +1,56 @@
 @import "tailwindcss";
 :root {
+  
+  /*=========================================
+  SPACING TOKENS
+  =========================================*/
+  --design-width:1600px;
+  /* 0.85x → 1.20x scaling */
+  --scale:clamp(.85, calc(100vw / var(--design-width)), 1.20);
+
+    --s2:calc(2px * var(--scale));
+    --s4:calc(4px * var(--scale));
+    --s6:calc(6px * var(--scale));
+    --s8:calc(8px * var(--scale));
+    --s10:calc(10px * var(--scale));
+    --s12:calc(12px * var(--scale));
+    --s14:calc(14px * var(--scale));
+    --s16:calc(16px * var(--scale));
+    --s18:calc(18px * var(--scale));
+    --s20:calc(20px * var(--scale));
+    --s22:calc(22px * var(--scale));
+    --s24:calc(24px * var(--scale));
+    --s28:calc(28px * var(--scale));
+    --s30:calc(30px * var(--scale));
+    --s32:calc(32px * var(--scale));
+    --s36:calc(36px * var(--scale));
+    --s40:calc(40px * var(--scale));
+    --s44:calc(44px * var(--scale));
+    --s48:calc(48px * var(--scale));
+    --s50:calc(50px * var(--scale));
+    --s56:calc(56px * var(--scale));
+    --s65:calc(65px * var(--scale));
+    --s70:calc(70px * var(--scale));
+  
+  /*========================
+      Layout
+  ========================*/
+
   --topbar-height: 38px;
   --navbar-height: 57px;
+  /* --patient-overlap:600px;
+  --hero-scale:clamp(0.85,1vw + 0.8,1.15); --portal-width:min(1600px,calc(100vw - 100px)); */
+
+  --portal-width:min(92vw,1600px);
+  --patient-overlap:clamp(35px,4vw,60px);
+  --hero-height:clamp(360px,36vw,520px);
+  --hero-scale:clamp(1.02,1vw + .98,1.10);
+  --hero-extra: 180px;
+  --font-size: 14px;
+
+  /*========================
+      Colors
+  ========================*/
   --primary: #0f4c81;
   --primary-light: #3b82f6;
   --secondary: #14b8a6;
@@ -10,22 +59,71 @@
   --surface: #ffffff;
   --text-dark: #1e293b;
   --text-light: #64748b;
-  --font-size: 14px;
   --select-background: #eaf3ff;
   --exp-background-color: rgb(255, 242, 242);
-  --patient-overlap:600px;
-  --portal-width:min(92vw,1600px);
-  --hero-scale:clamp(0.85,1vw + 0.8,1.15);
-  --hero-extra: 180px;
   --tree-blue: #4169e1;
+  
+  /*=========================================
+                FONT TOKENS
+  =========================================*/
 
-  --icon-sm: clamp(30px, 8cqi, 36px);   /* notification / prescription / insurance icons */
-  --icon-md: clamp(34px, 9cqi, 40px);   /* bill / lab-report icon tiles */
-  --icon-lg: clamp(44px, 10cqi, 58px);  /* patient action icons */
+  --font-10:calc(10px * var(--scale));
+  --font-11:calc(11px * var(--scale));
+  --font-12:calc(12px * var(--scale));
+  --font-13:calc(13px * var(--scale));
+  --font-14:calc(14px * var(--scale));
+  --font-15:calc(15px * var(--scale));
+  --font-16:calc(16px * var(--scale));
+  --font-17:calc(17px * var(--scale));
+  --font-18:calc(18px * var(--scale));
+  --font-20:calc(20px * var(--scale));
+  --font-22:calc(22px * var(--scale));
+  --font-24:calc(24px * var(--scale));
+  --font-28:calc(28px * var(--scale));
+  --font-32:calc(32px * var(--scale));
+  --font-40:calc(40px * var(--scale));
+  --font-46:calc(46px * var(--scale));
 
-  --heading-sm: clamp(1rem, 3.5cqi, 1.3rem);
-  --heading-md: clamp(1.1rem, 4cqi, 1.6rem);
-  --heading-lg: clamp(2rem, 6cqi, 3.9rem);
+  /*=========================================
+                ICON TOKENS
+  =========================================*/
+
+  --icon-16:calc(16px * var(--scale));
+  --icon-18:calc(18px * var(--scale));
+  --icon-20:calc(20px * var(--scale));
+  --icon-22:calc(22px * var(--scale));
+  --icon-24:calc(24px * var(--scale));
+  --icon-28:calc(28px * var(--scale));
+  --icon-32:calc(32px * var(--scale));
+  --icon-36:calc(36px * var(--scale));
+  --icon-40:calc(40px * var(--scale));
+  --icon-44:calc(44px * var(--scale));
+  --icon-48:calc(48px * var(--scale));
+  --icon-56:calc(56px * var(--scale));
+
+  /*=========================================
+               RADIUS TOKENS
+  =========================================*/
+
+  --radius-4:calc(4px * var(--scale));
+  --radius-6:calc(6px * var(--scale));
+  --radius-8:calc(8px * var(--scale));
+  --radius-10:calc(10px * var(--scale));
+  --radius-12:calc(12px * var(--scale));
+  --radius-14:calc(14px * var(--scale));
+  --radius-16:calc(16px * var(--scale));
+  --radius-20:calc(20px * var(--scale));
+
+    /*========================
+      Cards
+  ========================*/
+
+  --card-padding:clamp(16px,1.4vw,24px);
+  --card-gap:clamp(12px,1vw,20px);
+  --glass-blur:22px;
+  --shadow-sm:0 2px 8px rgba(0,0,0,.08);
+  --shadow-md:0 12px 32px rgba(0,0,0,.15);
+  --shadow-lg:0 20px 45px rgba(0,0,0,.25);
 }
 
 * {
