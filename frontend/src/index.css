@@ -31,6 +31,9 @@
     --s56:calc(56px * var(--scale));
     --s65:calc(65px * var(--scale));
     --s70:calc(70px * var(--scale));
+    --s80:calc(80px * var(--scale));
+    --s90:calc(90px * var(--scale));
+    --s100:calc(100px * var(--scale));
   
   /*========================
       Layout
