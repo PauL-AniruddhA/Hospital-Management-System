@@ -1,13 +1,13 @@
 import React , { useRef, useState, useEffect,useMemo } from 'react';
-import "../../../styles/Dash-Board/patient-home.css";
+import "../../styles/DashBoard/Patient/patient-home.css";
 import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan,Apple,Dumbbell,Moon,HeartHandshake,ChevronLeft,BadgeCheck,Hospital,UserRound,BedDouble,Activity ,Sparkles, Smile, Glasses,Monitor,Eye,Zap,Bone,ClipboardList,Search}  from "lucide-react";
-import homeimage from "../../../assets/hero-images/Hoispital Image 7.png";
-import doc1 from "../../../assets/home/doc3.png";
-import cc1 from "../../../assets/carousel cards/1-stay-hydrated-copy.png";
-import cc2 from "../../../assets/carousel cards/2-eat-healthy-copy.png";
-import cc3 from "../../../assets/carousel cards/3-move-every-day-copy.png";
-import cc4 from "../../../assets/carousel cards/4-get-quality-sleep-copy.png";
-import cc5 from "../../../assets/carousel cards/5-take-time-to-relax-copy.png";
+import homeimage from "../../assets/hero-images/Hoispital Image 7.png";
+import doc1 from "../../assets/home/doc3.png";
+import cc1 from "../../assets/carousel cards/1-stay-hydrated-copy.png";
+import cc2 from "../../assets/carousel cards/2-eat-healthy-copy.png";
+import cc3 from "../../assets/carousel cards/3-move-every-day-copy.png";
+import cc4 from "../../assets/carousel cards/4-get-quality-sleep-copy.png";
+import cc5 from "../../assets/carousel cards/5-take-time-to-relax-copy.png";
 
 const ICON_REGISTRY = {
   tablet: Pill,
@@ -106,7 +106,7 @@ const medicines = [
   { id: 2, name: "Atorvastatin", dose: "10mg", type: "inhaler", schedule: { PM: "15ml" }, foodTiming: "Bedtime", supply: "30 days" },
   { id: 3, name: "Metformin", dose: "500mg", type: "injection", schedule: { AM: "1 tab", PM: "1 tab" }, foodTiming: "After food", refill: true },
   { id: 4, name: "Aspirin", dose: "75mg", type: "drops", schedule: { Noon: "1 tbsp" }, foodTiming: "After food", supply: "30 days" },
-  { id: 4, name: "Aspirin", dose: "75mg", type: "drops", schedule: { Noon: "1 tbsp" }, foodTiming: "After food", supply: "30 days" },
+  { id: 5, name: "Aspirin", dose: "75mg", type: "drops", schedule: { Noon: "1 tbsp" }, foodTiming: "After food", supply: "30 days" },
 ];
 const slots = ["AM", "Noon", "PM"];
 const labReports = [
@@ -1178,7 +1178,6 @@ const [statusFilter, setStatusFilter] = useState("all");
         </div>
       </section>
 
-      {/* <section className="Empty"/> */}
     </div>
     </>
   );

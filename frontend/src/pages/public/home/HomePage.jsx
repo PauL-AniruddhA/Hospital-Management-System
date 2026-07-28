@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { ShieldPlus, CalendarDays, FlaskConical, Stethoscope, Building2 ,HeartPulse, ClipboardList, } from 'lucide-react';
 import Department from '../common/Department';
 import departments from '../../../mock/depertment';
-import PatientHomeSection from "../../Dashboard/patient/PatientHomeSection";
+import PatientHomeSection from "../../patient/PatientHomeSection";
 import {isAuthenticated} from "../../../utils/tokenUtils";
 import {getRole} from "../../../utils/roleUtils";
 
