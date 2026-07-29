@@ -7,7 +7,7 @@ import {
   CalendarDays, Bell, BarChart3, UserRound, Headset, Settings as SettingsIcon,
   Menu, Search, MessageCircle, ChevronDown, CheckCircle2, Clock, ChevronLeft,
   ChevronRight, MoreVertical, AlertTriangle, UserPlus, BedDouble, ClipboardCheck,
-  Star, Timer, ClipboardList, PlayCircle,
+  Star, Timer, ClipboardList, PlayCircle, FileCheck2, NotebookPen, CheckSquare
 } from "lucide-react";
 
 /* ---------------- static nav / reference data ---------------- */
@@ -88,7 +88,18 @@ const PERFORMANCE = [
 //   [30, 1, 2, 3, 4, null, null],
 // ];
 
- const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+const ASIDE_QUICK_ACTIONS = [
+  { icon: FileText, label: "New Patient", cls: "aside-qa-item--blue" },
+  { icon: NotebookPen, label: "Write Note", cls: "aside-qa-item--orange" },
+  // { icon: FileCheck2, label: "Add Prescription", cls: "aside-qa-item--green" },
+  { icon: Bell, label: "Reminders", cls: "aside-qa-item--green" },
+  { icon: FlaskConical, label: "Order Lab Test", cls: "aside-qa-item--purple" },
+  { icon: Users, label: "Referral ", cls: "aside-qa-item--teal" },
+  { icon: CheckSquare, label: "Create Task", cls: "aside-qa-item--red" },
+];
+
 
 function getMonthGrid(date) {
   const year = date.getFullYear();
@@ -102,6 +113,33 @@ function getMonthGrid(date) {
   ];
   while (cells.length % 7 !== 0) cells.push(null);
   return cells;
+}
+function getMonthGridFull(date) {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+  const cells = [];
+  for (let i = firstDay - 1; i >= 0; i--) {
+    cells.push({ day: daysInPrevMonth - i, muted: true });
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    cells.push({ day: d, muted: false });
+  }
+  let nextDay = 1;
+  while (cells.length < 42) {
+    cells.push({ day: nextDay++, muted: true });
+  }
+  return cells;
+}
+function getWeekNumber(d) {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
 }
 /* ---------------- component ---------------- */
 
@@ -128,12 +166,24 @@ function DoctorDashboard() {
 
   const nextPatient = QUEUE.find((p) => p.status === "checkedin") || QUEUE.find((p) => p.status === "waiting");
 
-  const timeStr = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  const dateStr = now.toLocaleDateString([], { day: "numeric", month: "short", year: "numeric" });
+  const dayName = now.toLocaleDateString([], { weekday: "long" });
+  const fullDate = now.toLocaleDateString([], { day: "numeric", month: "long", year: "numeric" });
+  const weekNum = getWeekNumber(now);
+
+  const hh = now.getHours() % 12 === 0 ? 12 : now.getHours() % 12;
+  const mm = String(now.getMinutes()).padStart(2, "0");
+  const ss = String(now.getSeconds()).padStart(2, "0");
+  const ampm = now.getHours() >= 12 ? "PM" : "AM";
+
   const monthLabel = now.toLocaleDateString([], { month: "long", year: "numeric" });
   const todayDate = now.getDate();
 
-  const calendarCells = useMemo(() => getMonthGrid(now), [now.getMonth(), now.getFullYear()]);
+  const calendarCellsFull = useMemo(() => getMonthGridFull(now), [now.getMonth(), now.getFullYear(), now.getDate()]);
+
+// analog clock hand angles
+const secAngle = now.getSeconds() * 6;
+const minAngle = now.getMinutes() * 6 + now.getSeconds() * 0.1;
+const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
 
   const STATS = [
     { icon: CalendarDays, iconClass: "stat-icon--blue", label: "Today's Appointments", value: 24, action: "View all" },
@@ -166,10 +216,10 @@ function DoctorDashboard() {
           <kbd className="topbar__search-kbd">Ctrl + K</kbd>
         </div>
 
-        <div className="topbar__clock">
+        {/* <div className="topbar__clock">
           <span className="topbar__clock-time">{timeStr}</span>
           <span className="topbar__clock-date">{dateStr}</span>
-        </div>
+        </div> */}
 
         <div className="topbar__actions">
           <button className="topbar__icon-btn" aria-label="Messages">
@@ -232,7 +282,7 @@ function DoctorDashboard() {
             ))}
           </nav>
 
-          <div className="sidebar__quick-actions">
+          {/* <div className="sidebar__quick-actions">
             <span className="sidebar__section-label">Quick Actions</span>
             <div className="sidebar__qa-list">
               {QUICK_ACTIONS.map((a) => (
@@ -244,7 +294,7 @@ function DoctorDashboard() {
                 </button>
               ))}
             </div>
-          </div>
+          </div> */}
 
           <div className="sidebar__help">
             <span className="sidebar__help-icon">
@@ -327,6 +377,31 @@ function DoctorDashboard() {
               </div>
             </div>
 
+            <div className="panel panel--schedule">
+              <div className="panel__header">
+                <h2>
+                  <CalendarDays size={16} className="panel__header-icon" /> Today's Schedule
+                </h2>
+                <a href="#">View Calendar</a>
+              </div>
+              <div className="timeline">
+                {SCHEDULE.map((item, i) => (
+                  <div className="timeline-row" key={i}>
+                    <span className="timeline-row__time">{item.time}</span>
+                    <span className={`timeline-row__dot timeline-row__dot--${item.status}`} />
+                    <div className="timeline-row__info">
+                      <span className="timeline-row__title">{item.title}</span>
+                      <span className="timeline-row__patient">Patient: {item.patient}</span>
+                    </div>
+                    <span className={`badge badge--${item.status}`}>
+                      {SCHEDULE_STATUS_LABEL[item.status]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <button className="panel__full-btn">View Full Schedule</button>
+            </div>
+
             <div className="panel panel--actioncenter">
               <div className="panel__header">
                 <h2><ClipboardList size={16} className="panel__header-icon" /> Action Center</h2>
@@ -365,10 +440,11 @@ function DoctorDashboard() {
               ))}
             </div>
           </section>
+          
         </div>
       </section>
 
-      {/* right: permanent clock + calendar + today's schedule rail */}
+      {/* right: permanent clock + calendar  */}
       <section className="doc_aside">
         <aside className="aside-rail">
           {/* <div className="panel panel--clock">
@@ -376,60 +452,85 @@ function DoctorDashboard() {
             <span className="clock-date">{dateStr}</span>
           </div> */}
 
-          <div className="panel panel--calendar">
+          <div className="panel panel--quick-actions">
             <div className="panel__header">
-              <h2><CalendarDays size={16} className="panel__header-icon" /> Calendar</h2>
+              <h2>Quick Actions</h2>
             </div>
-            <div className="calendar-nav">
+            <div className="aside-qa-grid">
+              {ASIDE_QUICK_ACTIONS.map((a) => (
+                <button className={`aside-qa-item ${a.cls}`} key={a.label}>
+                  <span className="aside-qa-icon">
+                    <a.icon size={16} strokeWidth={2} />
+                  </span>
+                  <span className="aside-qa-label">{a.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="panel panel--calendar-v2">
+            <div className="cal-card__top">
+              <div className="cal-card__daydate">
+                <span className="cal-card__day">{dayName}</span>
+                <span className="cal-card__date">{fullDate}</span>
+              </div>
+              <span className="cal-card__week">Week {weekNum}</span>
+            </div>
+
+            <div className="cal-card__clock-row">
+              <div className="cal-card__digital">
+                <span className="cal-card__time">{hh}:{mm}</span>
+                <div className="cal-card__time-meta">
+                  <span className="cal-card__ampm">{ampm}</span>
+                  <span className="cal-card__sec">:{ss}</span>
+                </div>
+              </div>
+
+              <svg className="cal-card__analog" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="46" className="analog-face" />
+                {[0, 3, 6, 9].map((i) => (
+                  <line
+                    key={i}
+                    x1="50" y1="6" x2="50" y2="13"
+                    className="analog-tick"
+                    transform={`rotate(${i * 30} 50 50)`}
+                  />
+                ))}
+                <line x1="50" y1="50" x2="50" y2="24" className="analog-hand analog-hand--hour" transform={`rotate(${hourAngle} 50 50)`} />
+                <line x1="50" y1="50" x2="50" y2="16" className="analog-hand analog-hand--min" transform={`rotate(${minAngle} 50 50)`} />
+                <line x1="50" y1="50" x2="50" y2="12" className="analog-hand analog-hand--sec" transform={`rotate(${secAngle} 50 50)`} />
+                <circle cx="50" cy="50" r="3" className="analog-center" />
+              </svg>
+            </div>
+
+            <div className="cal-card__month-nav">
               <span>{monthLabel}</span>
               <div className="calendar-nav__arrows">
                 <button aria-label="Previous month"><ChevronLeft size={15} /></button>
                 <button aria-label="Next month"><ChevronRight size={15} /></button>
               </div>
             </div>
-            <div className="calendar-grid">
+
+            <div className="calendar-grid calendar-grid--v2">
               {WEEKDAYS.map((d) => (
                 <span className="calendar-grid__weekday" key={d}>{d}</span>
               ))}
-              {calendarCells.map((d, i) => (
+              {calendarCellsFull.map((c, i) => (
                 <span
                   key={i}
                   className={
                     "calendar-grid__day" +
-                    (d === todayDate ? " calendar-grid__day--selected" : "") +
-                    (d === null ? " calendar-grid__day--empty" : "")
+                    (c.muted ? " calendar-grid__day--muted" : "") +
+                    (!c.muted && c.day === todayDate ? " calendar-grid__day--selected" : "")
                   }
                 >
-                  {d}
+                  {c.day}
                 </span>
               ))}
             </div>
           </div>
 
-          <div className="panel panel--schedule">
-            <div className="panel__header">
-              <h2><Clock size={16} className="panel__header-icon" /> Today's Schedule</h2>
-              <a href="#">Full view</a>
-            </div>
-            <div className="mini-schedule-list">
-              {SCHEDULE.map((item, i) => (
-                <div className="mini-schedule-row" key={i}>
-                  <span className={`mini-schedule-dot mini-schedule-dot--${item.status}`} />
-                  <div className="mini-schedule-info">
-                    <div className="mini-schedule-top">
-                      <span className="mini-schedule-time">{item.time}</span>
-                      <span className={`badge badge--${item.status}`}>
-                        {SCHEDULE_STATUS_LABEL[item.status]}
-                      </span>
-                    </div>
-                    <span className="mini-schedule-patient">
-                      {item.patient} · {item.title}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          
         </aside>
       </section>
     </div>

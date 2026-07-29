@@ -1,7 +1,7 @@
 /* ================= LAYOUT SHELL ================= */
 .doctors-home {
   display: grid;
-  grid-template-columns: 222px 1fr 345px;
+  grid-template-columns: 222px 1fr 300px;
   grid-template-rows: auto 1fr;
   grid-template-areas:
     "topbar topbar topbar"
@@ -18,7 +18,7 @@
   align-items: center;
   gap: 16px;
   background: #ffffff;
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-bottom: 1px solid #eef0f4;
   position: sticky;
   top: 0;
@@ -29,13 +29,13 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding-right: 16px;
+  padding-right: 14px;
   flex-shrink: 0;
 }
 
 .doc_topbar_brand-icon {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 10px;
   background: #e8f0ff;
   color: #2563eb;
@@ -61,7 +61,7 @@
 }
 
 .doc_topbar_brand-tagline {
-  font-size: 11px;
+  font-size: 12px;
   color: #9aa1ac;
   white-space: nowrap;
 }
@@ -85,14 +85,14 @@
 
 .topbar__search {
   flex: 1;
-  max-width: 512px;
+  max-width: 420px;
   display: flex;
   align-items: center;
   gap: 8px;
   background: #f6f7fb;
   border: 1px solid #eaecf1;
   border-radius: 10px;
-  padding: 9px 14px;
+  padding: 8px 12px;
 }
 
 .topbar__search-icon {
@@ -115,7 +115,7 @@
 }
 
 .topbar__search-kbd {
-  font-size: 0.68rem;
+  font-size: 11px;
   color: #9aa1ac;
   background: #ffffff;
   border: 1px solid #e5e7eb;
@@ -128,15 +128,15 @@
 .topbar__actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin-left: auto;
   flex-shrink: 0;
 }
 
 .topbar__icon-btn {
   position: relative;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: #f6f7fb;
   border: none;
@@ -158,7 +158,7 @@
   right: -2px;
   background: #ef4444;
   color: #fff;
-  font-size: 0.6rem;
+  font-size: 11px;
   font-weight: 700;
   min-width: 1rem;
   height: 1rem;
@@ -176,7 +176,7 @@
 
 .notif-dropdown {
   position: absolute;
-  top: 46px;
+  top: 44px;
   right: 0;
   width: 300px;
   background: #ffffff;
@@ -232,12 +232,12 @@
 }
 
 .notif-dropdown__subtitle {
-  font-size: 11px;
+  font-size: 12px;
   color: #9aa1ac;
 }
 
 .notif-dropdown__time {
-  font-size: 10px;
+  font-size: 11px;
   color: #9aa1ac;
   white-space: nowrap;
   flex-shrink: 0;
@@ -247,15 +247,15 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding-left: 14px;
+  padding-left: 12px;
   border-left: 1px solid #eef0f4;
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .topbar__avatar {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -290,7 +290,7 @@
   flex-direction: column;
   align-items: flex-end;
   line-height: 1.2;
-  padding: 0 14px;
+  padding: 0 12px;
   border-left: 1px solid #eef0f4;
   flex-shrink: 0;
 }
@@ -303,7 +303,7 @@
 }
 
 .topbar__clock-date {
-  font-size: 11px;
+  font-size: 12px;
   color: #9aa1ac;
 }
 
@@ -316,26 +316,28 @@
   width: 100%;
   height: calc(100vh - 4.5rem);
   position: sticky;
-  top: 4.5rem;
+  top: 5.0rem;
   background: #ffffff;
   border-right: 1px solid #eef0f4;
   display: flex;
   flex-direction: column;
-  padding: 20px 14px 16px;
+  padding: 16px 12px 14px;
   overflow-y: auto;
+  border-top-right-radius: 20px;
 }
 
 .sidebar__nav {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  flex: 1;
 }
 
 .sidebar__link {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
+  padding: 9px 10px;
   border-radius: 10px;
   color: #6b7280;
   text-decoration: none;
@@ -373,8 +375,8 @@
 /* ---------- Sidebar quick actions ---------- */
 .sidebar__quick-actions {
   flex: 1;
-  margin-top: 20px;
-  padding-top: 16px;
+  margin-top: 16px;
+  padding-top: 14px;
   border-top: 1px solid #eef0f4;
 }
 
@@ -385,7 +387,7 @@
   letter-spacing: 0.4px;
   text-transform: uppercase;
   color: #9aa1ac;
-  padding: 0 12px 10px;
+  padding: 0 10px 8px;
 }
 
 .sidebar__qa-list {
@@ -398,7 +400,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 9px 12px;
+  padding: 8px 10px;
   border-radius: 10px;
   border: none;
   background: transparent;
@@ -414,8 +416,8 @@
 }
 
 .sidebar__qa-icon {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -441,13 +443,13 @@
   gap: 10px;
   background: #eaf1ff;
   border-radius: 12px;
-  padding: 12px;
-  margin-top: 12px;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 .sidebar__help-icon {
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.1rem;
+  height: 2.1rem;
   border-radius: 50%;
   background: #ffffff;
   color: #2563eb;
@@ -476,8 +478,8 @@
 
 .sidebar__footer {
   text-align: center;
-  margin-top: 0.9rem;
-  font-size: 0.65rem;
+  margin-top: 0.8rem;
+  font-size: 11px;
   color: #9aa1ac;
   line-height: 1.5;
 }
@@ -485,41 +487,41 @@
 /* ================= MIDDLE: MAIN ================= */
 .doc_main {
   grid-area: main;
-  padding: 24px;
+  padding: 18px 20px;
   overflow-y: auto;
 }
 
 .dashboard {
   display: flex;
   flex-direction: column;
-  gap: var(--s20, 20px);
+  gap: 16px;
 }
 
 /* ---------- Stat cards ---------- */
 .stat-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--s16, 16px);
+  gap: 12px;
 }
 
 .stat-card {
   background: var(--surface, #fff);
   border-radius: var(--radius-16, 16px);
-  padding: var(--card-padding, 16px);
+  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: var(--s6, 6px);
+  gap: 5px;
   box-shadow: var(--shadow-sm, 0 1px 2px rgba(20,24,33,0.05));
 }
 
 .stat-icon {
-  width: var(--icon-40, 40px);
-  height: var(--icon-40, 40px);
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-10, 10px);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: var(--s4, 4px);
+  margin-bottom: 2px;
 }
 
 .stat-icon--blue { background: #e8f0fe; color: #2563eb; }
@@ -529,18 +531,18 @@
 .stat-icon--orange { background: #fef3e2; color: var(--warning, #f59e0b); }
 
 .stat-card__label {
-  font-size: var(--font-12, 12px);
+  font-size: 13px;
   color: var(--text-light, #9aa1ac);
 }
 
 .stat-card__value {
-  font-size: var(--font-28, 28px);
+  font-size: 24px;
   font-weight: 700;
   color: var(--text-dark, #1f2937);
 }
 
 .stat-card__action {
-  font-size: var(--font-12, 12px);
+  font-size: 12px;
   font-weight: 600;
   color: var(--primary-light, #2563eb);
   text-decoration: none;
@@ -557,7 +559,7 @@
   background: #eaf1ff;
   border: 1px solid #cfe0ff;
   border-radius: var(--radius-16, 16px);
-  padding: 14px 18px;
+  padding: 12px 16px;
 }
 
 .next-patient__info {
@@ -588,7 +590,7 @@
   color: #fff;
   border: none;
   border-radius: 10px;
-  padding: 9px 16px;
+  padding: 8px 14px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -603,13 +605,13 @@
 .dashboard__grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
-  gap: var(--s16, 16px);
+  gap: 12px;
 }
 
 .panel {
   background: var(--surface, #fff);
   border-radius: var(--radius-16, 16px);
-  padding: var(--card-padding, 16px);
+  padding: 14px;
   box-shadow: var(--shadow-sm, 0 1px 2px rgba(20,24,33,0.05));
 }
 
@@ -617,16 +619,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--s16, 16px);
+  margin-bottom: 12px;
 }
 
 .panel__header h2 {
-  font-size: var(--font-15, 15px);
+  font-size: 14px;
   font-weight: 700;
   color: var(--text-dark, #1f2937);
   display: flex;
   align-items: center;
-  gap: var(--s8, 8px);
+  gap: 8px;
 }
 
 .panel__header-icon {
@@ -634,7 +636,7 @@
 }
 
 .panel__header a {
-  font-size: var(--font-12, 12px);
+  font-size: 12px;
   font-weight: 600;
   color: var(--primary-light, #2563eb);
   text-decoration: none;
@@ -644,25 +646,25 @@
 .queue-list {
   display: flex;
   flex-direction: column;
-  gap: var(--s10, 10px);
+  gap: 8px;
 }
 
 .queue-row {
   display: flex;
   align-items: center;
-  gap: var(--s12, 12px);
-  padding: var(--s10, 10px);
+  gap: 10px;
+  padding: 9px;
   border-radius: var(--radius-12, 12px);
   border: 1px solid var(--border-color, #eef0f4);
 }
 
 .queue-row__id {
-  font-size: var(--font-12, 12px);
+  font-size: 12px;
   font-weight: 700;
   color: var(--primary, #2563eb);
   background: var(--select-background, #eaf1ff);
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: var(--radius-8, 8px);
   display: flex;
   align-items: center;
@@ -671,8 +673,8 @@
 }
 
 .queue-row__avatar {
-  width: var(--icon-36, 36px);
-  height: var(--icon-36, 36px);
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -691,7 +693,7 @@
 .queue-row__reason { flex: 1.2; }
 
 .queue-row__name {
-  font-size: var(--font-13, 13px);
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-dark, #1f2937);
   white-space: nowrap;
@@ -702,13 +704,13 @@
 .queue-row__pid,
 .queue-row__meta,
 .queue-row__dept {
-  font-size: var(--font-11, 11px);
+  font-size: 12px;
   color: var(--text-light, #9aa1ac);
 }
 
 .queue-row__time span:first-child,
 .queue-row__reason span:first-child {
-  font-size: var(--font-13, 13px);
+  font-size: 13px;
   color: var(--text-dark, #1f2937);
   font-weight: 500;
 }
@@ -718,15 +720,15 @@
   border: none;
   color: var(--text-light, #9aa1ac);
   cursor: pointer;
-  padding: var(--s4, 4px);
+  padding: 4px;
   flex-shrink: 0;
 }
 
 /* ---------- Status badges ---------- */
 .badge {
-  font-size: var(--font-11, 11px);
+  font-size: 12px;
   font-weight: 600;
-  padding: 4px var(--s10, 10px);
+  padding: 4px 10px;
   border-radius: 999px;
   white-space: nowrap;
   flex-shrink: 0;
@@ -742,14 +744,14 @@
 .action-list {
   display: flex;
   flex-direction: column;
-  gap: var(--s10, 10px);
+  gap: 8px;
 }
 
 .action-item {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px;
+  padding: 9px;
   border-radius: var(--radius-12, 12px);
   border: 1px solid var(--border-color, #eef0f4);
   border-left-width: 3px;
@@ -760,8 +762,8 @@
 .action-item--admin { border-left-color: #2563eb; background: #f6f9ff; }
 
 .action-item__icon {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.7);
   display: flex;
@@ -779,18 +781,18 @@
 }
 
 .action-item__title {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: #1f2937;
 }
 
 .action-item__subtitle {
-  font-size: 11px;
+  font-size: 12px;
   color: #6b7280;
 }
 
 .action-item__cta {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: #1f2937;
   background: #ffffff;
@@ -805,7 +807,7 @@
 .perf-strip {
   background: var(--surface, #fff);
   border-radius: var(--radius-16, 16px);
-  padding: 14px 16px;
+  padding: 12px 14px;
   box-shadow: var(--shadow-sm, 0 1px 2px rgba(20,24,33,0.05));
 }
 
@@ -816,7 +818,7 @@
   font-size: 13px;
   font-weight: 700;
   color: #1f2937;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .perf-strip__header a {
@@ -832,7 +834,7 @@
 .perf-strip__row {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap: 8px;
 }
 
 .perf-strip__item {
@@ -844,8 +846,8 @@
 }
 
 .perf-icon {
-  width: var(--icon-32, 32px);
-  height: var(--icon-32, 32px);
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -865,7 +867,7 @@
 }
 
 .perf-strip__label {
-  font-size: 10px;
+  font-size: 11px;
   color: #9aa1ac;
 }
 
@@ -879,16 +881,76 @@
   height: calc(100vh - 4.5rem);
   position: sticky;
   top: 4.5rem;
-  padding: 16px 16px 16px 0;
+  padding: 14px 14px 14px 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .panel--calendar,
+.panel--schedule,
+.panel--quick-actions {
+  padding: 12px;
+}
+
+/* ---------- Aside quick-actions grid ---------- */
+.aside-qa-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.aside-qa-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px;
+  border-radius: var(--radius-12, 12px);
+  border: 1px solid var(--border-color, #eef0f4);
+  cursor: pointer;
+  text-align: left;
+}
+
+.aside-qa-item:hover {
+  filter: brightness(0.98);
+}
+
+.aside-qa-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-8, 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.aside-qa-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dark, #1f2937);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.aside-qa-item--blue   { background: #eef4ff; }
+.aside-qa-item--blue   .aside-qa-icon { background: #dbe8ff; color: #2563eb; }
+.aside-qa-item--green  { background: #edf9f1; }
+.aside-qa-item--green  .aside-qa-icon { background: #d7f2df; color: var(--success, #16a34a); }
+.aside-qa-item--purple { background: #f5f0fc; }
+.aside-qa-item--purple .aside-qa-icon { background: #e6d9f8; color: #7c3aed; }
+.aside-qa-item--orange { background: #fef6ea; }
+.aside-qa-item--orange .aside-qa-icon { background: #fbe8c6; color: var(--warning, #f59e0b); }
+.aside-qa-item--teal   { background: #eaf7f6; }
+.aside-qa-item--teal   .aside-qa-icon { background: #d3efec; color: var(--secondary, #0d9488); }
+.aside-qa-item--red    { background: #fdecec; }
+.aside-qa-item--red    .aside-qa-icon { background: #fbd5d5; color: var(--danger, #ef4444); }
+
+.panel--calendar,
 .panel--schedule {
-  padding: 14px;
+  padding: 12px;
 }
 
 /* ---------- Calendar ---------- */
@@ -896,15 +958,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: var(--font-13, 13px);
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-dark, #1f2937);
-  margin-bottom: var(--s12, 12px);
+  margin-bottom: 10px;
 }
 
 .calendar-nav__arrows {
   display: flex;
-  gap: var(--s6, 6px);
+  gap: 6px;
 }
 
 .calendar-nav__arrows button {
@@ -928,14 +990,14 @@
 }
 
 .calendar-grid__weekday {
-  font-size: var(--font-10, 10px);
+  font-size: 11px;
   color: var(--text-light, #9aa1ac);
   font-weight: 600;
-  padding-bottom: var(--s6, 6px);
+  padding-bottom: 6px;
 }
 
 .calendar-grid__day {
-  font-size: 10.5px;
+  font-size: 12px;
   color: var(--text-dark, #1f2937);
   padding: 4px 0;
   border-radius: var(--radius-6, 6px);
@@ -950,81 +1012,266 @@
   font-weight: 700;
 }
 
-/* ---------- Today's Schedule (compact, aside rail) ---------- */
-.mini-schedule-list {
+/* ---------- Calendar card v2 (day/date + digital+analog clock + month) ---------- */
+.panel--calendar-v2 {
+  padding: 16px;
   display: flex;
   flex-direction: column;
+  gap: 14px;
 }
 
-.mini-schedule-row {
+.cal-card__top {
   display: flex;
-  gap: 10px;
-  padding-bottom: 10px;
-  position: relative;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
-.mini-schedule-row:not(:last-child)::before {
-  content: "";
-  position: absolute;
-  left: 4px;
-  top: 14px;
-  bottom: -2px;
-  width: 1px;
-  background: var(--border-color, #eef0f4);
+.cal-card__daydate {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-.mini-schedule-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  margin-top: 4px;
+.cal-card__day {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark, #1f2937);
+}
+
+.cal-card__date {
+  font-size: 12px;
+  color: var(--text-light, #9aa1ac);
+}
+
+.cal-card__week {
+  font-size: 11px;
+  font-weight: 600;
+  color: #2563eb;
+  background: #eaf1ff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
   flex-shrink: 0;
-  background: var(--text-light, #9aa1ac);
 }
 
-.mini-schedule-dot--completed { background: var(--success, #16a34a); }
-.mini-schedule-dot--progress { background: #2563eb; }
-.mini-schedule-dot--upcoming { background: #b7bfcc; }
-
-.mini-schedule-info {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.mini-schedule-top {
+.cal-card__clock-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
 }
 
-.mini-schedule-time {
+.cal-card__digital {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.cal-card__time {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-dark, #1f2937);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.cal-card__time-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+.cal-card__ampm {
   font-size: 11px;
+  font-weight: 700;
+  color: var(--text-light, #9aa1ac);
+}
+
+.cal-card__sec {
+  font-size: 12px;
+  color: var(--text-light, #9aa1ac);
+  font-variant-numeric: tabular-nums;
+}
+
+.cal-card__analog {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.analog-face {
+  fill: #ffffff;
+  stroke: var(--border-color, #eef0f4);
+  stroke-width: 2;
+}
+
+.analog-tick {
+  stroke: #c3c9d4;
+  stroke-width: 1.5;
+}
+
+.analog-hand {
+  stroke-linecap: round;
+}
+
+.analog-hand--hour {
+  stroke: #1f2937;
+  stroke-width: 3.5;
+}
+
+.analog-hand--min {
+  stroke: #2563eb;
+  stroke-width: 2.5;
+}
+.analog-hand--sec {
+  stroke: #0d9488;
+  stroke-width: 1;
+}
+
+.analog-center {
+  fill: #2563eb;
+}
+
+.cal-card__month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-dark, #1f2937);
 }
 
-.mini-schedule-patient {
-  font-size: 10.5px;
-  color: var(--text-light, #9aa1ac);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.calendar-grid--v2 .calendar-grid__day--muted {
+  color: #d5dae2;
+}
+
+/* ---------- Today's Schedule (compact, aside rail) ---------- */
+.panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--s16);
+}
+
+.panel__header h2 {
+  font-size: var(--font-15);
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: var(--s8);
+}
+
+.panel__header-icon {
+  color: var(--primary);
+}
+
+.panel__header a {
+  font-size: var(--font-12);
+  font-weight: 600;
+  color: var(--primary-light);
+  text-decoration: none;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.timeline-row {
+  display: grid;
+  grid-template-columns: 72px 20px 1fr auto;
+  align-items: start;
+  gap: var(--s10);
+  padding-bottom: var(--s20);
+  position: relative;
+}
+
+.timeline-row:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 81px;
+  top: 16px;
+  bottom: -4px;
+  width: 1px;
+  background: var(--border-color);
+}
+
+.timeline-row__time {
+  font-size: var(--font-12);
+  color: var(--text-light);
+  padding-top: 2px;
+}
+
+.timeline-row__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-top: 5px;
+  background: var(--text-light);
+}
+
+.timeline-row__dot--completed { background: var(--success); }
+.timeline-row__dot--progress { background: #2563eb; }
+.timeline-row__dot--upcoming { background: #b7bfcc; }
+
+.timeline-row__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-row__title {
+  font-size: var(--font-13);
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.timeline-row__patient {
+  font-size: var(--font-11);
+  color: var(--text-light);
+}
+
+.panel__full-btn {
+  width: 100%;
+  margin-top: var(--s4);
+  padding: var(--s10);
+  border-radius: var(--radius-10);
+  border: 1px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font-size: var(--font-13);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.panel__full-btn:hover {
+  background: var(--select-background);
 }
 
 /* ---------- Responsive ---------- */
+
+/* 14" laptop band (~1280–1512px logical width): this is now the
+   tuned base above, so no extra shrinking happens in this range —
+   only the two rules below adjust for it explicitly. */
+@media (max-width: 1512px) and (min-width: 1201px) {
+  .doctors-home {
+    grid-template-columns: 210px 1fr 330px;
+  }
+  .stat-row {
+    gap: 10px;
+  }
+}
+
 @media (max-width: 1400px) {
   .doctors-home {
-    grid-template-columns: 220px 1fr 260px;
+    grid-template-columns: 200px 1fr 260px;
   }
 }
 
 @media (max-width: 1200px) {
   .doctors-home {
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: 210px 1fr;
     grid-template-areas:
       "topbar topbar"
       "sidebar main"
@@ -1033,7 +1280,7 @@
   .aside-rail {
     height: auto;
     position: static;
-    padding: 0 24px 24px;
+    padding: 0 20px 20px;
   }
   .stat-row { grid-template-columns: repeat(2, 1fr); }
   .dashboard__grid { grid-template-columns: 1fr; }
