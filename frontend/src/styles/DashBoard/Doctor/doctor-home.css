@@ -18,7 +18,7 @@
   align-items: center;
   gap: 16px;
   background: #ffffff;
-  padding: 10px 20px;
+  padding: 12px 20px;
   border-bottom: 1px solid #eef0f4;
   position: sticky;
   top: 0;
@@ -879,7 +879,7 @@
 
 .aside-rail {
   width: 100%;
-  height: calc(100vh - 4.5rem);
+  height: calc(100vh - 4rem);
   position: sticky;
   top: 4.0rem;
   padding: 14px 14px 14px 0;
