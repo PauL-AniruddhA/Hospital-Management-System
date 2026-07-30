@@ -167,7 +167,7 @@ function DoctorDashboard() {
   const nextPatient = QUEUE.find((p) => p.status === "checkedin") || QUEUE.find((p) => p.status === "waiting");
 
   const dayName = now.toLocaleDateString([], { weekday: "long" });
-  const fullDate = now.toLocaleDateString([], { day: "numeric", month: "long", year: "numeric" });
+  const fullDate = now.toLocaleDateString([], { day: "numeric", month: "long" });
   const weekNum = getWeekNumber(now);
 
   const hh = now.getHours() % 12 === 0 ? 12 : now.getHours() % 12;
@@ -180,10 +180,10 @@ function DoctorDashboard() {
 
   const calendarCellsFull = useMemo(() => getMonthGridFull(now), [now.getMonth(), now.getFullYear(), now.getDate()]);
 
-// analog clock hand angles
-const secAngle = now.getSeconds() * 6;
-const minAngle = now.getMinutes() * 6 + now.getSeconds() * 0.1;
-const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
+  // analog clock hand angles
+  const secAngle = now.getSeconds() * 6;
+  const minAngle = now.getMinutes() * 6 + now.getSeconds() * 0.1;
+  const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
 
   const STATS = [
     { icon: CalendarDays, iconClass: "stat-icon--blue", label: "Today's Appointments", value: 24, action: "View all" },
@@ -315,7 +315,7 @@ const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
 
       {/* middle: doctor-specific working content */}
       <section className="doc_main">
-        <div className="dashboard">
+        {/* <div className="dashboard">
           <section className="stat-row">
             {STATS.map((s) => (
               <div className="stat-card" key={s.label}>
@@ -422,7 +422,6 @@ const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
             </div>
           </section>
 
-          {/* Performance: condensed strip only — full breakdown lives on /performance */}
           <section className="perf-strip">
             <div className="perf-strip__header">
               <span>This Month</span>
@@ -441,7 +440,7 @@ const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
             </div>
           </section>
           
-        </div>
+        </div> */}
       </section>
 
       {/* right: permanent clock + calendar  */}
@@ -453,9 +452,9 @@ const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
           </div> */}
 
           <div className="panel panel--quick-actions">
-            <div className="panel__header">
+            {/* <div className="panel__header">
               <h2>Quick Actions</h2>
-            </div>
+            </div> */}
             <div className="aside-qa-grid">
               {ASIDE_QUICK_ACTIONS.map((a) => (
                 <button className={`aside-qa-item ${a.cls}`} key={a.label}>
@@ -469,49 +468,42 @@ const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
           </div>
 
           <div className="panel panel--calendar-v2">
-            <div className="cal-card__top">
-              <div className="cal-card__daydate">
-                <span className="cal-card__day">{dayName}</span>
-                <span className="cal-card__date">{fullDate}</span>
-              </div>
-              <span className="cal-card__week">Week {weekNum}</span>
-            </div>
-
-            <div className="cal-card__clock-row">
-              <div className="cal-card__digital">
-                <span className="cal-card__time">{hh}:{mm}</span>
-                <div className="cal-card__time-meta">
-                  <span className="cal-card__ampm">{ampm}</span>
-                  <span className="cal-card__sec">:{ss}</span>
+            <div className="cal-card__clock-block">
+              <div className="cal-card__info">
+                <div className="cal-card__digital-v2">
+                  <span className="cal-card__time-v2">
+                    {hh}:{mm}
+                    <span className="cal-card__ampm-v2">{ampm}</span>
+                  </span>
                 </div>
+                <span className="cal-card__date-v2">{dayName}, {fullDate}</span>
               </div>
-
               <svg className="cal-card__analog" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" className="analog-face" />
+                <circle cx="50" cy="50" r="47" className="analog-face" />
                 {[0, 3, 6, 9].map((i) => (
                   <line
                     key={i}
-                    x1="50" y1="6" x2="50" y2="13"
+                    x1="50" y1="7" x2="50" y2="14"
                     className="analog-tick"
                     transform={`rotate(${i * 30} 50 50)`}
                   />
                 ))}
-                <line x1="50" y1="50" x2="50" y2="24" className="analog-hand analog-hand--hour" transform={`rotate(${hourAngle} 50 50)`} />
-                <line x1="50" y1="50" x2="50" y2="16" className="analog-hand analog-hand--min" transform={`rotate(${minAngle} 50 50)`} />
-                <line x1="50" y1="50" x2="50" y2="12" className="analog-hand analog-hand--sec" transform={`rotate(${secAngle} 50 50)`} />
-                <circle cx="50" cy="50" r="3" className="analog-center" />
+                <line x1="50" y1="50" x2="50" y2="28" className="analog-hand analog-hand--hour" transform={`rotate(${hourAngle} 50 50)`} />
+                <line x1="50" y1="50" x2="50" y2="18" className="analog-hand analog-hand--min" transform={`rotate(${minAngle} 50 50)`} />
+                <line x1="50" y1="50" x2="50" y2="14" className="analog-hand analog-hand--sec" transform={`rotate(${secAngle} 50 50)`} />
+                <circle cx="50" cy="50" r="2.5" className="analog-center" />
               </svg>
             </div>
 
-            <div className="cal-card__month-nav">
-              <span>{monthLabel}</span>
-              <div className="calendar-nav__arrows">
-                <button aria-label="Previous month"><ChevronLeft size={15} /></button>
-                <button aria-label="Next month"><ChevronRight size={15} /></button>
-              </div>
+            <div className="cal-card__hr" />
+            
+            <div className="calendar-nav__arrows">
+              <button aria-label="Previous month"><ChevronLeft size={15} /></button>
+              <span className="cal-card__month-nav">{monthLabel}</span>
+              <button aria-label="Next month"><ChevronRight size={15} /></button>
             </div>
 
-            <div className="calendar-grid calendar-grid--v2">
+            <div className="calendar-grid ">
               {WEEKDAYS.map((d) => (
                 <span className="calendar-grid__weekday" key={d}>{d}</span>
               ))}
