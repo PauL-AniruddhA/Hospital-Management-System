@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LoginPage from "../pages/auth/LoginPage";
 import AdminDashboard from "../pages/admin/AdminDashboard";
-import DoctorDashboard from "../pages/doctor/DoctorDashboard";
+import DoctorHome from "../pages/doctor/DocHome";
 // import PatientDashboard from "../pages/patient/PatientDashboard";
 import ReceptionDashboard from "../pages/receptionist/ReceptionDashboard";
 import RegistrationPage from "../pages/auth/RegistrationPage";
@@ -19,7 +19,7 @@ function AppRoutes(){
             <Routes>
                 {/* Public Routes */}
                 {/* <Route path="/" element={<HomePage />} /> */}
-                <Route path="/" element={<DoctorDashboard />} />
+                <Route path="/" element={<DoctorHome />} />
                 <Route path="/book-appointment" element={<BookAppointments />} />
                 
                 {/* Auth Routing */}
@@ -34,7 +34,7 @@ function AppRoutes(){
                     <Route index element={<AdminDashboard/>}/>
                 </Route>
                 
-                <Route path="/doctor/dashboard" element={<ProtectedRoute allowedRole="DOCTOR"><DoctorDashboard /></ProtectedRoute>} />
+                <Route path="/doctor/dashboard" element={<ProtectedRoute allowedRole="DOCTOR"><DoctorHome /></ProtectedRoute>} />
                 {/* <Route path="/patient/dashboard" element={<ProtectedRoute allowedRole="PATIENT"><PatientDashboard /></ProtectedRoute>} />  */}
                 <Route path="/receptionist/dashboard" element={<ProtectedRoute allowedRole="RECEPTIONIST"><ReceptionDashboard /></ProtectedRoute>} /> 
 
