@@ -6,9 +6,7 @@ import {
   Cross, LayoutDashboard, Users, FileText, Stethoscope, Pill, FlaskConical,
   CalendarDays, Bell, BarChart3, UserRound, Headset, Settings as SettingsIcon,
   Menu, Search, MessageCircle, ChevronDown, CheckCircle2, Clock, ChevronLeft,
-  ChevronRight, MoreVertical, AlertTriangle, UserPlus, BedDouble, ClipboardCheck,
-  Star, Timer, ClipboardList, PlayCircle, FileCheck2, NotebookPen, CheckSquare,Settings,CircleHelp,LogOut,Activity,X,Phone,Mail, 
-  Moon
+  ChevronRight, MoreVertical, AlertTriangle, UserPlus, BedDouble, ClipboardCheck, Star, Timer, ClipboardList, PlayCircle, FileCheck2, NotebookPen, CheckSquare,Settings,CircleHelp, LogOut, Activity, X, Phone, Mail, HeartPulse, Moon, Hospital
 } from "lucide-react";
 
 /* Lazy-load each section — only the active one gets fetched/rendered.
@@ -35,14 +33,67 @@ const SECTION_MAP = {
 
 /* ---------------- static nav / reference data ---------------- */
 
-const NAV_ITEMS = [
-  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { id: "patient-records", label: "Patient Records", icon: FileText },
-  // { id: "consultation", label: "Consultation", icon: Stethoscope },
-  { id: "schedule", label: "Schedule", icon: CalendarDays },
-  { id: "performance", label: "Performance", icon: BarChart3 },
-  // { id: "profile", label: "Profile", icon: UserRound },
-  // { id: "settings", label: "Settings", icon: SettingsIcon },
+// const NAV_ITEMS = [
+//   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+//   { id: "patient-records", label: "Patient Records", icon: FileText },
+//   { id: "consultation", label: "Consultation", icon: Stethoscope },
+//   { id: "schedule", label: "Schedule", icon: CalendarDays },
+//   { id: "performance", label: "Performance", icon: BarChart3 },
+//   { id: "profile", label: "Profile", icon: UserRound },
+//   { id: "settings", label: "Settings", icon: SettingsIcon },
+// ];
+
+const NAV_SECTIONS = [
+  {
+    title: "MAIN",
+    theme: "blue",
+    items: [
+      { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+      { id: "schedule", label: "Schedule", icon: CalendarDays },
+      
+      // { id: "patient-queue", label: "Patient Queue", icon: Users, count: 10 },
+      // { id: "my-patients", label: "My Patients", icon: UserRound },
+    ],
+  },
+
+  {
+    title: "CLINICAL",
+    theme: "green",
+    items: [
+      // { id: "consultations",label: "Consultations",icon: Stethoscope },
+      // { id: "diagnosis",label: "Diagnosis",icon: HeartPulse },
+      // { id: "prescriptions",label: "Prescriptions",icon: Pill },
+      { id: "consultation", label: "	Patients", icon: Stethoscope },
+      { id: "clinical-notes",label: "Clinical Notes",icon: ClipboardList },
+      // { id: "follow-ups",label: "Follow-ups",icon: Timer,count: 6 },
+      // { id: "certificates",label: "Certificates",icon: FileCheck2 },
+      // { id: "referrals",label: "Referrals",icon: ChevronRight },
+    ],
+  },
+
+  {
+    title: "COLLABORATION",
+    theme: "purple",
+    items: [
+      { id: "doctor-hub", label: "Doctor Hub", icon: Users, tag: "NEW" },
+      // { id: "case-reviews", label: "Case Reviews", icon: Search },
+      { id: "mdt-meetings", label: "MDT Meetings", icon: UserPlus },
+      // { id: "medical-library", label: "Medical Library", icon: FileText },
+      // { id: "research", label: "Research", icon: FlaskConical },
+    ],
+  },
+
+  {
+    title: "PRODUCTIVITY",
+    theme: "orange",
+    items: [
+      { id: "procedures", label: "Facility", icon: Hospital },
+      // { id: "performance", label: "Hospital Department", icon: BarChart3 },
+      // { id: "performance", label: "Performance", icon: BarChart3 },
+      // { id: "ward-rounds", label: "Ward Rounds", icon: BedDouble },
+      { id: "cme", label: "CME", icon: Star },
+    ],
+  },
 ];
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -155,11 +206,6 @@ const [ticketId, setTicketId] = useState(null);
     return () => clearInterval(id);
   }, []);
 
-  // close the notification dropdown on outside click
-
-
-
-
   return (
     <div className="doctors-home">
       {/* topbar */}
@@ -264,33 +310,51 @@ const [ticketId, setTicketId] = useState(null);
       {/* left: doctor-specific nav + quick actions */}
       <section className="doc_sidebar">
         <aside className="sidebar">
-          <nav className="sidebar__nav">
-            {NAV_ITEMS.map(({ id, label, icon: Icon }) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => setActiveTab(id)}
-                className={"sidebar__link" + (activeTab === id ? " sidebar__link--active" : "")}
-              >
-                <Icon size={18} strokeWidth={2} className="sidebar__link-icon" />
-                <span className="sidebar__link-label">{label}</span>
-              </button>
-            ))}
-          </nav>
+          <div className="sidebar__nav-items">
+            <nav className="doctor-sidebar">
+              {NAV_SECTIONS.map((section, index) => (
+                <div key={section.title} className={`sidebar-section sidebar-section--${section.theme}`} >
+                  {/* SECTION TITLE */}
+                      
 
-          {/* <div className="sidebar__quick-actions">
-            <span className="sidebar__section-label">Quick Actions</span>
-            <div className="sidebar__qa-list">
-              {QUICK_ACTIONS.map((a) => (
-                <button className="sidebar__qa-item" key={a.label}>
-                  <span className={`sidebar__qa-icon ${a.iconClass}`}>
-                    <a.icon size={16} strokeWidth={2} />
-                  </span>
-                  <span className="sidebar__qa-label">{a.label}</span>
-                </button>
+                  {/* <div className="sidebar-section__header">
+                    <div className="sidebar-section__line"/>
+                    <div className="sidebar-section__dot" />
+                    <span>{section.title}</span>
+                    <div className="sidebar-section__line" />
+                  </div> */}
+
+                  {/* ITEMS */}
+
+                  <div className="sidebar-section__body">
+                    
+                    {section.items.map(
+                      ({ id, label, icon: Icon, count, tag }) => (
+                        <button key={id} type="button" onClick={() => setActiveTab(id)}  className={ "sidebar-item" + (activeTab === id ? " sidebar-item--active" : "")}>
+                          <div className="sidebar-item__icon">
+                            <Icon size={18} strokeWidth={2} />
+                          </div>
+                          <span className="sidebar-item__label">
+                            {label}
+                          </span>
+                          {count && (
+                            <span className="sidebar-item__badge">
+                              {count}
+                            </span>
+                          )}
+                          {tag && (
+                            <span className="sidebar-item__tag">
+                              {tag}
+                            </span>
+                          )}
+                        </button>
+                      )
+                    )}
+                  </div>
+                </div>
               ))}
-            </div>
-          </div> */}
+            </nav>
+          </div>
 
           <button type="button" className="sidebar__help"  onClick={() => setHelpOpen(true)}>
             <span className="sidebar__help-icon">
@@ -415,7 +479,7 @@ const [ticketId, setTicketId] = useState(null);
       <section className="doc_aside">
         <aside className="aside-rail">
 
-          <div className="panel panel--quick-actions">
+          <div className="panel--quick-actions">
             {/* <div className="panel__header">
               <h2>Quick Actions</h2>
             </div> */}
