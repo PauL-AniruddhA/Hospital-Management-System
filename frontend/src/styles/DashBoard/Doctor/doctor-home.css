@@ -175,9 +175,9 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: #05f06f;
+  background: #2563eb;
   border: none;
-  color: #4b5563;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -194,8 +194,8 @@
   position: absolute;
   top: -2px;
   right: -2px;
-  background: #ef4444;
-  color: #fff;
+  background: #ffffff;
+  color: #2563eb;
   font-size: 11px;
   font-weight: 700;
   min-width: 1rem;
@@ -294,7 +294,7 @@ background: #eaf3ee;
   background-color: #fff;
   border-radius: 12px;
   transition:.25s;
-  box-shadow:0 8px 22px rgba(0,0,0,.05);
+  box-shadow: 0 8px 22px rgba(0,0,0,.05);
 }
 /* .topbar__profile :hover {
   transform:translateY(-2px);
@@ -336,7 +336,8 @@ background: #eaf3ee;
   right: -57px;
   width: 315px;
   top: 68px;
-  background: #4e3e7a;
+  /* background: #4e3e7a; */
+  background: #2563eb;
   border-radius: 22px;
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
@@ -385,18 +386,28 @@ background: #eaf3ee;
 
 /* per-button colors, in JSX order: My Profile, Availability, Settings, Logout */
 .doctor-dropdown button:nth-child(1) { background: #dbe4fb; }
-.doctor-dropdown button:nth-child(1) svg { background: #ffffff; color: #3a6bd8; }
+.doctor-dropdown button:nth-child(1) svg { background: #ffffff; color: #45199c; }
 
 .doctor-dropdown button:nth-child(2) { background: #dbe4fb; }
-.doctor-dropdown button:nth-child(2) svg { background: #ffffff; color: #3a6bd8; }
+.doctor-dropdown button:nth-child(2) svg { background: #ffffff; color: #45199c; }
 
 .doctor-dropdown button:nth-child(3) { background: #dbe4fb; }
-.doctor-dropdown button:nth-child(3) svg { background: #ffffff; color: #8256d9; }
+.doctor-dropdown button:nth-child(3) svg { background: #ffffff; color: #45199c; }
 
 .doctor-dropdown button:nth-child(4) { background: #dbe4fb; }
-.doctor-dropdown button:nth-child(4) svg { background: #ffffff; color: #8256d9; }
+.doctor-dropdown button:nth-child(4) svg { background: #ffffff; color: #45199c; }
 
+.doctor-dropdown button:nth-child(5) { background: #dbe4fb; }
+.doctor-dropdown button:nth-child(5) svg { background: #ffffff; color: #45199c; }
 
+.doctor-dropdown button:nth-child(6) { background: #dbe4fb; }
+.doctor-dropdown button:nth-child(6) svg { background: #ffffff; color: #45199c; }
+
+.doctor-dropdown button svg {
+  border: 1px solid rgba(37, 33, 46, 0.06);
+  border-radius: 12px;
+  
+}
 .doctor-dropdown .logout {
   grid-column: 1 / -1;
   margin-top: 6px;
@@ -592,7 +603,7 @@ background: #eaf3ee;
 
 .sidebar-item__label{
   flex:1;
-  font-size:clamp(12px, 1.5vh, 13px);
+  font-size:12.5px;
   font-weight:600;
   color:#1f2937;
 }

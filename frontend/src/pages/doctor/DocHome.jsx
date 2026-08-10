@@ -6,15 +6,25 @@ import {
   Cross, LayoutDashboard, Users, FileText, Stethoscope, Pill, FlaskConical,
   CalendarDays, Bell, BarChart3, UserRound, Headset, Settings as SettingsIcon,
   Menu, Search, MessageCircle, ChevronDown, CheckCircle2, Clock, ChevronLeft,
-  ChevronRight, MoreVertical, AlertTriangle, UserPlus, BedDouble, ClipboardCheck, Star, Timer, ClipboardList, PlayCircle, FileCheck2, NotebookPen, CheckSquare,Settings,CircleHelp, LogOut, Activity, X, Phone, Mail, HeartPulse, Moon, Hospital
+  ChevronRight, MoreVertical, AlertTriangle, UserPlus, BedDouble, ClipboardCheck, Star, Timer, ClipboardList, PlayCircle, FileCheck2, NotebookPen, CheckSquare,Settings,CircleHelp, LogOut, Activity, X, Phone, Mail, HeartPulse, Moon, Languages, LogIn, ShieldCheck, LockKeyhole, FileSignature,
+  BriefcaseMedical,
+  LibraryBig,
+  Building2
 } from "lucide-react";
 
 /* Lazy-load each section — only the active one gets fetched/rendered.
    This recovers the code-splitting benefit you'd normally get from routing. */
-const DashboardHome   = lazy(() => import("../doctor/DocDashboard"));
-const PatientRecords  = lazy(() => import("../../components/common/PatientRecords"));
-// const Consultation    = lazy(() => import("./sections/Consultation"));
-const Schedule        = lazy(() => import("../doctor/DocSchedule"));
+const Dashboard    = lazy(() => import("../doctor/DocDashboard"));
+const Schedule         = lazy(() => import("../doctor/DocSchedule"));
+const Patient   = lazy(() => import("../../components/common/PatientRecords"));
+const Doctor_Workspace        = lazy(() => import("../doctor/DocWorkspace"));
+const DocHub           = lazy(() => import("../../components/common/DoctorsHub"));
+const MDT_Meetings              = lazy(() => import("../../components/common/MDT_Meetings"));
+const Hospital_Faculty              = lazy(() => import("../../components/common/Hospital_Faculty"));
+const MedicalLibrary   = lazy(() => import("../../components/common/Medical_Library"));
+
+
+
 const Performance      = lazy(() => import("../doctor/DocPerformance"));
 const Profile          = lazy(() => import("../doctor/DocProfile"));
 const SettingsSection  = lazy(() => import("../../components/common/SettingsSection"));
@@ -22,10 +32,15 @@ const SettingsSection  = lazy(() => import("../../components/common/SettingsSect
 /* key = tab id, value = component to render. Single source of truth —
    adding a new sidebar item later means adding ONE line here. */
 const SECTION_MAP = {
-  dashboard: DashboardHome,
-  "patient-records": PatientRecords,
-  // consultation: Consultation,
+  dashboard: Dashboard,
   schedule: Schedule,
+  "patient-records": Patient,
+  Workspace:Doctor_Workspace,
+  DocHub:DocHub,
+  MDT:MDT_Meetings,
+  Faculty:Hospital_Faculty,
+  "Med-Library":MedicalLibrary,
+  
   performance: Performance,
   profile: Profile,
   settings: SettingsSection,
@@ -50,50 +65,50 @@ const NAV_SECTIONS = [
     items: [
       { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
       { id: "schedule", label: "Schedule", icon: CalendarDays },
-      
       // { id: "patient-queue", label: "Patient Queue", icon: Users, count: 10 },
       // { id: "my-patients", label: "My Patients", icon: UserRound },
+      { id: "patient-records", label: "	Patients", icon: Stethoscope },
     ],
   },
-
+  
   {
     title: "CLINICAL",
     theme: "green",
     items: [
+      { id: "Workspace", label: "My Workspace", icon: BriefcaseMedical },
+      // { id: "clinical-notes",label: "Clinical Notes",icon: ClipboardList },
       // { id: "consultations",label: "Consultations",icon: Stethoscope },
       // { id: "diagnosis",label: "Diagnosis",icon: HeartPulse },
       // { id: "prescriptions",label: "Prescriptions",icon: Pill },
-      { id: "consultation", label: "	Patients", icon: Stethoscope },
-      { id: "clinical-notes",label: "Clinical Notes",icon: ClipboardList },
       // { id: "follow-ups",label: "Follow-ups",icon: Timer,count: 6 },
       // { id: "certificates",label: "Certificates",icon: FileCheck2 },
       // { id: "referrals",label: "Referrals",icon: ChevronRight },
     ],
   },
-
+  
   {
     title: "COLLABORATION",
     theme: "purple",
     items: [
-      { id: "doctor-hub", label: "Doctor Hub", icon: Users, tag: "NEW" },
+      { id: "DocHub", label: "Doctor Hub", icon: Users, tag: "NEW" },
+      { id: "MDT", label: "MDT Meetings", icon: UserPlus },
       // { id: "case-reviews", label: "Case Reviews", icon: Search },
-      { id: "mdt-meetings", label: "MDT Meetings", icon: UserPlus },
       // { id: "medical-library", label: "Medical Library", icon: FileText },
       // { id: "research", label: "Research", icon: FlaskConical },
     ],
   },
-
+  
   {
-    title: "PRODUCTIVITY",
+    title: "HOSPITAL",
     theme: "orange",
     items: [
-      { id: "procedures", label: "Facility", icon: Hospital },
-      // { id: "performance", label: "Hospital Department", icon: BarChart3 },
+      { id: "Faculty", label: "Hospital Faculty", icon: Building2 },
+      { id: "Med-Library", label: "Medical Library", icon: LibraryBig },
+      // { id: "cme", label: "More", icon: Star },
       // { id: "performance", label: "Performance", icon: BarChart3 },
       // { id: "ward-rounds", label: "Ward Rounds", icon: BedDouble },
-      { id: "cme", label: "CME", icon: Star },
     ],
-  },
+  }
 ];
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -232,6 +247,9 @@ const [ticketId, setTicketId] = useState(null);
           <kbd className="topbar__search-kbd">Ctrl + K</kbd>
         </div>  
         <div className="topbar__search-activity" >
+          <button className="topbar__icon-btn" aria-label="Dark Mode">
+            <Moon size={18} />
+          </button>
           <button className="topbar__icon-btn" aria-label="Messages">
             <MessageCircle size={18} />
           </button>
@@ -273,6 +291,7 @@ const [ticketId, setTicketId] = useState(null);
           <div className="topbar__profile-text">
             <span className="topbar__profile-name">Dr. Rajesh Sharma</span>
             <span className="topbar__profile-role">Cardiologist</span>
+            {/* <span className="topbar__profile-role">Id : DOC-2023</span> */}
           </div>
           {/* <ChevronDown size={16} className={`topbar__profile-chevron${profileOpen ? " topbar__profile-chevron--open" : ""}`} /> */}
 
@@ -283,16 +302,31 @@ const [ticketId, setTicketId] = useState(null);
                   <UserRound size={17} /> My Profile
                 </button>
 
-                <button onClick={(e) => { e.stopPropagation(); setProfileOpen(false); }}>
-                  <Activity size={17} /> Availability Status
-                </button>
-                
                 <button onClick={(e) => { e.stopPropagation(); setActiveTab("settings"); setProfileOpen(false); }}>
                   <Settings size={17} /> Settings
                 </button>
 
+                {/* <button onClick={(e) => { e.stopPropagation(); setActiveTab("profile"); setProfileOpen(false); }}>
+                  <UserRound size={17} /> Attendance
+                </button> */}
+
+                <button onClick={(e) => { e.stopPropagation(); setProfileOpen(false); }}>
+                  <LockKeyhole size={17} /> Privacy
+                </button>
+
+
+                <button onClick={(e) => { e.stopPropagation(); setProfileOpen(false); }}>
+                  <ShieldCheck size={17} />  Security
+                </button>
+
+                <button onClick={(e) => { e.stopPropagation(); setProfileOpen(false); }}>
+                  <FileSignature size={17} /> Credentials
+                </button>
+
+                
+
                 <button onClick={(e) => { e.stopPropagation(); setActiveTab("settings"); setProfileOpen(false); }}>
-                  <Moon size={17} /> Darkmode
+                  <Languages size={17} /> Language
                 </button>
 
                 <button className="logout" onClick={(e) => { e.stopPropagation(); setProfileOpen(false); }}>
