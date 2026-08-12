@@ -1,7 +1,8 @@
 /* ================= LAYOUT SHELL ================= */
 .doctors-home {
   display: grid;
-  grid-template-columns:225px 1fr 330px;
+  /* grid-template-columns:225px 1fr 330px; */
+  grid-template-columns: 205px 1fr 300px;
   grid-template-rows: auto 1fr;
   grid-template-areas:
     "doc-logo topbar-search doc-profile"
@@ -489,7 +490,7 @@ background: #eaf3ee;
 
 .sidebar-section{
   border-radius:22px;
-  padding:12px;
+  padding:12px 12px 12px 6px;
   border:1px solid rgba(255,255,255,.08);
   transition:.25s ease;
   /* box-shadow:0 4px 10px rgba(0,0,0,.08); */
@@ -986,7 +987,7 @@ background: #eaf3ee;
   height: calc(100vh - 6rem);
   position: sticky;
   top: 6rem;
-  padding: 0px 14px 14px 0;
+  padding: 0px 10px 0px 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -1101,7 +1102,7 @@ background: #eaf3ee;
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  gap: 8px;
   text-align: center;
 }
 
@@ -1142,7 +1143,7 @@ background: #eaf3ee;
   background: #edf9f1;
   border: 1px solid #e2e8f4;
   box-shadow: none;
-  padding: 20px 18px;
+  padding: 20px 12px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -1154,7 +1155,7 @@ background: #eaf3ee;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: 16px;
+  gap:4px;
 }
 .cal-card__info {
   display: flex;
@@ -1172,6 +1173,7 @@ background: #eaf3ee;
 .cal-card__digital-v2 {
   display: flex;
   align-items: baseline;
+  justify-content: space-around;
 }
 
 .cal-card__time-v2 {
@@ -1192,8 +1194,8 @@ background: #eaf3ee;
 }
 
 .cal-card__analog {
-  width: 108px;
-  height: 108px;
+  width: 100px;
+  height: 100px;
 }
 
 .analog-face {
@@ -1246,8 +1248,8 @@ background: #eaf3ee;
    only the two rules below adjust for it explicitly. */
 @media (max-width: 1512px) and (min-width: 1201px) {
   .doctors-home {
-    grid-template-columns: 225px 1fr 330px;
-
+    /* grid-template-columns: 225px 1fr 330px; */
+    grid-template-columns: 205px 1fr 300px;
   }
   .stat-row {
     gap: 10px;

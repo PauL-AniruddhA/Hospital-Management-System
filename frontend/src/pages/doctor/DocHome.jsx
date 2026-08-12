@@ -1,5 +1,5 @@
 import React, { useEffect , useMemo , useRef , useState , Suspense, lazy} from "react";
-import "../../styles/DashBoard/Doctor/doctor-home.css";
+import "../../styles/Doctor/doctor-home.css";
 import doc from "../../assets/home/doc3.png";
 import { createPortal } from "react-dom";
 import {

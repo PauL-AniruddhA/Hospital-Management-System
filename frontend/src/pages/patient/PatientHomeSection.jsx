@@ -1,5 +1,5 @@
 import React , { useRef, useState, useEffect,useMemo } from 'react';
-import "../../styles/DashBoard/Patient/patient-home.css";
+import "../../styles/Patient/patient-home.css";
 import { CalendarDays, FileText, Pill, FlaskConical, Receipt,  HeartPulse, Weight, Droplets, Heart, CalendarPlus ,UserRoundSearch, MessageCircle, ChevronRight , Stethoscope, ShieldAlert,  CreditCard, CircleCheckBig, ShieldCheck, CalendarCheck, MessageSquare,  Ticket, MapPin,ChevronDown,CheckCircle2, ArrowRight, IndianRupee,Check,CalendarClock,Video,Download, BellRing, Tablets, GlassWater, Syringe, Droplet, SprayCan,Apple,Dumbbell,Moon,HeartHandshake,ChevronLeft,BadgeCheck,Hospital,UserRound,BedDouble,Activity ,Sparkles, Smile, Glasses,Monitor,Eye,Zap,Bone,ClipboardList,Search}  from "lucide-react";
 import homeimage from "../../assets/hero-images/Hoispital Image 7.png";
 import doc1 from "../../assets/home/doc3.png";

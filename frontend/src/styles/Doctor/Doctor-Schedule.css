@@ -1,0 +1,794 @@
+/* =========================================================
+   AMS HOSPITAL — DOCTOR SCHEDULE
+========================================================= */
+
+.sched {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: #172033;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.sched__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sched__heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sched__heading-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #2563eb;
+  background: #eef5ff;
+  border: 1px solid #dceaff;
+}
+
+.sched__title {
+  margin: 0;
+  font-size: 21px;
+  line-height: 1.2;
+  font-weight: 750;
+  color: #182235;
+}
+
+.sched__subtitle {
+  margin: 4px 0 0;
+
+  font-size: 12px;
+  color: #8993a5;
+}
+
+.sched__new-btn {
+  height: 36px;
+  padding: 0 15px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #2563eb;
+  color: white;
+
+  font-size: 12px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 12px rgba(37, 99, 235, 0.18);
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.sched__new-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.sched__toolbar {
+  min-height: 38px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+
+/* ---------- view switch ---------- */
+
+.sched__view-switch {
+  display: flex;
+  align-items: center;
+
+  padding: 3px;
+
+  background: #f5f7fb;
+  border: 1px solid #e9edf4;
+  border-radius: 9px;
+}
+
+.sched__view-switch button {
+  height: 29px;
+  padding: 0 13px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: #687386;
+
+  font-size: 11.5px;
+  font-weight: 650;
+
+  cursor: pointer;
+}
+
+.sched__view-switch button.is-active {
+  color: #ffffff;
+  background: #2563eb;
+
+  box-shadow:
+    0 2px 6px rgba(37, 99, 235, 0.18);
+}
+
+
+/* ---------- date navigation ---------- */
+
+.sched__date-navigation {
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sched__nav-btn {
+  width: 31px;
+  height: 31px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e6eaf1;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #566276;
+
+  cursor: pointer;
+}
+
+.sched__nav-btn:hover {
+  background: #f3f7ff;
+  color: #2563eb;
+}
+
+.sched__date-btn {
+  min-width: 184px;
+  height: 31px;
+
+  padding: 0 11px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  border: 1px solid #e6eaf1;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #253149;
+
+  font-size: 11.5px;
+  font-weight: 650;
+
+  cursor: pointer;
+}
+
+.sched__date-btn svg {
+  color: #64748b;
+}
+
+
+/* ---------- filter ---------- */
+
+.sched__filter-btn {
+  height: 31px;
+
+  margin-left: 5px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 0 11px;
+
+  border: 1px solid #e6eaf1;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #344158;
+
+  font-size: 11.5px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.sched__filter-btn:hover {
+  border-color: #cbd8ed;
+  background: #f8faff;
+}
+
+
+/* =========================================================
+   CALENDAR CARD
+========================================================= */
+
+.sched__card {
+  width: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e6ebf2;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.035);
+}
+
+
+/* =========================================================
+   DAY HEADER
+========================================================= */
+
+.sched__daybar {
+  display: grid;
+  grid-template-columns:
+    64px repeat(7, minmax(0, 1fr));
+
+  min-height: 78px;
+
+  border-bottom: 1px solid #e9edf3;
+}
+
+.sched__time-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-right: 1px solid #edf0f4;
+
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+
+  color: #718096;
+}
+
+
+.sched__daycell {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  border-right: 1px solid #edf0f4;
+
+  background: #ffffff;
+}
+
+.sched__daycell:last-child {
+  border-right: none;
+}
+
+
+.sched__daycell--today {
+  background: #f5f9ff;
+}
+
+.sched__daycell--today
+.sched__day-name,
+.sched__daycell--today
+.sched__day-date {
+  color: #2563eb;
+}
+
+
+.sched__day-name {
+  font-size: 10.5px;
+  font-weight: 750;
+
+  color: #7d8798;
+
+  text-transform: uppercase;
+}
+
+.sched__day-date {
+  font-size: 14px;
+  font-weight: 750;
+
+  color: #253149;
+}
+
+
+.sched__day-count {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  font-size: 9.5px;
+  font-weight: 550;
+
+  color: #8b95a6;
+}
+
+.sched__day-count i {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #3b82f6;
+}
+
+
+/* =========================================================
+   SCROLL AREA
+========================================================= */
+
+.sched__scroll {
+  height:486px ;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  background: #ffffff;
+}
+
+.sched__scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sched__scroll::-webkit-scrollbar-track {
+  background: #fafbfd;
+}
+
+.sched__scroll::-webkit-scrollbar-thumb {
+  background: #d6deeb;
+  border-radius: 999px;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.sched__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px repeat(7, minmax(0, 1fr));
+  grid-template-rows: repeat(24, 121.5px);
+  min-width: 760px;
+}
+
+
+/* =========================================================
+   TIME COLUMN
+========================================================= */
+
+.sched__time-cell {
+  position: relative;
+  border-right: 1px solid #e9edf3;
+  border-bottom: 1px dashed #edf0f4;
+  background: #fbfcfe;
+}
+
+.sched__time-cell:last-child {
+  border-bottom: none;
+}
+
+
+.sched__time-label {
+  position: absolute;
+
+  top: -6px;
+  right: 7px;
+
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  padding-left: 4px;
+
+  background: #fbfcfe;
+
+  color: #7b8799;
+
+  font-size: 9.5px;
+  font-weight: 650;
+
+  line-height: 1;
+}
+
+.sched__time-label small {
+  margin-top: 2px;
+
+  font-size: 7.5px;
+  font-weight: 600;
+
+  color: #aab2bf;
+}
+
+
+/* =========================================================
+   GRID CELLS
+========================================================= */
+
+.sched__cell {
+  min-width: 0;
+
+  border-right: 1px solid #edf0f4;
+  border-bottom: 1px dashed #edf1f5;
+
+  background: #ffffff;
+}
+
+.sched__cell--hour {
+  border-bottom: 1px solid #e8edf3;
+}
+
+.sched__grid
+> .sched__cell:nth-child(8n) {
+  border-right: none;
+}
+
+
+/* =========================================================
+   CURRENT TIME LINE
+========================================================= */
+
+.sched__now-line {
+  position: relative;
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+.sched__now-line::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  height: 2px;
+
+  background: #ef4444;
+
+  border-radius: 999px;
+}
+
+.sched__now-line::after {
+  content: "";
+
+  position: absolute;
+
+  left: -3px;
+  top: -3px;
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #ef4444;
+
+  box-shadow:
+    0 0 0 3px rgba(239, 68, 68, 0.10);
+}
+
+
+/* =========================================================
+   EVENT CARD
+========================================================= */
+
+.sched__event {
+  position: relative;
+
+  z-index: 4;
+
+  min-width: 0;
+
+  margin: 4px 4px;
+
+  padding: 6px 7px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  overflow: hidden;
+
+  border-radius: 7px;
+
+  border: 1px solid transparent;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.sched__event:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 12px rgba(15, 23, 42, 0.08);
+}
+
+
+/* =========================================================
+   EVENT TOP
+========================================================= */
+
+.sched__event-top {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.sched__event-icon {
+  width: 18px;
+  height: 18px;
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 5px;
+
+  background: rgba(255, 255, 255, 0.65);
+}
+
+
+.sched__event-title {
+  min-width: 0;
+
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  font-size: 10.5px;
+  font-weight: 750;
+
+  color: #263247;
+}
+
+
+.sched__event-subtitle {
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  font-size: 8.5px;
+
+  color: #64748b;
+}
+
+
+.sched__event-time {
+  font-size: 8px;
+  font-weight: 600;
+
+  color: #7b8799;
+}
+
+
+/* =========================================================
+   COMPACT 30-MINUTE EVENT
+========================================================= */
+
+.sched__event--compact {
+  padding: 5px 6px;
+
+  gap: 2px;
+}
+
+.sched__event--compact
+.sched__event-icon {
+  width: 17px;
+  height: 17px;
+}
+
+.sched__event--compact
+.sched__event-title {
+  font-size: 9.5px;
+}
+
+.sched__event--compact
+.sched__event-time {
+  font-size: 7.5px;
+}
+
+
+/* =========================================================
+   EVENT COLORS
+========================================================= */
+
+/* BLUE */
+
+.sched__event--blue {
+  background: #edf5ff;
+  border-color: #d5e7ff;
+}
+
+.sched__event--blue
+.sched__event-icon {
+  color: #2563eb;
+}
+
+
+/* GREEN */
+
+.sched__event--green {
+  background: #effaf2;
+  border-color: #d2efda;
+}
+
+.sched__event--green
+.sched__event-icon {
+  color: #16a34a;
+}
+
+
+/* PURPLE */
+
+.sched__event--purple {
+  background: #f5efff;
+  border-color: #e7dafa;
+}
+
+.sched__event--purple
+.sched__event-icon {
+  color: #7c3aed;
+}
+
+
+/* ORANGE */
+
+.sched__event--orange {
+  background: #fff6e9;
+  border-color: #f9e4bd;
+}
+
+.sched__event--orange
+.sched__event-icon {
+  color: #ea8a00;
+}
+
+
+/* PINK */
+
+.sched__event--pink {
+  background: #fff0f5;
+  border-color: #f8d8e4;
+}
+
+.sched__event--pink
+.sched__event-icon {
+  color: #db2777;
+}
+
+
+/* YELLOW */
+
+.sched__event--yellow {
+  background: #fff9e8;
+  border-color: #f5e7b5;
+}
+
+.sched__event--yellow
+.sched__event-icon {
+  color: #c98a00;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1250px) {
+
+  .sched__daybar,
+  .sched__grid {
+    grid-template-columns:
+      58px repeat(7, minmax(0, 1fr));
+  }
+
+  .sched__time-header {
+    font-size: 9px;
+  }
+
+  .sched__day-name {
+    font-size: 9.5px;
+  }
+
+  .sched__day-date {
+    font-size: 13px;
+  }
+
+  .sched__event-title {
+    font-size: 9.5px;
+  }
+}
+
+
+@media (max-width: 1000px) {
+
+  .sched__toolbar {
+    flex-wrap: wrap;
+  }
+
+  .sched__date-navigation {
+    margin-left: 0;
+  }
+
+  .sched__filter-btn {
+    margin-left: 0;
+  }
+
+  .sched__scroll {
+    overflow-x: auto;
+  }
+}
+
+
+@media (max-width: 700px) {
+
+  .sched__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sched__new-btn {
+    align-self: flex-start;
+  }
+
+  .sched__toolbar {
+    align-items: stretch;
+  }
+
+  .sched__date-navigation {
+    width: 100%;
+  }
+
+  .sched__date-btn {
+    flex: 1;
+  }
+}
