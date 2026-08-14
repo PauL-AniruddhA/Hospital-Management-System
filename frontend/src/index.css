@@ -49,6 +49,8 @@ body {
     --s90:calc(90px * var(--scale));
     --s100:calc(100px * var(--scale));
   
+
+    
   /*========================
       Layout
   ========================*/
@@ -56,8 +58,6 @@ body {
   --topbar-height: calc(38px * var(--scale));
   --navbar-height: calc(57px * var(--scale));
   --sidebar-width: calc(264px * var(--scale));
-  /* --patient-overlap:600px;
-  --hero-scale:clamp(0.85,1vw + 0.8,1.15); --portal-width:min(1600px,calc(100vw - 100px)); */
 
   --portal-width:min(92vw,1600px);
   --patient-overlap:clamp(35px,4vw,60px);

@@ -1,0 +1,351 @@
+/* ================= PATIENT CARDS GRID ================= */
+
+.pcard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+  width: 100%;
+  height: calc(100vh - 7.2rem);
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  border-radius: 22px;
+
+}
+
+@media (max-width: 1400px) {
+  .pcard-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 720px) {
+  .pcard-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------------- card shell ---------------- */
+.pcard {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  /* box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06); */
+  border: 1px solid #eef1f6;
+  display: flex;
+  flex-direction: column;
+  gap: 8.2px;
+}
+
+.pcard__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pcard__status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pcard-accent, #16a34a);
+}
+
+.pcard__status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pcard-accent, #16a34a);
+  flex-shrink: 0;
+}
+
+.pcard__more {
+  border: none;
+  background: transparent;
+  color: #9aa1ac;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.pcard__more:hover {
+  background: #f3f4f6;
+}
+
+/* ---------------- identity row ---------------- */
+.pcard__identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pcard__avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--pcard-avatar-bg, #dcfce7);
+  color: var(--pcard-accent, #16a34a);
+  font-size: 17px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pcard__id-block {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pcard__name {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pcard__id {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--pcard-accent, #16a34a);
+}
+
+.pcard__sub {
+  font-size: 12px;
+  color: #9aa1ac;
+  margin-top: 2px;
+}
+
+.pcard__status-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--pcard-avatar-bg, #dcfce7);
+  color: var(--pcard-accent, #16a34a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---------------- vitals row ---------------- */
+.pcard__vitals {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  background: var(--pcard-vitals-bg, #f0fdf4);
+  border: 1px solid var(--pcard-vitals-border, #d7f2df);
+  border-radius: 12px;
+  padding: 12px 10px;
+}
+
+.pcard__vital {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.pcard__vital-icon {
+  color: var(--pcard-accent, #16a34a);
+  flex-shrink: 0;
+}
+
+.pcard__vital-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pcard__vital-value {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1f2937;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.pcard__vital-trend {
+  color: #ef4444;
+  font-size: 12px;
+}
+
+.pcard__vital-unit {
+  font-size: 10.5px;
+  color: #9aa1ac;
+}
+
+/* ---------------- lab note block (lab-pending variant) ---------------- */
+.pcard__labnote {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--pcard-vitals-bg, #fff6ea);
+  border: 1px solid var(--pcard-vitals-border, #fbe8c6);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.pcard__labnote-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--pcard-accent, #ea580c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pcard__labnote-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.pcard__labnote-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pcard-accent, #ea580c);
+}
+
+.pcard__labnote-detail {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.pcard__labnote-status {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+/* ---------------- condition flag (high-risk variant) ---------------- */
+.pcard__condition {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--pcard-accent, #ef4444);
+  background: var(--pcard-vitals-bg, #fdecec);
+  border: 1px solid var(--pcard-vitals-border, #fbd5d5);
+  border-radius: 10px;
+  padding: 9px 12px;
+}
+
+.pcard__condition strong {
+  font-size: 13px;
+}
+
+/* ---------------- meta row ---------------- */
+.pcard__meta {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.pcard__meta-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.pcard__meta-icon {
+  color: #9aa1ac;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.pcard__meta-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.pcard__meta-label {
+  font-size: 11px;
+  color: #9aa1ac;
+}
+
+.pcard__meta-value {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* ---------------- footer link ---------------- */
+.pcard__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  background: var(--pcard-vitals-bg, #f0fdf4);
+  color: var(--pcard-accent, #16a34a);
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.pcard__footer:hover {
+  filter: brightness(0.97);
+}
+
+/* ================= COLOR THEMES ================= */
+
+.pcard--green {
+  --pcard-accent: #16a34a;
+  --pcard-avatar-bg: #dcfce7;
+  --pcard-vitals-bg: #f0fdf4;
+  --pcard-vitals-border: #d7f2df;
+}
+
+.pcard--orange {
+  --pcard-accent: #ea580c;
+  --pcard-avatar-bg: #ffedd5;
+  --pcard-vitals-bg: #fff6ea;
+  --pcard-vitals-border: #fbe8c6;
+}
+
+.pcard--blue {
+  --pcard-accent: #2563eb;
+  --pcard-avatar-bg: #dbeafe;
+  --pcard-vitals-bg: #eef4ff;
+  --pcard-vitals-border: #dbe8ff;
+}
+
+.pcard--teal {
+  --pcard-accent: #0d9488;
+  --pcard-avatar-bg: #d3efec;
+  --pcard-vitals-bg: #eaf7f6;
+  --pcard-vitals-border: #bfe8e3;
+}
+
+.pcard--red {
+  --pcard-accent: #ef4444;
+  --pcard-avatar-bg: #fee2e2;
+  --pcard-vitals-bg: #fdecec;
+  --pcard-vitals-border: #fbd5d5;
+}
+
+.pcard--purple {
+  --pcard-accent: #7c3aed;
+  --pcard-avatar-bg: #ede9fe;
+  --pcard-vitals-bg: #f5f0fc;
+  --pcard-vitals-border: #e6d9f8;
+}

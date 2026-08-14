@@ -253,12 +253,11 @@
 
 .sched__daybar {
   display: grid;
-  grid-template-columns:
-    64px repeat(7, minmax(0, 1fr));
-
+  grid-template-columns: 64px repeat(7, minmax(0, 1fr));
   min-height: 78px;
-
   border-bottom: 1px solid #e9edf3;
+  padding-right: 5px;
+  box-sizing: border-box;
 }
 
 .sched__time-header {
@@ -351,7 +350,8 @@
 ========================================================= */
 
 .sched__scroll {
-  height:486px ;
+  height: calc(100vh - 15.4rem);
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -380,7 +380,7 @@
   position: relative;
   display: grid;
   grid-template-columns: 64px repeat(7, minmax(0, 1fr));
-  grid-template-rows: repeat(24, 121.5px);
+  /* grid-template-rows: repeat(24, 121.5px); */
   min-width: 760px;
 }
 
@@ -403,35 +403,42 @@
 
 .sched__time-label {
   position: absolute;
-
-  top: -6px;
+  top: 50%;
+  transform: translateY(-50%);
   right: 7px;
-
   z-index: 3;
-
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
   padding-left: 4px;
-
   background: #fbfcfe;
-
-  color: #7b8799;
-
-  font-size: 9.5px;
-  font-weight: 650;
-
+  color: #4b5768;
+  /* color: #7b8799; */
+  font-size: 11px;
+  font-weight: 700;
   line-height: 1;
+
+  align-items: baseline;
+  gap: 3px;
+  padding-right: 10px;
+  letter-spacing: -0.01em;
 }
 
 .sched__time-label small {
   margin-top: 2px;
+  font-size: 8px;
+  font-weight: 650;
+  color: #a3aebd;
+  text-transform: uppercase;
+}
+.sched__time-label--minor {
+  font-size: 9.5px;
+  font-weight: 550;
+  color: #9aa4b2;
+}
 
-  font-size: 7.5px;
-  font-weight: 600;
-
-  color: #aab2bf;
+.sched__time-label--minor small {
+  color: #c2cad4;
 }
 
 
@@ -464,44 +471,30 @@
 
 .sched__now-line {
   position: relative;
-
   z-index: 10;
-
   pointer-events: none;
 }
 
 .sched__now-line::before {
   content: "";
-
   position: absolute;
-
   left: 0;
   right: 0;
-
   height: 2px;
-
-  background: #ef4444;
-
+  background: #4a44ef;
   border-radius: 999px;
 }
 
 .sched__now-line::after {
   content: "";
-
   position: absolute;
-
   left: -3px;
   top: -3px;
-
   width: 8px;
   height: 8px;
-
   border-radius: 50%;
-
-  background: #ef4444;
-
-  box-shadow:
-    0 0 0 3px rgba(239, 68, 68, 0.10);
+  background: #4a44ef;
+  box-shadow:0 0 0 3px rgba(239, 68, 68, 0.10);
 }
 
 
@@ -511,28 +504,18 @@
 
 .sched__event {
   position: relative;
-
+  align-items: center;
   z-index: 4;
-
   min-width: 0;
-
   margin: 4px 4px;
-
-  padding: 6px 7px;
-
+  padding: 20px 7px;
   display: flex;
   flex-direction: column;
-
-  gap: 3px;
-
+  gap: 10px;
   overflow: hidden;
-
   border-radius: 7px;
-
   border: 1px solid transparent;
-
   cursor: pointer;
-
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease;
@@ -540,9 +523,7 @@
 
 .sched__event:hover {
   transform: translateY(-1px);
-
-  box-shadow:
-    0 5px 12px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 5px 12px rgba(15, 23, 42, 0.08);
 }
 
 
@@ -552,60 +533,51 @@
 
 .sched__event-top {
   min-width: 0;
-
   display: flex;
   align-items: center;
-
-  gap: 5px;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .sched__event-icon {
-  width: 18px;
-  height: 18px;
-
+  width: 25px;
+  height: 25px;
   flex: 0 0 auto;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 5px;
-
   background: rgba(255, 255, 255, 0.65);
 }
 
 
 .sched__event-title {
   min-width: 0;
-
   overflow: hidden;
-
   white-space: nowrap;
   text-overflow: ellipsis;
-
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 750;
-
   color: #263247;
 }
 
 
 .sched__event-subtitle {
   overflow: hidden;
-
-  white-space: nowrap;
+  text-align: center;
+    /* white-space: nowrap; */
   text-overflow: ellipsis;
-
-  font-size: 8.5px;
-
-  color: #64748b;
+  font-size: 11px;
+  color: #096efb;
+  font-weight: 600;
+  margin-bottom: 7px;
+  border-bottom: 1px solid #c9c9d9;
 }
 
 
 .sched__event-time {
-  font-size: 8px;
+  font-size: 9.5px;
   font-weight: 600;
-
   color: #7b8799;
 }
 
@@ -615,27 +587,30 @@
 ========================================================= */
 
 .sched__event--compact {
-  padding: 5px 6px;
-
-  gap: 2px;
+  padding: 8px 6px;
+  gap: 8px;
 }
 
 .sched__event--compact
 .sched__event-icon {
-  width: 17px;
-  height: 17px;
+  width: 25px;
+  height: 25px;
 }
 
 .sched__event--compact
 .sched__event-title {
-  font-size: 9.5px;
+  font-size: 12px;
 }
 
 .sched__event--compact
 .sched__event-time {
-  font-size: 7.5px;
+  font-size: 9.5px;
 }
-
+.sched__event--compact
+.sched__event-subtitle {
+  font-size: 10.7px; 
+  margin-bottom: 0px; 
+}
 
 /* =========================================================
    EVENT COLORS
@@ -643,10 +618,7 @@
 
 /* BLUE */
 
-.sched__event--blue {
-  background: #edf5ff;
-  border-color: #d5e7ff;
-}
+.sched__event--blue { background: #edf5ff; border-color: #d5e7ff; }
 
 .sched__event--blue
 .sched__event-icon {
@@ -656,10 +628,7 @@
 
 /* GREEN */
 
-.sched__event--green {
-  background: #effaf2;
-  border-color: #d2efda;
-}
+.sched__event--green { background: #effaf2; border-color: #d2efda;}
 
 .sched__event--green
 .sched__event-icon {
@@ -669,10 +638,7 @@
 
 /* PURPLE */
 
-.sched__event--purple {
-  background: #f5efff;
-  border-color: #e7dafa;
-}
+.sched__event--purple { background: #f5efff; border-color: #e7dafa;}
 
 .sched__event--purple
 .sched__event-icon {
@@ -682,10 +648,7 @@
 
 /* ORANGE */
 
-.sched__event--orange {
-  background: #fff6e9;
-  border-color: #f9e4bd;
-}
+.sched__event--orange { background: #fff6e9; border-color: #f9e4bd;}
 
 .sched__event--orange
 .sched__event-icon {
@@ -695,10 +658,7 @@
 
 /* PINK */
 
-.sched__event--pink {
-  background: #fff0f5;
-  border-color: #f8d8e4;
-}
+.sched__event--pink { background: #fff0f5; border-color: #f8d8e4;}
 
 .sched__event--pink
 .sched__event-icon {
@@ -708,10 +668,7 @@
 
 /* YELLOW */
 
-.sched__event--yellow {
-  background: #fff9e8;
-  border-color: #f5e7b5;
-}
+.sched__event--yellow { background: #fff9e8; border-color: #f5e7b5;}
 
 .sched__event--yellow
 .sched__event-icon {
@@ -727,8 +684,7 @@
 
   .sched__daybar,
   .sched__grid {
-    grid-template-columns:
-      58px repeat(7, minmax(0, 1fr));
+    grid-template-columns: 58px repeat(7, minmax(0, 1fr));
   }
 
   .sched__time-header {

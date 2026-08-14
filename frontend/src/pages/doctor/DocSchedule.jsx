@@ -3,6 +3,7 @@ import "../../styles/Doctor/Doctor-Schedule.css";
 
 import {
   ChevronLeft, ChevronRight, CalendarDays, Filter, Plus, UserRound, Video, FlaskConical, Users, ClipboardList, HeartPulse, Coffee, BriefcaseMedical, Stethoscope,
+  Repeat,
 } from "lucide-react";
 
 /* =========================================================
@@ -11,9 +12,9 @@ import {
 
 const ROW_MIN = 30;
 const ROW_HEIGHT = 40.5;
-const VISIBLE_ROWS = 12; // 6 hours visible
-const DAY_START_HOUR = 7;
-const DAY_END_HOUR = 19;
+const VISIBLE_ROWS = 10; // 6 hours visible
+const DAY_START_HOUR = 10;
+const DAY_END_HOUR = 20.5;
 const TOTAL_ROWS = ((DAY_END_HOUR - DAY_START_HOUR) * 60) / ROW_MIN;
 const DAY_LABELS = [ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" ];
 
@@ -22,45 +23,21 @@ const DAY_LABELS = [ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" ];
 ========================================================= */
 
 const TYPE_STYLE = {
-  appointment: {
-    icon: UserRound,
-    color: "blue",
-  },
+  appointment: { icon: UserRound, color: "blue" },
 
-  followup: {
-    icon: ClipboardList,
-    color: "green",
-  },
+  followup: { icon: ClipboardList, color: "green" },
 
-  consultation: {
-    icon: Stethoscope,
-    color: "purple",
-  },
+  consultation: { icon: Stethoscope, color: "purple" },
 
-  diagnostic: {
-    icon: FlaskConical,
-    color: "orange",
-  },
+  diagnostic: { icon: FlaskConical, color: "orange" },
 
-  video: {
-    icon: Video,
-    color: "pink",
-  },
+  video: { icon: Video, color: "pink" },
 
-  meeting: {
-    icon: Users,
-    color: "yellow",
-  },
+  meeting: { icon: Users, color: "yellow" },
 
-  admin: {
-    icon: BriefcaseMedical,
-    color: "blue",
-  },
+  admin: { icon: BriefcaseMedical, color: "blue" },
 
-  break: {
-    icon: Coffee,
-    color: "yellow",
-  },
+  break: { icon: Coffee, color: "yellow" },
 };
 
 /* =========================================================
@@ -139,7 +116,7 @@ const EVENTS = [
   {
     id: 1,
     dayOffset: 0,
-    start: "07:00",
+    start: "10:00",
     duration: 30,
     type: "appointment",
     title: "Rahul Das",
@@ -149,7 +126,7 @@ const EVENTS = [
   {
     id: 2,
     dayOffset: 0,
-    start: "08:00",
+    start: "11:00",
     duration: 30,
     type: "consultation",
     title: "Ananya Sharma",
@@ -159,7 +136,7 @@ const EVENTS = [
   {
     id: 3,
     dayOffset: 0,
-    start: "09:30",
+    start: "12:30",
     duration: 30,
     type: "diagnostic",
     title: "Arjun Mehta",
@@ -578,8 +555,6 @@ function DocSchedule() {
     setWeekStart(getMonday(new Date()));
   };
 
-  /* ========================================================= */
-
   return (
     <section className="sched">
       {/* <div className="sched__header">
@@ -610,18 +585,18 @@ function DocSchedule() {
 
       </div> */}
 
-      {/* =====================================================
-          TOOLBAR
-      ===================================================== */}
-
       <div className="sched__toolbar">
         <div className="sched__view-switch">
           <button className={ view === "day" ? "is-active" : "" } onClick={() => setView("day")}>
-            Day View
+            Day
           </button>
 
           <button className={ view === "week" ? "is-active" : "" } onClick={() => setView("week")}>
-            Week View
+            Week
+          </button>
+
+          <button className={ view === "month" ? "is-active" : "" } onClick={() => setView("month")}>
+            Month
           </button>
 
         </div>
@@ -685,25 +660,16 @@ function DocSchedule() {
         {/* GRID */}
 
         <div ref={scrollRef} className="sched__scroll" >
-
-          <div className="sched__grid" >
-
+          <div className="sched__grid" style={{ gridTemplateRows: `repeat(${TOTAL_ROWS}, 121.5px)`}} >
             {/* BACKGROUND GRID */}
-
             {rows.map((time, rowIndex) => (
               <React.Fragment key={rowIndex}>
 
-                <div className="sched__time-cell" style={{gridColumn: 1, gridRow: rowIndex + 1 }} >
-
-                  {time.isHour && (
-                    <span className="sched__time-label">
-                      {time.label}
-                      <small>
-                        {time.ampm}
-                      </small>
-                    </span>
-                  )}
-
+                <div className="sched__time-cell" style={{ gridColumn: 1, gridRow: rowIndex + 1 }}>
+                  <span className={`sched__time-label ${!time.isHour ? "sched__time-label--minor" : ""}`}>
+                    {time.label}
+                    <small>{time.ampm}</small>
+                  </span>
                 </div>
 
                 {weekDays.map((_, columnIndex) => (
@@ -715,8 +681,7 @@ function DocSchedule() {
                         : ""
                     }`}
                     style={{
-                      gridColumn:
-                        columnIndex + 2,
+                      gridColumn:columnIndex + 2,
                       gridRow:
                         rowIndex + 1,
                     }}
@@ -730,8 +695,7 @@ function DocSchedule() {
                 CURRENT TIME
             ================================================= */}
 
-            {todayRow !== null &&
-              todayColumn !== -1 && (
+            {todayRow !== null && todayColumn !== -1 && (
                 <div
                   className="sched__now-line"
                   style={{
@@ -754,49 +718,25 @@ function DocSchedule() {
 
             {eventsWithPosition.map((event) => {
 
-              const config =
-                TYPE_STYLE[event.type] ||
-                TYPE_STYLE.appointment;
-
+              const config = TYPE_STYLE[event.type] || TYPE_STYLE.appointment;
               const Icon = config.icon;
-
-              const isShort =
-                event.duration === 30;
+              const isShort = event.duration === 30;
 
               return (
                 <div
                   key={event.id}
-                  className={`sched__event sched__event--${config.color} ${
-                    isShort
-                      ? "sched__event--compact"
-                      : ""
-                  }`}
-                  style={{
-                    gridColumn:
-                      event.dayOffset + 2,
-
-                    gridRow: `${
-                      Math.round(
-                        event.startRow
-                      ) + 1
-                    } / span ${
-                      Math.max(
-                        1,
-                        Math.round(
-                          event.span
-                        )
-                      )
-                    }`,
-                  }}
+                  className={`sched__event sched__event--${config.color} ${ isShort ? "sched__event--compact" : ""}`}
+                  style={{ gridColumn: event.dayOffset + 2,
+                    gridRow: `${ Math.round( event.startRow) + 1} / span ${ Math.max(1,Math.round(event.span)) }`,}} 
                 >
 
+                  <span className="sched__event-subtitle">
+                    {event.subtitle}
+                  </span>
                   <div className="sched__event-top">
 
                     <span className="sched__event-icon">
-                      <Icon
-                        size={12}
-                        strokeWidth={2.2}
-                      />
+                      <Icon size={15} strokeWidth={2.2} />
                     </span>
 
                     <span className="sched__event-title">
@@ -804,12 +744,6 @@ function DocSchedule() {
                     </span>
 
                   </div>
-
-                  {!isShort && (
-                    <span className="sched__event-subtitle">
-                      {event.subtitle}
-                    </span>
-                  )}
 
                   <span className="sched__event-time">
                     {formatTime(event.start)}
