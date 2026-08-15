@@ -3,7 +3,7 @@
 .pcard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 18px;
+  gap: 10px;
   width: 100%;
   height: calc(100vh - 7.2rem);
   min-height: 0;
@@ -15,21 +15,13 @@
 
 }
 
-@media (max-width: 1400px) {
-  .pcard-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 720px) {
-  .pcard-grid { grid-template-columns: 1fr; }
-}
-
 /* ---------------- card shell ---------------- */
 .pcard {
   background: #ffffff;
-  border-radius: 16px;
-  padding: 16px;
+  border-radius: 22px;
+  padding: 12.6px;
   /* box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06); */
-  border: 1px solid #eef1f6;
+  border: 1px solid #99adeb;
   display: flex;
   flex-direction: column;
   gap: 8.2px;
@@ -47,14 +39,14 @@
   gap: 6px;
   font-size: 13px;
   font-weight: 700;
-  color: var(--pcard-accent, #16a34a);
+  color: var(--pcard-accent,#2563eb);
 }
 
 .pcard__status-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--pcard-accent, #16a34a);
+  background: var(--pcard-accent,#2563eb);
   flex-shrink: 0;
 }
 
@@ -78,15 +70,18 @@
 .pcard__identity {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 30px;
 }
 
 .pcard__avatar {
-  width: 52px;
+  /* width: 52px;
   height: 52px;
-  border-radius: 14px;
-  background: var(--pcard-avatar-bg, #dcfce7);
-  color: var(--pcard-accent, #16a34a);
+  border-radius: 30px; */
+      width: 65px;
+    height: 65px;
+    border-radius: 16px;
+  background: #dbeafe;
+  color: #441c88;
   font-size: 17px;
   font-weight: 700;
   display: flex;
@@ -116,7 +111,7 @@
 .pcard__id {
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--pcard-accent, #16a34a);
+  color: var(--pcard-accent,#2563eb);
 }
 
 .pcard__sub {
@@ -129,8 +124,8 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: var(--pcard-avatar-bg, #dcfce7);
-  color: var(--pcard-accent, #16a34a);
+  background: var(--pcard-avatar-bg, #dbeafe);
+  color: var(--pcard-accent,#2563eb);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,12 +133,12 @@
 }
 
 /* ---------------- vitals row ---------------- */
-.pcard__vitals {
+/* .pcard__vitals {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 6px;
-  background: var(--pcard-vitals-bg, #f0fdf4);
-  border: 1px solid var(--pcard-vitals-border, #d7f2df);
+  background: var(--pcard-vitals-bg, #eef4ff);
+  border: 1px solid var(--pcard-vitals-border,  #dbe8ff);
   border-radius: 12px;
   padding: 12px 10px;
 }
@@ -156,7 +151,7 @@
 }
 
 .pcard__vital-icon {
-  color: var(--pcard-accent, #16a34a);
+  color: var(--pcard-accent,#2563eb);
   flex-shrink: 0;
 }
 
@@ -184,7 +179,7 @@
 .pcard__vital-unit {
   font-size: 10.5px;
   color: #9aa1ac;
-}
+} */
 
 /* ---------------- lab note block (lab-pending variant) ---------------- */
 .pcard__labnote {
@@ -254,15 +249,18 @@
 /* ---------------- meta row ---------------- */
 .pcard__meta {
   display: flex;
-  gap: 18px;
   flex-wrap: wrap;
+  margin: 5px 0px 10px 0px ;
+  justify-content: space-around;
 }
 
 .pcard__meta-item {
   display: flex;
-  align-items: flex-start;
-  gap: 6px;
+  align-items: center;
+  gap: 10px;
+  padding: 0px 11px 0px 11px;
 }
+
 
 .pcard__meta-icon {
   color: #9aa1ac;
@@ -292,18 +290,18 @@
   align-items: center;
   justify-content: space-between;
   border: none;
-  background: var(--pcard-vitals-bg, #f0fdf4);
-  color: var(--pcard-accent, #16a34a);
-  font-size: 13.5px;
-  font-weight: 700;
-  padding: 12px 14px;
-  border-radius: 10px;
+  background: var(--pcard-vitals-bg, #dbeafe);
+  color: var(--pcard-accent,#0b3ca7);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 30px;
   cursor: pointer;
   margin-top: auto;
 }
 
 .pcard__footer:hover {
-  filter: brightness(0.97);
+  filter: brightness(0.67);
 }
 
 /* ================= COLOR THEMES ================= */
@@ -325,8 +323,8 @@
 .pcard--blue {
   --pcard-accent: #2563eb;
   --pcard-avatar-bg: #dbeafe;
-  --pcard-vitals-bg: #eef4ff;
-  --pcard-vitals-border: #dbe8ff;
+  --pcard-vitals-bg: #dbeafe;
+  --pcard-vitals-border: #dbeafe;
 }
 
 .pcard--teal {

@@ -21,45 +21,49 @@ const PATIENTS = [
   {
     Id:1, pid: "AMS-2026-001", name: "Aniruddha Paul", initials: "AP", age: 23, gender: "Male", blood: "O+",
     status: "in-consultation",
+    theme: "blue",
     vitals: [
       { icon: Heart, label: "BP", value: "120/80", unit: "mmHg" },
       { icon: Activity, label: "Pulse", value: "72", unit: "bpm" },
       { icon: Thermometer, label: "Temp", value: "98.6°F" },
     ],
     meta: [
-      { icon: Calendar, label: "Last Visit", value: "Today, 10:30 AM" },
+      { icon: Calendar, label: "Last Visit", value: " 10:30 AM" },
       { icon: Stethoscope, label: "Department", value: "General Medicine" },
     ],
   },
   {
     Id:2, pid: "AMS-2026-014", name: "Priya Sharma", initials: "PS", age: 42, gender: "Female", blood: "A+",
     status: "waiting",
+    theme: "blue",
     vitals: [
       { icon: Heart, label: "BP", value: "138/88", unit: "mmHg" },
       { icon: Activity, label: "Pulse", value: "84", unit: "bpm" },
       { icon: Thermometer, label: "Temp", value: "99.1°F" },
     ],
     meta: [
-      { icon: Calendar, label: "Last Visit", value: "Today, 11:00 AM" },
+      { icon: Calendar, label: "Last Visit", value: " 11:00 AM" },
       { icon: Stethoscope, label: "Department", value: "General Medicine" },
     ],
   },
   {
     Id:3, pid: "AMS-2026-021", name: "Rahul Das", initials: "RD", age: 56, gender: "Male", blood: "B+",
     status: "scheduled",
+    theme: "blue",
     vitals: [
       { icon: Heart, label: "BP", value: "145/92", unit: "mmHg" },
       { icon: Activity, label: "Pulse", value: "91", unit: "bpm" },
       { icon: Thermometer, label: "Temp", value: "98.2°F" },
     ],
     meta: [
-      { icon: Calendar, label: "Appointment", value: "Today, 11:30 AM" },
+      { icon: Calendar, label: "Appointment", value: "11:30 AM" },
       { icon: Heart, label: "Department", value: "Cardiology" },
     ],
   },
   {
     Id:4, pid: "AMS-2026-027", name: "Sneha Das", initials: "SD", age: 31, gender: "Female", blood: "O+",
     status: "follow-up",
+    theme: "blue",
     vitals: [
       { icon: Heart, label: "BP", value: "118/76", unit: "mmHg" },
       { icon: Activity, label: "Pulse", value: "70", unit: "bpm" },
@@ -73,6 +77,7 @@ const PATIENTS = [
   {
     Id:5, pid: "AMS-2026-031", name: "Arjun Sharma", initials: "AS", age: 28, gender: "Male", blood: "AB+",
     status: "completed",
+    theme: "blue",
     vitals: [
       { icon: Heart, label: "BP", value: "124/82", unit: "mmHg" },
       { icon: Activity, label: "Pulse", value: "76", unit: "bpm" },
@@ -87,6 +92,7 @@ const PATIENTS = [
     Id:6, pid: "AMS-2026-038", name: "Riya Paul", initials: "RP", age: 19, gender: "Female", blood: "B+",
     status: "completed",
     theme: "blue", // overrides the default green completed theme, matches ref image
+    theme: "blue",
     vitals: [
       { icon: Heart, label: "BP", value: "110/70", unit: "mmHg" },
       { icon: Activity, label: "Pulse", value: "68", unit: "bpm" },
@@ -100,20 +106,28 @@ const PATIENTS = [
   {
     Id:7, pid: "AMS-2026-044", name: "Amit Roy", initials: "AR", age: 64, gender: "Male", blood: "A+",
     status: "high-risk",
+    theme: "blue",
     vitals: [
       { icon: Heart, label: "BP", value: "150/96", unit: "mmHg", up: true },
       { icon: Activity, label: "Pulse", value: "96", unit: "bpm", up: true },
       { icon: Thermometer, label: "Temp", value: "99.3°F" },
     ],
-    condition: "Hypertension",
+    // condition: "Hypertension",
     meta: [
-      { icon: Calendar, label: "Last Visit", value: "Today, 09:15 AM" },
+      { icon: Calendar, label: "Last Visit", value: " 09:15 AM" },
+      { icon: Stethoscope, label: "Department", value: "General Medicine" },
     ],
   },
   {
     Id:8, pid: "AMS-2026-052", name: "Neha Sharma", initials: "NS", age: 36, gender: "Female", blood: "O+",
     status: "lab-pending",
-    labNote: { title: "Lab Reports Pending", detail: "CBC, LFT, Lipid Profile", status: "Awaiting Results" },
+    // labNote: { title: "Lab Reports Pending", detail: "CBC, LFT, Lipid Profile", status: "Awaiting Results" },
+        theme: "blue",
+    vitals: [
+      { icon: Heart, label: "BP", value: "150/96", unit: "mmHg", up: true },
+      { icon: Activity, label: "Pulse", value: "96", unit: "bpm", up: true },
+      { icon: Thermometer, label: "Temp", value: "99.3°F" },
+    ],
     meta: [
       { icon: Calendar, label: "Last Visit", value: "Aug 13, 2026" },
       { icon: Stethoscope, label: "Department", value: "General Medicine" },
@@ -122,6 +136,91 @@ const PATIENTS = [
   {
     Id:9, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
     status: "review-due",
+    theme: "blue",
+    vitals: [
+      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
+      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
+      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
+    ],
+    meta: [
+      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
+      { icon: Heart, label: "Department", value: "Cardiology" },
+    ],
+  },
+  {
+    Id:10, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    status: "review-due",
+    theme: "blue",
+    vitals: [
+      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
+      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
+      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
+    ],
+    meta: [
+      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
+      { icon: Heart, label: "Department", value: "Cardiology" },
+    ],
+  },
+  {
+    Id:11, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    status: "review-due",
+    theme: "blue",
+    vitals: [
+      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
+      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
+      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
+    ],
+    meta: [
+      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
+      { icon: Heart, label: "Department", value: "Cardiology" },
+    ],
+  },
+  {
+    Id:12, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    status: "review-due",
+    theme: "blue",
+    vitals: [
+      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
+      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
+      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
+    ],
+    meta: [
+      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
+      { icon: Heart, label: "Department", value: "Cardiology" },
+    ],
+  },
+  {
+    Id:13, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    status: "review-due",
+    theme: "blue",
+    vitals: [
+      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
+      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
+      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
+    ],
+    meta: [
+      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
+      { icon: Heart, label: "Department", value: "Cardiology" },
+    ],
+  },
+  {
+    Id:14, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    status: "review-due",
+    theme: "blue",
+    vitals: [
+      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
+      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
+      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
+    ],
+    meta: [
+      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
+      { icon: Heart, label: "Department", value: "Cardiology" },
+    ],
+  },
+  {
+    Id:15, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    status: "review-due",
+    theme: "blue",
     vitals: [
       { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
       { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
@@ -154,18 +253,16 @@ export default function PatientRecords() {
   }, []);
 
   return (
-    <div   ref={gridRef} className="pcard-grid" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)`, transform: `scale(${scale})`,transformOrigin: 'top left' }}>
+    <div   ref={gridRef} className="pcard-grid" >
       {PATIENTS.map((patient) => (
         <article key={patient.Id} className={`pcard pcard--${patient.theme || patient.status}`}>
-          <header className="pcard__top">
+          {/* <header className="pcard__top">
             <span className="pcard__status">
               <span className="pcard__status-dot" />
               {statusLabel(patient.status)}
             </span>
-            <button className="pcard__more" aria-label="More options">
-              <MoreVertical size={16} />
-            </button>
-          </header>
+            
+          </header> */}
 
           <div className="pcard__identity">
             <span className="pcard__avatar">{patient.initials}</span>
@@ -176,12 +273,12 @@ export default function PatientRecords() {
                 {patient.age} Yrs&nbsp;&nbsp;•&nbsp;&nbsp;{patient.gender}&nbsp;&nbsp;•&nbsp;&nbsp;{patient.blood}
               </span>
             </div>
-            <span className="pcard__status-icon">
-              <Stethoscope size={18} strokeWidth={2} />
-            </span>
+            <button className="pcard__more" aria-label="More options">
+              <MoreVertical size={16} />
+            </button>
           </div>
 
-          {patient.vitals && (
+          {/* {patient.vitals && (
             <div className="pcard__vitals">
               {patient.vitals.map((v, i) => (
                 <div className="pcard__vital" key={i}>
@@ -193,7 +290,7 @@ export default function PatientRecords() {
                 </div>
               ))}
             </div>
-          )}
+          )} */}
 
           {patient.labNote && (
             <div className="pcard__labnote">

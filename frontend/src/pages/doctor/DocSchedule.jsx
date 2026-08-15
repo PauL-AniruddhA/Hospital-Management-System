@@ -11,8 +11,8 @@ import {
 ========================================================= */
 
 const ROW_MIN = 30;
-const ROW_HEIGHT = 40.5;
-const VISIBLE_ROWS = 10; // 6 hours visible
+// const ROW_HEIGHT = 40.5;
+const VISIBLE_ROWS = 10; // 5 hours visible
 const DAY_START_HOUR = 10;
 const DAY_END_HOUR = 20.5;
 const TOTAL_ROWS = ((DAY_END_HOUR - DAY_START_HOUR) * 60) / ROW_MIN;
@@ -146,7 +146,7 @@ const EVENTS = [
   {
     id: 4,
     dayOffset: 0,
-    start: "11:30",
+    start: "12:00",
     duration: 30,
     type: "followup",
     title: "Neha Verma",
@@ -417,6 +417,7 @@ function DocSchedule() {
   const [filter, setFilter] = useState("all");
   const scrollRef = useRef(null);
 
+  
   /* ---------------- current time ---------------- */
 
   useEffect(() => {
@@ -427,6 +428,12 @@ function DocSchedule() {
     return () => clearInterval(interval);
   }, []);
 
+  const getScheduleRowHeight = () => {
+    const value = getComputedStyle(document.documentElement)
+      .getPropertyValue("--schedule-row-height");
+
+    return parseFloat(value);
+  };
   /* ---------------- days ---------------- */
 
   const weekDays = useMemo(() => {
@@ -534,7 +541,7 @@ function DocSchedule() {
       );
 
     scrollRef.current.scrollTop =
-      target * ROW_HEIGHT;
+      target * getScheduleRowHeight();
   }, []);
 
   /* ---------------- handlers ---------------- */
@@ -660,7 +667,7 @@ function DocSchedule() {
         {/* GRID */}
 
         <div ref={scrollRef} className="sched__scroll" >
-          <div className="sched__grid" style={{ gridTemplateRows: `repeat(${TOTAL_ROWS}, 121.5px)`}} >
+          <div className="sched__grid" style={{ gridTemplateRows: `repeat(${TOTAL_ROWS}, var(--schedule-row-height))`}} >
             {/* BACKGROUND GRID */}
             {rows.map((time, rowIndex) => (
               <React.Fragment key={rowIndex}>
@@ -706,7 +713,7 @@ function DocSchedule() {
                     } / span 1`,
                     top: `${
                       (todayRow % 1) *
-                      40.5
+                      getScheduleRowHeight()
                     }px`,
                   }}
                 />

@@ -6,9 +6,10 @@
 }
 html {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  min-height: 100dvh;
+  min-height: 100%;
 }
 body {
+  min-height: 100dvh;
   background: var(--background);
   color: var(--text-dark);
 }
@@ -34,6 +35,7 @@ body {
     --s20:calc(20px * var(--scale));
     --s22:calc(22px * var(--scale));
     --s24:calc(24px * var(--scale));
+    --s25:calc(25px * var(--scale));
     --s28:calc(28px * var(--scale));
     --s30:calc(30px * var(--scale));
     --s32:calc(32px * var(--scale));
@@ -65,7 +67,7 @@ body {
   --hero-scale:clamp(1.02,1vw + .98,1.10);
   --hero-extra: calc(180px * var(--scale));
   --font-size: var(--s14);
-
+  --schedule-row-height:calc(46.91875px + 79.63333px * var(--scale)); /* patient Schedule row  */
   /*========================
       Colors
   ========================*/
@@ -164,7 +166,4 @@ body {
   --danger: #e23744;
   --warning: #f5a623;
   --success: #22a06b;
-
-
 }
-
