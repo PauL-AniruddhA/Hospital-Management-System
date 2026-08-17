@@ -1,19 +1,24 @@
 /* ================= LAYOUT SHELL ================= */
 .doctors-home {
   display: grid;
-  /* grid-template-columns:225px 1fr 330px; */
   grid-template-columns: 205px 1fr 300px;
-  grid-template-rows: auto 1fr;
+  /* grid-template-columns: clamp(190px 14vw 220px) 1fr clamp(260px 20vw 310px); */
+  grid-template-rows: 82px minmax(0,1fr);
   grid-template-areas:
     "doc-logo topbar-search doc-profile"
     "sidebar main aside";
   min-height: 100vh;
+  min-width: 0;
   background:  #daf4e4;
   font-family: "Inter", "Segoe UI", sans-serif;
+   /* overflow: hidden; */
 }
 
 .doc_logo {
   grid-area: doc-logo;
+  min-width: 0;
+  min-height: 0;
+  height: 82px;
   position: sticky;
   top: 0;
   z-index: 21;
@@ -21,6 +26,10 @@
 
 .doc_topbar {
   grid-area: topbar;
+   min-width: 0;
+  min-height: 0;
+
+  height: 82px;
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
@@ -161,6 +170,9 @@
 }
 .topbar__actions {
   grid-area: doc-profile;
+  min-width: 0;
+  min-height: 0;
+  height: 82px;
   position: sticky;
   top: 0;
   z-index: 23;
@@ -452,11 +464,15 @@ background: #eaf3ee;
 /* ================= LEFT SIDEBAR ================= */
 .doc_sidebar {
   grid-area: sidebar;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
 }
 
 .sidebar {
   width: 100%;
   height: calc(100vh - 7rem);
+  min-height: 0;
   position: sticky;
   top: 6rem;
   background: #f5faf6;   
@@ -983,9 +999,9 @@ background: #eaf3ee;
   grid-area: main;
   padding: 13px 20px 18px 20px;
   overflow-y: auto;
-  /* height: 100%; */
-  /* background-color: #22c55e; */
-  /* height: 100%; */
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
 }
 
 
@@ -993,6 +1009,9 @@ background: #eaf3ee;
 /* ================= RIGHT: PERMANENT ASIDE RAIL ================= */
 .doc_aside {
   grid-area: aside;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
 }
 
 .aside-rail {
@@ -1259,9 +1278,8 @@ background: #eaf3ee;
 /* 14" laptop band (~1280–1512px logical width): this is now the
    tuned base above, so no extra shrinking happens in this range —
    only the two rules below adjust for it explicitly. */
-@media (max-width: 1512px) and (min-width: 1201px) {
+/* @media (max-width: 1512px) and (min-width: 1201px) {
   .doctors-home {
-    /* grid-template-columns: 225px 1fr 330px; */
     grid-template-columns: 205px 1fr 300px;
   }
   .stat-row {
@@ -1303,4 +1321,4 @@ background: #eaf3ee;
 
 @media (max-width: 640px) {
   .perf-strip__row { grid-template-columns: repeat(2, 1fr); }
-}
+} */

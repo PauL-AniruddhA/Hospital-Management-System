@@ -3,7 +3,8 @@ import "../../styles/Components/Common/Patient-Records.css";
 import {
   Heart, Activity, Thermometer, Droplet, Calendar, Stethoscope,
   ArrowRight, MoreVertical, Clock, CheckCircle2, FlaskConical,
-  Bell, AlertTriangle, RotateCw, CalendarCheck,
+  Bell, AlertTriangle, RotateCw, CalendarCheck, Eye, Phone,
+  MessageCircle, VenetianMask, User, IdCard
 } from "lucide-react";
 const STATUS_LABELS = {
   "in-consultation": "In Consultation",
@@ -17,219 +18,119 @@ const STATUS_LABELS = {
 };
 const statusLabel = (s) => STATUS_LABELS[s] || s;
 
+
 const PATIENTS = [
   {
     Id:1, pid: "AMS-2026-001", name: "Aniruddha Paul", initials: "AP", age: 23, gender: "Male", blood: "O+",
+    phone: "+91 98765 43210",
     status: "in-consultation",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "120/80", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "72", unit: "bpm" },
-      { icon: Thermometer, label: "Temp", value: "98.6°F" },
-    ],
-    meta: [
-      { icon: Calendar, label: "Last Visit", value: " 10:30 AM" },
-      { icon: Stethoscope, label: "Department", value: "General Medicine" },
-    ],
+    calender: { icon: Calendar, label: "Last Visit", date: "16 May 2025" },
   },
   {
     Id:2, pid: "AMS-2026-014", name: "Priya Sharma", initials: "PS", age: 42, gender: "Female", blood: "A+",
+    phone: "+91 91234 56780",
     status: "waiting",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "138/88", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "84", unit: "bpm" },
-      { icon: Thermometer, label: "Temp", value: "99.1°F" },
-    ],
-    meta: [
-      { icon: Calendar, label: "Last Visit", value: " 11:00 AM" },
-      { icon: Stethoscope, label: "Department", value: "General Medicine" },
-    ],
+    calender: { icon: Calendar, label: "Last Visit", date: "15 May 2025" },
   },
   {
     Id:3, pid: "AMS-2026-021", name: "Rahul Das", initials: "RD", age: 56, gender: "Male", blood: "B+",
+    phone: "+91 90071 22334",
     status: "scheduled",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "145/92", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "91", unit: "bpm" },
-      { icon: Thermometer, label: "Temp", value: "98.2°F" },
-    ],
-    meta: [
-      { icon: Calendar, label: "Appointment", value: "11:30 AM" },
-      { icon: Heart, label: "Department", value: "Cardiology" },
-    ],
+    calender: { icon: Calendar, label: "Appointment", date: "18 May 2025" },
   },
   {
     Id:4, pid: "AMS-2026-027", name: "Sneha Das", initials: "SD", age: 31, gender: "Female", blood: "O+",
+    phone: "+91 98123 44556",
     status: "follow-up",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "118/76", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "70", unit: "bpm" },
-      { icon: Droplet, label: "Sugar", value: "102", unit: "mg/dL" },
-    ],
-    meta: [
-      { icon: Calendar, label: "Last Visit", value: "Aug 09, 2026" },
-      { icon: Stethoscope, label: "Department", value: "General Medicine" },
-    ],
+    calender: { icon: Calendar, label: "Last Visit", date: "09 Aug 2026" },
   },
   {
     Id:5, pid: "AMS-2026-031", name: "Arjun Sharma", initials: "AS", age: 28, gender: "Male", blood: "AB+",
+    phone: "+91 97001 88213",
     status: "completed",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "124/82", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "76", unit: "bpm" },
-      { icon: Thermometer, label: "Temp", value: "98.4°F" },
-    ],
-    meta: [
-      { icon: Calendar, label: "Last Visit", value: "Aug 07, 2026" },
-      { icon: Stethoscope, label: "Department", value: "Orthopedics" },
-    ],
+    calender: { icon: Calendar, label: "Last Visit", date: "07 Aug 2026" },
   },
   {
     Id:6, pid: "AMS-2026-038", name: "Riya Paul", initials: "RP", age: 19, gender: "Female", blood: "B+",
+    phone: "+91 96543 21098",
     status: "completed",
-    theme: "blue", // overrides the default green completed theme, matches ref image
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "110/70", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "68", unit: "bpm" },
-      { icon: Thermometer, label: "Temp", value: "98.1°F" },
-    ],
-    meta: [
-      { icon: Calendar, label: "Last Visit", value: "Aug 06, 2026" },
-      { icon: Stethoscope, label: "Department", value: "General Medicine" },
-    ],
+    calender: { icon: Calendar, label: "Last Visit",  date: "06 Aug 2026" },
   },
   {
     Id:7, pid: "AMS-2026-044", name: "Amit Roy", initials: "AR", age: 64, gender: "Male", blood: "A+",
+    phone: "+91 94002 77651",
     status: "high-risk",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "150/96", unit: "mmHg", up: true },
-      { icon: Activity, label: "Pulse", value: "96", unit: "bpm", up: true },
-      { icon: Thermometer, label: "Temp", value: "99.3°F" },
-    ],
-    // condition: "Hypertension",
-    meta: [
-      { icon: Calendar, label: "Last Visit", value: " 09:15 AM" },
-      { icon: Stethoscope, label: "Department", value: "General Medicine" },
-    ],
+    calender: { icon: Calendar, label: "Last Visit", date: "05 Aug 2026" },
   },
   {
     Id:8, pid: "AMS-2026-052", name: "Neha Sharma", initials: "NS", age: 36, gender: "Female", blood: "O+",
+    phone: "+91 93456 09871",
     status: "lab-pending",
-    // labNote: { title: "Lab Reports Pending", detail: "CBC, LFT, Lipid Profile", status: "Awaiting Results" },
-        theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "150/96", unit: "mmHg", up: true },
-      { icon: Activity, label: "Pulse", value: "96", unit: "bpm", up: true },
-      { icon: Thermometer, label: "Temp", value: "99.3°F" },
-    ],
-    meta: [
-      { icon: Calendar, label: "Last Visit", value: "Aug 13, 2026" },
-      { icon: Stethoscope, label: "Department", value: "General Medicine" },
-    ],
+    theme: "blue",
+    calender: { icon: Calendar, label: "Last Visit",  date: "13 Aug 2026" },
   },
   {
     Id:9, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    phone: "+91 99887 66554",
     status: "review-due",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
-      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
-    ],
-    meta: [
-      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
-      { icon: Heart, label: "Department", value: "Cardiology" },
-    ],
+    calender: { icon: Calendar, label: "Follow-up Due", date: "20 Aug 2026" },
   },
   {
-    Id:10, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    Id:10, pid: "AMS-2026-062", name: "Sanjay Kalita", initials: "SK", age: 39, gender: "Male", blood: "B+",
+    phone: "+91 99887 66555",
     status: "review-due",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
-      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
-    ],
-    meta: [
-      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
-      { icon: Heart, label: "Department", value: "Cardiology" },
-    ],
+    calender: { icon: Calendar, label: "Follow-up Due", date: "20 Aug 2026" },
   },
   {
-    Id:11, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    Id:11, pid: "AMS-2026-063", name: "Mridul Bora", initials: "MB", age: 52, gender: "Male", blood: "O-",
+    phone: "+91 99887 66556",
     status: "review-due",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
-      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
-    ],
-    meta: [
-      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
-      { icon: Heart, label: "Department", value: "Cardiology" },
-    ],
+    calender: { icon: Calendar, label: "Follow-up Due", date: "20 Aug 2026" },
   },
   {
-    Id:12, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    Id:12, pid: "AMS-2026-064", name: "Nirmali Gogoi", initials: "NG", age: 44, gender: "Female", blood: "A-",
+    phone: "+91 99887 66557",
     status: "review-due",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
-      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
-    ],
-    meta: [
-      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
-      { icon: Heart, label: "Department", value: "Cardiology" },
-    ],
+    calender: { icon: Calendar, label: "Follow-up Due", date: "20 Aug 2026" },
   },
   {
-    Id:13, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    Id:13, pid: "AMS-2026-065", name: "Bikash Saikia", initials: "BS", age: 58, gender: "Male", blood: "AB-",
+    phone: "+91 99887 66558",
     status: "review-due",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
-      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
-    ],
-    meta: [
-      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
-      { icon: Heart, label: "Department", value: "Cardiology" },
-    ],
+    calender: { icon: Calendar, label: "Follow-up Due", date: "20 Aug 2026" },
   },
   {
-    Id:14, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    Id:14, pid: "AMS-2026-066", name: "Rituparna Deka", initials: "RD", age: 33, gender: "Female", blood: "B-",
+    phone: "+91 99887 66559",
     status: "review-due",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
-      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
-    ],
-    meta: [
-      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
-      { icon: Heart, label: "Department", value: "Cardiology" },
-    ],
+    calender: { icon: Calendar, label: "Follow-up Due", date: "20 Aug 2026" },
   },
   {
-    Id:15, pid: "AMS-2026-061", name: "Vikash Das", initials: "VD", age: 47, gender: "Male", blood: "B+",
+    Id:15, pid: "AMS-2026-067", name: "Diganta Hazarika", initials: "DH", age: 61, gender: "Male", blood: "O+",
+    phone: "+91 99887 66560",
     status: "review-due",
     theme: "blue",
-    vitals: [
-      { icon: Heart, label: "BP", value: "132/84", unit: "mmHg" },
-      { icon: Activity, label: "Pulse", value: "81", unit: "bpm" },
-      { icon: Droplet, label: "Sugar", value: "128", unit: "mg/dL" },
-    ],
-    meta: [
-      { icon: CalendarCheck, label: "Follow-up Due", value: "Aug 20, 2026" },
-      { icon: Heart, label: "Department", value: "Cardiology" },
-    ],
+    calender: { icon: Calendar, label: "Follow-up Due",  date: "20 Aug 2026" },
+  },
+  {
+    Id:16, pid: "AMS-2026-068", name: "Junmoni Baruah", initials: "JB", age: 27, gender: "Female", blood: "A+",
+    phone: "+91 99887 66561",
+    status: "review-due",
+    theme: "blue",
+    calender: { icon: Calendar, label: "Follow-up Due" , date: "20 Aug 2026" },
   },
 ];
 
@@ -245,8 +146,6 @@ export default function PatientRecords() {
       const { width, height } = entry.contentRect;
       const newCols = width > 1100 ? 4 : width > 800 ? 3 : 2;
       setCols(newCols);
-      // after layout, compare natural grid size to container, compute scale
-      // e.g. scale = Math.min(width / naturalWidth, height / naturalHeight, 1)
     });
     observer.observe(el);
     return () => observer.disconnect();
@@ -255,42 +154,20 @@ export default function PatientRecords() {
   return (
     <div   ref={gridRef} className="pcard-grid" >
       {PATIENTS.map((patient) => (
-        <article key={patient.Id} className={`pcard pcard--${patient.theme || patient.status}`}>
-          {/* <header className="pcard__top">
-            <span className="pcard__status">
-              <span className="pcard__status-dot" />
-              {statusLabel(patient.status)}
-            </span>
-            
-          </header> */}
-
+        <article key={patient.Id} className={`pcard pcard--${patient.theme}`}>
           <div className="pcard__identity">
             <span className="pcard__avatar">{patient.initials}</span>
-            <div className="pcard__id-block">
-              <h3 className="pcard__name">{patient.name}</h3>
-              <span className="pcard__id">{patient.pid}</span>
-              <span className="pcard__sub">
-                {patient.age} Yrs&nbsp;&nbsp;•&nbsp;&nbsp;{patient.gender}&nbsp;&nbsp;•&nbsp;&nbsp;{patient.blood}
-              </span>
+            <div className="pcard__block">
+              <div className="pcard__id-block">
+                <h3 className="pcard__name">{patient.name}</h3>
+                <span className="pcard__id-pill"> <IdCard size={14} /> {patient.pid} </span>
+              </div>
+
             </div>
             <button className="pcard__more" aria-label="More options">
               <MoreVertical size={16} />
             </button>
           </div>
-
-          {/* {patient.vitals && (
-            <div className="pcard__vitals">
-              {patient.vitals.map((v, i) => (
-                <div className="pcard__vital" key={i}>
-                  <v.icon size={15} className="pcard__vital-icon" />
-                  <div className="pcard__vital-text">
-                    <span className="pcard__vital-value">{v.value}</span>
-                    {v.unit && <span className="pcard__vital-unit">{v.unit}</span>}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )} */}
 
           {patient.labNote && (
             <div className="pcard__labnote">
@@ -302,29 +179,41 @@ export default function PatientRecords() {
               </div>
             </div>
           )}
-
-          {patient.condition && (
-            <div className="pcard__condition">
-              <AlertTriangle size={14} /> {patient.condition}
-            </div>
-          )}
-
-          <div className="pcard__meta">
-            {patient.meta.map((m, i) => (
-              <div className="pcard__meta-item" key={i}>
-                <m.icon size={14} className="pcard__meta-icon" />
-                <div className="pcard__meta-text">
-                  <span className="pcard__meta-label">{m.label}</span>
-                  <span className="pcard__meta-value">{m.value}</span>
-                </div>
+          
+          <div className="pcard__phone-box">
+            <div className="pcard__phone-left">
+              <span className="pcard__phone-icon"> <Phone size={14} /> </span>
+              <div className="pcard__phone-text">
+                <span className="pcard__phone-label">Phone No.</span>
+                <span className="pcard__phone-value">{patient.phone}</span>
               </div>
-            ))}
+            </div>
+            <span className="pcard__phone-divider" />
+            <div className="pcard__call-communication">
+              <button className="pcard__call-btn" aria-label={`Call ${patient.name}`}>
+                <Phone size={16} />
+              </button>
+              <button className="pcard__call-btn" aria-label={`Call ${patient.name}`}>
+                <MessageCircle size={16} />
+              </button>
+            </div>
           </div>
 
-          <button type="button" className="pcard__footer">
-            View Patient Record
-            <ArrowRight size={16} />
-          </button>
+          <div className="pcard__footer-box">
+            <div className="pcard__footer-left">
+              <patient.calender.icon size={16} className="pcard__footer-icon" />
+              <div className="pcard__footer-text">
+                <span className="pcard__footer-label">{patient.calender.label}</span>
+                <div className='pcard__footer-day'>
+                  <span className="pcard__footer-date">{patient.calender.date}</span>
+                </div>
+              </div>
+            </div>
+            <span className="pcard__footer-divider" />
+            <button type="button" className="pcard__footer-btn">
+              <Eye size={14} /> View
+            </button>
+          </div>
         </article>
       ))}
     </div>
