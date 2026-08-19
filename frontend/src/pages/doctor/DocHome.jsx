@@ -1,6 +1,7 @@
 import React, { useEffect , useMemo , useRef , useState , Suspense, lazy} from "react";
 import "../../styles/Doctor/doctor-home.css";
 import doc from "../../assets/home/doc3.png";
+import Hospital_Brand from "../../components/common/Hospital_Brand";
 import { createPortal } from "react-dom";
 import {
   Cross, LayoutDashboard, Users, FileText, Stethoscope, Pill, FlaskConical,
@@ -14,23 +15,22 @@ import {
 
 /* Lazy-load each section — only the active one gets fetched/rendered.
    This recovers the code-splitting benefit you'd normally get from routing. */
-const Dashboard    = lazy(() => import("../doctor/DocDashboard"));
+const Dashboard        = lazy(() => import("../doctor/DocDashboard"));
 const Schedule         = lazy(() => import("../doctor/DocSchedule"));
-const Patient   = lazy(() => import("../../components/common/PatientRecords"));
-const Doctor_Workspace        = lazy(() => import("../doctor/DocWorkspace"));
+const Patient          = lazy(() => import("../../components/common/PatientRecords"));
+const Doctor_Workspace = lazy(() => import("../doctor/DocWorkspace"));
 const DocHub           = lazy(() => import("../../components/common/DoctorsHub"));
-const MDT_Meetings              = lazy(() => import("../../components/common/MDT_Meetings"));
-const Hospital_Faculty              = lazy(() => import("../../components/common/Hospital_Faculty"));
+const MDT_Meetings     = lazy(() => import("../../components/common/MDT_Meetings"));
+const Hospital_Faculty = lazy(() => import("../../components/common/Hospital_Faculty"));
 const MedicalLibrary   = lazy(() => import("../../components/common/Medical_Library"));
 
 
 
 const Performance      = lazy(() => import("../doctor/DocPerformance"));
-const Profile          = lazy(() => import("../doctor/DocProfile"));
+const Profile          = lazy(() => import("../../components/personal/My_Profile"));
 const SettingsSection  = lazy(() => import("../../components/common/SettingsSection"));
 
-/* key = tab id, value = component to render. Single source of truth —
-   adding a new sidebar item later means adding ONE line here. */
+/* key = tab id, value = component to render. Single source of truth — adding a new sidebar item later means adding ONE line here. */
 const SECTION_MAP = {
   dashboard: Dashboard,
   schedule: Schedule,
@@ -179,11 +179,11 @@ function DocHome() {
   const [notifOpen, setNotifOpen] = useState(false);
   const notifRef = useRef(null);
 
-const [helpOpen, setHelpOpen] = useState(false);
-const [helpSubject, setHelpSubject] = useState("");
-const [helpMessage, setHelpMessage] = useState("");
-const [helpPriority, setHelpPriority] = useState("Medium");
-const [ticketId, setTicketId] = useState(null);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [helpSubject, setHelpSubject] = useState("");
+  const [helpMessage, setHelpMessage] = useState("");
+  const [helpPriority, setHelpPriority] = useState("Medium");
+  const [ticketId, setTicketId] = useState(null);
 
   // calender and clock items
   const dayName = now.toLocaleDateString([], { weekday: "long" });
@@ -222,9 +222,11 @@ const [ticketId, setTicketId] = useState(null);
   }, []);
 
   return (
-    <div className="doctors-home">
+    <div className="doctors-home" data-entity="doctor">
       {/* topbar */}
-      <div className="doc_logo">
+      <Hospital_Brand/>
+
+      {/* <div className="doc_logo">
         <div className="doc_topbar_brand">
           <span className="doc_topbar_brand-icon">
             <Cross size={20} strokeWidth={2.5} />
@@ -234,7 +236,7 @@ const [ticketId, setTicketId] = useState(null);
             <span className="doc_topbar_brand-tagline">HOSPITAL</span>
           </div>
         </div>
-      </div>
+      </div> */}
 
         {/* <button className="doc_topbar__menu-btn" aria-label="Toggle sidebar">
           <Menu size={20} />
@@ -306,10 +308,6 @@ const [ticketId, setTicketId] = useState(null);
                   <Settings size={17} /> Settings
                 </button>
 
-                {/* <button onClick={(e) => { e.stopPropagation(); setActiveTab("profile"); setProfileOpen(false); }}>
-                  <UserRound size={17} /> Attendance
-                </button> */}
-
                 <button onClick={(e) => { e.stopPropagation(); setProfileOpen(false); }}>
                   <LockKeyhole size={17} /> Privacy
                 </button>
@@ -322,8 +320,6 @@ const [ticketId, setTicketId] = useState(null);
                 <button onClick={(e) => { e.stopPropagation(); setProfileOpen(false); }}>
                   <FileSignature size={17} /> Credentials
                 </button>
-
-                
 
                 <button onClick={(e) => { e.stopPropagation(); setActiveTab("settings"); setProfileOpen(false); }}>
                   <Languages size={17} /> Language

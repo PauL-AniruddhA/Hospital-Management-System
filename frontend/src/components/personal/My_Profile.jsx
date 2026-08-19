@@ -1,7 +1,7 @@
 import React from 'react'
 import { FileText } from "lucide-react";
 
-export default function DocProfile()  {
+export default function My_Profile()  {
   return (
     <div className="coming-soon">
       <FileText size={40} strokeWidth={1.5} />

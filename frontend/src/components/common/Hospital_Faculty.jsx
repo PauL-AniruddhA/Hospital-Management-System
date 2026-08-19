@@ -10,3 +10,4 @@ export default function Hospital_Faculty   () {
     </div>
   );
 }
+

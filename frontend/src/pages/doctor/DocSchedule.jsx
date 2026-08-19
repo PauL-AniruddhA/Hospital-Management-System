@@ -18,9 +18,6 @@ const DAY_END_HOUR = 20.5;
 const TOTAL_ROWS = ((DAY_END_HOUR - DAY_START_HOUR) * 60) / ROW_MIN;
 const DAY_LABELS = [ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" ];
 
-/* =========================================================
-   EVENT TYPES
-========================================================= */
 
 const TYPE_STYLE = {
   appointment: { icon: UserRound, color: "blue" },
@@ -39,10 +36,6 @@ const TYPE_STYLE = {
 
   break: { icon: Coffee, color: "yellow" },
 };
-
-/* =========================================================
-   DATE HELPERS
-========================================================= */
 
 function getMonday(date) {
   const d = new Date(date);

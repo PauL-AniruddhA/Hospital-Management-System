@@ -14,7 +14,7 @@
    /* overflow: hidden; */
 }
 
-.doc_logo {
+/* .doc_logo {
   grid-area: doc-logo;
   min-width: 0;
   min-height: 0;
@@ -22,13 +22,12 @@
   position: sticky;
   top: 0;
   z-index: 21;
-}
+} */
 
-.doc_topbar {
+/* .doc_topbar {
   grid-area: topbar;
-   min-width: 0;
+  min-width: 0;
   min-height: 0;
-
   height: 82px;
   display: grid;
   grid-template-columns: auto 1fr;
@@ -39,9 +38,9 @@
   position: sticky;
   top: 0;
   z-index: 20;
-}
+} */
 
-.doc_topbar_brand {
+/* .doc_topbar_brand {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -87,9 +86,9 @@
   font-size: 13px;
   color: #1e3a8a;
   white-space: nowrap;
-}
+} */
 
-.doc_topbar__menu-btn {
+/* .doc_topbar__menu-btn {
   background: transparent;
   border: none;
   color: #4b5563;
@@ -104,7 +103,7 @@
 
 .doc_topbar__menu-btn:hover {
   background: #f2f4f8;
-}
+} */
 
 .topbar__search {
   grid-area: topbar-search;
