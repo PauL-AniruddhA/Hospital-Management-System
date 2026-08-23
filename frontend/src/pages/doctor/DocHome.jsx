@@ -2,6 +2,13 @@ import React, { useEffect , useMemo , useRef , useState , Suspense, lazy} from "
 import "../../styles/Doctor/doctor-home.css";
 import doc from "../../assets/home/doc3.png";
 import Hospital_Brand from "../../components/common/Hospital_Brand";
+import Search_Bar from "../../components/ui/Search";
+import ProfileMenu from "../../components/ui/ProfileMenu";
+import ClockCalendarCard from "../../components/ui/ClockCalendarCard";
+// import Sidebar from "../../components/ui/Sidebar";
+
+
+
 import { createPortal } from "react-dom";
 import {
   Cross, LayoutDashboard, Users, FileText, Stethoscope, Pill, FlaskConical,
@@ -24,8 +31,6 @@ const MDT_Meetings     = lazy(() => import("../../components/common/MDT_Meetings
 const Hospital_Faculty = lazy(() => import("../../components/common/Hospital_Faculty"));
 const MedicalLibrary   = lazy(() => import("../../components/common/Medical_Library"));
 
-
-
 const Performance      = lazy(() => import("../doctor/DocPerformance"));
 const Profile          = lazy(() => import("../../components/personal/My_Profile"));
 const SettingsSection  = lazy(() => import("../../components/common/SettingsSection"));
@@ -47,18 +52,10 @@ const SECTION_MAP = {
 };
 
 /* ---------------- static nav / reference data ---------------- */
-
-// const NAV_ITEMS = [
-//   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-//   { id: "patient-records", label: "Patient Records", icon: FileText },
-//   { id: "consultation", label: "Consultation", icon: Stethoscope },
-//   { id: "schedule", label: "Schedule", icon: CalendarDays },
-//   { id: "performance", label: "Performance", icon: BarChart3 },
-//   { id: "profile", label: "Profile", icon: UserRound },
-//   { id: "settings", label: "Settings", icon: SettingsIcon },
-// ];
-
 const NAV_SECTIONS = [
+
+
+
   {
     title: "MAIN",
     theme: "blue",
@@ -110,9 +107,6 @@ const NAV_SECTIONS = [
     ],
   }
 ];
-
-const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
 const ASIDE_QUICK_ACTIONS = [
   { icon: FileText, label: "New Patient", cls: "aside-qa-item--blue" },
   { icon: NotebookPen, label: "Write Note", cls: "aside-qa-item--orange" },
@@ -122,60 +116,70 @@ const ASIDE_QUICK_ACTIONS = [
   { icon: Users, label: "Referral ", cls: "aside-qa-item--teal" },
   { icon: CheckSquare, label: "Create Task", cls: "aside-qa-item--red" },
 ];
-
 const NOTIFICATIONS = [
   { icon: CalendarDays, title: "Appointment cancelled", subtitle: "John Smith cancelled his 2:00 PM slot", time: "25 mins ago" },
   { icon: FileText, title: "New record shared", subtitle: "Referral note added for Priya Mehta", time: "40 mins ago" },
   { icon: CheckCircle2, title: "Lab sync complete", subtitle: "3 reports imported from the lab system", time: "1 hr ago" },
 ];
 
+// const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+// const NAV_ITEMS = [
+//   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+//   { id: "patient-records", label: "Patient Records", icon: FileText },
+//   { id: "consultation", label: "Consultation", icon: Stethoscope },
+//   { id: "schedule", label: "Schedule", icon: CalendarDays },
+//   { id: "performance", label: "Performance", icon: BarChart3 },
+//   { id: "profile", label: "Profile", icon: UserRound },
+//   { id: "settings", label: "Settings", icon: SettingsIcon },
+// ];
 
 
-function getMonthGrid(date) {
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+// function getMonthGrid(date) {
+//   const year = date.getFullYear();
+//   const month = date.getMonth();
+//   const firstDay = new Date(year, month, 1).getDay();
+//   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-  const cells = [
-    ...Array(firstDay).fill(null),
-    ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
-  ];
-  while (cells.length % 7 !== 0) cells.push(null);
-  return cells;
-}
-function getMonthGridFull(date) {
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const daysInPrevMonth = new Date(year, month, 0).getDate();
+//   const cells = [
+//     ...Array(firstDay).fill(null),
+//     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
+//   ];
+//   while (cells.length % 7 !== 0) cells.push(null);
+//   return cells;
+// }
+// function getMonthGridFull(date) {
+//   const year = date.getFullYear();
+//   const month = date.getMonth();
+//   const firstDay = new Date(year, month, 1).getDay();
+//   const daysInMonth = new Date(year, month + 1, 0).getDate();
+//   const daysInPrevMonth = new Date(year, month, 0).getDate();
 
-  const cells = [];
-  for (let i = firstDay - 1; i >= 0; i--) {
-    cells.push({ day: daysInPrevMonth - i, muted: true });
-  }
-  for (let d = 1; d <= daysInMonth; d++) {
-    cells.push({ day: d, muted: false });
-  }
-  let nextDay = 1;
-  while (cells.length < 42) {
-    cells.push({ day: nextDay++, muted: true });
-  }
-  return cells;
-}
-function getWeekNumber(d) {
-  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  const dayNum = date.getUTCDay() || 7;
-  date.setUTCDate(date.getUTCDate() + 4 - dayNum);
-  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
-  return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
-}
+//   const cells = [];
+//   for (let i = firstDay - 1; i >= 0; i--) {
+//     cells.push({ day: daysInPrevMonth - i, muted: true });
+//   }
+//   for (let d = 1; d <= daysInMonth; d++) {
+//     cells.push({ day: d, muted: false });
+//   }
+//   let nextDay = 1;
+//   while (cells.length < 42) {
+//     cells.push({ day: nextDay++, muted: true });
+//   }
+//   return cells;
+// }
+// function getWeekNumber(d) {
+//   const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+//   const dayNum = date.getUTCDay() || 7;
+//   date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+//   const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+//   return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+// }
+
 /* ---------------- component ---------------- */
 
 function DocHome() {
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [now, setNow] = useState(new Date());
+  // const [now, setNow] = useState(new Date());
   const [notifOpen, setNotifOpen] = useState(false);
   const notifRef = useRef(null);
 
@@ -186,22 +190,22 @@ function DocHome() {
   const [ticketId, setTicketId] = useState(null);
 
   // calender and clock items
-  const dayName = now.toLocaleDateString([], { weekday: "long" });
-  const fullDate = now.toLocaleDateString([], { day: "numeric", month: "long" });
-  const weekNum = getWeekNumber(now);
-  const hh = now.getHours() % 12 === 0 ? 12 : now.getHours() % 12;
-  const mm = String(now.getMinutes()).padStart(2, "0");
-  const ss = String(now.getSeconds()).padStart(2, "0");
-  const ampm = now.getHours() >= 12 ? "PM" : "AM";
-  const monthLabel = now.toLocaleDateString([], { month: "long", year: "numeric" });
-  const todayDate = now.getDate();
-  const calendarCellsFull = useMemo(() => getMonthGridFull(now), [now.getMonth(), now.getFullYear(), now.getDate()]);
-  // analog clock hand angles
-  const secAngle = now.getSeconds() * 6;
-  const minAngle = now.getMinutes() * 6 + now.getSeconds() * 0.1;
-  const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
+  // const dayName = now.toLocaleDateString([], { weekday: "long" });
+  // const fullDate = now.toLocaleDateString([], { day: "numeric", month: "long" });
+  // const weekNum = getWeekNumber(now);
+  // const hh = now.getHours() % 12 === 0 ? 12 : now.getHours() % 12;
+  // const mm = String(now.getMinutes()).padStart(2, "0");
+  // const ss = String(now.getSeconds()).padStart(2, "0");
+  // const ampm = now.getHours() >= 12 ? "PM" : "AM";
+  // const monthLabel = now.toLocaleDateString([], { month: "long", year: "numeric" });
+  // const todayDate = now.getDate();
+  // const calendarCellsFull = useMemo(() => getMonthGridFull(now), [now.getMonth(), now.getFullYear(), now.getDate()]);
+  // // analog clock hand angles
+  // const secAngle = now.getSeconds() * 6;
+  // const minAngle = now.getMinutes() * 6 + now.getSeconds() * 0.1;
+  // const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
 
-  const ActiveSection = SECTION_MAP[activeTab] ?? DashboardHome;
+  const ActiveSection = SECTION_MAP[activeTab] ?? Dashboard;
 
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
@@ -209,25 +213,27 @@ function DocHome() {
   useEffect(() => {
     function onClick(e) {
       if (notifRef.current && !notifRef.current.contains(e.target)) setNotifOpen(false);  // close the notification dropdown on outside click
-      if (profileRef.current && !profileRef.current.contains(e.target)) setProfileOpen(false); // close the profile dropdown on outside click
+      // if (profileRef.current && !profileRef.current.contains(e.target)) setProfileOpen(false); // close the profile dropdown on outside click
     }
     document.addEventListener("mousedown", onClick); 
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
   // single ticking clock for the permanent right-rail widget
-  useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(id);
-  }, []);
+  // useEffect(() => {
+  //   const id = setInterval(() => setNow(new Date()), 1000);
+  //   return () => clearInterval(id);
+  // }, []);
 
   return (
     <div className="doctors-home" data-entity="doctor">
       {/* topbar */}
-      <Hospital_Brand/>
 
-      {/* <div className="doc_logo">
-        <div className="doc_topbar_brand">
+      <div className="doc_logo">
+         <Hospital_Brand/>
+      </div>
+
+        {/* <div className="doc_topbar_brand">
           <span className="doc_topbar_brand-icon">
             <Cross size={20} strokeWidth={2.5} />
           </span>
@@ -235,7 +241,6 @@ function DocHome() {
             <span className="doc_topbar_brand-name">AMS </span>
             <span className="doc_topbar_brand-tagline">HOSPITAL</span>
           </div>
-        </div>
       </div> */}
 
         {/* <button className="doc_topbar__menu-btn" aria-label="Toggle sidebar">
@@ -243,11 +248,13 @@ function DocHome() {
         </button> */}
 
       <div className="topbar__search">
-        <div className="topbar__search-bar">
+        <Search_Bar  placeholder="Search patients by name, ID or phone..."/>
+        {/* <div className="topbar__search-bar">
           <Search size={16} className="topbar__search-icon" />
           <input type="text" placeholder="Search patients by name, ID or phone..." />
           <kbd className="topbar__search-kbd">Ctrl + K</kbd>
-        </div>  
+        </div>   */}
+
         <div className="topbar__search-activity" >
           <button className="topbar__icon-btn" aria-label="Dark Mode">
             <Moon size={18} />
@@ -287,15 +294,16 @@ function DocHome() {
       </div>
 
       <div className="topbar__actions">
+        <ProfileMenu  variant="doctor" avatar={doc} name="Dr. Rajesh Sharma" role="Cardiologist" onNavigate={setActiveTab} />
 
-        <div className="topbar__profile" ref={profileRef} onClick={() => setProfileOpen((o) => !o)}>
+        {/* <div className="topbar__profile" ref={profileRef} onClick={() => setProfileOpen((o) => !o)}>
           <img className="topbar__avatar" src={doc} alt="Dr. Rajesh Sharma" />
           <div className="topbar__profile-text">
             <span className="topbar__profile-name">Dr. Rajesh Sharma</span>
             <span className="topbar__profile-role">Cardiologist</span>
-            {/* <span className="topbar__profile-role">Id : DOC-2023</span> */}
+            <span className="topbar__profile-role">Id : DOC-2023</span>
           </div>
-          {/* <ChevronDown size={16} className={`topbar__profile-chevron${profileOpen ? " topbar__profile-chevron--open" : ""}`} /> */}
+          <ChevronDown size={16} className={`topbar__profile-chevron${profileOpen ? " topbar__profile-chevron--open" : ""}`} />
 
           {profileOpen && (
             <>
@@ -331,15 +339,17 @@ function DocHome() {
               </div>
             </>
           )}
-        </div>
+        </div> */}
+        
       </div>
+
 
         {/* <header className="doc_topbar">
        </header> */}
 
       {/* left: doctor-specific nav + quick actions */}
-      <section className="doc_sidebar">
-        <aside className="sidebar">
+      <aside className="doc_sidebar">
+        <section className="sidebar">
           <div className="sidebar__nav-items">
             <nav className="doctor-sidebar">
               {NAV_SECTIONS.map((section, index) => (
@@ -498,14 +508,16 @@ function DocHome() {
             </div>
           </div>
 
-        </aside>
-      </section>
+        </section>
+      </aside>
 
       {/* middle: doctor-specific working content */}
       <section className="doc_main">
-        <Suspense fallback={<div className="section-loading">Loading…</div>}>
-          <ActiveSection />
-        </Suspense>
+        <div className="doc_workspace">
+          <Suspense fallback={<div className="section-loading">Loading…</div>}>
+            <ActiveSection />
+          </Suspense>
+        </div>
       </section>
 
       {/* right: permanent clock + calendar  */}
@@ -527,8 +539,10 @@ function DocHome() {
               ))}
             </div>
           </div>
+          
+          <ClockCalendarCard/>
 
-          <div className="panel--calendar-v2">
+          {/* <div className="panel--calendar-v2">
             <div className="cal-card__clock-block">
               <div className="cal-card__info">
                 <div className="cal-card__digital-v2">
@@ -581,12 +595,14 @@ function DocHome() {
                 </span>
               ))}
             </div>
-          </div>
+          </div> */}
+
+          
           
         </aside>
       </section>
     </div>
   );
 }
-
+ 
 export default DocHome;

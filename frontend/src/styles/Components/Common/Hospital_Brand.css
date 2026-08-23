@@ -1,0 +1,49 @@
+@import "../../Custom/Doctor_Customs.css";
+@import "../../Custom/Admin_Customs.css";
+
+.hospital-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 0.6vw, 10px);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  background: var(--logo-background);
+  padding:clamp(14px, 1.2vw, 20px) clamp(16px, 1.5vw, 24px);
+  border-radius: 0 0 clamp(16px, 1.4vw, 22px) clamp(16px, 1.4vw, 22px);
+  overflow: hidden;
+}
+.hospital-logo__icon {
+  width: clamp(32px, 2.5vw, 40px);
+  height: clamp(32px, 2.5vw, 40px);
+  border-radius: clamp(8px, 0.7vw, 10px);
+  background: var(--logo-icon-background);
+  color: var(--logo-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.hospital-logo__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  min-width: 0;
+  flex-shrink: 1;
+}
+.hospital-logo__name {
+  font-size: clamp(18px, 1.45vw, 23px);
+  font-weight: 600;
+  color: var(--logo-text);
+  white-space: nowrap;
+  letter-spacing: clamp(0.6px, 0.08vw, 1.2px);
+  line-height: 1.1;
+}
+.hospital-logo__tagline {
+  font-size: clamp(10px, 0.85vw, 13px);
+  color: var(--logo-text);
+  white-space: nowrap;
+  line-height: 1.2;
+}

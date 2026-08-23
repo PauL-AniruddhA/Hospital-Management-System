@@ -2,27 +2,28 @@
 .doctors-home {
   display: grid;
   grid-template-columns: 205px 1fr 300px;
-  /* grid-template-columns: clamp(190px 14vw 220px) 1fr clamp(260px 20vw 310px); */
   grid-template-rows: 82px minmax(0,1fr);
   grid-template-areas:
     "doc-logo topbar-search doc-profile"
     "sidebar main aside";
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
   background:  #daf4e4;
   font-family: "Inter", "Segoe UI", sans-serif;
-   /* overflow: hidden; */
 }
 
-/* .doc_logo {
+.doc_logo {
   grid-area: doc-logo;
   min-width: 0;
   min-height: 0;
-  height: 82px;
+  /* height: 82px; */
   position: sticky;
   top: 0;
-  z-index: 21;
-} */
+  /* z-index: 21; */
+}
 
 /* .doc_topbar {
   grid-area: topbar;
@@ -118,7 +119,7 @@
   background: #daf4e4;   /* match page bg so it doesn't look see-through when pinned */
 }
 
-.topbar__search-bar {
+/* .topbar__search-bar {
   flex: 1;
   max-width: 450px;
   display: flex;
@@ -128,7 +129,7 @@
   border: 1px solid #c8e0d2;
   border-radius: 10px;
   padding: 10px 14px;
-  margin: 0;              /* was the 15px 33% that pushed it off */
+  margin: 0;              
 }
 
 .topbar__search-icon {
@@ -159,27 +160,13 @@
   padding: 0.1rem 0.4rem;
   font-family: inherit;
   flex-shrink: 0;
-}
+} */
 
 .topbar__search-activity {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
-}
-.topbar__actions {
-  grid-area: doc-profile;
-  min-width: 0;
-  min-height: 0;
-  height: 82px;
-  position: sticky;
-  top: 0;
-  z-index: 23;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  flex-shrink: 0;
-  justify-content: space-evenly;
 }
 
 .topbar__icon-btn {
@@ -229,7 +216,7 @@
   top: 44px;
   right: 0;
   width: 300px;
-  background: #f5faf6;   /* was #ffffff */
+  background: #f5faf6;  
   border: 1px solid #e0ede4;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(20, 24, 33, 0.12);
@@ -293,14 +280,27 @@ background: #eaf3ee;
   flex-shrink: 0;
 }
 
-.topbar__profile {
+.topbar__actions {
+  grid-area: doc-profile;
+  min-width: 0;
+  min-height: 0;
+  height: 82px;
+  position: sticky;
+  top: 0;
+  z-index: 23;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-shrink: 0;
+  justify-content: space-evenly;
+}
+
+/* .topbar__profile {
   position: relative;
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  /* margin: 3px 64px 0px 0px; */
   padding: 7px 20px 7px 12px;
-  /* border-left: 1px solid #9aa1ac; */
   cursor: pointer;
   flex-shrink: 0;
   background-color: #fff;
@@ -308,10 +308,10 @@ background: #eaf3ee;
   transition:.25s;
   box-shadow: 0 8px 22px rgba(0,0,0,.05);
 }
-/* .topbar__profile :hover {
+.topbar__profile :hover {
   transform:translateY(-2px);
   box-shadow:0 15px 35px rgba(0,0,0,.09);
-} */
+}
 
 .topbar__avatar {
   width: 36px;
@@ -339,17 +339,15 @@ background: #eaf3ee;
   font-size: 12px;
   color: #0b87ec;
   letter-spacing: 0.3px;
-}
+} */
 
-
-
-.doctor-dropdown {
+/* .doctor-dropdown {
   position: absolute;
   right: -55px;
   width: 315px;
   top: 68px;
-  /* background: #4e3e7a; */
-  background: #2563eb;
+  background: #4e3e7a;
+  background: #2563eb; -- original
   border-radius: 22px;
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
@@ -380,6 +378,7 @@ background: #eaf3ee;
   color: #1e2a3f;
   transition: transform 0.15s ease, filter 0.15s ease;
   box-sizing: border-box;
+  background: #dbe4fb;
 }
 
 .doctor-dropdown button:hover {
@@ -394,10 +393,14 @@ background: #eaf3ee;
   border-radius: 10px;
   flex-shrink: 0;
   box-sizing: border-box;
-}
+   border: 1px solid rgba(37, 33, 46, 0.06);
+  border-radius: 12px;
+  background: #ffffff; 
+  color: #45199c;
+} */
 
 /* per-button colors, in JSX order: My Profile, Availability, Settings, Logout */
-.doctor-dropdown button:nth-child(1) { background: #dbe4fb; }
+/* .doctor-dropdown button:nth-child(1) { background: #dbe4fb; }
 .doctor-dropdown button:nth-child(1) svg { background: #ffffff; color: #45199c; }
 
 .doctor-dropdown button:nth-child(2) { background: #dbe4fb; }
@@ -413,13 +416,9 @@ background: #eaf3ee;
 .doctor-dropdown button:nth-child(5) svg { background: #ffffff; color: #45199c; }
 
 .doctor-dropdown button:nth-child(6) { background: #dbe4fb; }
-.doctor-dropdown button:nth-child(6) svg { background: #ffffff; color: #45199c; }
+.doctor-dropdown button:nth-child(6) svg { background: #ffffff; color: #45199c; } */
 
-.doctor-dropdown button svg {
-  border: 1px solid rgba(37, 33, 46, 0.06);
-  border-radius: 12px;
-  
-}
+/* 
 .doctor-dropdown .logout {
   grid-column: 1 / -1;
   margin-top: 6px;
@@ -435,30 +434,7 @@ background: #eaf3ee;
 .doctor-dropdown .logout svg {
   background: #ffffff;
   color: #d64a63;
-}
-
-/* topbar clock — replaces the removed aside clock panel */
-.topbar__clock {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  line-height: 1.2;
-  padding: 0 12px;
-  border-left: 1px solid #eef0f4;
-  flex-shrink: 0;
-}
-
-.topbar__clock-time {
-  font-size: 14px;
-  font-weight: 700;
-  color: #1f2937;
-  font-variant-numeric: tabular-nums;
-}
-
-.topbar__clock-date {
-  font-size: 12px;
-  color: #9aa1ac;
-}
+} */
 
 /* ================= LEFT SIDEBAR ================= */
 .doc_sidebar {
@@ -995,15 +971,36 @@ background: #eaf3ee;
 
 /* ================= MIDDLE: MAIN ================= */
 .doc_main {
-  grid-area: main;
-  padding: 13px 20px 18px 20px;
-  overflow-y: auto;
+    grid-area: main;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding: 8px 20px 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.doc_workspace {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* background: #2b1616; */
+    /* border-radius: 20px; */
+}
+.doc_workspace > * {
+  width: 100%;
+  height: 100%;
   min-width: 0;
   min-height: 0;
-  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width:none;
+  
 }
-
-
 
 /* ================= RIGHT: PERMANENT ASIDE RAIL ================= */
 .doc_aside {
@@ -1015,14 +1012,13 @@ background: #eaf3ee;
 
 .aside-rail {
   width: 100%;
-  height: calc(100vh - 6rem);
   position: sticky;
-  top: 6rem;
-  padding: 0px 10px 0px 0;
+  top: 5.6rem;
+  padding: 0px 8px 0px 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
 }
 
 .panel--quick-actions {
@@ -1088,7 +1084,7 @@ background: #eaf3ee;
 
 
 /* ---------- Calendar ---------- */
-.calendar-nav {
+/* .calendar-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1166,11 +1162,10 @@ background: #eaf3ee;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-}
+} */
 /* ---------- Calendar card v2 (day/date + digital+analog clock + month) ---------- */
 
-.panel--calendar-v2 {
-  /* background: #eef2f9; */
+/* .panel--calendar-v2 {
   background: #edf9f1;
   border: 1px solid #e2e8f4;
   box-shadow: none;
@@ -1179,7 +1174,6 @@ background: #eaf3ee;
   flex-direction: column;
   gap: 10px;
   border-radius: var(--radius-16, 16px);
-  /* box-shadow: 0 0px 24px rgba(54, 90, 173, 0.12); */
 }
 
 .cal-card__clock-block {
@@ -1269,7 +1263,7 @@ background: #eaf3ee;
   width: 100%;
   height: 1px;
   background: #dbe2f0;
-}
+} */
 
 
 /* ---------- Responsive ---------- */

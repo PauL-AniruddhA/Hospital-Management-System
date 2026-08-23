@@ -54,135 +54,131 @@ export default function DocDashboard() {
     QUEUE.find((p) => p.status === "checkedin") || QUEUE.find((p) => p.status === "waiting");
 
   return (
-    <>
-      <div className="dashboard">
-        {/* <section className="stat-row">
-          {STATS.map((s) => (
-            <div className="stat-card" key={s.label}>
-              <span className={`stat-icon ${s.iconClass}`}>
-                <s.icon size={20} strokeWidth={2} />
-              </span>
-              <span className="stat-card__label">{s.label}</span>
-              <span className="stat-card__value">{s.value}</span>
-              <a className="stat-card__action" href="#">
-                {s.action} <ChevronRight size={13} />
-              </a>
-            </div>
-          ))}
-        </section> */}
-
-        {/* {nextPatient && (
-          <section className="next-patient">
-            <div className="next-patient__info">
-              <span className="next-patient__label">Next patient</span>
-              <span className="next-patient__name">
-                {nextPatient.name} · {nextPatient.reason} · {nextPatient.meta}
-              </span>
-            </div>
-            <button className="next-patient__cta">
-              <PlayCircle size={16} /> Start consultation
-            </button>
-          </section>
-        )} */}
-
-        <section className="dashboard__grid">
-          <div className="panel panel--queue">
-            <div className="panel__header">
-              <h2><Users size={16} className="panel__header-icon" /> Patient Queue</h2>
-              <a href="#">View All</a>
-            </div>
-            <div className="queue-list">
-              {QUEUE.slice(0, 3).map((p) => (
-                <div className="queue-row" key={p.pid}>
-                  <span className="queue-row__id">{p.id}</span>
-                  <img className="queue-row__avatar" src={p.patientImage} alt={p.name} />
-                  <div className="queue-row__info">
-                    <span className="queue-row__name">{p.name}</span>
-                    <span className="queue-row__pid">{p.pid}</span>
-                  </div>
-                  <div className="queue-row__time">
-                    <span>{p.time}</span>
-                    <span className="queue-row__meta">{p.meta}</span>
-                  </div>
-                  <div className="queue-row__reason">
-                    <span>{p.reason}</span>
-                    <span className="queue-row__dept">{p.dept}</span>
-                  </div>
-                  <span className={`badge badge--${p.status}`}>{STATUS_LABEL[p.status]}</span>
-                  <button className="queue-row__menu" aria-label="More options">
-                    <MoreVertical size={16} />
-                  </button>
-                </div>
-              ))}
-            </div>
+    <div className="dashboard">
+      {/* <section className="stat-row">
+        {STATS.map((s) => (
+          <div className="stat-card" key={s.label}>
+            <span className={`stat-icon ${s.iconClass}`}>
+              <s.icon size={20} strokeWidth={2} />
+            </span>
+            <span className="stat-card__label">{s.label}</span>
+            <span className="stat-card__value">{s.value}</span>
+            <a className="stat-card__action" href="#">
+              {s.action} <ChevronRight size={13} />
+            </a>
           </div>
+        ))}
+      </section> 
 
-          <div className="panel panel--schedule">
-            <div className="panel__header">
-              <h2>
-                <CalendarDays size={16} className="panel__header-icon" /> Today's Schedule
-              </h2>
-              <a href="#">View Calendar</a>
-            </div>
-            <div className="timeline">
-              {SCHEDULE.slice(0, 3).map((item, i) => (
-                <div className="timeline-row" key={i}>
-                  <span className="timeline-row__time">{item.time}</span>
-                  <span className={`timeline-row__dot timeline-row__dot--${item.status}`} />
-                  <div className="timeline-row__info">
-                    <span className="timeline-row__title">{item.title}</span>
-                    <span className="timeline-row__patient">Patient: {item.patient}</span>
-                  </div>
-                  <span className={`badge badge--${item.status}`}>
-                    {SCHEDULE_STATUS_LABEL[item.status]}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <button className="panel__full-btn">View Full Schedule</button>
+       {nextPatient && (
+        <section className="next-patient">
+          <div className="next-patient__info">
+            <span className="next-patient__label">Next patient</span>
+            <span className="next-patient__name">
+              {nextPatient.name} · {nextPatient.reason} · {nextPatient.meta}
+            </span>
           </div>
-
-          <div className="panel panel--actioncenter">
-            <div className="panel__header">
-              <h2><ClipboardList size={16} className="panel__header-icon" /> Action Center</h2>
-              <a href="#">View All</a>
-            </div>
-            <div className="action-list">
-              {ACTION_ITEMS.map((a) => (
-                <div className={`action-item action-item--${a.tier}`} key={a.id}>
-                  <span className="action-item__icon"><a.icon size={16} /></span>
-                  <div className="action-item__info">
-                    <span className="action-item__title">{a.title}</span>
-                    <span className="action-item__subtitle">{a.subtitle}</span>
-                  </div>
-                  <button className="action-item__cta">{a.cta}</button>
-                </div>
-              ))}
-            </div>
-          </div>
+          <button className="next-patient__cta">
+            <PlayCircle size={16} /> Start consultation
+          </button>
         </section>
+      )} */}
 
-        <section className="perf-strip">
-          <div className="perf-strip__header">
-            <span>This Month</span>
-            <a href="/performance">Full report <ChevronRight size={13} /></a>
+      {/* <section className="dashboard__grid">
+        <div className="panel panel--queue">
+          <div className="panel__header">
+            <h2><Users size={16} className="panel__header-icon" /> Patient Queue</h2>
+            <a href="#">View All</a>
           </div>
-          <div className="perf-strip__row">
-            {PERFORMANCE.map((p) => (
-              <div className="perf-strip__item" key={p.label}>
-                <span className={`perf-icon ${p.iconClass}`}>
-                  <p.icon size={16} strokeWidth={2} />
-                </span>
-                <span className="perf-strip__value">{p.value}</span>
-                <span className="perf-strip__label">{p.label}</span>
+          <div className="queue-list">
+            {QUEUE.slice(0, 3).map((p) => (
+              <div className="queue-row" key={p.pid}>
+                <span className="queue-row__id">{p.id}</span>
+                <img className="queue-row__avatar" src={p.patientImage} alt={p.name} />
+                <div className="queue-row__info">
+                  <span className="queue-row__name">{p.name}</span>
+                  <span className="queue-row__pid">{p.pid}</span>
+                </div>
+                <div className="queue-row__time">
+                  <span>{p.time}</span>
+                  <span className="queue-row__meta">{p.meta}</span>
+                </div>
+                <div className="queue-row__reason">
+                  <span>{p.reason}</span>
+                  <span className="queue-row__dept">{p.dept}</span>
+                </div>
+                <span className={`badge badge--${p.status}`}>{STATUS_LABEL[p.status]}</span>
+                <button className="queue-row__menu" aria-label="More options">
+                  <MoreVertical size={16} />
+                </button>
               </div>
             ))}
           </div>
-        </section>
-      </div>
-  
-    </>      
+        </div>
 
+        <div className="panel panel--schedule">
+          <div className="panel__header">
+            <h2>
+              <CalendarDays size={16} className="panel__header-icon" /> Today's Schedule
+            </h2>
+            <a href="#">View Calendar</a>
+          </div>
+          <div className="timeline">
+            {SCHEDULE.slice(0, 3).map((item, i) => (
+              <div className="timeline-row" key={i}>
+                <span className="timeline-row__time">{item.time}</span>
+                <span className={`timeline-row__dot timeline-row__dot--${item.status}`} />
+                <div className="timeline-row__info">
+                  <span className="timeline-row__title">{item.title}</span>
+                  <span className="timeline-row__patient">Patient: {item.patient}</span>
+                </div>
+                <span className={`badge badge--${item.status}`}>
+                  {SCHEDULE_STATUS_LABEL[item.status]}
+                </span>
+              </div>
+            ))}
+          </div>
+          <button className="panel__full-btn">View Full Schedule</button>
+        </div>
+
+        <div className="panel panel--actioncenter">
+          <div className="panel__header">
+            <h2><ClipboardList size={16} className="panel__header-icon" /> Action Center</h2>
+            <a href="#">View All</a>
+          </div>
+          <div className="action-list">
+            {ACTION_ITEMS.map((a) => (
+              <div className={`action-item action-item--${a.tier}`} key={a.id}>
+                <span className="action-item__icon"><a.icon size={16} /></span>
+                <div className="action-item__info">
+                  <span className="action-item__title">{a.title}</span>
+                  <span className="action-item__subtitle">{a.subtitle}</span>
+                </div>
+                <button className="action-item__cta">{a.cta}</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="perf-strip">
+        <div className="perf-strip__header">
+          <span>This Month</span>
+          <a href="/performance">Full report <ChevronRight size={13} /></a>
+        </div>
+        <div className="perf-strip__row">
+          {PERFORMANCE.map((p) => (
+            <div className="perf-strip__item" key={p.label}>
+              <span className={`perf-icon ${p.iconClass}`}>
+                <p.icon size={16} strokeWidth={2} />
+              </span>
+              <span className="perf-strip__value">{p.value}</span>
+              <span className="perf-strip__label">{p.label}</span>
+            </div>
+          ))}
+        </div>
+      </section> */}
+    </div>   
   );
 }
 

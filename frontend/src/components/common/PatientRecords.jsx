@@ -1,5 +1,5 @@
 import React ,{useRef,useState,useEffect}from 'react'
-import "../../styles/Components/Common/Patient-Records.css";
+import "../../styles/Components/Common/Patient_Records.css";
 import {
   Heart, Activity, Thermometer, Droplet, Calendar, Stethoscope,
   ArrowRight, MoreVertical, Clock, CheckCircle2, FlaskConical,
@@ -137,22 +137,45 @@ const PATIENTS = [
 export default function PatientRecords() {
 
   const gridRef = useRef(null);
-  const [scale, setScale] = useState(1);
-  const [cols, setCols] = useState(3);
+  const [gridSize, setGridSize] = useState({columns: 1,rows: 1});
 
   useEffect(() => {
     const el = gridRef.current;
+    if (!el) return;
+    const GAP = 10;
+    const MIN_CARD_WIDTH = 280;
+    const MIN_CARD_HEIGHT = 190; //minimum around 190–210px
+
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
-      const newCols = width > 1100 ? 4 : width > 800 ? 3 : 2;
-      setCols(newCols);
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
 
+      //  COLUMN CALCULATION
+      const columns = Math.max(1,Math.floor((width + GAP) /(MIN_CARD_WIDTH + GAP)));
+
+      //  ROW CALCULATION
+      const rows = Math.max(1,Math.floor((height + GAP) /(MIN_CARD_HEIGHT + GAP)));
+
+      //  ACTUAL ROW HEIGHT
+      const rowHeight =(height -GAP * (rows - 1)) / rows;
+      
+      setGridSize({columns,rows,rowHeight});
+
+    });
+
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+    };
+
+  }, []);
+  
   return (
-    <div   ref={gridRef} className="pcard-grid" >
+    <div ref={gridRef} className="pcard-grid"
+      style={{
+        "--pcard-columns": gridSize.columns,
+        "--pcard-row-height": `${gridSize.rowHeight}px`,
+    }}>
       {PATIENTS.map((patient) => (
         <article key={patient.Id} className={`pcard pcard--${patient.theme}`}>
           <div className="pcard__identity">

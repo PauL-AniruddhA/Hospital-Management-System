@@ -1,0 +1,9 @@
+[data-entity="doctor"] {
+    /* Logo */
+  --logo-background: rgb(237 249 241);
+  --logo-icon-background: #e8f0ff;
+  --logo-primary: #2563eb;
+  --logo-text: #1e3a8a;
+    
+
+}

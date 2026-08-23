@@ -1,6 +1,6 @@
 import React from "react";
 import { Cross } from "lucide-react";
-import "../../styles/Components/Common/Hospital-Brand.css";
+import "../../styles/Components/Common/Hospital_Brand.css";
 
 function Hospital_Brand({ entity = "default", name = "AMS", tagline = "HOSPITAL", icon: Icon = Cross }) {
   return (
