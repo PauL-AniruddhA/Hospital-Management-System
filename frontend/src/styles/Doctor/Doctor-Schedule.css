@@ -5,11 +5,14 @@
 .sched {
   width: 100%;
   height: 100%;
-  min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--s12);
+  gap: var(--s8);
   color: #172033;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 
@@ -96,144 +99,292 @@
    TOOLBAR
 ========================================================= */
 
+
 .sched__toolbar {
-  min-height: 38px;
+  width: 90%;
+  margin: 0 auto;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto ;
   align-items: center;
-  gap: 9px;
-}
 
+  padding: 8px 10px;
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border: 1px solid #e8edf3;
+  border-radius: 40px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+}
 
 /* ---------- view switch ---------- */
 
 .sched__view-switch {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-
-  padding: 3px;
-
-  background: #f5f7fb;
-  border: 1px solid #e9edf4;
-  border-radius: 9px;
+  padding: 4px;
+  background: #f8fafb;
+  border: 1px solid #e2e8ee;
+  border-radius: 20px;
+  gap: 2px;
 }
 
 .sched__view-switch button {
   height: 29px;
-  padding: 0 13px;
-
-  border: none;
-  border-radius: 7px;
-
+  /* height: 38px; */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 20px;
   background: transparent;
-
   color: #687386;
-
-  font-size: 11.5px;
-  font-weight: 650;
-
+  font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
-}
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
 
+  white-space: nowrap;
+}
+.sched__view-switch button:hover {
+  color: #244034;
+}
 .sched__view-switch button.is-active {
   color: #ffffff;
   background: #2563eb;
-
-  box-shadow:
-    0 2px 6px rgba(37, 99, 235, 0.18);
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.18);
 }
-
+.sched__view-switch button.is-active svg {
+  color: #ffffff;
+}
 
 /* ---------- date navigation ---------- */
 
 .sched__date-navigation {
-  margin-left: auto;
-
+  /* margin-left: auto; */
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-self: center;
+  gap: 9px;
 }
-
 .sched__nav-btn {
-  width: 31px;
-  height: 31px;
-
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border: 1px solid #e6eaf1;
-  border-radius: 8px;
-
+  flex: 0 0 auto;
+  border: 1px solid #dce5de;
+  border-radius: 50%;
   background: #ffffff;
-  color: #566276;
-
+  color: #176b4d;
   cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    transform 150ms ease;
 }
-
 .sched__nav-btn:hover {
   background: #f3f7ff;
   color: #2563eb;
 }
-
+.sched__nav-btn:active {
+  transform: scale(0.96);
+}
 .sched__date-btn {
-  min-width: 184px;
-  height: 31px;
-
-  padding: 0 11px;
-
+  font-size: 12px;
+  min-width: 190px;
+  height: 38px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-
-  border: 1px solid #e6eaf1;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 50px;
+  border: 1px solid #dcebdc;
   border-radius: 8px;
-
-  background: #ffffff;
-  color: #253149;
-
-  font-size: 11.5px;
-  font-weight: 650;
-
+  background: #f4f9f3;
+  font-weight: 500;
+  color: #183b2d;
   cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
 }
 
+.sched__date-btn:hover {
+  background: #edf7ef;
+  border-color: #c8dfca;
+}
 .sched__date-btn svg {
-  color: #64748b;
+  color: #648b71;
+}
+
+/* week content */
+.sched__date-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+}
+.sched__date-content strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: #183b2d;
+  white-space: nowrap;
+}
+.sched__date-content small {
+  margin-top: 3px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #4f735f;
 }
 
 
 /* ---------- filter ---------- */
 
-.sched__filter-btn {
-  height: 31px;
-
-  margin-left: 5px;
-
+.sched__filter {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
+}
 
-  padding: 0 11px;
+.sched__filter-dropdown {
+  position: relative;
+}
 
-  border: 1px solid #e6eaf1;
-  border-radius: 8px;
+/* Selected filter / dropdown */
 
-  background: #ffffff;
-  color: #344158;
+.sched__filter-select {
+  height: 40px;
 
-  font-size: 11.5px;
+  /* min-width: 190px; */
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding: 0 14px;
+
+  border: 1px solid #dcebdc;
+  border-radius: 9px;
+
+  background: #f5faf5;
+
+  color: #18241e;
+
+  font-size: 13px;
   font-weight: 600;
 
   cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
 }
 
-.sched__filter-btn:hover {
-  border-color: #cbd8ed;
-  background: #f8faff;
+.sched__filter-select:hover {
+  background: #eef7ef;
+  border-color: #c9dfcc;
 }
 
+.sched__filter-select span {
+  white-space: nowrap;
+}
+
+.sched__filter-select svg {
+  flex-shrink: 0;
+  color: #183b2d;
+}
+
+.sched__filter-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 100;
+  min-width: 210px;
+  padding: 6px;
+  background: #ffffff;
+  border: 1px solid #e4e9ee;
+  border-radius: 10px;
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.10),
+    0 2px 6px rgba(15, 23, 42, 0.05);
+}
+.sched__filter-option {
+  width: 100%;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #344054;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sched__filter-option:hover {
+  background: #f5f8f6;
+}
+.sched__filter-check {
+  width: 17px;
+  height: 17px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border: 1px solid #d5dde3;
+  border-radius: 4px;
+  color: transparent;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sched__filter-check.is-selected {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+/* Separate filter icon */
+
+.sched__refresh-icon {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dcebdc;
+  border-radius: 50px;
+  background: #ffffff;
+  color: #176b4d;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    transform 150ms ease;
+}
+
+.sched__refresh-icon:hover {
+  background: #f4faf6;
+  border-color: #bcd8c5;
+}
+
+.sched__refresh-icon:active {
+  transform: scale(0.96);
+}
 
 /* =========================================================
    CALENDAR CARD
@@ -241,6 +392,11 @@
 
 .sched__card {
   width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   background: #ffffff;
   border: 1px solid #e6ebf2;
@@ -256,7 +412,7 @@
 .sched__daybar {
   display: grid;
   grid-template-columns: 64px repeat(7, minmax(0, 1fr));
-  min-height: 78px;
+  min-height: 75px;
   border-bottom: 1px solid #e9edf3;
   padding-right: 5px;
   box-sizing: border-box;
@@ -285,7 +441,7 @@
   align-items: center;
   justify-content: center;
 
-  gap: var(-s2);
+  gap: 3px;
 
   border-right: 1px solid #edf0f4;
 
@@ -310,9 +466,9 @@
 
 
 .sched__day-name {
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 750;
-
+  letter-spacing: 1px;
   color: #7d8798;
 
   text-transform: uppercase;
@@ -321,7 +477,6 @@
 .sched__day-date {
   font-size: 14px;
   font-weight: 750;
-
   color: #253149;
 }
 
@@ -330,20 +485,20 @@
   display: flex;
   align-items: center;
   gap: 4px;
-
   font-size: 9.5px;
   font-weight: 550;
-
   color: #8b95a6;
 }
 
 .sched__day-count i {
   width: 5px;
   height: 5px;
-
   border-radius: 50%;
-
-  background: #3b82f6;
+  background: #eead70;
+}
+.sched__daycell--today
+.sched__day-count i {
+  background-color: #3b82f6;
 }
 
 
@@ -352,12 +507,15 @@
 ========================================================= */
 
 .sched__scroll {
-  height: calc(100vh - 15.4rem);
-  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
   background: #ffffff;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 .sched__scroll::-webkit-scrollbar {
@@ -380,10 +538,18 @@
 
 .sched__grid {
   position: relative;
+  width: 100%;
+  min-width: 0;
   display: grid;
-  grid-template-columns: 64px repeat(7, minmax(0, 1fr));
-  /* grid-template-rows: repeat(24, 121.5px); */
-  /* min-width: 760px; */
+  grid-template-columns:64px repeat(7,minmax(0, 1fr));
+  grid-template-rows:
+    repeat(
+      var(--schedule-total-rows),
+      var(--schedule-row-height)
+    );
+  column-gap: 0;
+  row-gap: 0;
+  box-sizing: border-box;
 }
 
 
@@ -392,6 +558,9 @@
 ========================================================= */
 
 .sched__time-cell {
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
   position: relative;
   border-right: 1px solid #e9edf3;
   border-bottom: 1px dashed #edf0f4;
@@ -450,10 +619,10 @@
 
 .sched__cell {
   min-width: 0;
-
+  min-height: 0;
+  box-sizing: border-box;
   border-right: 1px solid #edf0f4;
   border-bottom: 1px dashed #edf1f5;
-
   background: #ffffff;
 }
 
@@ -505,6 +674,7 @@
 ========================================================= */
 
 .sched__event {
+  
   position: relative;
   align-items: center;
   z-index: 4;
@@ -613,6 +783,220 @@
   font-size: 10.7px; 
   margin-bottom: 0px; 
 }
+
+
+/* =========================================================
+   MONTH VIEW
+========================================================= */
+
+.month-view {
+  /* container-type: inline-size; */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: #ffffff;
+}
+
+
+/* ---------------------------------------------------------
+   WEEKDAY HEADER
+--------------------------------------------------------- */
+
+.month-view__header {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  flex: 0 0 45px;
+  border-bottom: 1px solid #e7ebf2;
+  text-transform: uppercase;
+}
+
+.month-view__weekday {
+  /* background: linear-gradient( 180deg, #8ab3f5 0%, #ffffff 50% ); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #697586;
+  border-right: 1px solid #edf0f4;
+}
+
+.month-view__weekday:last-child {
+  border-right: none;
+}
+
+
+/* ---------------------------------------------------------
+   CALENDAR GRID
+--------------------------------------------------------- */
+
+.month-view__grid {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-rows: repeat(6, minmax(0, 1fr));
+  overflow: hidden;
+}
+
+
+/* ---------------------------------------------------------
+   DAY CELL
+--------------------------------------------------------- */
+
+.month-cell {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  padding: 8px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-right: 1px solid #e8edf3;
+  border-bottom: 1px solid #e8edf3;
+  overflow: hidden;
+  container-type: inline-size;
+}
+.month-cell:nth-child(7n) {
+  border-right: none;
+}
+
+
+/* ---------------------------------------------------------
+   DATE HEADER
+--------------------------------------------------------- */
+
+.month-cell__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  margin: -8px;
+  height: 24px;
+}
+
+
+.month-cell__date {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  /* color: #344054; */
+  color: #fff0f5;
+  border-radius: 50%;
+  border-radius: 0% 0% 50% 0%;
+    background: #000091;
+    border: 1px solid #000091;
+}
+.month-cell__count {
+  flex-shrink: 0;
+  font-size: 9px;
+  font-weight: 500;
+  color: #98a2b3;
+  text-transform: uppercase;
+}
+
+
+/* ---------------------------------------------------------
+   TODAY
+--------------------------------------------------------- */
+
+.month-cell--today {
+  /* background: #fbfdff; */
+  background: #f5f0fc;
+}
+.month-cell__today {
+  display: none;
+}
+
+.month-cell--today .month-cell__date {
+  color: #ffffff;
+  background: #1677ff;
+  box-shadow: 0 2px 6px rgba(22, 119, 255, 0.25);
+  border: none;
+}
+
+
+/* ---------------------------------------------------------
+   PREVIOUS / NEXT MONTH DAYS
+--------------------------------------------------------- */
+
+.month-cell--outside {
+  /* background: #fafbfc; */
+  background: #f8f2f2;
+  font-style: italic;
+}
+
+.month-cell--outside .month-cell__date {
+  color: #b5becb;
+  border: none;
+  background: #fafbfc;
+}
+
+.month-cell--outside .month-cell__availability-total strong  {
+  font-size: 10px;
+}
+.month-cell--outside .month-cell__availability-total span {
+  font-size: 10px;
+}
+.month-cell--outside .month-cell__availability-total  {
+  /* opacity: 0.72; */
+  display: none;
+}
+
+
+/* =========================================================
+   EVENT 
+========================================================= */
+
+.month-cell__availability {
+  min-width: 0;
+  min-height: 0;
+  height: calc(100% - 10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+
+/* ---------------------------------------------------------
+   AVAILABLE TOTAL
+--------------------------------------------------------- */
+
+.month-cell__availability-total {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.month-cell__availability-total strong {
+  font-size: 17px;
+  line-height: 1;
+  font-weight: 700;
+  color: #176b4d;
+}
+
+.month-cell__availability-total span {
+  margin-top: 3px;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 500;
+  /* color: #7a8794; */
+  color: #176b4d;
+}
+
 
 /* =========================================================
    EVENT COLORS
@@ -724,6 +1108,9 @@
   .sched__scroll {
     overflow-x: auto;
   }
+  .month-cell__type-grid{
+    display: none;
+  }
 }
 
 
@@ -749,4 +1136,5 @@
   .sched__date-btn {
     flex: 1;
   }
+
 }

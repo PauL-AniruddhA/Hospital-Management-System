@@ -55,7 +55,7 @@ export default function DocDashboard() {
 
   return (
     <div className="dashboard">
-      {/* <section className="stat-row">
+      <section className="stat-row">
         {STATS.map((s) => (
           <div className="stat-card" key={s.label}>
             <span className={`stat-icon ${s.iconClass}`}>
@@ -82,9 +82,9 @@ export default function DocDashboard() {
             <PlayCircle size={16} /> Start consultation
           </button>
         </section>
-      )} */}
+      )}
 
-      {/* <section className="dashboard__grid">
+      <section className="dashboard__grid">
         <div className="panel panel--queue">
           <div className="panel__header">
             <h2><Users size={16} className="panel__header-icon" /> Patient Queue</h2>
@@ -177,7 +177,7 @@ export default function DocDashboard() {
             </div>
           ))}
         </div>
-      </section> */}
+      </section>
     </div>   
   );
 }

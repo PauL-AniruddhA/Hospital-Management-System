@@ -15,7 +15,7 @@ export default function DocWorkspace   () {
     <br />
     <Search_Bar/>
     <br/>
-      <ProfileMenu  variant="doctor" avatar={""} name="Dr. Rajesh Sharma" role="Cardiologist" onNavigate={""} />
+      {/* <ProfileMenu  variant="doctor" avatar={""} name="Dr. Rajesh Sharma" role="Cardiologist" onNavigate={""} /> */}
     <br/>
     <Calender/>
     </div>

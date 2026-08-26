@@ -4,6 +4,8 @@ import "../../styles/Doctor/Doctor-Schedule.css";
 import {
   ChevronLeft, ChevronRight, CalendarDays, Filter, Plus, UserRound, Video, FlaskConical, Users, ClipboardList, HeartPulse, Coffee, BriefcaseMedical, Stethoscope,
   Repeat,
+  ChevronDown,
+  RefreshCcw,
 } from "lucide-react";
 
 /* =========================================================
@@ -11,13 +13,15 @@ import {
 ========================================================= */
 
 const ROW_MIN = 30;
-// const ROW_HEIGHT = 40.5;
-const VISIBLE_ROWS = 10; // 5 hours visible
 const DAY_START_HOUR = 10;
-const DAY_END_HOUR = 20.5;
-const TOTAL_ROWS = ((DAY_END_HOUR - DAY_START_HOUR) * 60) / ROW_MIN;
-const DAY_LABELS = [ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" ];
-
+const DAY_END_HOUR = 20;
+const SLOT_MINUTES = 30;
+const TOTAL_ROWS = ((DAY_END_HOUR - DAY_START_HOUR) * 60) / SLOT_MINUTES;
+const DAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const MIN_VISIBLE_ROWS = 2;
+const MIN_ROW_HEIGHT = 120;
+// const TIME_COLUMN_WIDTH = 64;
+const GRID_GAP = 0;
 
 const TYPE_STYLE = {
   appointment: { icon: UserRound, color: "blue" },
@@ -60,7 +64,7 @@ function isSameDate(a, b) {
   );
 }
 
-function formatDayDate(date) { 
+function formatDayDate(date) {
   return date.getDate();
 }
 
@@ -77,11 +81,48 @@ function formatRange(weekStart) {
   return `${startMonth} ${weekStart.getDate()}, ${startYear} – ${endMonth} ${end.getDate()}, ${endYear}`;
 }
 
+
+function getMonthDays(date) {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+
+  const firstDay = new Date(year, month, 1);
+
+  // Start on Sunday
+  const calendarStart = new Date(firstDay);
+  calendarStart.setDate(
+    firstDay.getDate() - firstDay.getDay()
+  );
+
+  const days = [];
+
+  for (let i = 0; i < 42; i++) {
+    const day = new Date(calendarStart);
+    day.setDate(calendarStart.getDate() + i);
+    days.push(day);
+  }
+
+  return days;
+}
+function formatMonthLabel(date) {
+  return date.toLocaleDateString([], {
+    month: "long",
+    year: "numeric",
+  });
+}
+function isSameMonth(a, b) {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth()
+  );
+}
+
+
 function formatTime(time) {
   const [hour, minute] = time.split(":").map(Number);
   const suffix = hour >= 12 ? "PM" : "AM";
   const displayHour = hour % 12 === 0 ? 12 : hour % 12;
-  return `${displayHour}:${String(minute).padStart( 2, "0" )} ${suffix}`;
+  return `${displayHour}:${String(minute).padStart(2, "0")} ${suffix}`;
 }
 
 function timeToRow(time) {
@@ -96,13 +137,157 @@ function createTimeLabel(rowIndex) {
   const hour = DAY_START_HOUR + Math.floor(totalMinutes / 60);
   const minute = totalMinutes % 60;
   const displayHour = hour % 12 === 0 ? 12 : hour % 12;
-  return { 
-    hour, 
+  return {
+    hour,
     minute,
     label: `${displayHour}:${String(minute).padStart(2, "0")}`,
     ampm: hour >= 12 ? "PM" : "AM",
     isHour: minute === 0,
   };
+}
+
+function getEventEndTime(start, duration) {
+  const [hour, minute] = start
+    .split(":")
+    .map(Number);
+
+  const totalMinutes =
+    hour * 60 +
+    minute +
+    duration;
+
+  const endHour =
+    Math.floor(totalMinutes / 60);
+
+  const endMinute =
+    totalMinutes % 60;
+
+  return `${String(endHour).padStart(2, "0")}:${String(
+    endMinute
+  ).padStart(2, "0")}`;
+}
+
+function getWeekNumber(date) {
+  const target = new Date(date);
+  target.setHours(0, 0, 0, 0);
+
+  target.setDate(
+    target.getDate() +
+    4 -
+    (target.getDay() || 7)
+  );
+
+  const yearStart = new Date(
+    target.getFullYear(),
+    0,
+    1
+  );
+
+  return Math.ceil(
+    (
+      (
+        (target - yearStart) / 86400000
+      ) + 1
+    ) / 7
+  );
+}
+
+// function toggleFilter(filterId) {
+//   setSelectedFilters((prev) => {
+//     if (prev.includes(filterId)) {
+//       return prev.filter((id) => id !== filterId);
+//     }
+
+//     return [...prev, filterId];
+//   });
+// }
+
+function getDayAvailability(dayEvents) {
+  const totalSlots =
+    ((DAY_END_HOUR - DAY_START_HOUR) * 60) /
+    SLOT_MINUTES;
+
+  const occupiedSlots = new Set();
+
+  dayEvents.forEach((event) => {
+    const [hour, minute] = event.start
+      .split(":")
+      .map(Number);
+
+    const eventStart =
+      hour * 60 + minute;
+
+    const eventEnd =
+      eventStart + event.duration;
+
+    const scheduleStart =
+      DAY_START_HOUR * 60;
+
+    const scheduleEnd =
+      DAY_END_HOUR * 60;
+
+    // Ignore events completely outside working hours
+    if (
+      eventEnd <= scheduleStart ||
+      eventStart >= scheduleEnd
+    ) {
+      return;
+    }
+
+    const clampedStart = Math.max(
+      eventStart,
+      scheduleStart
+    );
+
+    const clampedEnd = Math.min(
+      eventEnd,
+      scheduleEnd
+    );
+
+    const firstSlot =
+      Math.floor(
+        (clampedStart - scheduleStart) /
+          SLOT_MINUTES
+      );
+
+    const lastSlot =
+      Math.ceil(
+        (clampedEnd - scheduleStart) /
+          SLOT_MINUTES
+      );
+
+    for (
+      let slot = firstSlot;
+      slot < lastSlot;
+      slot++
+    ) {
+      occupiedSlots.add(slot);
+    }
+  });
+
+  return {
+    totalSlots,
+    occupiedSlots: occupiedSlots.size,
+    availableSlots:
+      Math.max(
+        0,
+        totalSlots - occupiedSlots.size
+      ),
+  };
+}
+
+function getEventTypeCounts(dayEvents) {
+  return Object.entries(
+    dayEvents.reduce((counts, event) => {
+      counts[event.type] =
+        (counts[event.type] || 0) + 1;
+
+      return counts;
+    }, {})
+  ).map(([type, count]) => ({
+    type,
+    count,
+  }));
 }
 
 const EVENTS = [
@@ -399,6 +584,41 @@ const EVENTS = [
   },
 ];
 
+const appointmentFilters = [
+  {
+    id: "appointment",
+    label: "Appointments",
+  },
+  {
+    id: "followup",
+    label: "Follow-up",
+  },
+  {
+    id: "consultation",
+    label: "Consultations",
+  },
+  {
+    id: "diagnostic",
+    label: "Diagnostics",
+  },
+  {
+    id: "video",
+    label: "Video Appointments",
+  },
+  {
+    id: "meeting",
+    label: "Meetings",
+  },
+  {
+    id: "admin",
+    label: "Administrative",
+  },
+  {
+    id: "break",
+    label: "Breaks",
+  },
+];
+
 /* =========================================================
    COMPONENT
 ========================================================= */
@@ -407,27 +627,24 @@ function DocSchedule() {
   const [weekStart, setWeekStart] = useState(() => getMonday(new Date()));
   const [now, setNow] = useState(new Date());
   const [view, setView] = useState("week");
-  const [filter, setFilter] = useState("all");
+  // const [filter, setFilter] = useState("all");
   const scrollRef = useRef(null);
-
+  const [visibleRows, setVisibleRows] = useState(MIN_VISIBLE_ROWS);
+  const [rowHeight, setRowHeight] = useState(MIN_ROW_HEIGHT);
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState([]);
   
-  
-  /* ---------------- current time ---------------- */
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setNow(new Date());
-    }, 60000);
+const toggleFilter = (filterId) => {
+  setSelectedFilters((prev) => {
+    if (prev.includes(filterId)) {
+      return prev.filter((id) => id !== filterId);
+    }
 
-    return () => clearInterval(interval);
-  }, []);
+    return [...prev, filterId];
+  });
+};
 
-  const getScheduleRowHeight = () => {
-    const value = getComputedStyle(document.documentElement)
-      .getPropertyValue("--schedule-row-height");
-
-    return parseFloat(value);
-  };
   /* ---------------- days ---------------- */
 
   const weekDays = useMemo(() => {
@@ -435,6 +652,12 @@ function DocSchedule() {
       label,
       date: addDays(weekStart, index),
     }));
+  }, [weekStart]);
+
+  /* ---------------- month days ---------------- */
+
+  const monthDays = useMemo(() => {
+    return getMonthDays(weekStart);
   }, [weekStart]);
 
   /* ---------------- rows ---------------- */
@@ -448,13 +671,22 @@ function DocSchedule() {
 
   /* ---------------- filtered events ---------------- */
 
+  // const filteredEvents = useMemo(() => {
+  //   if (filter === "all") return EVENTS;
+  //   return EVENTS.filter(
+  //     (event) => event.type === filter
+  //   );
+  // }, [filter]);
+ 
   const filteredEvents = useMemo(() => {
-    if (filter === "all") return EVENTS;
-    return EVENTS.filter(
-      (event) => event.type === filter
-    );
-  }, [filter]);
+    if (selectedFilters.length === 0) {
+      return EVENTS;
+    }
 
+    return EVENTS.filter((event) =>
+      selectedFilters.includes(event.type)
+    );
+  }, [selectedFilters]);
   /* ---------------- positioned events ---------------- */
 
   const eventsWithPosition = useMemo(() => {
@@ -483,15 +715,13 @@ function DocSchedule() {
 
   const appointmentCounts = useMemo(() => {
     return DAY_LABELS.map((_, index) => {
-      return EVENTS.filter(
+      return filteredEvents.filter(
         (event) =>
           event.dayOffset === index &&
-          !["break", "meeting", "admin"].includes(
-            event.type
-          )
+          !["break", "meeting", "admin"].includes(event.type)
       ).length;
     });
-  }, []);
+  }, [filteredEvents]);
 
   /* ---------------- today ---------------- */
 
@@ -513,48 +743,213 @@ function DocSchedule() {
     return row;
   }, [now]);
 
-  /* ---------------- initial scroll ---------------- */
+/* ---------------- month events ---------------- */
 
-  useEffect(() => {
-    if (!scrollRef.current) return;
+  const monthEvents = useMemo(() => {
 
-    const minutes =
-      (now.getHours() - DAY_START_HOUR) *
-        60 +
-      now.getMinutes();
+    return monthDays.map((day) => {
 
-    const row = minutes / ROW_MIN;
+      const jsDay = day.getDay();
 
-    const target =
-      Math.max(
-        0,
-        Math.min(
-          TOTAL_ROWS - VISIBLE_ROWS,
-          Math.floor(row) - 2
+      // Convert Sunday-based JS day
+      // to your existing Monday-based dayOffset
+      const dayOffset =
+        jsDay === 0 ? 6 : jsDay - 1;
+
+      return filteredEvents.filter(
+        (event) =>
+          event.dayOffset === dayOffset
+      );
+
+    });
+
+  }, [monthDays, filteredEvents]);
+
+    /* ---------------- handlers ---------------- */
+
+  const previousPeriod = () => {
+    setWeekStart((current) => {
+
+      if (view === "month") {
+        const previousMonth = new Date(
+          current.getFullYear(),
+          current.getMonth() - 1,
+          1
+        );
+
+        return previousMonth;
+      }
+
+      if (view === "day") {
+        return addDays(current, -1);
+      }
+
+      return addDays(current, -7);
+    });
+  };
+  const nextPeriod = () => {
+    setWeekStart((current) => {
+
+      if (view === "month") {
+        const nextMonth = new Date(
+          current.getFullYear(),
+          current.getMonth() + 1,
+          1
+        );
+
+        return nextMonth;
+      }
+
+      if (view === "day") {
+        return addDays(current, 1);
+      }
+
+      return addDays(current, 7);
+    });
+  };
+  const goToday = () => {
+
+    const today = new Date();
+
+    if (view === "month") {
+
+      setWeekStart(
+        new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          1
         )
       );
 
-    scrollRef.current.scrollTop =
-      target * getScheduleRowHeight();
+      return;
+    }
+
+
+    setWeekStart(
+      getMonday(today)
+    );
+  };
+
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNow(new Date());
+    }, 60000);
+
+    return () => clearInterval(interval);
   }, []);
 
-  /* ---------------- handlers ---------------- */
+  useEffect(() => {
 
-  const previousWeek = () => {
-    setWeekStart((current) =>
-      addDays(current, -7)
+    // Month view doesn't use the time-grid measurements.
+    if (view !== "week") {
+      return;
+    }
+
+    const el = scrollRef.current;
+
+    if (!el) {
+      return;
+    }
+
+
+    const updateScheduleDimensions = (height) => {
+
+      if (height <= 0) {
+        return;
+      }
+
+      const rowsThatFit =
+        Math.floor(
+          height / MIN_ROW_HEIGHT
+        );
+
+      const rows = Math.min(
+        TOTAL_ROWS,
+        Math.max(
+          MIN_VISIBLE_ROWS,
+          rowsThatFit
+        )
+      );
+
+      const totalGapHeight =
+        GRID_GAP * Math.max(
+          0,
+          rows - 1
+        );
+
+      const calculatedRowHeight =
+        (
+          height -
+          totalGapHeight
+        ) / rows;
+
+
+      setVisibleRows(rows);
+      setRowHeight(calculatedRowHeight);
+    };
+
+
+    // Initial measurement
+    updateScheduleDimensions(
+      el.getBoundingClientRect().height
     );
-  };
 
-  const nextWeek = () => {
-    setWeekStart((current) =>
-      addDays(current, 7)
-    );
-  };
 
-  const goToday = () => {
-    setWeekStart(getMonday(new Date()));
-  };
+    const observer =
+      new ResizeObserver(([entry]) => {
+
+        updateScheduleDimensions(
+          entry.contentRect.height
+        );
+
+      });
+
+
+    observer.observe(el);
+
+
+    return () => {
+      observer.disconnect();
+    };
+
+  }, [view]);
+
+ useEffect(() => {
+  if (view !== "week") { return; }
+
+  const element = scrollRef.current;
+
+  if (!element) {
+    return;
+  }
+
+  if (!rowHeight || rowHeight <= 0) {
+    return;
+  }
+
+
+  const minutes =
+    (now.getHours() - DAY_START_HOUR) * 60 +
+    now.getMinutes();
+
+  const currentRow =
+    minutes / ROW_MIN;
+
+  const targetRow = Math.max(
+    0,
+    Math.min(
+      TOTAL_ROWS - visibleRows,
+      Math.floor(currentRow) - 2
+    )
+  );
+
+
+  element.scrollTop =
+    targetRow * rowHeight;
+
+
+ }, [ view, rowHeight, visibleRows, now ]);
 
   return (
     <section className="sched">
@@ -588,15 +983,15 @@ function DocSchedule() {
 
       <div className="sched__toolbar">
         <div className="sched__view-switch">
-          <button className={ view === "day" ? "is-active" : "" } onClick={() => setView("day")}>
+          {/* <button className={view === "day" ? "is-active" : ""} onClick={() => setView("day")}>
             Day
-          </button>
+          </button> */}
 
-          <button className={ view === "week" ? "is-active" : "" } onClick={() => setView("week")}>
+          <button className={view === "week" ? "is-active" : ""} onClick={() => setView("week")}>
             Week
           </button>
 
-          <button className={ view === "month" ? "is-active" : "" } onClick={() => setView("month")}>
+          <button className={view === "month" ? "is-active" : ""} onClick={() => setView("month")}>
             Month
           </button>
 
@@ -604,162 +999,408 @@ function DocSchedule() {
 
         <div className="sched__date-navigation">
 
-          <button className="sched__nav-btn" onClick={previousWeek} >
-            <ChevronLeft size={17} />
+          <button type="button" className="sched__nav-btn" onClick={previousPeriod} aria-label={ view === "month" ? "Previous month" : "Previous week"}>
+            <ChevronLeft size={17} strokeWidth={2}/>
           </button>
 
-          <button className="sched__date-btn" onClick={goToday} >
-            <span>
-              {formatRange(weekStart)}
+          <button type="button" className="sched__date-btn" onClick={goToday} title="Go to today" >
+              <CalendarDays size={15} />
+            <span className="sched__date-content">
+              <strong>
+                {view === "month"
+                  ? formatMonthLabel(weekStart)
+                  : formatRange(weekStart)}
+              </strong>
+              {view === "week" && (
+                <small>
+                  Week {getWeekNumber(weekStart)}
+                </small>
+              )}
             </span>
-
-            <CalendarDays size={15} />
           </button>
 
-          <button className="sched__nav-btn" onClick={nextWeek} >
-            <ChevronRight size={17} />
+          <button className="sched__nav-btn" onClick={nextPeriod} aria-label={ view === "month" ? "Next month" : "Next week" }>
+            <ChevronRight size={17} strokeWidth={2}/>
           </button>
 
         </div>
 
-        <button className="sched__filter-btn">
-          <span>All Appointments</span>
-          <Filter size={14} />
-        </button>
+        <div className="sched__filter">
+          <div className="sched__filter-dropdown"> 
+            <button
+              type="button"
+              className="sched__filter-select"
+              onClick={() => setFilterOpen((prev) => !prev)}
+              aria-expanded={filterOpen}
+              aria-haspopup="menu"
+            >
+              <span>
+                {selectedFilters.length === 0
+                  ? "All Appointments"
+                  : `${selectedFilters.length} Selected`}
+              </span>
+
+              <ChevronDown size={16} strokeWidth={2} />
+            </button>
+            {filterOpen && (
+              <div className="sched__filter-menu">
+
+                <button
+                  type="button"
+                  className="sched__filter-option"
+                  onClick={() => {setSelectedFilters([]);setFilterOpen(false)} }
+                >
+                  <span
+                    className={
+                      selectedFilters.length === 0
+                        ? "sched__filter-check is-selected"
+                        : "sched__filter-check"
+                    }
+                  >
+                    ✓
+                  </span>
+
+                  <span>All Appointments</span>
+                </button>
+
+                {appointmentFilters.map((filter) => (
+                  <button
+                    key={filter.id}
+                    type="button"
+                    className="sched__filter-option"
+                    onClick={() => toggleFilter(filter.id)}
+                  >
+                    <span
+                      className={
+                        selectedFilters.includes(filter.id)
+                          ? "sched__filter-check is-selected"
+                          : "sched__filter-check"
+                      }
+                    >
+                      ✓
+                    </span>
+
+                    <span>{filter.label}</span>
+                  </button>
+                ))}
+
+              </div>
+            )}
+          </div>
+
+          <button type="button" className="sched__refresh-icon" aria-label="Refresh schedule">
+            <RefreshCcw size={19} strokeWidth={2}/>
+          </button>
+        </div>
+        
 
       </div>
 
 
       <div className="sched__card">
-        <div className="sched__daybar">
-          <div className="sched__time-header"> TIME </div>
+        {view === "week" && (
+          <>
+            <div className="sched__daybar">
+              <div className="sched__time-header"> TIME </div>
 
-          {weekDays.map((day, index) => {
-            const isToday = isSameDate(day.date, now);
-            return (
-              <div key={day.label} className={`sched__daycell ${ isToday ? "sched__daycell--today" : "" }`}>
+              {weekDays.map((day, index) => {
+                const isToday = isSameDate(day.date, now);
+                return (
+                  <div key={day.label} className={`sched__daycell ${isToday ? "sched__daycell--today" : ""}`}>
 
-                <span className="sched__day-name">
-                  {day.label}
-                </span>
-
-                <span className="sched__day-date">
-                  {formatDayDate(day.date)}
-                </span>
-
-                <span className="sched__day-count">
-                  <i/>
-                  {appointmentCounts[index]} Appts
-                </span>
-
-              </div>
-            );
-          })}
-
-        </div>
-
-        {/* GRID */}
-
-        <div ref={scrollRef} className="sched__scroll" >
-          <div className="sched__grid" style={{ gridTemplateRows: `repeat(${TOTAL_ROWS}, var(--schedule-row-height))`}} >
-            {/* BACKGROUND GRID */}
-            {rows.map((time, rowIndex) => (
-              <React.Fragment key={rowIndex}>
-
-                <div className="sched__time-cell" style={{ gridColumn: 1, gridRow: rowIndex + 1 }}>
-                  <span className={`sched__time-label ${!time.isHour ? "sched__time-label--minor" : ""}`}>
-                    {time.label}
-                    <small>{time.ampm}</small>
-                  </span>
-                </div>
-
-                {weekDays.map((_, columnIndex) => (
-                  <div
-                    key={columnIndex}
-                    className={`sched__cell ${
-                      time.isHour
-                        ? "sched__cell--hour"
-                        : ""
-                    }`}
-                    style={{
-                      gridColumn:columnIndex + 2,
-                      gridRow:
-                        rowIndex + 1,
-                    }}
-                  />
-                ))}
-
-              </React.Fragment>
-            ))}
-
-            {/* =================================================
-                CURRENT TIME
-            ================================================= */}
-
-            {todayRow !== null && todayColumn !== -1 && (
-                <div
-                  className="sched__now-line"
-                  style={{
-                    gridColumn:
-                      todayColumn + 2,
-                    gridRow: `${
-                      Math.floor(todayRow) + 1
-                    } / span 1`,
-                    top: `${
-                      (todayRow % 1) *
-                      getScheduleRowHeight()
-                    }px`,
-                  }}
-                />
-              )}
-
-            {/* =================================================
-                EVENTS
-            ================================================= */}
-
-            {eventsWithPosition.map((event) => {
-
-              const config = TYPE_STYLE[event.type] || TYPE_STYLE.appointment;
-              const Icon = config.icon;
-              const isShort = event.duration === 30;
-
-              return (
-                <div
-                  key={event.id}
-                  className={`sched__event sched__event--${config.color} ${ isShort ? "sched__event--compact" : ""}`}
-                  style={{ gridColumn: event.dayOffset + 2,
-                    gridRow: `${ Math.round( event.startRow) + 1} / span ${ Math.max(1,Math.round(event.span)) }`,}} 
-                >
-
-                  <span className="sched__event-subtitle">
-                    {event.subtitle}
-                  </span>
-                  <div className="sched__event-top">
-
-                    <span className="sched__event-icon">
-                      <Icon size={15} strokeWidth={2.2} />
+                    <span className="sched__day-name">
+                      {day.label}
                     </span>
 
-                    <span className="sched__event-title">
-                      {event.title}
+                    <span className="sched__day-date">
+                      {formatDayDate(day.date)}
+                    </span>
+
+                    <span className="sched__day-count">
+                      <i />
+                      {appointmentCounts[index]} Appts
                     </span>
 
                   </div>
+                );
+              })}
 
-                  <span className="sched__event-time">
-                    {formatTime(event.start)}
-                    {" – "}
-                    {formatTime(`${String(Math.floor((event.start.split(":")[0] * 60 + Number(event.start.split(":")[1]) + event.duration) / 60 )).padStart(2, "0")}:${String(( Number( event.start.split(":")[1] ) + event.duration ) % 60 ).padStart(2, "0")}`)}
-                  </span>
+            </div>
 
+            {/* GRID */}
+
+            <div ref={scrollRef} className="sched__scroll">
+              <div
+                className="sched__grid"
+                style={{
+                  "--schedule-total-rows": TOTAL_ROWS,
+                  "--schedule-visible-rows": visibleRows,
+                  "--schedule-row-height": `${rowHeight}px`,
+                }}
+              >
+                {/* BACKGROUND GRID */}
+                {rows.map((time, rowIndex) => (
+                  <React.Fragment key={rowIndex}>
+
+                    <div className="sched__time-cell" style={{ gridColumn: 1, gridRow: rowIndex + 1 }}>
+                      <span className={`sched__time-label ${!time.isHour ? "sched__time-label--minor" : ""}`}>
+                        {time.label}
+                        <small>{time.ampm}</small>
+                      </span>
+                    </div>
+
+                    {weekDays.map((_, columnIndex) => (
+                      <div
+                        key={columnIndex}
+                        className={`sched__cell ${time.isHour ? "sched__cell--hour" : ""}`}
+                        style={{
+                          gridColumn: columnIndex + 2,
+                          gridRow: rowIndex + 1,
+                        }}
+                      />
+                    ))}
+
+                  </React.Fragment>
+                ))}
+
+                {/* =================================================
+                    CURRENT TIME
+                ================================================= */}
+
+                {todayRow !== null && todayColumn !== -1 && (
+                  <div
+                    className="sched__now-line"
+                    style={{
+                      gridColumn:todayColumn + 2,
+                      gridRow: `${Math.floor(todayRow) + 1 } / span 1`,
+                      top: `${(todayRow % 1) }px`
+                    }}
+                  />
+                )}
+
+                {/* =================================================
+                    EVENTS
+                ================================================= */}
+
+                {eventsWithPosition.map((event) => {
+
+                  const config = TYPE_STYLE[event.type] || TYPE_STYLE.appointment;
+                  const Icon = config.icon;
+                  const isShort = event.duration === 30;
+
+                  return (
+                    <div
+                      key={event.id}
+                      className={`sched__event sched__event--${config.color} ${isShort ? "sched__event--compact" : ""}`}
+                      style={{
+                        gridColumn: event.dayOffset + 2,
+                        gridRow: `${Math.round(event.startRow) + 1} / span ${Math.max(1, Math.round(event.span))}`,
+                      }}
+                    >
+
+                      <span className="sched__event-subtitle">
+                        {event.subtitle}
+                      </span>
+                      <div className="sched__event-top">
+
+                        <span className="sched__event-icon">
+                          <Icon size={15} strokeWidth={2.2} />
+                        </span>
+
+                        <span className="sched__event-title">
+                          {event.title}
+                        </span>
+
+                      </div>
+
+                      <span className="sched__event-time">
+                        {formatTime(event.start)}
+                        {" – "}
+                        {formatTime(
+                          getEventEndTime(
+                            event.start,
+                            event.duration
+                          )
+                        )}
+                      </span>
+
+                    </div>
+                  );
+                })}
+
+              </div>
+
+            </div>
+          </>
+        )}
+
+        {view === "month" && (
+          <div className="month-view">
+            <div className="month-view__header">
+              {DAY_LABELS.map((day) => (
+                <div key={day} className="month-view__weekday">
+                  {day}
                 </div>
-              );
-            })}
+              ))}
+
+            </div>
+
+
+            <div className="month-view__grid">
+              {/* {monthDays.map((day, index) => {
+                const dayEvents = monthEvents[index];
+                const isToday = isSameDate(day, now);
+                const isCurrentMonth = isSameMonth(day, weekStart);
+                const appointmentCount =
+                  dayEvents.filter(
+                    (event) =>
+                      ![
+                        "break",
+                        "meeting",
+                        "admin",
+                      ].includes(event.type)
+                  ).length;
+
+                const visibleEvents = dayEvents.slice(0, 3);
+
+                const remainingEvents = Math.max( 0, dayEvents.length - visibleEvents.length);
+
+                return (
+                  <div
+                    key={day.toISOString()}
+                    className={` month-cell ${isToday ? "month-cell--today" : ""} ${!isCurrentMonth ? "month-cell--outside" : ""} `}
+                  >
+
+                    <div className="month-cell__top">
+
+                      <span className="month-cell__date">
+                        {day.getDate()}
+                      </span>
+
+                      {appointmentCount > 0 && (
+                        <span className="month-cell__count">
+                          {appointmentCount}{" "}
+                          {appointmentCount === 1 ? "Appt" : "Appts"}
+                        </span>
+                      )}
+
+                    </div>
+
+
+                    <div className="month-cell__events">
+
+                      {visibleEvents.map((event) => {
+
+                        const config =
+                          TYPE_STYLE[event.type] ||
+                          TYPE_STYLE.appointment;
+
+                        const Icon = config.icon;
+
+                        return (
+                          <div
+                            key={event.id}
+                            className={`
+                              month-event
+                              month-event--${config.color}
+                            `}
+                          >
+
+                            <span className="month-event__icon">
+                              <Icon
+                                size={11}
+                                strokeWidth={2.4}
+                              />
+                            </span>
+
+                            <span className="month-event__title">
+                              {event.title}
+                            </span>
+
+                            <span className="month-event__time">
+                              {formatTime(event.start)}
+                            </span>
+
+                          </div>
+                        );
+
+                      })}
+
+
+                      {remainingEvents > 0 && (
+                        <button
+                          type="button"
+                          className="month-cell__more"
+                        >
+                          +{remainingEvents} more
+                        </button>
+                      )}
+
+                    </div>
+
+                  </div>
+                );
+              })} */}
+
+              {monthDays.map((day, index) => {
+
+                const dayEvents = monthEvents[index];
+                const isToday = isSameDate(day, now);
+                const isCurrentMonth = isSameMonth(day, weekStart);
+                const availability = getDayAvailability(dayEvents);
+                const typeCounts = getEventTypeCounts(dayEvents);
+
+                return (
+                  <div
+                    key={day.toISOString()}
+                    className={` month-cell ${isToday ? "month-cell--today" : ""} ${ !isCurrentMonth ? "month-cell--outside" : "" } `}
+                  >
+
+                    {/* DATE */}
+
+                    <div className="month-cell__top">
+
+                      <span className="month-cell__date">
+                        {day.getDate()}
+                      </span>
+
+                      {isToday && (
+                        <span className="month-cell__today">
+                          Today
+                        </span>
+                      )}
+
+                    </div>
+
+
+                    {/* =================================================
+                        SINGLE RESPONSIVE CONTAINER
+                    ================================================= */}
+
+                    <div className="month-cell__availability">
+
+                      {/* AVAILABLE COUNT */}
+
+                      <div className="month-cell__availability-total">
+
+                        <strong>
+                          {availability.availableSlots}
+                        </strong>
+
+                        <span>
+                           Slots Available
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+                );
+              })}
+
+            </div>
 
           </div>
-
-        </div>
-
+        )}
       </div>
 
     </section>
