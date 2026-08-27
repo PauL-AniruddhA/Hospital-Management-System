@@ -20,7 +20,6 @@ const TOTAL_ROWS = ((DAY_END_HOUR - DAY_START_HOUR) * 60) / SLOT_MINUTES;
 const DAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const MIN_VISIBLE_ROWS = 2;
 const MIN_ROW_HEIGHT = 120;
-// const TIME_COLUMN_WIDTH = 64;
 const GRID_GAP = 0;
 
 const TYPE_STYLE = {
@@ -192,87 +191,39 @@ function getWeekNumber(date) {
   );
 }
 
-// function toggleFilter(filterId) {
-//   setSelectedFilters((prev) => {
-//     if (prev.includes(filterId)) {
-//       return prev.filter((id) => id !== filterId);
-//     }
+function getDayAvailability( dayEvents, scheduleFilter) {
+  const filters =
+    scheduleFilter === "all"
+      ? appointmentFilters
+      : appointmentFilters.filter(
+          (filter) =>
+            filter.id === scheduleFilter
+        );
 
-//     return [...prev, filterId];
-//   });
-// }
+  let totalSlots = 0;
+  let filledSlots = 0;
 
-function getDayAvailability(dayEvents) {
-  const totalSlots =
-    ((DAY_END_HOUR - DAY_START_HOUR) * 60) /
-    SLOT_MINUTES;
+  filters.forEach((filter) => {
+    const filled = dayEvents.filter(
+      (event) =>
+        event.type === filter.id
+    ).length;
 
-  const occupiedSlots = new Set();
+    totalSlots += filter.capacity;
 
-  dayEvents.forEach((event) => {
-    const [hour, minute] = event.start
-      .split(":")
-      .map(Number);
-
-    const eventStart =
-      hour * 60 + minute;
-
-    const eventEnd =
-      eventStart + event.duration;
-
-    const scheduleStart =
-      DAY_START_HOUR * 60;
-
-    const scheduleEnd =
-      DAY_END_HOUR * 60;
-
-    // Ignore events completely outside working hours
-    if (
-      eventEnd <= scheduleStart ||
-      eventStart >= scheduleEnd
-    ) {
-      return;
-    }
-
-    const clampedStart = Math.max(
-      eventStart,
-      scheduleStart
+    filledSlots += Math.min(
+      filled,
+      filter.capacity
     );
-
-    const clampedEnd = Math.min(
-      eventEnd,
-      scheduleEnd
-    );
-
-    const firstSlot =
-      Math.floor(
-        (clampedStart - scheduleStart) /
-          SLOT_MINUTES
-      );
-
-    const lastSlot =
-      Math.ceil(
-        (clampedEnd - scheduleStart) /
-          SLOT_MINUTES
-      );
-
-    for (
-      let slot = firstSlot;
-      slot < lastSlot;
-      slot++
-    ) {
-      occupiedSlots.add(slot);
-    }
   });
 
   return {
     totalSlots,
-    occupiedSlots: occupiedSlots.size,
-    availableSlots:
-      Math.max(
-        0,
-        totalSlots - occupiedSlots.size
-      ),
+    filledSlots,
+    availableSlots: Math.max(
+      0,
+      totalSlots - filledSlots
+    ),
   };
 }
 
@@ -291,14 +242,16 @@ function getEventTypeCounts(dayEvents) {
 }
 
 const EVENTS = [
+  /* ================= MONDAY ================= */
+
   {
     id: 1,
     dayOffset: 0,
     start: "10:00",
     duration: 30,
     type: "appointment",
-    title: "Rahul Das",
-    subtitle: "Follow-up",
+    title: "Aniruddha Ranjan PAul",
+    subtitle: "Appointment",
   },
 
   {
@@ -306,23 +259,13 @@ const EVENTS = [
     dayOffset: 0,
     start: "11:00",
     duration: 30,
-    type: "consultation",
-    title: "Ananya Sharma",
-    subtitle: "Consultation",
+    type: "appointment",
+    title: "Priya Sharma",
+    subtitle: "Appointment",
   },
 
   {
     id: 3,
-    dayOffset: 0,
-    start: "12:30",
-    duration: 30,
-    type: "diagnostic",
-    title: "Arjun Mehta",
-    subtitle: "Cardiology Review",
-  },
-
-  {
-    id: 4,
     dayOffset: 0,
     start: "12:00",
     duration: 30,
@@ -332,21 +275,81 @@ const EVENTS = [
   },
 
   {
+    id: 4,
+    dayOffset: 0,
+    start: "13:00",
+    duration: 30,
+    type: "followup",
+    title: "Amit Roy",
+    subtitle: "Follow-up",
+  },
+
+  {
     id: 5,
     dayOffset: 0,
     start: "14:00",
-    duration: 60,
-    type: "meeting",
-    title: "MDT Meeting",
-    subtitle: "Multidisciplinary discussion",
+    duration: 30,
+    type: "consultation",
+    title: "Ananya Sharma",
+    subtitle: "Consultation",
   },
-
-  /* ---------------- TUESDAY ---------------- */
 
   {
     id: 6,
+    dayOffset: 0,
+    start: "15:00",
+    duration: 30,
+    type: "diagnostic",
+    title: "Arjun Mehta",
+    subtitle: "Cardiology Review",
+  },
+
+  {
+    id: 7,
+    dayOffset: 0,
+    start: "16:00",
+    duration: 30,
+    type: "video",
+    title: "Mitali Gupta",
+    subtitle: "ECG Review",
+  },
+
+  /* ================= TUESDAY ================= */
+
+  {
+    id: 8,
     dayOffset: 1,
-    start: "07:30",
+    start: "10:30",
+    duration: 30,
+    type: "appointment",
+    title: "Sourav Roy",
+    subtitle: "Appointment",
+  },
+
+  {
+    id: 9,
+    dayOffset: 1,
+    start: "11:00",
+    duration: 30,
+    type: "appointment",
+    title: "Kavita Das",
+    subtitle: "Appointment",
+  },
+
+  {
+    id: 10,
+    dayOffset: 1,
+    start: "12:00",
+    duration: 30,
+    type: "appointment",
+    title: "Rohan Sen",
+    subtitle: "Appointment",
+  },
+
+  {
+    id: 11,
+    dayOffset: 1,
+    start: "13:00",
     duration: 30,
     type: "followup",
     title: "Priya Das",
@@ -354,229 +357,319 @@ const EVENTS = [
   },
 
   {
-    id: 7,
-    dayOffset: 1,
-    start: "08:30",
-    duration: 30,
-    type: "appointment",
-    title: "Sourav Roy",
-    subtitle: "Consultation",
-  },
-
-  {
-    id: 8,
-    dayOffset: 1,
-    start: "11:00",
-    duration: 30,
-    type: "video",
-    title: "Mitali Gupta",
-    subtitle: "ECG Review",
-  },
-
-  {
-    id: 9,
+    id: 12,
     dayOffset: 1,
     start: "14:00",
-    duration: 60,
+    duration: 30,
     type: "consultation",
-    title: "Training Session",
-    subtitle: "Resident training",
-  },
-
-  /* ---------------- WEDNESDAY ---------------- */
-
-  {
-    id: 10,
-    dayOffset: 2,
-    start: "07:00",
-    duration: 30,
-    type: "appointment",
-    title: "Amit Paul",
-    subtitle: "Follow-up",
-  },
-
-  {
-    id: 11,
-    dayOffset: 2,
-    start: "07:30",
-    duration: 30,
-    type: "followup",
-    title: "Rina Das",
-    subtitle: "New Consultation",
-  },
-
-  {
-    id: 12,
-    dayOffset: 2,
-    start: "09:00",
-    duration: 30,
-    type: "diagnostic",
-    title: "Kunal Sharma",
-    subtitle: "Cardiology Review",
+    title: "Rina Paul",
+    subtitle: "Consultation",
   },
 
   {
     id: 13,
-    dayOffset: 2,
-    start: "10:30",
+    dayOffset: 1,
+    start: "15:00",
     duration: 30,
     type: "video",
-    title: "Sneha Roy",
-    subtitle: "Consultation",
+    title: "Mitali Gupta",
+    subtitle: "Video Consultation",
   },
 
   {
     id: 14,
-    dayOffset: 2,
-    start: "13:00",
+    dayOffset: 1,
+    start: "16:00",
     duration: 60,
-    type: "break",
-    title: "Lunch Break",
-    subtitle: "01:00 – 02:00 PM",
+    type: "meeting",
+    title: "Resident Training",
+    subtitle: "Clinical training",
   },
 
-  /* ---------------- THURSDAY ---------------- */
+  /* ================= WEDNESDAY ================= */
 
   {
     id: 15,
-    dayOffset: 3,
-    start: "08:00",
+    dayOffset: 2,
+    start: "10:30",
     duration: 30,
     type: "appointment",
-    title: "Vivek Sharma",
-    subtitle: "Follow-up",
+    title: "Amit Paul",
+    subtitle: "Appointment",
   },
 
   {
     id: 16,
-    dayOffset: 3,
-    start: "09:30",
-    duration: 30,
-    type: "followup",
-    title: "Neha Singh",
-    subtitle: "Consultation",
-  },
-
-  {
-    id: 17,
-    dayOffset: 3,
+    dayOffset: 2,
     start: "11:30",
     duration: 30,
-    type: "appointment",
-    title: "Rohit Verma",
+    type: "followup",
+    title: "Rina Das",
     subtitle: "Follow-up",
   },
 
   {
+    id: 17,
+    dayOffset: 2,
+    start: "12:00",
+    duration: 30,
+    type: "consultation",
+    title: "Kunal Sharma",
+    subtitle: "Cardiology Consultation",
+  },
+
+  {
     id: 18,
+    dayOffset: 2,
+    start: "13:00",
+    duration: 30,
+    type: "diagnostic",
+    title: "Sneha Roy",
+    subtitle: "Diagnostic Review",
+  },
+
+  {
+    id: 19,
+    dayOffset: 2,
+    start: "14:30",
+    duration: 30,
+    type: "video",
+    title: "Meera Gupta",
+    subtitle: "Video Consultation",
+  },
+
+  {
+    id: 20,
+    dayOffset: 2,
+    start: "16:00",
+    duration: 60,
+    type: "break",
+    title: "Lunch Break",
+    subtitle: "Scheduled break",
+  },
+
+  /* ================= THURSDAY ================= */
+
+  {
+    id: 21,
+    dayOffset: 3,
+    start: "10:00",
+    duration: 30,
+    type: "appointment",
+    title: "Vivek Sharma",
+    subtitle: "Appointment",
+  },
+
+  {
+    id: 22,
+    dayOffset: 3,
+    start: "11:00",
+    duration: 30,
+    type: "appointment",
+    title: "Rohit Verma",
+    subtitle: "Appointment",
+  },
+
+  {
+    id: 23,
+    dayOffset: 3,
+    start: "12:00",
+    duration: 30,
+    type: "followup",
+    title: "Neha Singh",
+    subtitle: "Follow-up",
+  },
+
+  {
+    id: 24,
+    dayOffset: 3,
+    start: "13:00",
+    duration: 30,
+    type: "followup",
+    title: "Vikas Das",
+    subtitle: "Follow-up",
+  },
+
+  {
+    id: 25,
     dayOffset: 3,
     start: "14:00",
+    duration: 30,
+    type: "consultation",
+    title: "Sanjay Roy",
+    subtitle: "Consultation",
+  },
+
+  {
+    id: 26,
+    dayOffset: 3,
+    start: "15:30",
     duration: 60,
     type: "meeting",
     title: "Case Discussion",
     subtitle: "Clinical review",
   },
 
-  /* ---------------- FRIDAY ---------------- */
-
-  {
-    id: 19,
-    dayOffset: 4,
-    start: "07:30",
-    duration: 30,
-    type: "appointment",
-    title: "Rohan Das",
-    subtitle: "Follow-up",
-  },
-
-  {
-    id: 20,
-    dayOffset: 4,
-    start: "10:00",
-    duration: 30,
-    type: "diagnostic",
-    title: "Pooja Sharma",
-    subtitle: "Cardiology Review",
-  },
-
-  {
-    id: 21,
-    dayOffset: 4,
-    start: "11:30",
-    duration: 30,
-    type: "followup",
-    title: "Vijay Patel",
-    subtitle: "Consultation",
-  },
-
-  {
-    id: 22,
-    dayOffset: 4,
-    start: "14:00",
-    duration: 60,
-    type: "admin",
-    title: "Admin Work",
-    subtitle: "Documentation",
-  },
-
-  /* ---------------- SATURDAY ---------------- */
-
-  {
-    id: 23,
-    dayOffset: 5,
-    start: "08:00",
-    duration: 30,
-    type: "consultation",
-    title: "Nitin Das",
-    subtitle: "Consultation",
-  },
-
-  {
-    id: 24,
-    dayOffset: 5,
-    start: "09:30",
-    duration: 30,
-    type: "appointment",
-    title: "Kavya Singh",
-    subtitle: "Follow-up",
-  },
-
-  {
-    id: 25,
-    dayOffset: 5,
-    start: "14:00",
-    duration: 60,
-    type: "admin",
-    title: "Admin Work",
-    subtitle: "Hospital records",
-  },
-
-  /* ---------------- SUNDAY ---------------- */
-
-  {
-    id: 26,
-    dayOffset: 6,
-    start: "10:00",
-    duration: 30,
-    type: "followup",
-    title: "Aditya Verma",
-    subtitle: "Consultation",
-  },
+  /* ================= FRIDAY ================= */
 
   {
     id: 27,
-    dayOffset: 6,
-    start: "11:30",
+    dayOffset: 4,
+    start: "10:30",
     duration: 30,
     type: "appointment",
-    title: "Megha Roy",
-    subtitle: "Follow-up",
+    title: "Rohan Das",
+    subtitle: "Appointment",
   },
 
   {
     id: 28,
+    dayOffset: 4,
+    start: "11:00",
+    duration: 30,
+    type: "followup",
+    title: "Vijay Patel",
+    subtitle: "Follow-up",
+  },
+
+  {
+    id: 29,
+    dayOffset: 4,
+    start: "12:00",
+    duration: 30,
+    type: "consultation",
+    title: "Pooja Sharma",
+    subtitle: "Consultation",
+  },
+
+  {
+    id: 30,
+    dayOffset: 4,
+    start: "13:00",
+    duration: 30,
+    type: "diagnostic",
+    title: "Karan Mehta",
+    subtitle: "Diagnostic Review",
+  },
+
+  {
+    id: 31,
+    dayOffset: 4,
+    start: "14:00",
+    duration: 30,
+    type: "video",
+    title: "Nisha Roy",
+    subtitle: "Video Consultation",
+  },
+
+  {
+    id: 32,
+    dayOffset: 4,
+    start: "15:00",
+    duration: 60,
+    type: "admin",
+    title: "Documentation",
+    subtitle: "Administrative work",
+  },
+
+  /* ================= SATURDAY ================= */
+
+  {
+    id: 33,
+    dayOffset: 5,
+    start: "10:00",
+    duration: 30,
+    type: "appointment",
+    title: "Kavya Singh",
+    subtitle: "Appointment",
+  },
+
+  {
+    id: 34,
+    dayOffset: 5,
+    start: "11:30",
+    duration: 30,
+    type: "followup",
+    title: "Nitin Das",
+    subtitle: "Follow-up",
+  },
+
+  {
+    id: 35,
+    dayOffset: 5,
+    start: "12:00",
+    duration: 30,
+    type: "consultation",
+    title: "Aarav Roy",
+    subtitle: "Consultation",
+  },
+
+  {
+    id: 36,
+    dayOffset: 5,
+    start: "14:00",
+    duration: 30,
+    type: "diagnostic",
+    title: "Ishita Sharma",
+    subtitle: "Diagnostic Review",
+  },
+
+  {
+    id: 37,
+    dayOffset: 5,
+    start: "15:00",
+    duration: 60,
+    type: "admin",
+    title: "Hospital Records",
+    subtitle: "Administrative work",
+  },
+
+  /* ================= SUNDAY ================= */
+
+  {
+    id: 38,
+    dayOffset: 6,
+    start: "10:00",
+    duration: 30,
+    type: "appointment",
+    title: "Megha Roy",
+    subtitle: "Appointment",
+  },
+
+  {
+    id: 39,
+    dayOffset: 6,
+    start: "11:00",
+    duration: 30,
+    type: "followup",
+    title: "Aditya Verma",
+    subtitle: "Follow-up",
+  },
+
+  {
+    id: 40,
+    dayOffset: 6,
+    start: "12:00",
+    duration: 30,
+    type: "followup",
+    title: "Riya Das",
+    subtitle: "Follow-up",
+  },
+
+  {
+    id: 41,
     dayOffset: 6,
     start: "14:00",
+    duration: 30,
+    type: "consultation",
+    title: "Tanmay Paul",
+    subtitle: "Consultation",
+  },
+
+  {
+    id: 42,
+    dayOffset: 6,
+    start: "15:00",
     duration: 60,
     type: "meeting",
     title: "Weekly Review",
@@ -588,34 +681,42 @@ const appointmentFilters = [
   {
     id: "appointment",
     label: "Appointments",
+    capacity: 4,
   },
   {
     id: "followup",
     label: "Follow-up",
+    capacity: 5,
   },
   {
     id: "consultation",
     label: "Consultations",
+    capacity: 3,
   },
   {
     id: "diagnostic",
     label: "Diagnostics",
+    capacity: 2,
   },
   {
     id: "video",
     label: "Video Appointments",
+    capacity: 2,
   },
   {
     id: "meeting",
     label: "Meetings",
+    capacity: 2,
   },
   {
     id: "admin",
     label: "Administrative",
+    capacity: 2,
   },
   {
     id: "break",
     label: "Breaks",
+    capacity: 1,
   },
 ];
 
@@ -627,24 +728,17 @@ function DocSchedule() {
   const [weekStart, setWeekStart] = useState(() => getMonday(new Date()));
   const [now, setNow] = useState(new Date());
   const [view, setView] = useState("week");
-  // const [filter, setFilter] = useState("all");
+  const [scheduleEvents, setScheduleEvents] = useState(EVENTS);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [refreshError, setRefreshError] = useState(null);
+
   const scrollRef = useRef(null);
+  const filterRef = useRef(null);
   const [visibleRows, setVisibleRows] = useState(MIN_VISIBLE_ROWS);
   const [rowHeight, setRowHeight] = useState(MIN_ROW_HEIGHT);
+
   const [filterOpen, setFilterOpen] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState([]);
-  
-
-const toggleFilter = (filterId) => {
-  setSelectedFilters((prev) => {
-    if (prev.includes(filterId)) {
-      return prev.filter((id) => id !== filterId);
-    }
-
-    return [...prev, filterId];
-  });
-};
-
+  const [scheduleFilter, setScheduleFilter] = useState("all");
   /* ---------------- days ---------------- */
 
   const weekDays = useMemo(() => {
@@ -679,14 +773,15 @@ const toggleFilter = (filterId) => {
   // }, [filter]);
  
   const filteredEvents = useMemo(() => {
-    if (selectedFilters.length === 0) {
-      return EVENTS;
+    if (scheduleFilter === "all") {
+      return scheduleEvents;
     }
 
-    return EVENTS.filter((event) =>
-      selectedFilters.includes(event.type)
+    return scheduleEvents.filter(
+      (event) => event.type === scheduleFilter
     );
-  }, [selectedFilters]);
+  }, [scheduleEvents, scheduleFilter]);
+
   /* ---------------- positioned events ---------------- */
 
   const eventsWithPosition = useMemo(() => {
@@ -715,14 +810,25 @@ const toggleFilter = (filterId) => {
 
   const appointmentCounts = useMemo(() => {
     return DAY_LABELS.map((_, index) => {
-      return filteredEvents.filter(
+      const dayEvents = filteredEvents.filter(
         (event) =>
-          event.dayOffset === index &&
-          !["break", "meeting", "admin"].includes(event.type)
-      ).length;
-    });
-  }, [filteredEvents]);
+          event.dayOffset === index
+      );
 
+      if (scheduleFilter === "all") {
+        return dayEvents.filter(
+          (event) =>
+            ![
+              "break",
+              "meeting",
+              "admin",
+            ].includes(event.type)
+        ).length;
+      }
+
+      return dayEvents.length;
+    });
+  }, [filteredEvents, scheduleFilter]);
   /* ---------------- today ---------------- */
 
   const todayColumn = weekDays.findIndex(
@@ -765,69 +871,115 @@ const toggleFilter = (filterId) => {
 
   }, [monthDays, filteredEvents]);
 
-    /* ---------------- handlers ---------------- */
+  const refreshSchedule = async () => {
+    if (isRefreshing) return;
+
+    try {
+      setIsRefreshing(true);
+      setRefreshError(null);
+
+      /*
+      * BACKEND:
+      * Replace this with your actual API call.
+      *
+      * const response = await fetch("/api/doctor/schedule");
+      *
+      * if (!response.ok) {
+      *   throw new Error("Failed to refresh schedule");
+      * }
+      *
+      * const data = await response.json();
+      *
+      * setScheduleEvents(data);
+      */
+
+      // Temporary development implementation
+      await new Promise((resolve) => setTimeout(resolve, 600));
+      setScheduleEvents([...EVENTS]);
+      // Keep "now" synchronized after refresh
+      setNow(new Date());
+      // Reset filter to default
+      setScheduleFilter("all");
+
+    } catch (error) {
+      console.error("Schedule refresh failed:", error);
+
+      setRefreshError( "Unable to refresh schedule");
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+  
+
+  // after Backend connection:
+
+//   const refreshSchedule = async () => {
+//   if (isRefreshing) return;
+
+//   try {
+//     setIsRefreshing(true);
+//     setRefreshError(null);
+
+//     const response = await fetch(
+//       "/api/doctor/schedule"
+//     );
+
+//     if (!response.ok) {
+//       throw new Error(
+//         "Failed to fetch schedule"
+//       );
+//     }
+
+//     const data = await response.json();
+
+//     setScheduleEvents(data);
+//     setNow(new Date());
+
+//   } catch (error) {
+//     console.error(error);
+
+//     setRefreshError(
+//       "Unable to refresh schedule"
+//     );
+
+//   } finally {
+//     setIsRefreshing(false);
+//   }
+// };
+  
+/* ---------------- handlers ---------------- */
 
   const previousPeriod = () => {
     setWeekStart((current) => {
-
       if (view === "month") {
-        const previousMonth = new Date(
-          current.getFullYear(),
-          current.getMonth() - 1,
-          1
-        );
-
+        const previousMonth = new Date( current.getFullYear(), current.getMonth() - 1, 1);
         return previousMonth;
       }
-
       if (view === "day") {
         return addDays(current, -1);
       }
-
       return addDays(current, -7);
     });
   };
   const nextPeriod = () => {
     setWeekStart((current) => {
-
       if (view === "month") {
-        const nextMonth = new Date(
-          current.getFullYear(),
-          current.getMonth() + 1,
-          1
-        );
-
+        const nextMonth = new Date( current.getFullYear(), current.getMonth() + 1, 1);
         return nextMonth;
       }
-
       if (view === "day") {
         return addDays(current, 1);
       }
-
       return addDays(current, 7);
     });
   };
   const goToday = () => {
-
     const today = new Date();
-
     if (view === "month") {
-
-      setWeekStart(
-        new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          1
-        )
-      );
-
+      setWeekStart( new Date( today.getFullYear(), today.getMonth(), 1));
       return;
     }
-
-
-    setWeekStart(
-      getMonday(today)
-    );
+    setWeekStart( getMonday(today) );
   };
 
 
@@ -951,6 +1103,27 @@ const toggleFilter = (filterId) => {
 
  }, [ view, rowHeight, visibleRows, now ]);
 
+ useEffect(() => {
+  const handleOutsideClick = (event) => {
+    if (
+      filterRef.current &&
+      !filterRef.current.contains(event.target)
+    ) {
+      setFilterOpen(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleOutsideClick);
+
+  return () => {
+    document.removeEventListener(
+      "mousedown",
+      handleOutsideClick
+    );
+  };
+}, []);
+
+
   return (
     <section className="sched">
       {/* <div className="sched__header">
@@ -1025,75 +1198,132 @@ const toggleFilter = (filterId) => {
 
         </div>
 
-        <div className="sched__filter">
-          <div className="sched__filter-dropdown"> 
+        <div ref={filterRef} className="sched__filter">
+          <div className="sched__filter-dropdown">
+
             <button
               type="button"
               className="sched__filter-select"
-              onClick={() => setFilterOpen((prev) => !prev)}
+              onClick={() => {
+                setFilterOpen((prev) => !prev);
+              }}
               aria-expanded={filterOpen}
               aria-haspopup="menu"
             >
               <span>
-                {selectedFilters.length === 0
-                  ? "All Appointments"
-                  : `${selectedFilters.length} Selected`}
+                {scheduleFilter === "all"
+                  ? "All Schedule"
+                  : appointmentFilters.find(
+                      (filter) =>
+                        filter.id === scheduleFilter
+                    )?.label
+                }
               </span>
 
-              <ChevronDown size={16} strokeWidth={2} />
+              <ChevronDown
+                size={16}
+                strokeWidth={2}
+                className={
+                  filterOpen ? "is-open" : ""
+                }
+              />
             </button>
+
+
             {filterOpen && (
               <div className="sched__filter-menu">
 
+                <div className="sched__filter-heading">
+                  FILTER BY
+                </div>
+
+
+                {/* ALL */}
+
                 <button
                   type="button"
-                  className="sched__filter-option"
-                  onClick={() => {setSelectedFilters([]);setFilterOpen(false)} }
+                  className={`sched__filter-option ${
+                    scheduleFilter === "all"
+                      ? "is-active"
+                      : ""
+                  }`}
+                  onClick={() => {
+                    setScheduleFilter("all");
+                    setFilterOpen(false);
+                  }}
                 >
-                  <span
-                    className={
-                      selectedFilters.length === 0
-                        ? "sched__filter-check is-selected"
-                        : "sched__filter-check"
-                    }
-                  >
-                    ✓
+
+                  <span className="sched__filter-radio">
+
+                    {scheduleFilter === "all" && (
+                      <span className="sched__filter-radio-dot" />
+                    )}
+
                   </span>
 
-                  <span>All Appointments</span>
+                  <span>
+                    All Schedule
+                  </span>
+
                 </button>
 
+
+                {/* FILTER OPTIONS */}
+
                 {appointmentFilters.map((filter) => (
+
                   <button
                     key={filter.id}
                     type="button"
-                    className="sched__filter-option"
-                    onClick={() => toggleFilter(filter.id)}
+                    className={`sched__filter-option ${
+                      scheduleFilter === filter.id
+                        ? "is-active"
+                        : ""
+                    }`}
+                    onClick={() => {
+                      setScheduleFilter(filter.id);
+                      setFilterOpen(false);
+                    }}
                   >
-                    <span
-                      className={
-                        selectedFilters.includes(filter.id)
-                          ? "sched__filter-check is-selected"
-                          : "sched__filter-check"
-                      }
-                    >
-                      ✓
+
+                    <span className="sched__filter-radio">
+
+                      {scheduleFilter === filter.id && (
+                        <span className="sched__filter-radio-dot" />
+                      )}
+
                     </span>
 
-                    <span>{filter.label}</span>
+                    <span>
+                      {filter.label}
+                    </span>
+
                   </button>
+
                 ))}
 
               </div>
             )}
+
           </div>
 
-          <button type="button" className="sched__refresh-icon" aria-label="Refresh schedule">
-            <RefreshCcw size={19} strokeWidth={2}/>
+          <button
+            type="button"
+            className={`sched__refresh-icon ${
+              isRefreshing ? "is-refreshing" : ""
+            }`}
+            aria-label={
+              isRefreshing
+                ? "Refreshing schedule"
+                : "Refresh schedule"
+            }
+            onClick={refreshSchedule}
+            disabled={isRefreshing}
+          >
+            <RefreshCcw size={19} strokeWidth={2} />
           </button>
-        </div>
-        
 
+        </div>
       </div>
 
 
@@ -1115,12 +1345,30 @@ const toggleFilter = (filterId) => {
                     <span className="sched__day-date">
                       {formatDayDate(day.date)}
                     </span>
-
+                    
                     <span className="sched__day-count">
                       <i />
-                      {appointmentCounts[index]} Appts
+                      {appointmentCounts[index]} task
                     </span>
 
+                    {/* <span className="sched__day-count">
+                      <i />
+                      {appointmentCounts[index]}{" "}
+                      {scheduleFilter === "all"
+                        ? appointmentCounts[index] === 1
+                          ? "Appt"
+                          : "Appts"
+                        : appointmentFilters.find(
+                            (filter) =>
+                              filter.id === scheduleFilter
+                          )?.label
+                      }
+                    </span> */}
+                    {/* <span className="sched__day-count">
+                      <i />
+                      {appointmentCounts[index]}{" "}
+                      {appointmentCounts[index] === 1 ? "item" : "items"}
+                    </span> */}
                   </div>
                 );
               })}
@@ -1152,7 +1400,11 @@ const toggleFilter = (filterId) => {
                     {weekDays.map((_, columnIndex) => (
                       <div
                         key={columnIndex}
-                        className={`sched__cell ${time.isHour ? "sched__cell--hour" : ""}`}
+                        className={`sched__cell
+                            ${time.isHour ? "sched__cell--hour" : ""}
+                            ${ columnIndex < todayColumn ? "sched__cell--past-day" : ""}
+                            ${ columnIndex === todayColumn ? "sched__cell--today" : ""}
+                            ${ columnIndex > todayColumn ? "sched__cell--future-day" : ""}`}
                         style={{
                           gridColumn: columnIndex + 2,
                           gridRow: rowIndex + 1,
@@ -1242,113 +1494,16 @@ const toggleFilter = (filterId) => {
                   {day}
                 </div>
               ))}
-
             </div>
 
 
             <div className="month-view__grid">
-              {/* {monthDays.map((day, index) => {
-                const dayEvents = monthEvents[index];
-                const isToday = isSameDate(day, now);
-                const isCurrentMonth = isSameMonth(day, weekStart);
-                const appointmentCount =
-                  dayEvents.filter(
-                    (event) =>
-                      ![
-                        "break",
-                        "meeting",
-                        "admin",
-                      ].includes(event.type)
-                  ).length;
-
-                const visibleEvents = dayEvents.slice(0, 3);
-
-                const remainingEvents = Math.max( 0, dayEvents.length - visibleEvents.length);
-
-                return (
-                  <div
-                    key={day.toISOString()}
-                    className={` month-cell ${isToday ? "month-cell--today" : ""} ${!isCurrentMonth ? "month-cell--outside" : ""} `}
-                  >
-
-                    <div className="month-cell__top">
-
-                      <span className="month-cell__date">
-                        {day.getDate()}
-                      </span>
-
-                      {appointmentCount > 0 && (
-                        <span className="month-cell__count">
-                          {appointmentCount}{" "}
-                          {appointmentCount === 1 ? "Appt" : "Appts"}
-                        </span>
-                      )}
-
-                    </div>
-
-
-                    <div className="month-cell__events">
-
-                      {visibleEvents.map((event) => {
-
-                        const config =
-                          TYPE_STYLE[event.type] ||
-                          TYPE_STYLE.appointment;
-
-                        const Icon = config.icon;
-
-                        return (
-                          <div
-                            key={event.id}
-                            className={`
-                              month-event
-                              month-event--${config.color}
-                            `}
-                          >
-
-                            <span className="month-event__icon">
-                              <Icon
-                                size={11}
-                                strokeWidth={2.4}
-                              />
-                            </span>
-
-                            <span className="month-event__title">
-                              {event.title}
-                            </span>
-
-                            <span className="month-event__time">
-                              {formatTime(event.start)}
-                            </span>
-
-                          </div>
-                        );
-
-                      })}
-
-
-                      {remainingEvents > 0 && (
-                        <button
-                          type="button"
-                          className="month-cell__more"
-                        >
-                          +{remainingEvents} more
-                        </button>
-                      )}
-
-                    </div>
-
-                  </div>
-                );
-              })} */}
-
               {monthDays.map((day, index) => {
 
                 const dayEvents = monthEvents[index];
                 const isToday = isSameDate(day, now);
                 const isCurrentMonth = isSameMonth(day, weekStart);
-                const availability = getDayAvailability(dayEvents);
-                const typeCounts = getEventTypeCounts(dayEvents);
+                const availability = getDayAvailability( dayEvents, scheduleFilter);
 
                 return (
                   <div
@@ -1379,18 +1534,22 @@ const toggleFilter = (filterId) => {
 
                     <div className="month-cell__availability">
 
-                      {/* AVAILABLE COUNT */}
-
                       <div className="month-cell__availability-total">
 
                         <strong>
                           {availability.availableSlots}
+                          <span>
+                            {" / "}
+                            {availability.totalSlots}
+                          </span>
                         </strong>
 
                         <span>
-                           Slots Available
+                          Slots Available
                         </span>
+
                       </div>
+
                     </div>
 
                   </div>
