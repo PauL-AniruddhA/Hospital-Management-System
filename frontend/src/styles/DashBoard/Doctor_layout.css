@@ -1,0 +1,219 @@
+/* =====================================================
+   NAVIGATION HEADER
+===================================================== */
+
+.nav-header {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    padding: 0 22px;
+
+    box-sizing: border-box;
+    background-color: white ;
+}
+
+
+
+
+
+/* =====================================================
+   ACTION AREA
+===================================================== */
+
+.nav-header__actions {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    margin-left: 24px;
+}
+
+
+/* =====================================================
+   NOTIFICATION
+===================================================== */
+
+.nav-header__notification {
+    position: relative;
+
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+}
+
+
+.nav-header__notification:hover {
+    background: #f4f6f9;
+}
+
+
+.nav-header__notification-icon {
+    font-size: 22px;
+
+    color: #69717d;
+}
+
+
+/* Notification indicator */
+
+.nav-header__notification-badge {
+    position: absolute;
+
+    top: 5px;
+    right: 5px;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #e53935;
+
+    border: 2px solid #ffffff;
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.nav-header__profile {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 5px 4px 5px 6px;
+
+    border: 0;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    border-radius: 12px;
+}
+
+
+.nav-header__profile:hover {
+    background: #f6f8fa;
+}
+
+
+/* =====================================================
+   AVATAR
+===================================================== */
+
+.nav-header__avatar {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+}
+
+
+.nav-header__avatar img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+}
+
+
+/* Online indicator */
+
+.nav-header__online {
+    position: absolute;
+
+    right: -1px;
+    bottom: 1px;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #24b47e;
+
+    border: 2px solid #ffffff;
+}
+
+
+/* =====================================================
+   USER INFORMATION
+===================================================== */
+
+.nav-header__user {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    min-width: 115px;
+}
+
+
+.nav-header__user strong {
+    color: #2f3540;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    line-height: 1.25;
+
+    white-space: nowrap;
+}
+
+
+.nav-header__user small {
+    margin-top: 2px;
+
+    color: #858c97;
+
+    font-size: 11px;
+    font-weight: 400;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   CHEVRON
+===================================================== */
+
+.nav-header__chevron {
+    margin-left: 3px;
+
+    color: #6e7681;
+
+    font-size: 18px;
+
+    line-height: 1;
+}

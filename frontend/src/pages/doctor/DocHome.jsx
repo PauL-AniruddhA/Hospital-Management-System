@@ -17,7 +17,12 @@ import {
   ChevronRight, MoreVertical, AlertTriangle, UserPlus, BedDouble, ClipboardCheck, Star, Timer, ClipboardList, PlayCircle, FileCheck2, NotebookPen, CheckSquare,Settings,CircleHelp, LogOut, Activity, X, Phone, Mail, HeartPulse, Moon, Languages, LogIn, ShieldCheck, LockKeyhole, FileSignature,
   BriefcaseMedical,
   LibraryBig,
-  Building2
+  Building2,
+PanelLeftClose,
+PanelLeftOpen,
+PanelRightClose,
+PanelRightOpen,
+SearchIcon,
 } from "lucide-react";
 
 /* Lazy-load each section — only the active one gets fetched/rendered.
@@ -53,9 +58,6 @@ const SECTION_MAP = {
 
 /* ---------------- static nav / reference data ---------------- */
 const NAV_SECTIONS = [
-
-
-
   {
     title: "MAIN",
     theme: "blue",
@@ -111,10 +113,10 @@ const ASIDE_QUICK_ACTIONS = [
   { icon: FileText, label: "New Patient", cls: "aside-qa-item--blue" },
   { icon: NotebookPen, label: "Write Note", cls: "aside-qa-item--orange" },
   // { icon: FileCheck2, label: "Add Prescription", cls: "aside-qa-item--green" },
-  { icon: Bell, label: "Reminders", cls: "aside-qa-item--green" },
-  { icon: FlaskConical, label: "Order Lab Test", cls: "aside-qa-item--purple" },
-  { icon: Users, label: "Referral ", cls: "aside-qa-item--teal" },
-  { icon: CheckSquare, label: "Create Task", cls: "aside-qa-item--red" },
+  // { icon: Bell, label: "Reminders", cls: "aside-qa-item--green" },
+  // { icon: FlaskConical, label: "Order Lab Test", cls: "aside-qa-item--purple" },
+  // { icon: Users, label: "Referral ", cls: "aside-qa-item--teal" },
+  // { icon: CheckSquare, label: "Create Task", cls: "aside-qa-item--red" },
 ];
 const NOTIFICATIONS = [
   { icon: CalendarDays, title: "Appointment cancelled", subtitle: "John Smith cancelled his 2:00 PM slot", time: "25 mins ago" },
@@ -122,64 +124,133 @@ const NOTIFICATIONS = [
   { icon: CheckCircle2, title: "Lab sync complete", subtitle: "3 reports imported from the lab system", time: "1 hr ago" },
 ];
 
-// const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-// const NAV_ITEMS = [
-//   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-//   { id: "patient-records", label: "Patient Records", icon: FileText },
-//   { id: "consultation", label: "Consultation", icon: Stethoscope },
-//   { id: "schedule", label: "Schedule", icon: CalendarDays },
-//   { id: "performance", label: "Performance", icon: BarChart3 },
-//   { id: "profile", label: "Profile", icon: UserRound },
-//   { id: "settings", label: "Settings", icon: SettingsIcon },
-// ];
 
+const activityLabels = {
+  messages: "Messages",
+  notifications: "Notifications",
+};
+const ACTIVITY_SEARCH = [
+  {
+    id: 1,
+    name: "Rahul Sharma",
+    meta: "Patient · ID #PT1024",
+    detail: "Last visit 28 Aug",
+  },
+  {
+    id: 2,
+    name: "Dr. Priya Mehta",
+    meta: "Cardiology",
+    detail: "Available today",
+  },
+  {
+    id: 3,
+    name: "Ananya Patel",
+    meta: "Patient · ID #PT1187",
+    detail: "Appointment at 3:30 PM",
+  },
+  {
+    id: 4,
+    name: "Dr. Arjun Rao",
+    meta: "Neurology",
+    detail: "Hospital Faculty",
+  },
+];
 
-// function getMonthGrid(date) {
-//   const year = date.getFullYear();
-//   const month = date.getMonth();
-//   const firstDay = new Date(year, month, 1).getDay();
-//   const daysInMonth = new Date(year, month + 1, 0).getDate();
+const ACTIVITY_MESSAGES = [
+  {
+    id: 1,
+    name: "Dr. Priya Mehta",
+    message: "Can you review the patient report?",
+    time: "10 min",
+    unread: true,
+  },
+  {
+    id: 2,
+    name: "Dr. Arjun Rao",
+    message: "The case discussion is scheduled for 4 PM.",
+    time: "32 min",
+    unread: true,
+  },
+  {
+    id: 3,
+    name: "Nursing Desk",
+    message: "Patient PT1024 has arrived.",
+    time: "1 hr",
+    unread: false,
+  },
+  {
+    id: 4,
+    name: "Dr. Neha Shah",
+    message: "Thanks for the update.",
+    time: "2 hr",
+    unread: false,
+  },
+];
 
-//   const cells = [
-//     ...Array(firstDay).fill(null),
-//     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
-//   ];
-//   while (cells.length % 7 !== 0) cells.push(null);
-//   return cells;
-// }
-// function getMonthGridFull(date) {
-//   const year = date.getFullYear();
-//   const month = date.getMonth();
-//   const firstDay = new Date(year, month, 1).getDay();
-//   const daysInMonth = new Date(year, month + 1, 0).getDate();
-//   const daysInPrevMonth = new Date(year, month, 0).getDate();
+const ACTIVITY_NOTIFICATIONS = [
+  {
+    id: 1,
+    type: "appointment",
+    title: "Appointment starting soon",
+    message: "Rahul Sharma · 10:30 AM",
+    time: "5 min",
+    unread: true,
+  },
+  {
+    id: 2,
+    type: "report",
+    title: "Lab report available",
+    message: "Patient PT1187",
+    time: "18 min",
+    unread: true,
+  },
+  {
+    id: 3,
+    type: "message",
+    title: "New message received",
+    message: "Dr. Priya Mehta",
+    time: "42 min",
+    unread: false,
+  },
+  {
+    id: 4,
+    type: "task",
+    title: "Task due today",
+    message: "Complete patient review",
+    time: "1 hr",
+    unread: false,
+  },
+];
 
-//   const cells = [];
-//   for (let i = firstDay - 1; i >= 0; i--) {
-//     cells.push({ day: daysInPrevMonth - i, muted: true });
-//   }
-//   for (let d = 1; d <= daysInMonth; d++) {
-//     cells.push({ day: d, muted: false });
-//   }
-//   let nextDay = 1;
-//   while (cells.length < 42) {
-//     cells.push({ day: nextDay++, muted: true });
-//   }
-//   return cells;
-// }
-// function getWeekNumber(d) {
-//   const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-//   const dayNum = date.getUTCDay() || 7;
-//   date.setUTCDate(date.getUTCDate() + 4 - dayNum);
-//   const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
-//   return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
-// }
+const ACTIVITY_ROW_MIN_HEIGHT = 52;
+const ACTIVITY_ROW_GAP = 8;
+
 
 /* ---------------- component ---------------- */
+function ActivityInfoRow({ icon, title, subtitle, meta, unread = false}) {
+  return (
+    <div
+      className={ "aside__activity-row" +
+        (unread ? " aside__activity-row--unread" : "")
+      }
+    >
+      <div className="aside__activity-row-icon"> {icon} </div>
+
+      <div className="aside__activity-row-content">
+        <span className="aside__activity-row-title"> {title} </span>
+        <span className="aside__activity-row-subtitle"> {subtitle} </span>
+      </div>
+
+      {meta && ( <span className="aside__activity-row-meta"> {meta} </span> )}
+    </div>
+  );
+}
+
+
 
 function DocHome() {
   const [activeTab, setActiveTab] = useState("dashboard");
-  // const [now, setNow] = useState(new Date());
+
   const [notifOpen, setNotifOpen] = useState(false);
   const notifRef = useRef(null);
 
@@ -188,76 +259,58 @@ function DocHome() {
   const [helpMessage, setHelpMessage] = useState("");
   const [helpPriority, setHelpPriority] = useState("Medium");
   const [ticketId, setTicketId] = useState(null);
-
-  // calender and clock items
-  // const dayName = now.toLocaleDateString([], { weekday: "long" });
-  // const fullDate = now.toLocaleDateString([], { day: "numeric", month: "long" });
-  // const weekNum = getWeekNumber(now);
-  // const hh = now.getHours() % 12 === 0 ? 12 : now.getHours() % 12;
-  // const mm = String(now.getMinutes()).padStart(2, "0");
-  // const ss = String(now.getSeconds()).padStart(2, "0");
-  // const ampm = now.getHours() >= 12 ? "PM" : "AM";
-  // const monthLabel = now.toLocaleDateString([], { month: "long", year: "numeric" });
-  // const todayDate = now.getDate();
-  // const calendarCellsFull = useMemo(() => getMonthGridFull(now), [now.getMonth(), now.getFullYear(), now.getDate()]);
-  // // analog clock hand angles
-  // const secAngle = now.getSeconds() * 6;
-  // const minAngle = now.getMinutes() * 6 + now.getSeconds() * 0.1;
-  // const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
-
   const ActiveSection = SECTION_MAP[activeTab] ?? Dashboard;
-
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [asideOpen, setAsideOpen] = useState(true);
+  const [activityMode, setActivityMode] = useState("messages");
 
+  const infoRef = useRef(null);
+  const [infoHeight, setInfoHeight] = useState(0);
+  const visibleActivityRows = infoHeight > 0 ? Math.floor( (infoHeight + ACTIVITY_ROW_GAP) / (ACTIVITY_ROW_MIN_HEIGHT + ACTIVITY_ROW_GAP) ): 0;
+
+  const visibleSearchItems = ACTIVITY_SEARCH.slice(0, visibleActivityRows);
+  const visibleMessageItems = ACTIVITY_MESSAGES.slice(0, visibleActivityRows);
+  const visibleNotificationItems = ACTIVITY_NOTIFICATIONS.slice(0, visibleActivityRows);
   useEffect(() => {
-    function onClick(e) {
-      if (notifRef.current && !notifRef.current.contains(e.target)) setNotifOpen(false);  // close the notification dropdown on outside click
-      // if (profileRef.current && !profileRef.current.contains(e.target)) setProfileOpen(false); // close the profile dropdown on outside click
-    }
-    document.addEventListener("mousedown", onClick); 
-    return () => document.removeEventListener("mousedown", onClick);
+    if (!infoRef.current) return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      setInfoHeight(entry.contentRect.height);
+    });
+
+    observer.observe(infoRef.current);
+
+    return () => observer.disconnect();
   }, []);
 
-  // single ticking clock for the permanent right-rail widget
-  // useEffect(() => {
-  //   const id = setInterval(() => setNow(new Date()), 1000);
-  //   return () => clearInterval(id);
-  // }, []);
+
 
   return (
-    <div className="doctors-home" data-entity="doctor">
+    // <div className="doctors-home" data-entity="doctor">
+    <div className={[ "doctors-home", !sidebarOpen && "sidebar-collapsed", !asideOpen && "aside-collapsed" ] .filter(Boolean) .join(" ")} data-entity="doctor" >
+
       {/* topbar */}
 
       <div className="doc_logo">
          <Hospital_Brand/>
       </div>
 
-        {/* <div className="doc_topbar_brand">
-          <span className="doc_topbar_brand-icon">
-            <Cross size={20} strokeWidth={2.5} />
-          </span>
-          <div className="doc_topbar_brand-text">
-            <span className="doc_topbar_brand-name">AMS </span>
-            <span className="doc_topbar_brand-tagline">HOSPITAL</span>
-          </div>
-      </div> */}
-
-        {/* <button className="doc_topbar__menu-btn" aria-label="Toggle sidebar">
-          <Menu size={20} />
-        </button> */}
-
-      <div className="topbar__search">
-        <Search_Bar  placeholder="Search patients by name, ID or phone..."/>
-        {/* <div className="topbar__search-bar">
-          <Search size={16} className="topbar__search-icon" />
-          <input type="text" placeholder="Search patients by name, ID or phone..." />
-          <kbd className="topbar__search-kbd">Ctrl + K</kbd>
-        </div>   */}
+      <div className="topbar__navigation">
+        <nav className ="nav-header__menu">
+          <a href="#" class="nav-header__item"> Dashboard </a>
+          <a href="#" class="nav-header__item"> Community </a>
+          <a href="#" class="nav-header__item nav-header__item--active"> Hospital Faculty </a>
+          <a href="#" class="nav-header__item"> Personal </a>
+        </nav>
+        {/* <div className=" serch">
+          <Search_Bar  placeholder="Search patients by name, ID or phone..."/>
+        </div> */}
 
         <div className="topbar__search-activity" >
           <button className="topbar__icon-btn" aria-label="Dark Mode">
-            <Moon size={18} />
+            <SearchIcon size={18} />
           </button>
           <button className="topbar__icon-btn" aria-label="Messages">
             <MessageCircle size={18} />
@@ -291,61 +344,12 @@ function DocHome() {
             )}
           </div>
         </div>
-      </div>
 
+      </div>
+      
       <div className="topbar__actions">
         <ProfileMenu  variant="doctor" avatar={doc} name="Dr. Rajesh Sharma" role="Cardiologist" onNavigate={setActiveTab} />
-
-        {/* <div className="topbar__profile" ref={profileRef} onClick={() => setProfileOpen((o) => !o)}>
-          <img className="topbar__avatar" src={doc} alt="Dr. Rajesh Sharma" />
-          <div className="topbar__profile-text">
-            <span className="topbar__profile-name">Dr. Rajesh Sharma</span>
-            <span className="topbar__profile-role">Cardiologist</span>
-            <span className="topbar__profile-role">Id : DOC-2023</span>
-          </div>
-          <ChevronDown size={16} className={`topbar__profile-chevron${profileOpen ? " topbar__profile-chevron--open" : ""}`} />
-
-          {profileOpen && (
-            <>
-              <div className="doctor-dropdown">
-                <button onClick={(e) => { e.stopPropagation(); setActiveTab("profile"); setProfileOpen(false); }}>
-                  <UserRound size={17} /> My Profile
-                </button>
-
-                <button onClick={(e) => { e.stopPropagation(); setActiveTab("settings"); setProfileOpen(false); }}>
-                  <Settings size={17} /> Settings
-                </button>
-
-                <button onClick={(e) => { e.stopPropagation(); setProfileOpen(false); }}>
-                  <LockKeyhole size={17} /> Privacy
-                </button>
-
-
-                <button onClick={(e) => { e.stopPropagation(); setProfileOpen(false); }}>
-                  <ShieldCheck size={17} />  Security
-                </button>
-
-                <button onClick={(e) => { e.stopPropagation(); setProfileOpen(false); }}>
-                  <FileSignature size={17} /> Credentials
-                </button>
-
-                <button onClick={(e) => { e.stopPropagation(); setActiveTab("settings"); setProfileOpen(false); }}>
-                  <Languages size={17} /> Language
-                </button>
-
-                <button className="logout" onClick={(e) => { e.stopPropagation(); setProfileOpen(false); }}>
-                  <LogOut size={17} /> Logout
-                </button>
-              </div>
-            </>
-          )}
-        </div> */}
-        
       </div>
-
-
-        {/* <header className="doc_topbar">
-       </header> */}
 
       {/* left: doctor-specific nav + quick actions */}
       <aside className="doc_sidebar">
@@ -513,21 +517,120 @@ function DocHome() {
 
       {/* middle: doctor-specific working content */}
       <section className="doc_main">
-        <div className="doc_workspace">
+        <div className="doc_workspace"> 
           <Suspense fallback={<div className="section-loading">Loading…</div>}>
             <ActiveSection />
           </Suspense>
+
         </div>
       </section>
 
       {/* right: permanent clock + calendar  */}
       <section className="doc_aside">
         <aside className="aside-rail">
+          {/* <div className="aside__search_msg_notif-activity">
+            <button className="aside__icon-btn" aria-label="Search">
+              <SearchIcon size={15} strokeWidth={3} />
+            </button>
+
+            <button className="aside__icon-btn" aria-label="Messages">
+              <MessageCircle size={15} strokeWidth={3} />
+            </button>
+
+            <div className="aside__doc_notif-wrap" ref={notifRef}>
+              <button
+                className="aside__icon-btn"
+                aria-label="Notifications"
+                onClick={() => setNotifOpen((o) => !o)}
+              >
+                <Bell size={15} strokeWidth={3} />
+                {NOTIFICATIONS.length > 0 && (
+                  <span className="doc_notif__icon-badge">{NOTIFICATIONS.length}</span>
+                )}
+              </button>
+              {notifOpen && (
+                <div className="doc_notif-dropdown">
+                  <div className="doc_notif-dropdown__header">Notifications</div>
+                  {NOTIFICATIONS.map((n) => (
+                    <div className="doc_notif-dropdown__row" key={n.title}>
+                      <span className="doc_notif-dropdown__icon"><n.icon size={15} /></span>
+                      <div className="doc_notif-dropdown__info">
+                        <span className="doc_notif-dropdown__title">{n.title}</span>
+                        <span className="doc_notif-dropdown__subtitle">{n.subtitle}</span>
+                      </div>
+                      <span className="doc_notif-dropdown__time">{n.time}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>  */}
+          
+          <div className="aside__search_msg_notif-activity">
+           {/* =====================================================
+              ASIDE ACTIVITY PANEL
+              ===================================================== */}
+            <div className="aside__activity-controls">
+              <button className="aside__icon-btn" aria-label="Messages" onClick={() => setActivityMode("messages")}>
+                <MessageCircle size={15} strokeWidth={3} />
+              </button>
+
+
+              <button className="aside__icon-btn" aria-label="Notifications" onClick={() => setActivityMode("notifications")} >
+                <Bell size={15} strokeWidth={3} />
+
+                {ACTIVITY_NOTIFICATIONS.length > 0 && (
+                  <span className="doc_notif__icon-badge">
+                    {ACTIVITY_NOTIFICATIONS.length}
+                  </span>
+                )}
+              </button>
+
+            </div>
+
+            {/* <div className="activity_divider_workspace"/> */}
+            {/* =========================================
+                INFORMATION WORKSPACE
+            ========================================= */}
+
+              <div className="aside__activity-info" ref={infoRef}>
+                {activityMode === "messages" && (
+                  <div className="aside__activity-list" 
+                  // style={{ gridTemplateRows: `repeat(${visibleActivityRows}, 52px)`}}
+                  >
+                    {ACTIVITY_MESSAGES .slice(0, visibleActivityRows).map((item) => (
+                      <ActivityInfoRow
+                        key={item.id}
+                        icon={<MessageCircle size={14} />}
+                        title={item.name}
+                        subtitle={item.message}
+                        meta={item.time}
+                        unread={item.unread}
+                      />
+                    ))}
+                  </div>
+                )}
+                {activityMode === "notifications" && (
+                  // <div>NOTIFICATION</div>
+                  <div className="aside__activity-list" 
+                  // style={{ gridTemplateRows: `repeat(${visibleActivityRows}, 52px)`}}
+                  >
+                    {ACTIVITY_NOTIFICATIONS .slice(0, visibleActivityRows).map((item) => (
+                      <ActivityInfoRow
+                        key={item.id}
+                        icon={<Bell size={14} />}
+                        title={item.title}
+                        subtitle={item.message}
+                        meta={item.time}
+                        unread={item.unread}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
 
           <div className="panel--quick-actions">
-            {/* <div className="panel__header">
-              <h2>Quick Actions</h2>
-            </div> */}
             <div className="aside-qa-grid">
               {ASIDE_QUICK_ACTIONS.map((a) => (
                 <button className={`aside-qa-item ${a.cls}`} key={a.label}>
@@ -539,66 +642,7 @@ function DocHome() {
               ))}
             </div>
           </div>
-          
-          <ClockCalendarCard/>
-
-          {/* <div className="panel--calendar-v2">
-            <div className="cal-card__clock-block">
-              <div className="cal-card__info">
-                <div className="cal-card__digital-v2">
-                  <span className="cal-card__time-v2">
-                    {hh}:{mm}
-                    <span className="cal-card__ampm-v2">{ampm}</span>
-                  </span>
-                </div>
-                <span className="cal-card__date-v2">{dayName}, {fullDate}</span>
-              </div>
-              <svg className="cal-card__analog" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="47" className="analog-face" />
-                {[0,1,2,3,4,5,6,7,8,9,10,11].map((i) => (
-                  <line
-                    key={i}
-                    x1="50" y1="7" x2="50" y2="14"
-                    className="analog-tick"
-                    transform={`rotate(${i * 30} 50 50)`}
-                  />
-                ))}
-                <line x1="50" y1="50" x2="50" y2="28" className="analog-hand analog-hand--hour" transform={`rotate(${hourAngle} 50 50)`} />
-                <line x1="50" y1="50" x2="50" y2="18" className="analog-hand analog-hand--min" transform={`rotate(${minAngle} 50 50)`} />
-                <line x1="50" y1="50" x2="50" y2="14" className="analog-hand analog-hand--sec" transform={`rotate(${secAngle} 50 50)`} />
-                <circle cx="50" cy="50" r="2.5" className="analog-center" />
-              </svg>
-            </div>
-
-            <div className="cal-card__hr" />
-            
-            <div className="calendar-nav__arrows">
-              <button aria-label="Previous month"><ChevronLeft size={15} /></button>
-              <span className="cal-card__month-nav">{monthLabel}</span>
-              <button aria-label="Next month"><ChevronRight size={15} /></button>
-            </div>
-
-            <div className="calendar-grid ">
-              {WEEKDAYS.map((d) => (
-                <span className="calendar-grid__weekday" key={d}>{d}</span>
-              ))}
-              {calendarCellsFull.map((c, i) => (
-                <span
-                  key={i}
-                  className={
-                    "calendar-grid__day" +
-                    (c.muted ? " calendar-grid__day--muted" : "") +
-                    (!c.muted && c.day === todayDate ? " calendar-grid__day--selected" : "")
-                  }
-                >
-                  {c.day}
-                </span>
-              ))}
-            </div>
-          </div> */}
-
-          
-          
+          <ClockCalendarCard/> 
         </aside>
       </section>
     </div>

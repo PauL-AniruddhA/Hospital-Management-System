@@ -96,6 +96,7 @@ function ClockCalendarCard() {
           </div>
           <span className="clock_calender--date">{dayName}, {fullDate}</span>
         </div>
+        
         <svg className="analog_card" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="47" className="analog-face" />
           {[0,1,2,3,4,5,6,7,8,9,10,11].map((i) => (

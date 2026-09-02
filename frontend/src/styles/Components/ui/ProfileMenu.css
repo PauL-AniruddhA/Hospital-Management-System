@@ -4,7 +4,8 @@
   align-items: center;
   gap: 0.6rem;
   /* margin: 3px 64px 0px 0px; */
-  padding: 7px 20px 7px 12px;
+  padding: 5px 20px 5px 20px;
+      /* padding: 5px 22px 5px 22px; */
   /* border-left: 1px solid #9aa1ac; */
   cursor: pointer;
   flex-shrink: 0;
@@ -48,7 +49,7 @@
 
 .compact_profile-dropdown {
   position: absolute;
-  right: -55px;
+  right: -50px;
   width: 315px;
   top: 68px;
   /* background: #4e3e7a; */

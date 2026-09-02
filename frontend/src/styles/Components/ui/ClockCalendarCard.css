@@ -35,7 +35,7 @@
 }
 
 .clock__digital--time {
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 700;
   color: #1f2937;
   font-variant-numeric: tabular-nums;
@@ -46,19 +46,19 @@
 }
 
 .clock__digital--ampm {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: #6b7593;
 }
 .clock_calender--date {
-  font-size: 13.5px;
+  font-size: 11px;
   font-weight: 500;
   color: #8b93a8;
   letter-spacing: 0.1px;
 }
 .analog_card {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
 }
 
 .analog-face {

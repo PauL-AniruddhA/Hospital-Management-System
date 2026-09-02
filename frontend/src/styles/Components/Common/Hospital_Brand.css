@@ -10,7 +10,7 @@
   height: 100%;
   box-sizing: border-box;
   margin: 0;
-  background: var(--logo-background);
+  /* background: var(--logo-background); */
   padding:clamp(14px, 1.2vw, 20px) clamp(16px, 1.5vw, 24px);
   border-radius: 0 0 clamp(16px, 1.4vw, 22px) clamp(16px, 1.4vw, 22px);
   overflow: hidden;
@@ -35,6 +35,7 @@
 }
 .hospital-logo__name {
   font-size: clamp(18px, 1.45vw, 23px);
+  font-size: clamp(17px, 0.25vw, 19px);
   font-weight: 600;
   color: var(--logo-text);
   white-space: nowrap;

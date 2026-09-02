@@ -4,7 +4,7 @@ import LoginPage from "../pages/auth/LoginPage";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import DoctorHome from "../pages/doctor/DocHome";
 // import PatientDashboard from "../pages/patient/PatientDashboard";
-import ReceptionDashboard from "../pages/receptionist/ReceptionDashboard";
+import ReceptionDashboard from "../pages/receptionist/ReceptionHome";
 import RegistrationPage from "../pages/auth/RegistrationPage";
 import StaffSignUpPage from "../pages/auth/StaffSignUpPage";
 
@@ -12,6 +12,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import HomePage from "../pages/public/home/HomePage";
 import BookAppointments from "../pages/public/common/BookAppointments";
+import { DoctorLayout } from "../layouts/DoctorLayout";
 
 function AppRoutes(){
     return(
@@ -19,7 +20,9 @@ function AppRoutes(){
             <Routes>
                 {/* Public Routes */}
                 {/* <Route path="/" element={<HomePage />} /> */}
+                {/* <Route path="/" element={<ReceptionDashboard />} /> */}
                 <Route path="/" element={<DoctorHome />} />
+                {/* <Route path="/" element={<DoctorLayout />} /> */}
                 <Route path="/book-appointment" element={<BookAppointments />} />
                 
                 {/* Auth Routing */}
@@ -36,7 +39,7 @@ function AppRoutes(){
                 
                 <Route path="/doctor/dashboard" element={<ProtectedRoute allowedRole="DOCTOR"><DoctorHome /></ProtectedRoute>} />
                 {/* <Route path="/patient/dashboard" element={<ProtectedRoute allowedRole="PATIENT"><PatientDashboard /></ProtectedRoute>} />  */}
-                <Route path="/receptionist/dashboard" element={<ProtectedRoute allowedRole="RECEPTIONIST"><ReceptionDashboard /></ProtectedRoute>} /> 
+                {/* <Route path="/receptionist/dashboard" element={<ProtectedRoute allowedRole="RECEPTIONIST"><ReceptionDashboard /></ProtectedRoute>} />  */}
 
             </Routes>
         </BrowserRouter>

@@ -58,8 +58,7 @@ body {
   ========================*/
 
   --topbar-height: calc(38px * var(--scale));
-  --navbar-height: calc(57px * var(--scale));
-  --sidebar-width: calc(264px * var(--scale));
+  --navbar-height: calc(57px * var(--scale));  /* used by public and public patient */
 
   --portal-width:min(92vw,1600px);
   --patient-overlap:clamp(35px,4vw,60px);
