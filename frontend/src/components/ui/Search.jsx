@@ -7,11 +7,11 @@ function Search_Bar({ entity = "default",placeholder = "Search...",value = "",  
     <div className="search__bar" data-entity={entity}>
         <Search size={16}className="search__icon" />
         <input type="text" placeholder={placeholder} />
-        {shortcut && (
+        {/* {shortcut && (
           <kbd className="search__kbd">
             {shortcut}
           </kbd>
-        )}
+        )} */}
 
       </div>
   );

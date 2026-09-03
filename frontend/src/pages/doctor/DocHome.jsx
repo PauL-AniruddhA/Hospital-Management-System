@@ -1,4 +1,4 @@
-import React, { useEffect , useMemo , useRef , useState , Suspense, lazy} from "react";
+import React, { useEffect, useMemo, useRef, useState, Suspense, lazy } from "react";
 import "../../styles/Doctor/doctor-home.css";
 import doc from "../../assets/home/doc3.png";
 import Hospital_Brand from "../../components/common/Hospital_Brand";
@@ -14,51 +14,78 @@ import {
   Cross, LayoutDashboard, Users, FileText, Stethoscope, Pill, FlaskConical,
   CalendarDays, Bell, BarChart3, UserRound, Headset, Settings as SettingsIcon,
   Menu, Search, MessageCircle, ChevronDown, CheckCircle2, Clock, ChevronLeft,
-  ChevronRight, MoreVertical, AlertTriangle, UserPlus, BedDouble, ClipboardCheck, Star, Timer, ClipboardList, PlayCircle, FileCheck2, NotebookPen, CheckSquare,Settings,CircleHelp, LogOut, Activity, X, Phone, Mail, HeartPulse, Moon, Languages, LogIn, ShieldCheck, LockKeyhole, FileSignature,
+  ChevronRight, MoreVertical, AlertTriangle, UserPlus, BedDouble, ClipboardCheck, Star, Timer, ClipboardList, PlayCircle, FileCheck2, NotebookPen, CheckSquare, Settings, CircleHelp, LogOut, Activity, X, Phone, Mail, HeartPulse, Moon, Languages, LogIn, ShieldCheck, LockKeyhole, FileSignature,
   BriefcaseMedical,
   LibraryBig,
   Building2,
-PanelLeftClose,
-PanelLeftOpen,
-PanelRightClose,
-PanelRightOpen,
-SearchIcon,
+  PanelLeftClose,
+  PanelLeftOpen,
+  PanelRightClose,
+  PanelRightOpen,
+  SearchIcon,
 } from "lucide-react";
 
 /* Lazy-load each section — only the active one gets fetched/rendered.
    This recovers the code-splitting benefit you'd normally get from routing. */
-const Dashboard        = lazy(() => import("../doctor/DocDashboard"));
-const Schedule         = lazy(() => import("../doctor/DocSchedule"));
-const Patient          = lazy(() => import("../../components/common/PatientRecords"));
+const Dashboard = lazy(() => import("../doctor/DocDashboard"));
+const Schedule = lazy(() => import("../doctor/DocSchedule"));
+const Patient = lazy(() => import("../../components/common/PatientRecords"));
 const Doctor_Workspace = lazy(() => import("../doctor/DocWorkspace"));
-const DocHub           = lazy(() => import("../../components/common/DoctorsHub"));
-const MDT_Meetings     = lazy(() => import("../../components/common/MDT_Meetings"));
+const DocHub = lazy(() => import("../../components/common/DoctorsHub"));
+const MDT_Meetings = lazy(() => import("../../components/common/MDT_Meetings"));
 const Hospital_Faculty = lazy(() => import("../../components/common/Hospital_Faculty"));
-const MedicalLibrary   = lazy(() => import("../../components/common/Medical_Library"));
+const MedicalLibrary = lazy(() => import("../../components/common/Medical_Library"));
 
-const Performance      = lazy(() => import("../doctor/DocPerformance"));
-const Profile          = lazy(() => import("../../components/personal/My_Profile"));
-const SettingsSection  = lazy(() => import("../../components/common/SettingsSection"));
+const Performance = lazy(() => import("../doctor/DocPerformance"));
+const Profile = lazy(() => import("../../components/personal/My_Profile"));
+const SettingsSection = lazy(() => import("../../components/common/SettingsSection"));
 
 /* key = tab id, value = component to render. Single source of truth — adding a new sidebar item later means adding ONE line here. */
 const SECTION_MAP = {
   dashboard: Dashboard,
   schedule: Schedule,
   "patient-records": Patient,
-  Workspace:Doctor_Workspace,
-  DocHub:DocHub,
-  MDT:MDT_Meetings,
-  Faculty:Hospital_Faculty,
-  "Med-Library":MedicalLibrary,
-  
+  Workspace: Doctor_Workspace,
+  DocHub: DocHub,
+  MDT: MDT_Meetings,
+  Faculty: Hospital_Faculty,
+  "Med-Library": MedicalLibrary,
+
   performance: Performance,
   profile: Profile,
   settings: SettingsSection,
 };
 
-/* ---------------- static nav / reference data ---------------- */
-const NAV_SECTIONS = [
+const TOP_NAVIGATION = [
   {
+    id: "dashboard",
+    label: "Dashboard",
+    defaultTab: "schedule",
+  },
+  {
+    id: "community",
+    label: "Community",
+    defaultTab: "DocHub",
+  },
+  {
+    id: "clinical",
+    label: "Clinic",
+    defaultTab: "DocHub",
+  },
+  {
+    id: "faculty",
+    label: "Hospital Faculty",
+    defaultTab: "Faculty",
+  },
+  {
+    id: "personal",
+    label: "Personal",
+    defaultTab: "Workspace",
+  },
+];
+
+const NAV_SECTIONS = {
+  dashboard: {
     title: "MAIN",
     theme: "blue",
     items: [
@@ -69,8 +96,8 @@ const NAV_SECTIONS = [
       { id: "patient-records", label: "	Patients", icon: Stethoscope },
     ],
   },
-  
-  {
+
+  clinical: {
     title: "CLINICAL",
     theme: "green",
     items: [
@@ -84,8 +111,8 @@ const NAV_SECTIONS = [
       // { id: "referrals",label: "Referrals",icon: ChevronRight },
     ],
   },
-  
-  {
+
+  community: {
     title: "COLLABORATION",
     theme: "purple",
     items: [
@@ -96,8 +123,8 @@ const NAV_SECTIONS = [
       // { id: "research", label: "Research", icon: FlaskConical },
     ],
   },
-  
-  {
+
+  faculty: {
     title: "HOSPITAL",
     theme: "orange",
     items: [
@@ -107,8 +134,17 @@ const NAV_SECTIONS = [
       // { id: "performance", label: "Performance", icon: BarChart3 },
       // { id: "ward-rounds", label: "Ward Rounds", icon: BedDouble },
     ],
-  }
-];
+  },
+  personal: {
+    theme: "green",
+    items: [
+      { id: "Workspace", label: "My Workspace", icon: BriefcaseMedical, },
+      { id: "performance", label: "Performance", icon: BarChart3, },
+      { id: "profile", label: "My Profile", icon: UserRound, },
+      { id: "settings", label: "Settings", icon: SettingsIcon, },
+    ],
+  },
+};
 const ASIDE_QUICK_ACTIONS = [
   { icon: FileText, label: "New Patient", cls: "aside-qa-item--blue" },
   { icon: NotebookPen, label: "Write Note", cls: "aside-qa-item--orange" },
@@ -123,8 +159,6 @@ const NOTIFICATIONS = [
   { icon: FileText, title: "New record shared", subtitle: "Referral note added for Priya Mehta", time: "40 mins ago" },
   { icon: CheckCircle2, title: "Lab sync complete", subtitle: "3 reports imported from the lab system", time: "1 hr ago" },
 ];
-
-
 const activityLabels = {
   messages: "Messages",
   notifications: "Notifications",
@@ -155,7 +189,6 @@ const ACTIVITY_SEARCH = [
     detail: "Hospital Faculty",
   },
 ];
-
 const ACTIVITY_MESSAGES = [
   {
     id: 1,
@@ -186,7 +219,6 @@ const ACTIVITY_MESSAGES = [
     unread: false,
   },
 ];
-
 const ACTIVITY_NOTIFICATIONS = [
   {
     id: 1,
@@ -227,10 +259,10 @@ const ACTIVITY_ROW_GAP = 8;
 
 
 /* ---------------- component ---------------- */
-function ActivityInfoRow({ icon, title, subtitle, meta, unread = false}) {
+function ActivityInfoRow({ icon, title, subtitle, meta, unread = false }) {
   return (
     <div
-      className={ "aside__activity-row" +
+      className={"aside__activity-row" +
         (unread ? " aside__activity-row--unread" : "")
       }
     >
@@ -241,7 +273,7 @@ function ActivityInfoRow({ icon, title, subtitle, meta, unread = false}) {
         <span className="aside__activity-row-subtitle"> {subtitle} </span>
       </div>
 
-      {meta && ( <span className="aside__activity-row-meta"> {meta} </span> )}
+      {meta && (<span className="aside__activity-row-meta"> {meta} </span>)}
     </div>
   );
 }
@@ -249,6 +281,7 @@ function ActivityInfoRow({ icon, title, subtitle, meta, unread = false}) {
 
 
 function DocHome() {
+  const [activeNavigation, setActiveNavigation] = useState("dashboard");
   const [activeTab, setActiveTab] = useState("dashboard");
 
   const [notifOpen, setNotifOpen] = useState(false);
@@ -262,17 +295,14 @@ function DocHome() {
   const ActiveSection = SECTION_MAP[activeTab] ?? Dashboard;
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [asideOpen, setAsideOpen] = useState(true);
+
   const [activityMode, setActivityMode] = useState("messages");
 
   const infoRef = useRef(null);
   const [infoHeight, setInfoHeight] = useState(0);
-  const visibleActivityRows = infoHeight > 0 ? Math.floor( (infoHeight + ACTIVITY_ROW_GAP) / (ACTIVITY_ROW_MIN_HEIGHT + ACTIVITY_ROW_GAP) ): 0;
+  const visibleActivityRows = infoHeight > 0 ? Math.floor((infoHeight + ACTIVITY_ROW_GAP) / (ACTIVITY_ROW_MIN_HEIGHT + ACTIVITY_ROW_GAP)) : 0;
+  const currentSidebar = NAV_SECTIONS[activeNavigation];
 
-  const visibleSearchItems = ACTIVITY_SEARCH.slice(0, visibleActivityRows);
-  const visibleMessageItems = ACTIVITY_MESSAGES.slice(0, visibleActivityRows);
-  const visibleNotificationItems = ACTIVITY_NOTIFICATIONS.slice(0, visibleActivityRows);
   useEffect(() => {
     if (!infoRef.current) return;
 
@@ -286,24 +316,39 @@ function DocHome() {
   }, []);
 
 
-
   return (
-    // <div className="doctors-home" data-entity="doctor">
-    <div className={[ "doctors-home", !sidebarOpen && "sidebar-collapsed", !asideOpen && "aside-collapsed" ] .filter(Boolean) .join(" ")} data-entity="doctor" >
+    <div className="doctors-home" data-entity="doctor">
 
       {/* topbar */}
 
       <div className="doc_logo">
-         <Hospital_Brand/>
+        <Hospital_Brand />
       </div>
 
       <div className="topbar__navigation">
-        <nav className ="nav-header__menu">
-          <a href="#" class="nav-header__item"> Dashboard </a>
-          <a href="#" class="nav-header__item"> Community </a>
-          <a href="#" class="nav-header__item nav-header__item--active"> Hospital Faculty </a>
-          <a href="#" class="nav-header__item"> Personal </a>
+        <nav className="nav-header__menu">
+          <nav className="nav-header__menu">
+            {TOP_NAVIGATION.map((navigation) => (
+              <button
+                key={navigation.id}
+                type="button"
+                className={
+                  "nav-header__item" +
+                  (activeNavigation === navigation.id
+                    ? " nav-header__item--active"
+                    : "")
+                }
+                onClick={() => {
+                  setActiveNavigation(navigation.id);
+                  setActiveTab(navigation.defaultTab);
+                }}
+              >
+                {navigation.label}
+              </button>
+            ))}
+          </nav>
         </nav>
+
         {/* <div className=" serch">
           <Search_Bar  placeholder="Search patients by name, ID or phone..."/>
         </div> */}
@@ -346,9 +391,9 @@ function DocHome() {
         </div>
 
       </div>
-      
+
       <div className="topbar__actions">
-        <ProfileMenu  variant="doctor" avatar={doc} name="Dr. Rajesh Sharma" role="Cardiologist" onNavigate={setActiveTab} />
+        <ProfileMenu variant="doctor" avatar={doc} name="Dr. Rajesh Sharma" role="Cardiologist" onNavigate={setActiveTab} />
       </div>
 
       {/* left: doctor-specific nav + quick actions */}
@@ -356,52 +401,51 @@ function DocHome() {
         <section className="sidebar">
           <div className="sidebar__nav-items">
             <nav className="doctor-sidebar">
-              {NAV_SECTIONS.map((section, index) => (
-                <div key={section.title} className={`sidebar-section sidebar-section--${section.theme}`} >
-                  {/* SECTION TITLE */}
-                      
 
-                  {/* <div className="sidebar-section__header">
+              <div className={`sidebar-section sidebar-section--${currentSidebar.theme}`} >
+                {/* SECTION TITLE */}
+
+
+                {/* <div className="sidebar-section__header">
                     <div className="sidebar-section__line"/>
                     <div className="sidebar-section__dot" />
                     <span>{section.title}</span>
                     <div className="sidebar-section__line" />
                   </div> */}
 
-                  {/* ITEMS */}
+                {/* ITEMS */}
 
-                  <div className="sidebar-section__body">
-                    
-                    {section.items.map(
-                      ({ id, label, icon: Icon, count, tag }) => (
-                        <button key={id} type="button" onClick={() => setActiveTab(id)}  className={ "sidebar-item" + (activeTab === id ? " sidebar-item--active" : "")}>
-                          <div className="sidebar-item__icon">
-                            <Icon size={18} strokeWidth={2} />
-                          </div>
-                          <span className="sidebar-item__label">
-                            {label}
+                <div className="sidebar-section__body">
+
+                  {currentSidebar.items.map(
+                    ({ id, label, icon: Icon, count, tag }) => (
+                      <button key={id} type="button" onClick={() => setActiveTab(id)} className={"sidebar-item" + (activeTab === id ? " sidebar-item--active" : "")}>
+                        <div className="sidebar-item__icon">
+                          <Icon size={18} strokeWidth={2} />
+                        </div>
+                        <span className="sidebar-item__label">
+                          {label}
+                        </span>
+                        {count && (
+                          <span className="sidebar-item__badge">
+                            {count}
                           </span>
-                          {count && (
-                            <span className="sidebar-item__badge">
-                              {count}
-                            </span>
-                          )}
-                          {tag && (
-                            <span className="sidebar-item__tag">
-                              {tag}
-                            </span>
-                          )}
-                        </button>
-                      )
-                    )}
-                  </div>
+                        )}
+                        {tag && (
+                          <span className="sidebar-item__tag">
+                            {tag}
+                          </span>
+                        )}
+                      </button>
+                    )
+                  )}
                 </div>
-              ))}
+              </div>
             </nav>
           </div>
 
-          <div className="sidebar__bottom">    
-            <button type="button" className="sidebar__help"  onClick={() => setHelpOpen(true)}>
+          <div className="sidebar__bottom">
+            <button type="button" className="sidebar__help" onClick={() => setHelpOpen(true)}>
               <span className="sidebar__help-icon">
                 <Headset size={18} strokeWidth={2} />
               </span>
@@ -414,7 +458,7 @@ function DocHome() {
             {helpOpen && createPortal(
               <div className="help-modal-overlay" onClick={() => setHelpOpen(false)}>
                 <div className="help-modal" onClick={(e) => e.stopPropagation()}>
-                  
+
                   <div className="help-modal__header">
                     <div className="help-modal__title-group">
                       <span className="help-modal__icon">
@@ -517,7 +561,7 @@ function DocHome() {
 
       {/* middle: doctor-specific working content */}
       <section className="doc_main">
-        <div className="doc_workspace"> 
+        <div className="doc_workspace">
           <Suspense fallback={<div className="section-loading">Loading…</div>}>
             <ActiveSection />
           </Suspense>
@@ -528,53 +572,16 @@ function DocHome() {
       {/* right: permanent clock + calendar  */}
       <section className="doc_aside">
         <aside className="aside-rail">
-          {/* <div className="aside__search_msg_notif-activity">
-            <button className="aside__icon-btn" aria-label="Search">
-              <SearchIcon size={15} strokeWidth={3} />
-            </button>
-
-            <button className="aside__icon-btn" aria-label="Messages">
-              <MessageCircle size={15} strokeWidth={3} />
-            </button>
-
-            <div className="aside__doc_notif-wrap" ref={notifRef}>
-              <button
-                className="aside__icon-btn"
-                aria-label="Notifications"
-                onClick={() => setNotifOpen((o) => !o)}
-              >
-                <Bell size={15} strokeWidth={3} />
-                {NOTIFICATIONS.length > 0 && (
-                  <span className="doc_notif__icon-badge">{NOTIFICATIONS.length}</span>
-                )}
-              </button>
-              {notifOpen && (
-                <div className="doc_notif-dropdown">
-                  <div className="doc_notif-dropdown__header">Notifications</div>
-                  {NOTIFICATIONS.map((n) => (
-                    <div className="doc_notif-dropdown__row" key={n.title}>
-                      <span className="doc_notif-dropdown__icon"><n.icon size={15} /></span>
-                      <div className="doc_notif-dropdown__info">
-                        <span className="doc_notif-dropdown__title">{n.title}</span>
-                        <span className="doc_notif-dropdown__subtitle">{n.subtitle}</span>
-                      </div>
-                      <span className="doc_notif-dropdown__time">{n.time}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>  */}
-          
           <div className="aside__search_msg_notif-activity">
-           {/* =====================================================
-              ASIDE ACTIVITY PANEL
-              ===================================================== */}
             <div className="aside__activity-controls">
               <button className="aside__icon-btn" aria-label="Messages" onClick={() => setActivityMode("messages")}>
                 <MessageCircle size={15} strokeWidth={3} />
+                {ACTIVITY_MESSAGES.length > 0 && (
+                  <span className="doc_notif__icon-badge">
+                    {ACTIVITY_MESSAGES.length}
+                  </span>
+                )}
               </button>
-
 
               <button className="aside__icon-btn" aria-label="Notifications" onClick={() => setActivityMode("notifications")} >
                 <Bell size={15} strokeWidth={3} />
@@ -588,47 +595,42 @@ function DocHome() {
 
             </div>
 
-            {/* <div className="activity_divider_workspace"/> */}
-            {/* =========================================
-                INFORMATION WORKSPACE
-            ========================================= */}
-
-              <div className="aside__activity-info" ref={infoRef}>
-                {activityMode === "messages" && (
-                  <div className="aside__activity-list" 
-                  // style={{ gridTemplateRows: `repeat(${visibleActivityRows}, 52px)`}}
-                  >
-                    {ACTIVITY_MESSAGES .slice(0, visibleActivityRows).map((item) => (
-                      <ActivityInfoRow
-                        key={item.id}
-                        icon={<MessageCircle size={14} />}
-                        title={item.name}
-                        subtitle={item.message}
-                        meta={item.time}
-                        unread={item.unread}
-                      />
-                    ))}
-                  </div>
-                )}
-                {activityMode === "notifications" && (
-                  // <div>NOTIFICATION</div>
-                  <div className="aside__activity-list" 
-                  // style={{ gridTemplateRows: `repeat(${visibleActivityRows}, 52px)`}}
-                  >
-                    {ACTIVITY_NOTIFICATIONS .slice(0, visibleActivityRows).map((item) => (
-                      <ActivityInfoRow
-                        key={item.id}
-                        icon={<Bell size={14} />}
-                        title={item.title}
-                        subtitle={item.message}
-                        meta={item.time}
-                        unread={item.unread}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
+            <div className="aside__activity-info" ref={infoRef}>
+              {activityMode === "messages" && (
+                <div className="aside__activity-list"
+                // style={{ gridTemplateRows: `repeat(${visibleActivityRows}, 52px)`}}
+                >
+                  {ACTIVITY_MESSAGES.slice(0, visibleActivityRows).map((item) => (
+                    <ActivityInfoRow
+                      key={item.id}
+                      icon={<MessageCircle size={14} />}
+                      title={item.name}
+                      subtitle={item.message}
+                      meta={item.time}
+                      unread={item.unread}
+                    />
+                  ))}
+                </div>
+              )}
+              {activityMode === "notifications" && (
+                // <div>NOTIFICATION</div>
+                <div className="aside__activity-list"
+                // style={{ gridTemplateRows: `repeat(${visibleActivityRows}, 52px)`}}
+                >
+                  {ACTIVITY_NOTIFICATIONS.slice(0, visibleActivityRows).map((item) => (
+                    <ActivityInfoRow
+                      key={item.id}
+                      icon={<Bell size={14} />}
+                      title={item.title}
+                      subtitle={item.message}
+                      meta={item.time}
+                      unread={item.unread}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
+          </div>
 
           <div className="panel--quick-actions">
             <div className="aside-qa-grid">
@@ -642,11 +644,11 @@ function DocHome() {
               ))}
             </div>
           </div>
-          <ClockCalendarCard/> 
+          <ClockCalendarCard />
         </aside>
       </section>
     </div>
   );
 }
- 
+
 export default DocHome;

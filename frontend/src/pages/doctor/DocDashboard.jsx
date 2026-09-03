@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { 
   Users, CalendarDays, AlertTriangle, ClipboardList, ChevronRight, PlayCircle, MoreVertical, FlaskConical, Pill, UserPlus, CheckCircle2, ClipboardCheck, Star, Timer 
 } from "lucide-react";
@@ -6,179 +6,523 @@ import doc from "../../assets/home/doc3.png";
 import "../../styles/Doctor/Doctor-Dashboard.css";
 
 
-const QUEUE = [
-  { id: "01", name: "John Doe", pid: "AMS-2025-0012", time: "09:30 AM", meta: "20 mins ago", reason: "Follow-up", dept: "Hypertension", status: "waiting", patientImage: doc },
-  { id: "02", name: "Priyanghu Kaur", pid: "AMS-2025-0013", time: "09:45 AM", meta: "5 mins ago", reason: "Fever & Cold", dept: "General", status: "checkedin", patientImage: doc },
-  { id: "03", name: "Priya Mehta", pid: "AMS-2025-0014", time: "10:00 AM", meta: "In 15 mins", reason: "Chest Pain", dept: "Cardiology", status: "upcoming", patientImage: doc },
-  { id: "04", name: "Ramesh Kumar", pid: "AMS-2025-0015", time: "10:20 AM", meta: "In 35 mins", reason: "Diabetes Checkup", dept: "Endocrinology", status: "upcoming", patientImage: doc },
-  { id: "05", name: "Sneha Kapoor", pid: "AMS-2025-0016", time: "10:40 AM", meta: "In 55 mins", reason: "Thyroid Follow-up", dept: "Endocrinology", status: "upcoming", patientImage: doc },
+const MOCK_DOCTORS = [
+  { id: 1, name: "Tanvir Rayhan", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=12" },
+  { id: 2, name: "Akib Rahman", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=13" },
+  { id: 3, name: "Dr. Binti Biswas", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=32" },
+  { id: 4, name: "Shanto Shah", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=14" },
+  { id: 5, name: "Binti Biswas", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=33" },
+  { id: 6, name: "Zerin Taslim", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=34" },
+  { id: 7, name: "Rifat Rahman", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=15" },
+  { id: 8, name: "Monir Hossain", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=16" },
 ];
-
-const STATUS_LABEL = { waiting: "Waiting", checkedin: "Checked In", upcoming: "Upcoming" };
-
-const SCHEDULE = [
-  { time: "09:00 AM", title: "Consultation", patient: "Michael Brown", status: "completed" },
-  { time: "09:30 AM", title: "Consultation", patient: "John Doe", status: "completed" },
-  { time: "10:00 AM", title: "Consultation", patient: "Aniruddha Paul", status: "progress" },
-  { time: "10:30 AM", title: "Follow-up", patient: "Priya Mehta", status: "upcoming" },
-  { time: "11:00 AM", title: "Consultation", patient: "Ramesh Kumar", status: "upcoming" },
-  { time: "11:30 AM", title: "Consultation", patient: "Sneha Kapoor", status: "upcoming" },
+const MOCK_SELECTED_DOCTOR = {
+  id: 3,
+  name: "Dr. Binti Biswas",
+  specialty: "Nephrology Specialist",
+  photo: "https://i.pravatar.cc/300?img=32",
+  department: "Nephrology",
+  joiningDate: "01-Jun-2025",
+  email: "binti@birdem.net",
+  phone: "+880 1518443329",
+};
+const MOCK_DIALYSES_FEED = [
+  { id: 1, patientName: "Tanvir Rayhan", dateTime: "05 March 2026 | 09:00", urr: "65%", status: "Completed", note: "Patient stable, mild hypotension corrected" },
+  { id: 2, patientName: "Shanto Shah", dateTime: "05 March 2026 | 09:00", urr: "65%", status: "Cancelled", note: null },
+  { id: 3, patientName: "Din Islam", dateTime: "05 March 2026 | 09:00", urr: "65%", status: "Completed", note: "Patient stable, mild hypotension corrected" },
+  { id: 4, patientName: "Binti Biswas", dateTime: "05 March 2026 | 09:00", urr: "65%", status: "Completed", note: "Patient stable, mild hypotension corrected" },
 ];
-
-const SCHEDULE_STATUS_LABEL = { completed: "Completed", progress: "In Progress", upcoming: "Upcoming" };
-
-const ACTION_ITEMS = [
-  { id: "a1", tier: "critical", icon: AlertTriangle, title: "Emergency patient admitted", subtitle: "Bed 4 · needs triage now", cta: "Review" },
-  { id: "a2", tier: "clinical", icon: FlaskConical, title: "Abnormal lab flagged", subtitle: "Aniruddha Paul · CBC out of range", cta: "View report" },
-  { id: "a3", tier: "admin", icon: Pill, title: "2 prescriptions to sign", subtitle: "Ramesh Kumar, Sneha Kapoor", cta: "Sign" },
-  { id: "a4", tier: "admin", icon: UserPlus, title: "1 referral to approve", subtitle: "Priya Mehta → Cardiology", cta: "Approve" },
+const MOCK_WEEK_DAYS = [
+  { id: 1, label: "Mon", date: 9 },
+  { id: 2, label: "Mon", date: 10 },
+  { id: 3, label: "Mon", date: 11 },
+  { id: 4, label: "Mon", date: 12 },
+  { id: 5, label: "Mon", date: 13 },
+  { id: 6, label: "Mon", date: 14 },
+  { id: 7, label: "Mon", date: 15 },
 ];
-
-const PERFORMANCE = [
-  { icon: CheckCircle2, iconClass: "perf-icon--green", value: "142", label: "Patients Seen", trend: "+12%", up: true },
-  { icon: ClipboardCheck, iconClass: "perf-icon--purple", value: "128", label: "Prescriptions", trend: "+8%", up: true },
-  { icon: FlaskConical, iconClass: "perf-icon--blue", value: "96", label: "Lab Requests", trend: "+15%", up: true },
-  { icon: Star, iconClass: "perf-icon--orange", value: "4.8/5", label: "Avg. Rating", trend: "+0.3", up: true },
-  { icon: Timer, iconClass: "perf-icon--teal", value: "18 min", label: "Avg. Time", trend: "-2 min", up: false },
+const MOCK_PATIENTS_ON_SHIFT = [
+  { id: 1, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "https://i.pravatar.cc/60?img=51" },
+  { id: 2, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "https://i.pravatar.cc/60?img=52" },
+  { id: 3, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "https://i.pravatar.cc/60?img=53" },
+  { id: 4, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "https://i.pravatar.cc/60?img=54" },
+  { id: 5, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "https://i.pravatar.cc/60?img=55" },
 ];
-
-const STATS = [
-  { icon: CalendarDays, iconClass: "stat-icon--blue", label: "Today's Appointments", value: 24, action: "View all" },
-  { icon: Users, iconClass: "stat-icon--green", label: "Waiting Patients", value: QUEUE.filter((p) => p.status === "waiting" || p.status === "checkedin").length, action: "View queue" },
-  { icon: AlertTriangle, iconClass: "stat-icon--red", label: "Emergency Cases", value: 2, action: "View now" },
-  { icon: ClipboardList, iconClass: "stat-icon--purple", label: "Action Items Open", value: ACTION_ITEMS.length, action: "View all" },
+const MOCK_DIALYSES_TABLE = [
+  { id: 1, slNo: 1, patientName: "Tanvir Rayhan", hdId: "1090-562817", dialysesTime: "03/10", nid: "6445-6000-7890", progress: 65 },
+  { id: 2, slNo: 2, patientName: "Shanto Shah", hdId: "1090-562817", dialysesTime: "06/17", nid: "6445-6000-7890", progress: 75 },
+  { id: 3, slNo: 3, patientName: "Binti Biswas", hdId: "1090-562817", dialysesTime: "05/10", nid: "6445-6000-7890", progress: 45 },
+  { id: 4, slNo: 4, patientName: "Din Islam", hdId: "1090-562817", dialysesTime: "03/10", nid: "6445-6000-7890", progress: 80 },
 ];
+const MOCK_DOCUMENTS = [
+  { id: 1, name: "Third Meeting MOM.doc", size: "300 KB", type: "doc" },
+  { id: 2, name: "New Requirement.pdf", size: "300 KB", type: "pdf" },
+  { id: 3, name: "Design Inspiration.doc", size: "300 KB", type: "doc" },
+  { id: 4, name: "Design Inspiration.doc", size: "300 KB", type: "doc" },
+  { id: 5, name: "Design Inspiration.doc", size: "300 KB", type: "doc" },
+];
+const MOCK_NAV_ITEMS = [
+  { id: 1, label: "Dashboard" },
+  { id: 2, label: "Patients" },
+  { id: 3, label: "Appointment" },
+  { id: 4, label: "Doctors" },
+  { id: 5, label: "Dialysis" },
+];
+const MOCK_CURRENT_USER = {
+  name: "Dr. Tanvir Rayhan",
+  role: "Super Admin",
+  avatar: "https://i.pravatar.cc/60?img=12",
+  notificationCount: 2,
+};
 
-export default function DocDashboard() {
-  const nextPatient =
-    QUEUE.find((p) => p.status === "checkedin") || QUEUE.find((p) => p.status === "waiting");
+/* =========================================================
+   TOP NAV
+   ========================================================= */
 
+function TopNav({ navItems, activeNav, onNavClick, currentUser }) {
   return (
-    <div className="dashboard">
-      <section className="stat-row">
-        {STATS.map((s) => (
-          <div className="stat-card" key={s.label}>
-            <span className={`stat-icon ${s.iconClass}`}>
-              <s.icon size={20} strokeWidth={2} />
-            </span>
-            <span className="stat-card__label">{s.label}</span>
-            <span className="stat-card__value">{s.value}</span>
-            <a className="stat-card__action" href="#">
-              {s.action} <ChevronRight size={13} />
-            </a>
-          </div>
-        ))}
-      </section> 
+    <header className="top-nav">
+      <div className="brand">
+        <span className="brand-mark" aria-hidden="true">+</span>
+        <div className="brand-text">
+          <span className="brand-name">BIRDEM</span>
+          <span className="brand-subtitle">General Hospital</span>
+        </div>
+      </div>
 
-       {nextPatient && (
-        <section className="next-patient">
-          <div className="next-patient__info">
-            <span className="next-patient__label">Next patient</span>
-            <span className="next-patient__name">
-              {nextPatient.name} · {nextPatient.reason} · {nextPatient.meta}
-            </span>
-          </div>
-          <button className="next-patient__cta">
-            <PlayCircle size={16} /> Start consultation
+      <nav className="nav-links">
+        {navItems.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            className={`nav-link${activeNav === item.label ? " nav-link-active" : ""}`}
+            onClick={() => onNavClick(item.label)}
+          >
+            {item.label}
           </button>
-        </section>
-      )}
+        ))}
+      </nav>
 
-      <section className="dashboard__grid">
-        <div className="panel panel--queue">
-          <div className="panel__header">
-            <h2><Users size={16} className="panel__header-icon" /> Patient Queue</h2>
-            <a href="#">View All</a>
-          </div>
-          <div className="queue-list">
-            {QUEUE.slice(0, 3).map((p) => (
-              <div className="queue-row" key={p.pid}>
-                <span className="queue-row__id">{p.id}</span>
-                <img className="queue-row__avatar" src={p.patientImage} alt={p.name} />
-                <div className="queue-row__info">
-                  <span className="queue-row__name">{p.name}</span>
-                  <span className="queue-row__pid">{p.pid}</span>
-                </div>
-                <div className="queue-row__time">
-                  <span>{p.time}</span>
-                  <span className="queue-row__meta">{p.meta}</span>
-                </div>
-                <div className="queue-row__reason">
-                  <span>{p.reason}</span>
-                  <span className="queue-row__dept">{p.dept}</span>
-                </div>
-                <span className={`badge badge--${p.status}`}>{STATUS_LABEL[p.status]}</span>
-                <button className="queue-row__menu" aria-label="More options">
-                  <MoreVertical size={16} />
-                </button>
-              </div>
-            ))}
-          </div>
+      <div className="nav-user">
+        <button type="button" className="icon-button" aria-label="Notifications">
+          🔔
+          {currentUser.notificationCount > 0 && (
+            <span className="notification-badge">{currentUser.notificationCount}</span>
+          )}
+        </button>
+        <img className="user-avatar" src={currentUser.avatar} alt={currentUser.name} />
+        <div className="user-info">
+          <span className="user-name">{currentUser.name}</span>
+          <span className="user-role">{currentUser.role}</span>
         </div>
+      </div>
+    </header>
+  );
+}
 
-        <div className="panel panel--schedule">
-          <div className="panel__header">
-            <h2>
-              <CalendarDays size={16} className="panel__header-icon" /> Today's Schedule
-            </h2>
-            <a href="#">View Calendar</a>
-          </div>
-          <div className="timeline">
-            {SCHEDULE.slice(0, 3).map((item, i) => (
-              <div className="timeline-row" key={i}>
-                <span className="timeline-row__time">{item.time}</span>
-                <span className={`timeline-row__dot timeline-row__dot--${item.status}`} />
-                <div className="timeline-row__info">
-                  <span className="timeline-row__title">{item.title}</span>
-                  <span className="timeline-row__patient">Patient: {item.patient}</span>
-                </div>
-                <span className={`badge badge--${item.status}`}>
-                  {SCHEDULE_STATUS_LABEL[item.status]}
-                </span>
-              </div>
-            ))}
-          </div>
-          <button className="panel__full-btn">View Full Schedule</button>
-        </div>
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
 
-        <div className="panel panel--actioncenter">
-          <div className="panel__header">
-            <h2><ClipboardList size={16} className="panel__header-icon" /> Action Center</h2>
-            <a href="#">View All</a>
-          </div>
-          <div className="action-list">
-            {ACTION_ITEMS.map((a) => (
-              <div className={`action-item action-item--${a.tier}`} key={a.id}>
-                <span className="action-item__icon"><a.icon size={16} /></span>
-                <div className="action-item__info">
-                  <span className="action-item__title">{a.title}</span>
-                  <span className="action-item__subtitle">{a.subtitle}</span>
-                </div>
-                <button className="action-item__cta">{a.cta}</button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="perf-strip">
-        <div className="perf-strip__header">
-          <span>This Month</span>
-          <a href="/performance">Full report <ChevronRight size={13} /></a>
-        </div>
-        <div className="perf-strip__row">
-          {PERFORMANCE.map((p) => (
-            <div className="perf-strip__item" key={p.label}>
-              <span className={`perf-icon ${p.iconClass}`}>
-                <p.icon size={16} strokeWidth={2} />
-              </span>
-              <span className="perf-strip__value">{p.value}</span>
-              <span className="perf-strip__label">{p.label}</span>
-            </div>
+function PageHeader({ title, breadcrumbs, actionLabel, onAction }) {
+  return (
+    <div className="page-header">
+      <div>
+        <h1 className="page-title">{title}</h1>
+        <div className="breadcrumbs">
+          {breadcrumbs.map((crumb, i) => (
+            <span key={crumb} className="breadcrumb-item">
+              {crumb}
+              {i < breadcrumbs.length - 1 && <span className="breadcrumb-separator">›</span>}
+            </span>
           ))}
         </div>
-      </section>
-    </div>   
+      </div>
+      <button type="button" className="primary-button" onClick={onAction}>
+        + {actionLabel}
+      </button>
+    </div>
+  );
+}
+
+/* =========================================================
+   DOCTORS SIDEBAR (left list + search)
+   ========================================================= */
+
+function DoctorsSidebar({ doctors, selectedId, onSelect }) {
+  const [query, setQuery] = useState("");
+
+  const filtered = doctors.filter((d) =>
+    d.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  return (
+    <aside className="panel doctors-sidebar">
+      <div className="panel-header">
+        <h2 className="panel-title">Doctors List</h2>
+        <div className="search-box">
+          <input
+            type="text"
+            placeholder="Search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="search-input"
+          />
+          <span className="search-icon" aria-hidden="true">🔍</span>
+        </div>
+      </div>
+
+      <ul className="doctor-list">
+        {filtered.map((doc) => (
+          <li key={doc.id}>
+            <button
+              type="button"
+              className={`doctor-list-item${selectedId === doc.id ? " doctor-list-item-active" : ""}`}
+              onClick={() => onSelect(doc.id)}
+            >
+              <img className="doctor-list-avatar" src={doc.avatar} alt={doc.name} />
+              <span className="doctor-list-text">
+                <span className="doctor-list-name">{doc.name}</span>
+                <span className="doctor-list-specialty">{doc.specialty}</span>
+              </span>
+              <span className="doctor-list-menu" aria-hidden="true">⋯</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  );
+}
+
+/* =========================================================
+   DOCTOR PROFILE CARD (middle-left "Basic Information")
+   ========================================================= */
+
+function DoctorProfileCard({ doctor }) {
+  return (
+    <section className="panel profile-card">
+      <div className="panel-header">
+        <span className="panel-eyebrow">Basic Information</span>
+        <div className="profile-card-actions">
+          <button type="button" className="icon-button-ghost" aria-label="View">👁</button>
+          <button type="button" className="icon-button-ghost" aria-label="Edit">✎</button>
+        </div>
+      </div>
+
+      <img className="profile-photo" src={doctor.photo} alt={doctor.name} />
+
+      <h3 className="profile-name">{doctor.name}</h3>
+      <p className="profile-specialty">{doctor.specialty}</p>
+
+      <div className="profile-meta-grid">
+        <div className="profile-meta-item">
+          <span className="profile-meta-label">Department</span>
+          <span className="profile-meta-value">{doctor.department}</span>
+        </div>
+        <div className="profile-meta-item">
+          <span className="profile-meta-label">Joining Date</span>
+          <span className="profile-meta-value">{doctor.joiningDate}</span>
+        </div>
+      </div>
+
+      <div className="profile-contact-list">
+        <div className="profile-contact-item">
+          <span aria-hidden="true">✉</span> {doctor.email}
+        </div>
+        <div className="profile-contact-item">
+          <span aria-hidden="true">📞</span> {doctor.phone}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================
+   DIALYSES OVERVIEW FEED (middle "Dialyses Overview" scroll list)
+   ========================================================= */
+
+function DialysesOverviewFeed({ entries }) {
+  return (
+    <section className="panel overview-feed">
+      <div className="panel-header">
+        <h2 className="panel-title">Dialyses Overview</h2>
+      </div>
+
+      <ul className="overview-feed-list">
+        {entries.map((entry) => (
+          <li key={entry.id} className="overview-feed-item">
+            <div className="overview-feed-row">
+              <span className="overview-feed-patient">
+                <span aria-hidden="true">👤</span> {entry.patientName}
+              </span>
+              <span className="overview-feed-datetime">{entry.dateTime}</span>
+              <StatusBadge status={entry.status} />
+            </div>
+            <div className="overview-feed-urr">Urea Reduction Ratio (URR) : {entry.urr}</div>
+            {entry.note && (
+              <div className="overview-feed-note">
+                <span aria-hidden="true">ⓘ</span> {entry.note}
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function StatusBadge({ status }) {
+  const tone = status === "Completed" ? "success" : status === "Cancelled" ? "danger" : "neutral";
+  return <span className={`status-badge status-badge-${tone}`}>{status}</span>;
+}
+
+/* =========================================================
+   PATIENTS SCHEDULE PANEL (right "Patients" week strip + list)
+   ========================================================= */
+
+function PatientsSchedulePanel({ days, activeDayId, onDaySelect, patients }) {
+  return (
+    <section className="panel schedule-panel">
+      <div className="panel-header">
+        <h2 className="panel-title">
+          <span aria-hidden="true">🗓</span> Patients
+        </h2>
+      </div>
+
+      <div className="week-strip">
+        {days.map((day) => (
+          <button
+            key={day.id}
+            type="button"
+            className={`week-day${activeDayId === day.id ? " week-day-active" : ""}`}
+            onClick={() => onDaySelect(day.id)}
+          >
+            <span className="week-day-label">{day.label}</span>
+            <span className="week-day-date">{day.date}</span>
+          </button>
+        ))}
+      </div>
+
+      <ul className="schedule-patient-list">
+        {patients.map((patient, i) => (
+          <li key={`${patient.id}-${i}`} className="schedule-patient-item">
+            <img className="schedule-patient-avatar" src={patient.avatar} alt={patient.name} />
+            <span className="schedule-patient-text">
+              <span className="schedule-patient-name">{patient.name}</span>
+              <span className="schedule-patient-detail">Dialyses {patient.dialysesCount} times</span>
+            </span>
+            <span className="schedule-patient-shift">{patient.shift}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/* =========================================================
+   DIALYSES TABLE (bottom-left data table + pagination)
+   ========================================================= */
+
+function DialysesTable({ rows, currentPage, totalPages, totalCount, onPageChange }) {
+  const [query, setQuery] = useState("");
+
+  return (
+    <section className="panel table-panel">
+      <div className="panel-header table-panel-header">
+        <h2 className="panel-title">Dialyses Overview</h2>
+        <div className="table-panel-controls">
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="search-input"
+            />
+            <span className="search-icon" aria-hidden="true">🔍</span>
+          </div>
+          <button type="button" className="filter-button">
+            <span aria-hidden="true">☰</span> Status
+          </button>
+        </div>
+      </div>
+
+      <div className="table-scroll">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>SL. NO.</th>
+              <th>Patient Name</th>
+              <th>HD ID</th>
+              <th>Dialyses Time</th>
+              <th>NID</th>
+              <th>Progress</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.id}>
+                <td>{String(row.slNo).padStart(2, "0")}</td>
+                <td>{row.patientName}</td>
+                <td>{row.hdId}</td>
+                <td>{row.dialysesTime}</td>
+                <td>{row.nid}</td>
+                <td>
+                  <ProgressBar value={row.progress} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="table-footer">
+        <span className="table-footer-count">
+          Showing 1-10 from {totalCount}
+        </span>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+        />
+      </div>
+    </section>
+  );
+}
+
+function ProgressBar({ value }) {
+  return (
+    <div className="progress-bar-track">
+      <div className="progress-bar-fill" style={{ width: `${value}%` }} />
+      <span className="progress-bar-label">{value}%</span>
+    </div>
+  );
+}
+
+function Pagination({ currentPage, totalPages, onPageChange }) {
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  return (
+    <div className="pagination">
+      <button
+        type="button"
+        className="pagination-arrow"
+        disabled={currentPage === 1}
+        onClick={() => onPageChange(currentPage - 1)}
+      >
+        ‹
+      </button>
+      {pages.map((p) => (
+        <button
+          key={p}
+          type="button"
+          className={`pagination-page${currentPage === p ? " pagination-page-active" : ""}`}
+          onClick={() => onPageChange(p)}
+        >
+          {p}
+        </button>
+      ))}
+      <span className="pagination-ellipsis">...</span>
+      <button
+        type="button"
+        className="pagination-arrow"
+        disabled={currentPage === totalPages}
+        onClick={() => onPageChange(currentPage + 1)}
+      >
+        ›
+      </button>
+    </div>
+  );
+}
+
+/* =========================================================
+   DOCUMENTS PANEL (bottom-right "Essential Document")
+   ========================================================= */
+
+function DocumentsPanel({ documents }) {
+  return (
+    <section className="panel documents-panel">
+      <div className="panel-header">
+        <h2 className="panel-title">Essential Document</h2>
+      </div>
+
+      <ul className="document-list">
+        {documents.map((doc) => (
+          <li key={doc.id} className="document-item">
+            <span className={`document-icon document-icon-${doc.type}`} aria-hidden="true">
+              {doc.type === "pdf" ? "PDF" : "DOC"}
+            </span>
+            <span className="document-text">
+              <span className="document-name">{doc.name}</span>
+              <span className="document-size">{doc.size}</span>
+            </span>
+            <span className="document-actions">
+              <button type="button" className="icon-button-ghost" aria-label="Download">⬇</button>
+              <button type="button" className="icon-button-ghost" aria-label="Delete">🗑</button>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+
+
+export default function DocDashboard() {
+  const [activeNav, setActiveNav] = useState("Doctors");
+  const [selectedDoctorId, setSelectedDoctorId] = useState(MOCK_SELECTED_DOCTOR.id);
+  const [activeDayId, setActiveDayId] = useState(4);
+  const [tablePage, setTablePage] = useState(1);
+
+  const doctor = MOCK_SELECTED_DOCTOR; // in real app: look up MOCK_DOCTORS by selectedDoctorId
+
+  return (
+    <div className="page">
+      <TopNav
+        navItems={MOCK_NAV_ITEMS}
+        activeNav={activeNav}
+        onNavClick={setActiveNav}
+        currentUser={MOCK_CURRENT_USER}
+      />
+
+      <main className="page-body">
+        <PageHeader
+          title="Doctors List"
+          breadcrumbs={["Dashboard", "Route 01", "Route 02"]}
+          actionLabel="Add New Doctor"
+          onAction={() => console.log("open add-doctor form")}
+        />
+
+        <section className="content-grid">
+          <DoctorsSidebar
+            doctors={MOCK_DOCTORS}
+            selectedId={selectedDoctorId}
+            onSelect={setSelectedDoctorId}
+          />
+
+          <DoctorProfileCard doctor={doctor} />
+
+          <DialysesOverviewFeed entries={MOCK_DIALYSES_FEED} />
+
+          <PatientsSchedulePanel
+            days={MOCK_WEEK_DAYS}
+            activeDayId={activeDayId}
+            onDaySelect={setActiveDayId}
+            patients={MOCK_PATIENTS_ON_SHIFT}
+          />
+
+          <DialysesTable
+            rows={MOCK_DIALYSES_TABLE}
+            currentPage={tablePage}
+            totalPages={3}
+            totalCount={100}
+            onPageChange={setTablePage}
+          />
+
+          <DocumentsPanel documents={MOCK_DOCUMENTS} />
+        </section>
+      </main>
+    </div>
   );
 }
 
