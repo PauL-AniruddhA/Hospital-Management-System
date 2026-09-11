@@ -1,26 +1,26 @@
 import React, { useState } from "react";
-import { 
-  Users, CalendarDays, AlertTriangle, ClipboardList, ChevronRight, PlayCircle, MoreVertical, FlaskConical, Pill, UserPlus, CheckCircle2, ClipboardCheck, Star, Timer 
+import {
+  Users, CalendarDays, AlertTriangle, ClipboardList, ChevronRight, PlayCircle, MoreVertical, FlaskConical, Pill, UserPlus, CheckCircle2, ClipboardCheck, Star, Timer
 } from "lucide-react";
-import doc from "../../assets/home/doc3.png";
+import doc from "../../assets/home/doc9.png";
 import "../../styles/Doctor/Doctor-Dashboard.css";
 
 
 const MOCK_DOCTORS = [
-  { id: 1, name: "Tanvir Rayhan", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=12" },
-  { id: 2, name: "Akib Rahman", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=13" },
-  { id: 3, name: "Dr. Binti Biswas", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=32" },
-  { id: 4, name: "Shanto Shah", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=14" },
-  { id: 5, name: "Binti Biswas", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=33" },
-  { id: 6, name: "Zerin Taslim", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=34" },
-  { id: 7, name: "Rifat Rahman", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=15" },
-  { id: 8, name: "Monir Hossain", specialty: "Nephrology Specialist", avatar: "https://i.pravatar.cc/80?img=16" },
+  { id: 1, name: "Tanvir Rayhan", specialty: "Nephrology Specialist", avatar: "" },
+  { id: 2, name: "Akib Rahman", specialty: "Nephrology Specialist", avatar: "" },
+  { id: 3, name: "Dr. Binti Biswas", specialty: "Nephrology Specialist", avatar: { doc } },
+  { id: 4, name: "Shanto Shah", specialty: "Nephrology Specialist", avatar: "" },
+  { id: 5, name: "Binti Biswas", specialty: "Nephrology Specialist", avatar: "" },
+  { id: 6, name: "Zerin Taslim", specialty: "Nephrology Specialist", avatar: "" },
+  { id: 7, name: "Rifat Rahman", specialty: "Nephrology Specialist", avatar: "" },
+  { id: 8, name: "Monir Hossain", specialty: "Nephrology Specialist", avatar: "" },
 ];
 const MOCK_SELECTED_DOCTOR = {
   id: 3,
   name: "Dr. Binti Biswas",
   specialty: "Nephrology Specialist",
-  photo: "https://i.pravatar.cc/300?img=32",
+  photo: doc,
   department: "Nephrology",
   joiningDate: "01-Jun-2025",
   email: "binti@birdem.net",
@@ -42,11 +42,11 @@ const MOCK_WEEK_DAYS = [
   { id: 7, label: "Mon", date: 15 },
 ];
 const MOCK_PATIENTS_ON_SHIFT = [
-  { id: 1, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "https://i.pravatar.cc/60?img=51" },
-  { id: 2, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "https://i.pravatar.cc/60?img=52" },
-  { id: 3, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "https://i.pravatar.cc/60?img=53" },
-  { id: 4, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "https://i.pravatar.cc/60?img=54" },
-  { id: 5, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "https://i.pravatar.cc/60?img=55" },
+  { id: 1, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "" },
+  { id: 2, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "" },
+  { id: 3, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "" },
+  { id: 4, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "" },
+  { id: 5, name: "Akif Mahmud", shift: "2nd Shift", dialysesCount: 4, avatar: "" },
 ];
 const MOCK_DIALYSES_TABLE = [
   { id: 1, slNo: 1, patientName: "Tanvir Rayhan", hdId: "1090-562817", dialysesTime: "03/10", nid: "6445-6000-7890", progress: 65 },
@@ -71,7 +71,7 @@ const MOCK_NAV_ITEMS = [
 const MOCK_CURRENT_USER = {
   name: "Dr. Tanvir Rayhan",
   role: "Super Admin",
-  avatar: "https://i.pravatar.cc/60?img=12",
+  avatar: "",
   notificationCount: 2,
 };
 
@@ -198,44 +198,44 @@ function DoctorsSidebar({ doctors, selectedId, onSelect }) {
    DOCTOR PROFILE CARD (middle-left "Basic Information")
    ========================================================= */
 
-function DoctorProfileCard({ doctor }) {
-  return (
-    <section className="panel profile-card">
-      <div className="panel-header">
-        <span className="panel-eyebrow">Basic Information</span>
-        <div className="profile-card-actions">
-          <button type="button" className="icon-button-ghost" aria-label="View">👁</button>
-          <button type="button" className="icon-button-ghost" aria-label="Edit">✎</button>
-        </div>
-      </div>
+// function DoctorProfileCard({ doctor }) {
+//   return (
+//     <section className="panel profile-card">
+//       <div className="panel-header">
+//         <span className="panel-eyebrow">Basic Information</span>
+//         <div className="profile-card-actions">
+//           <button type="button" className="icon-button-ghost" aria-label="View">👁</button>
+//           <button type="button" className="icon-button-ghost" aria-label="Edit">✎</button>
+//         </div>
+//       </div>
 
-      <img className="profile-photo" src={doctor.photo} alt={doctor.name} />
+//       <img className="profile-photo" src={doctor.photo} alt={doctor.name} />
 
-      <h3 className="profile-name">{doctor.name}</h3>
-      <p className="profile-specialty">{doctor.specialty}</p>
+//       <h3 className="profile-name">{doctor.name}</h3>
+//       <p className="profile-specialty">{doctor.specialty}</p>
 
-      <div className="profile-meta-grid">
-        <div className="profile-meta-item">
-          <span className="profile-meta-label">Department</span>
-          <span className="profile-meta-value">{doctor.department}</span>
-        </div>
-        <div className="profile-meta-item">
-          <span className="profile-meta-label">Joining Date</span>
-          <span className="profile-meta-value">{doctor.joiningDate}</span>
-        </div>
-      </div>
+//       <div className="profile-meta-grid">
+//         <div className="profile-meta-item">
+//           <span className="profile-meta-label">Department</span>
+//           <span className="profile-meta-value">{doctor.department}</span>
+//         </div>
+//         <div className="profile-meta-item">
+//           <span className="profile-meta-label">Joining Date</span>
+//           <span className="profile-meta-value">{doctor.joiningDate}</span>
+//         </div>
+//       </div>
 
-      <div className="profile-contact-list">
-        <div className="profile-contact-item">
-          <span aria-hidden="true">✉</span> {doctor.email}
-        </div>
-        <div className="profile-contact-item">
-          <span aria-hidden="true">📞</span> {doctor.phone}
-        </div>
-      </div>
-    </section>
-  );
-}
+//       <div className="profile-contact-list">
+//         <div className="profile-contact-item">
+//           <span aria-hidden="true">✉</span> {doctor.email}
+//         </div>
+//         <div className="profile-contact-item">
+//           <span aria-hidden="true">📞</span> {doctor.phone}
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
 
 /* =========================================================
    DIALYSES OVERVIEW FEED (middle "Dialyses Overview" scroll list)
@@ -468,61 +468,346 @@ function DocumentsPanel({ documents }) {
 
 
 
+
+
+const sessions = [
+  {
+    id: 1,
+    patientName: 'Anita Roy',
+    room: 'Room 2',
+    startTime: '9:45 am',
+    elapsedMin: 22,      // recompute this every minute from startTime via setInterval
+    expectedMin: 240,
+  },
+  {
+    id: 2,
+    patientName: 'Rahul Sen',
+  },
+];
+
+const session = {
+  // room: 'Room 3',
+  patientName: 'Anita Roy',
+  scheduledTime: '10:30 am',
+  minutesUntil: 25,    // recompute the same way against scheduledTime
+  time: "10:30pm",
+  title: "Super Admin",
+  patient: "Rafig Ahmed",
+  remaining: "45min"
+};
+// const radius = 24;
+// const circumference = 2 * Math.PI * radius; 
+const progress = session.elapsedMinutes / session.totalMinutes;
+
+const radius = 22;
+const circumference = 2 * Math.PI * radius;
+const pct = Math.min(session.elapsedMin / session.expectedMin, 1);
+const offset = circumference * (1 - pct);
+const isOverdue = session.elapsedMin > session.expectedMin;
+
+
 export default function DocDashboard() {
   const [activeNav, setActiveNav] = useState("Doctors");
   const [selectedDoctorId, setSelectedDoctorId] = useState(MOCK_SELECTED_DOCTOR.id);
   const [activeDayId, setActiveDayId] = useState(4);
   const [tablePage, setTablePage] = useState(1);
 
+
   const doctor = MOCK_SELECTED_DOCTOR; // in real app: look up MOCK_DOCTORS by selectedDoctorId
 
   return (
-    <div className="page">
-      <TopNav
-        navItems={MOCK_NAV_ITEMS}
-        activeNav={activeNav}
-        onNavClick={setActiveNav}
-        currentUser={MOCK_CURRENT_USER}
-      />
+    <main className="doc_homepage-body">
+      <section className="content-grid">
 
-      <main className="page-body">
-        <PageHeader
-          title="Doctors List"
-          breadcrumbs={["Dashboard", "Route 01", "Route 02"]}
-          actionLabel="Add New Doctor"
-          onAction={() => console.log("open add-doctor form")}
-        />
+        <section className="panel profile-card">
 
-        <section className="content-grid">
-          <DoctorsSidebar
-            doctors={MOCK_DOCTORS}
-            selectedId={selectedDoctorId}
-            onSelect={setSelectedDoctorId}
-          />
+          <div className="profile-header">
+            <span className="profile-eyebrow">
+              Basic Information
+            </span>
 
-          <DoctorProfileCard doctor={doctor} />
+            <div className="profile-card-actions">
+              <button
+                type="button"
+                className="icon-button-ghost"
+                aria-label="View"
+              >
+                👁
+              </button>
 
-          <DialysesOverviewFeed entries={MOCK_DIALYSES_FEED} />
+              <button
+                type="button"
+                className="icon-button-ghost"
+                aria-label="Edit"
+              >
+                ✎
+              </button>
+            </div>
+          </div>
 
-          <PatientsSchedulePanel
-            days={MOCK_WEEK_DAYS}
-            activeDayId={activeDayId}
-            onDaySelect={setActiveDayId}
-            patients={MOCK_PATIENTS_ON_SHIFT}
-          />
+          <div className="profile-identity">
+            <h3 className="profile-name">
+              {doctor.name}
+            </h3>
 
-          <DialysesTable
-            rows={MOCK_DIALYSES_TABLE}
-            currentPage={tablePage}
-            totalPages={3}
-            totalCount={100}
-            onPageChange={setTablePage}
-          />
+            <p className="profile-specialty">
+              {doctor.specialty}
+            </p>
+          </div>
 
-          <DocumentsPanel documents={MOCK_DOCUMENTS} />
+          <div className="profile-image-area">
+            <img
+              className="profile-photo"
+              src={doctor.photo}
+              alt={doctor.name}
+            />
+          </div>
+
+          <div className="profile-meta-grid">
+
+            <div className="profile-meta-item">
+              <span className="profile-meta-label">
+                Department
+              </span>
+
+              <span className="profile-meta-value">
+                {doctor.department}
+              </span>
+            </div>
+
+            <div className="profile-meta-item">
+              <span className="profile-meta-label">
+                Joining Date
+              </span>
+
+              <span className="profile-meta-value">
+                {doctor.joiningDate}
+              </span>
+            </div>
+
+          </div>
+
+          <div className="profile-contact-list">
+
+            <div className="profile-contact-item">
+              <span aria-hidden="true">✉</span>
+              <span>{doctor.email}</span>
+            </div>
+
+            <div className="profile-contact-item">
+              <span aria-hidden="true">📞</span>
+              <span>{doctor.phone}</span>
+            </div>
+
+          </div>
+
         </section>
-      </main>
-    </div>
+
+        <section className="panel overview-card-1">
+
+          {/* part 3 */}
+          {/* <section className="active-row">
+            <div className="active-row__ring">
+              <svg width="52" height="52" viewBox="0 0 52 52">
+                <circle className="active-row__ring-track" cx="26" cy="26" r={radius} />
+                <circle
+                  className={`active-row__ring-fill ${isOverdue ? 'active-row__ring-fill--overdue' : ''}`}
+                  cx="26"
+                  cy="26"
+                  r={radius}
+                  strokeDasharray={circumference}
+                  strokeDashoffset={offset}
+                />
+              </svg>
+              <span className="active-row__ring-label">{session.elapsedMin}m</span>
+            </div>
+
+            <div className="active-row__info">
+              <div className="active-row__status">
+                <i className="ti ti-activity" aria-hidden="true" />
+                <span>Active</span>
+              </div>
+              <p className="active-row__title">{session.patientName}</p>
+              <p className="active-row__meta">
+                {session.room} · started {session.startTime}
+              </p>
+            </div>
+          </section> */}
+          
+          
+          {/* part 2 */}
+          <section className="next-up">
+            <div className="next-up__ring">
+              <span>{session.minutesUntil}m</span>
+            </div>
+
+            <div className="next-up__info">
+              <div className="next-up__status">
+                <i className="ti ti-clock" aria-hidden="true" />
+                <span>Next up</span>
+              </div>
+              <p className="next-up__title">{session.patientName}</p>
+              <p className="next-up__meta">
+                {session.title} · {session.scheduledTime}
+              </p>
+            </div>
+          </section>
+
+          {/* part 1 */}
+          {/* <div className="stc">
+            {sessions.map((session, i) => (
+              <React.Fragment key={session.id}>
+                <SessionRow session={session} isActive={i === 0} />
+                {i < sessions.length - 1 && <div className="stc__divider" />}
+              </React.Fragment>
+            ))}
+          </div> */}
+
+          {/* Main Part */}
+          
+
+
+          {/* <section className="panel schedule-card">
+            <span className="schedule-label">Next up</span>
+            <span className="schedule-time">{session.time}</span>
+            <span className="schedule-title">{session.title}</span>
+            <span className="schedule-patient">{session.patient}</span>
+          </section> */}
+        </section>
+
+        <section className="panel overview-card-2">
+          {/* Dialyses Overview */}
+
+        </section>
+
+        <section className="panel overview-card-3">
+          {/* Dialyses Overview */}
+          
+          <section className="panel schedule-card-ring">
+            <div className="ring-wrap">
+              <svg viewBox="0 0 56 56" className="ring-svg">
+                <circle
+                  className="ring-track"
+                  cx="28" cy="28" r="24"
+                  fill="none" strokeWidth="4"
+                />
+                <circle
+                  className="ring-progress"
+                  cx="28" cy="28" r="24"
+                  fill="none" strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={circumference * (1 - progress)}
+                  transform="rotate(-90 28 28)"
+                />
+                <text x="28" y="32" textAnchor="middle" className="ring-label">
+                  {session.remaining}
+                </text>
+              </svg>
+            </div>
+            <span className="ring-title">{session.title} · {session.time}</span>
+            <span className="ring-patient">{session.patient} · {session.room}</span>
+            
+          </section>
+
+          <section className="next-up">
+            <div className="next-up__ring">
+              <span>{session.minutesUntil}m</span>
+            </div>
+
+            <div className="next-up__info">
+              <div className="next-up__status">
+                <i className="ti ti-clock" aria-hidden="true" />
+                <span>Next up</span>
+              </div>
+              <p className="next-up__title">{session.patientName}</p>
+              <p className="next-up__meta">
+                {session.room} · {session.scheduledTime}
+              </p>
+            </div>
+          </section>
+          
+        </section>
+
+        <section className="panel patients-card-1">
+          {/* Patients */}
+        </section>
+
+        <section className="panel patients-card-2">
+          {/* Patients */}
+        </section>
+        <section className="panel patients-card-3">
+          {/* Patients */}
+        </section>
+
+        <section className="panel table-card-1">
+          {/* Patient Table */}
+        </section>
+        <section className="panel table-card-2">
+          {/* Patient Table */}
+        </section>
+        <section className="panel table-card-3">
+          {/* Patient Table */}
+        </section>
+
+      </section>
+
+    </main>
   );
 }
+
+
+// function SessionRow({ session, isActive }) {
+//   const { patientName, room, title = 'Dialysis session' } = session;
+
+//   return (
+//     <div className={`stc__row ${isActive ? 'stc__row--active' : 'stc__row--upcoming'}`}>
+//       <ProgressRing isActive={isActive} session={session} />
+
+//       <div className="stc__info">
+//         <div className="stc__status">
+//           <i className={`ti ${isActive ? 'ti-activity' : 'ti-clock'}`} aria-hidden="true" />
+//           <span>{isActive ? 'Active' : 'Next up'}</span>
+//         </div>
+//         <p className="stc__title">{patientName}</p>
+//         <p className="stc__meta">
+//           {room} · {isActive ? `started ${session.startTime}` : session.scheduledTime}
+//         </p>
+//       </div>
+//     </div>
+//   );
+// }
+
+// function ProgressRing({ isActive, session }) {
+//   if (!isActive) {
+//     return (
+//       <div className="stc__ring stc__ring--upcoming">
+//         <span>{session.minutesUntil}m</span>
+//       </div>
+//     );
+//   }
+
+//   const radius = 22;
+//   const circumference = 2 * Math.PI * radius;
+//   const pct = Math.min(session.elapsedMin / session.expectedMin, 1);
+//   const offset = circumference * (1 - pct);
+//   const isOverdue = session.elapsedMin > session.expectedMin;
+
+//   return (
+//     <div className="stc__ring stc__ring--active">
+//       <svg width="52" height="52" viewBox="0 0 52 52">
+//         <circle className="stc__ring-track" cx="26" cy="26" r={radius} />
+//         <circle
+//           className={`stc__ring-fill ${isOverdue ? 'stc__ring-fill--overdue' : ''}`}
+//           cx="26"
+//           cy="26"
+//           r={radius}
+//           strokeDasharray={circumference}
+//           strokeDashoffset={offset}
+//         />
+//       </svg>
+//       <span className="stc__ring-label">{session.elapsedMin}m</span>
+//     </div>
+//   );
+// }
 

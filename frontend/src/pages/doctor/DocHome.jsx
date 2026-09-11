@@ -56,95 +56,119 @@ const SECTION_MAP = {
   settings: SettingsSection,
 };
 
-const TOP_NAVIGATION = [
+// const TOP_NAVIGATION = [
+//   {
+//     id: "dashboard",
+//     label: "Dashboard",
+//     defaultTab: "schedule",
+//   },
+//   {
+//     id: "community",
+//     label: "Community",
+//     defaultTab: "DocHub",
+//   },
+//   {
+//     id: "clinical",
+//     label: "Clinic",
+//     defaultTab: "DocHub",
+//   },
+//   {
+//     id: "faculty",
+//     label: "Hospital Faculty",
+//     defaultTab: "Faculty",
+//   },
+//   {
+//     id: "personal",
+//     label: "Personal",
+//     defaultTab: "Workspace",
+//   },
+// ];
+
+const NAVIGATION = [
   {
     id: "dashboard",
-    label: "Dashboard",
-    defaultTab: "schedule",
+    label: "Home",
+    defaultTab: "dashboard",
+
+    title: "MAIN",
+    theme: "blue",
+      items: [
+        { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+        { id: "schedule", label: "Schedule", icon: CalendarDays },
+        // { id: "patient-queue", label: "Patient Queue", icon: Users, count: 10 },
+        // { id: "my-patients", label: "My Patients", icon: UserRound },
+        { id: "patient-records", label: "	Patients", icon: Stethoscope },
+      ],
   },
+
+  {
+    id: "clinical",
+    label: "Workspace",
+    defaultTab: "Workspace",
+
+    title: "CLINICAL",
+    theme: "green",
+
+      items: [
+        { id: "Workspace", label: "My Workspace", icon: BriefcaseMedical },
+        // { id: "clinical-notes",label: "Clinical Notes",icon: ClipboardList },
+        // { id: "consultations",label: "Consultations",icon: Stethoscope },
+        // { id: "diagnosis",label: "Diagnosis",icon: HeartPulse },
+        // { id: "prescriptions",label: "Prescriptions",icon: Pill },
+        // { id: "follow-ups",label: "Follow-ups",icon: Timer,count: 6 },
+        // { id: "certificates",label: "Certificates",icon: FileCheck2 },
+        // { id: "referrals",label: "Referrals",icon: ChevronRight },
+      ],
+  },
+
   {
     id: "community",
     label: "Community",
     defaultTab: "DocHub",
+
+    title: "COLLABORATION",
+    theme: "purple",
+      items: [
+        { id: "DocHub", label: "Doctor Hub", icon: Users, tag: "NEW" },
+        { id: "MDT", label: "MDT Meetings", icon: UserPlus },
+        // { id: "case-reviews", label: "Case Reviews", icon: Search },
+        // { id: "medical-library", label: "Medical Library", icon: FileText },
+        // { id: "research", label: "Research", icon: FlaskConical },
+      ],
   },
-  {
-    id: "clinical",
-    label: "Clinic",
-    defaultTab: "DocHub",
-  },
+
   {
     id: "faculty",
     label: "Hospital Faculty",
     defaultTab: "Faculty",
+
+    title: "HOSPITAL",
+    theme: "orange",
+      items: [
+        { id: "Faculty", label: "Hospital Faculty", icon: Building2 },
+        { id: "Med-Library", label: "Medical Library", icon: LibraryBig },
+        // { id: "cme", label: "More", icon: Star },
+        // { id: "performance", label: "Performance", icon: BarChart3 },
+        // { id: "ward-rounds", label: "Ward Rounds", icon: BedDouble },
+      ],
   },
+
   {
     id: "personal",
     label: "Personal",
     defaultTab: "Workspace",
+
+    title: "PERSONAL",
+    theme: "green",
+      items: [
+        { id: "Workspace", label: "My Workspace", icon: BriefcaseMedical, },
+        { id: "performance", label: "Performance", icon: BarChart3, },
+        { id: "profile", label: "My Profile", icon: UserRound, },
+        { id: "settings", label: "Settings", icon: SettingsIcon, },
+    ],
   },
 ];
 
-const NAV_SECTIONS = {
-  dashboard: {
-    title: "MAIN",
-    theme: "blue",
-    items: [
-      { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-      { id: "schedule", label: "Schedule", icon: CalendarDays },
-      // { id: "patient-queue", label: "Patient Queue", icon: Users, count: 10 },
-      // { id: "my-patients", label: "My Patients", icon: UserRound },
-      { id: "patient-records", label: "	Patients", icon: Stethoscope },
-    ],
-  },
-
-  clinical: {
-    title: "CLINICAL",
-    theme: "green",
-    items: [
-      { id: "Workspace", label: "My Workspace", icon: BriefcaseMedical },
-      // { id: "clinical-notes",label: "Clinical Notes",icon: ClipboardList },
-      // { id: "consultations",label: "Consultations",icon: Stethoscope },
-      // { id: "diagnosis",label: "Diagnosis",icon: HeartPulse },
-      // { id: "prescriptions",label: "Prescriptions",icon: Pill },
-      // { id: "follow-ups",label: "Follow-ups",icon: Timer,count: 6 },
-      // { id: "certificates",label: "Certificates",icon: FileCheck2 },
-      // { id: "referrals",label: "Referrals",icon: ChevronRight },
-    ],
-  },
-
-  community: {
-    title: "COLLABORATION",
-    theme: "purple",
-    items: [
-      { id: "DocHub", label: "Doctor Hub", icon: Users, tag: "NEW" },
-      { id: "MDT", label: "MDT Meetings", icon: UserPlus },
-      // { id: "case-reviews", label: "Case Reviews", icon: Search },
-      // { id: "medical-library", label: "Medical Library", icon: FileText },
-      // { id: "research", label: "Research", icon: FlaskConical },
-    ],
-  },
-
-  faculty: {
-    title: "HOSPITAL",
-    theme: "orange",
-    items: [
-      { id: "Faculty", label: "Hospital Faculty", icon: Building2 },
-      { id: "Med-Library", label: "Medical Library", icon: LibraryBig },
-      // { id: "cme", label: "More", icon: Star },
-      // { id: "performance", label: "Performance", icon: BarChart3 },
-      // { id: "ward-rounds", label: "Ward Rounds", icon: BedDouble },
-    ],
-  },
-  personal: {
-    theme: "green",
-    items: [
-      { id: "Workspace", label: "My Workspace", icon: BriefcaseMedical, },
-      { id: "performance", label: "Performance", icon: BarChart3, },
-      { id: "profile", label: "My Profile", icon: UserRound, },
-      { id: "settings", label: "Settings", icon: SettingsIcon, },
-    ],
-  },
-};
 const ASIDE_QUICK_ACTIONS = [
   { icon: FileText, label: "New Patient", cls: "aside-qa-item--blue" },
   { icon: NotebookPen, label: "Write Note", cls: "aside-qa-item--orange" },
@@ -281,6 +305,9 @@ function ActivityInfoRow({ icon, title, subtitle, meta, unread = false }) {
 
 
 function DocHome() {
+  const profileRef = useRef(null);
+  const infoRef = useRef(null);
+
   const [activeNavigation, setActiveNavigation] = useState("dashboard");
   const [activeTab, setActiveTab] = useState("dashboard");
 
@@ -292,16 +319,15 @@ function DocHome() {
   const [helpMessage, setHelpMessage] = useState("");
   const [helpPriority, setHelpPriority] = useState("Medium");
   const [ticketId, setTicketId] = useState(null);
-  const ActiveSection = SECTION_MAP[activeTab] ?? Dashboard;
   const [profileOpen, setProfileOpen] = useState(false);
-  const profileRef = useRef(null);
-
+  const [infoHeight, setInfoHeight] = useState(0);
   const [activityMode, setActivityMode] = useState("messages");
 
-  const infoRef = useRef(null);
-  const [infoHeight, setInfoHeight] = useState(0);
+  const ActiveSection = SECTION_MAP[activeTab] ?? Dashboard;
+  const currentNavigation = NAVIGATION.find((navigation) => navigation.id === activeNavigation);
+  const currentItems = currentNavigation?.items ?? [];
+  
   const visibleActivityRows = infoHeight > 0 ? Math.floor((infoHeight + ACTIVITY_ROW_GAP) / (ACTIVITY_ROW_MIN_HEIGHT + ACTIVITY_ROW_GAP)) : 0;
-  const currentSidebar = NAV_SECTIONS[activeNavigation];
 
   useEffect(() => {
     if (!infoRef.current) return;
@@ -327,26 +353,28 @@ function DocHome() {
 
       <div className="topbar__navigation">
         <nav className="nav-header__menu">
-          <nav className="nav-header__menu">
-            {TOP_NAVIGATION.map((navigation) => (
-              <button
-                key={navigation.id}
-                type="button"
-                className={
-                  "nav-header__item" +
-                  (activeNavigation === navigation.id
+
+          {NAVIGATION.map((navigation) => (
+            <button
+              key={navigation.id}
+              type="button"
+              className={
+                "nav-header__item" +
+                (
+                  activeNavigation === navigation.id
                     ? " nav-header__item--active"
-                    : "")
-                }
-                onClick={() => {
-                  setActiveNavigation(navigation.id);
-                  setActiveTab(navigation.defaultTab);
-                }}
-              >
-                {navigation.label}
-              </button>
-            ))}
-          </nav>
+                    : ""
+                )
+              }
+              onClick={() => {
+                setActiveNavigation(navigation.id);
+                setActiveTab(navigation.defaultTab);
+              }}
+            >
+              {navigation.label}
+            </button>
+          ))}
+
         </nav>
 
         {/* <div className=" serch">
@@ -402,24 +430,27 @@ function DocHome() {
           <div className="sidebar__nav-items">
             <nav className="doctor-sidebar">
 
-              <div className={`sidebar-section sidebar-section--${currentSidebar.theme}`} >
+              <div className={`sidebar-section sidebar-section--${currentNavigation?.theme || "blue"}`} >
                 {/* SECTION TITLE */}
-
-
-                {/* <div className="sidebar-section__header">
-                    <div className="sidebar-section__line"/>
-                    <div className="sidebar-section__dot" />
-                    <span>{section.title}</span>
-                    <div className="sidebar-section__line" />
-                  </div> */}
+                <div className="sidebar-section__header">
+                  <div className="sidebar-section__line" />
+                  <div className="sidebar-section__dot" />
+                  <span> {currentNavigation?.title} </span>
+                  <div className="sidebar-section__line" />
+                </div>
 
                 {/* ITEMS */}
 
                 <div className="sidebar-section__body">
 
-                  {currentSidebar.items.map(
+                  {currentNavigation.items.map(
                     ({ id, label, icon: Icon, count, tag }) => (
-                      <button key={id} type="button" onClick={() => setActiveTab(id)} className={"sidebar-item" + (activeTab === id ? " sidebar-item--active" : "")}>
+                      <button 
+                        key={id} 
+                        type="button" 
+                        onClick={() => setActiveTab(id)} 
+                        className={"sidebar-item" + (activeTab === id ? " sidebar-item--active" : "")}
+                      >
                         <div className="sidebar-item__icon">
                           <Icon size={18} strokeWidth={2} />
                         </div>
