@@ -20,7 +20,7 @@
    HEADER
 ========================================================= */
 
-.sched__header {
+/* .sched__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -92,7 +92,7 @@
 .sched__new-btn:hover {
   background: #1d4ed8;
   transform: translateY(-1px);
-}
+} */
 
 
 /* =========================================================

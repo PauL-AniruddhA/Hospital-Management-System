@@ -44,7 +44,7 @@ function ProfileMenu({ variant = "default", avatar, name, role, onNavigate}) {
                 </button>
 
                 <button onClick={(e) => { e.stopPropagation(); setProfileOpen(false); }}>
-                  <FileSignature size={17} /> Credentials
+                  <FileSignature size={17} /> Sessions 
                 </button>
 
                 <button onClick={(e) => { e.stopPropagation(); onNavigate("settings"); setProfileOpen(false); }}>

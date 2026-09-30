@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState, Suspense, lazy } from "react";
-import "../../styles/Doctor/doctor-home.css";
+import "../../styles/Doctor/Doctor-Home.css";
 import doc from "../../assets/home/doc3.png";
 import Hospital_Brand from "../../components/common/Hospital_Brand";
 import Search_Bar from "../../components/ui/Search";
@@ -7,36 +7,40 @@ import ProfileMenu from "../../components/ui/ProfileMenu";
 import ClockCalendarCard from "../../components/ui/ClockCalendarCard";
 // import Sidebar from "../../components/ui/Sidebar";
 
-
-
 import { createPortal } from "react-dom";
 import {
   Cross, LayoutDashboard, Users, FileText, Stethoscope, Pill, FlaskConical,
   CalendarDays, Bell, BarChart3, UserRound, Headset, Settings as SettingsIcon,
   Menu, Search, MessageCircle, ChevronDown, CheckCircle2, Clock, ChevronLeft,
-  ChevronRight, MoreVertical, AlertTriangle, UserPlus, BedDouble, ClipboardCheck, Star, Timer, ClipboardList, PlayCircle, FileCheck2, NotebookPen, CheckSquare, Settings, CircleHelp, LogOut, Activity, X, Phone, Mail, HeartPulse, Moon, Languages, LogIn, ShieldCheck, LockKeyhole, FileSignature,
-  BriefcaseMedical,
-  LibraryBig,
-  Building2,
-  PanelLeftClose,
-  PanelLeftOpen,
-  PanelRightClose,
-  PanelRightOpen,
-  SearchIcon,
+  ChevronRight, MoreVertical, AlertTriangle, UserPlus, BedDouble, ClipboardCheck, Star, Timer, ClipboardList, PlayCircle, FileCheck2, NotebookPen, CheckSquare, Settings, CircleHelp, LogOut, Activity, X, Phone, Mail, HeartPulse, Moon, Languages, LogIn, ShieldCheck, LockKeyhole, FileSignature, BriefcaseMedical, LibraryBig, Building2, PanelLeftClose, PanelLeftOpen, PanelRightClose, PanelRightOpen, SearchIcon, UsersRound, ListChecks, UserRoundPlus, MessageSquare, Video, Send, ContactRound, BookOpenCheck, Megaphone, CalendarClock
 } from "lucide-react";
 
-/* Lazy-load each section — only the active one gets fetched/rendered.
-   This recovers the code-splitting benefit you'd normally get from routing. */
+/* 
+  Lazy-load each section — only the active one gets fetched/rendered.
+  This recovers the code-splitting benefit you'd normally get from routing.
+*/
+
 const Dashboard = lazy(() => import("../doctor/DocDashboard"));
 const Schedule = lazy(() => import("../doctor/DocSchedule"));
 const Patient = lazy(() => import("../../components/common/PatientRecords"));
+const Queue = lazy(() => import("../doctor/DocQueue"));
+
 const Doctor_Workspace = lazy(() => import("../doctor/DocWorkspace"));
+const Prescriptions = lazy(() => import("../doctor/Prescriptions"));
+
+const Doctor_Referral = lazy(() => import("../doctor/DocReferral"));
 const DocHub = lazy(() => import("../../components/common/DoctorsHub"));
 const MDT_Meetings = lazy(() => import("../../components/common/MDT_Meetings"));
+
 const Hospital_Faculty = lazy(() => import("../../components/common/Hospital_Faculty"));
+const Hospital_Notice = lazy(() => import("../../components/common/Hospital_Notice"));
 const MedicalLibrary = lazy(() => import("../../components/common/Medical_Library"));
 
 const Performance = lazy(() => import("../doctor/DocPerformance"));
+const Salary = lazy(() => import("../../components/common/Salary"));
+const Credentials = lazy(() => import("../../components/common/Credentials"));
+const Appraisals = lazy(() => import("../../components/common/Appraisals"));
+
 const Profile = lazy(() => import("../../components/personal/My_Profile"));
 const SettingsSection = lazy(() => import("../../components/common/SettingsSection"));
 
@@ -45,13 +49,24 @@ const SECTION_MAP = {
   dashboard: Dashboard,
   schedule: Schedule,
   "patient-records": Patient,
-  Workspace: Doctor_Workspace,
-  DocHub: DocHub,
+  "patient-queue":Queue,
+
+  workspace: Doctor_Workspace,
+  prescriptions :Prescriptions,
+
+  "doctor-hub": DocHub,
   MDT: MDT_Meetings,
-  Faculty: Hospital_Faculty,
-  "Med-Library": MedicalLibrary,
+  referrals: Doctor_Referral,
+
+  faculty: Hospital_Faculty,
+  "med-library": MedicalLibrary,
+  notices:Hospital_Notice,
 
   performance: Performance,
+  salary : Salary,
+  credentials : Credentials,
+  appraisals :Appraisals,
+
   profile: Profile,
   settings: SettingsSection,
 };
@@ -84,21 +99,24 @@ const SECTION_MAP = {
 //   },
 // ];
 
-const NAVIGATION = [
+const NAVIGATIONn = [
   {
     id: "dashboard",
     label: "Home",
     defaultTab: "dashboard",
 
-    title: "MAIN",
+    title: "HOME",
     theme: "blue",
-      items: [
-        { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-        { id: "schedule", label: "Schedule", icon: CalendarDays },
-        // { id: "patient-queue", label: "Patient Queue", icon: Users, count: 10 },
-        // { id: "my-patients", label: "My Patients", icon: UserRound },
-        { id: "patient-records", label: "	Patients", icon: Stethoscope },
-      ],
+    items: [
+      { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+      { id: "schedule", label: "Schedule", icon: CalendarDays },
+      // { id: "patient-queue", label: "Patient Queue", icon: Users, count: 10 },
+      // { id: "my-patients", label: "My Patients", icon: UserRound },
+      { id: "patient-records", label: "	Patients", icon: Stethoscope },
+      // { id: "patients", label: "Patients", icon: UsersRound },
+      // { id: "patient-queue", label: "Patient Queue", icon: Users, count: 10 },
+      // { id: "my-patients", label: "My Patients", icon: UserRound },
+    ],
   },
 
   {
@@ -106,19 +124,15 @@ const NAVIGATION = [
     label: "Workspace",
     defaultTab: "Workspace",
 
-    title: "CLINICAL",
+    title: "WORKSPACE",
     theme: "green",
-
-      items: [
-        { id: "Workspace", label: "My Workspace", icon: BriefcaseMedical },
-        // { id: "clinical-notes",label: "Clinical Notes",icon: ClipboardList },
-        // { id: "consultations",label: "Consultations",icon: Stethoscope },
-        // { id: "diagnosis",label: "Diagnosis",icon: HeartPulse },
-        // { id: "prescriptions",label: "Prescriptions",icon: Pill },
-        // { id: "follow-ups",label: "Follow-ups",icon: Timer,count: 6 },
-        // { id: "certificates",label: "Certificates",icon: FileCheck2 },
-        // { id: "referrals",label: "Referrals",icon: ChevronRight },
-      ],
+    items: [
+      { id: "workspace", label: "My Workspace", icon: BriefcaseMedical },
+      { id: "prescriptions", label: "Prescriptions", icon: Pill },
+      { id: "certificates", label: "Certificates", icon: FileCheck2 },
+      { id: "clinical-notes", label: "Clinical Notes", icon: ClipboardList },
+      { id: "Order Lab Test", label: "Lab Reports ", icon: FlaskConical },
+    ],
   },
 
   {
@@ -126,31 +140,31 @@ const NAVIGATION = [
     label: "Community",
     defaultTab: "DocHub",
 
-    title: "COLLABORATION",
+    title: "COMMUNITY",
     theme: "purple",
-      items: [
-        { id: "DocHub", label: "Doctor Hub", icon: Users, tag: "NEW" },
-        { id: "MDT", label: "MDT Meetings", icon: UserPlus },
-        // { id: "case-reviews", label: "Case Reviews", icon: Search },
-        // { id: "medical-library", label: "Medical Library", icon: FileText },
-        // { id: "research", label: "Research", icon: FlaskConical },
-      ],
+    items: [
+      { id: "DocHub", label: "Doctor Hub", icon: Users, tag: "NEW" },
+      { id: "MDT", label: "MDT Meetings", icon: UserPlus },
+      // { id: "case-reviews", label: "Case Reviews", icon: Search },
+      // { id: "medical-library", label: "Medical Library", icon: FileText },
+      // { id: "research", label: "Research", icon: FlaskConical },
+    ],
   },
 
   {
     id: "faculty",
-    label: "Hospital Faculty",
+    label: "Faculty",
     defaultTab: "Faculty",
 
-    title: "HOSPITAL",
+    title: "HOSPITAL FACULTY",
     theme: "orange",
-      items: [
-        { id: "Faculty", label: "Hospital Faculty", icon: Building2 },
-        { id: "Med-Library", label: "Medical Library", icon: LibraryBig },
-        // { id: "cme", label: "More", icon: Star },
-        // { id: "performance", label: "Performance", icon: BarChart3 },
-        // { id: "ward-rounds", label: "Ward Rounds", icon: BedDouble },
-      ],
+    items: [
+      { id: "Faculty", label: "Hospital Faculty", icon: Building2 },
+      { id: "Med-Library", label: "Medical Library", icon: LibraryBig },
+      // { id: "cme", label: "More", icon: Star },
+      // { id: "performance", label: "Performance", icon: BarChart3 },
+      // { id: "ward-rounds", label: "Ward Rounds", icon: BedDouble },
+    ],
   },
 
   {
@@ -160,11 +174,105 @@ const NAVIGATION = [
 
     title: "PERSONAL",
     theme: "green",
-      items: [
-        { id: "Workspace", label: "My Workspace", icon: BriefcaseMedical, },
-        { id: "performance", label: "Performance", icon: BarChart3, },
-        { id: "profile", label: "My Profile", icon: UserRound, },
-        { id: "settings", label: "Settings", icon: SettingsIcon, },
+    items: [
+      { id: "Workspace", label: "My Workspace", icon: BriefcaseMedical, },
+      { id: "performance", label: "Performance", icon: BarChart3, },
+      { id: "profile", label: "My Profile", icon: UserRound, },
+      { id: "settings", label: "Settings", icon: SettingsIcon, },
+    ],
+  },
+];
+
+const NAVIGATION = [
+
+  {
+    id: "overview",
+    label: "Overview",
+    defaultTab: "dashboard",
+
+    title: "OVERVIEW",
+    theme: "blue",
+
+    items: [
+      { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+      { id: "schedule", label: "Schedule", icon: CalendarDays },
+      { id: "patient-records", label: "My Patients", icon: Stethoscope },
+      { id: "patient-queue", label: "Queue", icon: ListChecks, count: 10 },
+      { id: "visits", label: "Visits", icon: ClipboardCheck },
+
+      // { id: "patients", label: "Patients", icon: UsersRound },
+      // { id: "patient-queue", label: "Patient Queue", icon: Users, count: 10 },
+      // { id: "my-patients", label: "My Patients", icon: UserRound },
+    ],
+  },
+
+  {
+    id: "care",
+    label: "Clinical",
+    defaultTab: "workspace",
+
+    title: "CARE",
+    theme: "green",
+
+    items: [
+      { id: "workspace", label: "Workspace", icon: BriefcaseMedical },
+      { id: "notes", label: "Notes", icon: ClipboardList },
+      { id: "prescriptions", label: "Prescriptions", icon: Pill },
+      { id: "lab-orders", label: "Lab Orders", icon: FlaskConical },
+      { id: "certificates", label: "Certificates", icon: FileCheck2 },
+    ],
+  },
+
+  {
+    id: "connect",
+    label: "Connect",
+    defaultTab: "doctor-hub",
+
+    title: "CONNECT",
+    theme: "purple",
+
+    items: [
+      { id: "doctor-hub", label: "Doctor Hub", icon: Users, tag: "NEW" },
+      { id: "referrals", label: "Referrals", icon: Send },
+      { id: "case-reviews", label: "Case Reviews", icon: MessageSquare },
+      { id: "MDT", label: "Meetings", icon: Video },
+      { id: "research", label: "Research", icon: FlaskConical },
+    ],
+  },
+
+  {
+    id: "hospital",
+    label: "Hospital",
+    defaultTab: "faculty",
+
+    title: "HOSPITAL",
+    theme: "orange",
+
+    items: [
+      { id: "faculty", label: "Departments", icon: Building2 },
+      { id: "directory", label: "Directory", icon: ContactRound },
+      { id: "med-library", label: "Library", icon: LibraryBig },
+      { id: "guidelines", label: "Guidelines", icon: BookOpenCheck },
+      { id: "notices", label: "Notices", icon: Megaphone },
+    ],
+  },
+
+  {
+    // id: "account",
+    // label: "Account",
+    id: "personal",
+    label: "Personal",
+    defaultTab: "privileges",
+
+    title: "PERSONAL",
+    theme: "gray",
+
+    items: [
+      { id: "development", label: "Development", icon: Activity },
+      // { id: "Leave & Attendance", label: "leave", icon: Activity },
+      { id: "salary", label: "Payroll", icon: Settings },
+      { id: "appraisals", label: "Appraisals", icon: Settings },
+      { id: "credentials", label: "Credentials", icon: Settings },
     ],
   },
 ];
@@ -172,21 +280,15 @@ const NAVIGATION = [
 const ASIDE_QUICK_ACTIONS = [
   { icon: FileText, label: "New Patient", cls: "aside-qa-item--blue" },
   { icon: NotebookPen, label: "Write Note", cls: "aside-qa-item--orange" },
-  // { icon: FileCheck2, label: "Add Prescription", cls: "aside-qa-item--green" },
+  { icon: FileCheck2, label: "Add Prescription", cls: "aside-qa-item--green" },
+  { icon: Bell, label: "Reminders", cls: "aside-qa-item--green" },
+  { icon: FlaskConical, label: "Order Lab Test", cls: "aside-qa-item--purple" },
   // { icon: Bell, label: "Reminders", cls: "aside-qa-item--green" },
   // { icon: FlaskConical, label: "Order Lab Test", cls: "aside-qa-item--purple" },
+  { icon: CheckSquare, label: "Create Task", cls: "aside-qa-item--red" },
   // { icon: Users, label: "Referral ", cls: "aside-qa-item--teal" },
-  // { icon: CheckSquare, label: "Create Task", cls: "aside-qa-item--red" },
 ];
-const NOTIFICATIONS = [
-  { icon: CalendarDays, title: "Appointment cancelled", subtitle: "John Smith cancelled his 2:00 PM slot", time: "25 mins ago" },
-  { icon: FileText, title: "New record shared", subtitle: "Referral note added for Priya Mehta", time: "40 mins ago" },
-  { icon: CheckCircle2, title: "Lab sync complete", subtitle: "3 reports imported from the lab system", time: "1 hr ago" },
-];
-const activityLabels = {
-  messages: "Messages",
-  notifications: "Notifications",
-};
+
 const ACTIVITY_SEARCH = [
   {
     id: 1,
@@ -213,7 +315,8 @@ const ACTIVITY_SEARCH = [
     detail: "Hospital Faculty",
   },
 ];
-const ACTIVITY_MESSAGES = [
+
+const MESSAGES = [
   {
     id: 1,
     name: "Dr. Priya Mehta",
@@ -243,10 +346,12 @@ const ACTIVITY_MESSAGES = [
     unread: false,
   },
 ];
-const ACTIVITY_NOTIFICATIONS = [
+
+const NOTIFICATIONS = [
   {
     id: 1,
     type: "appointment",
+    icon: CalendarClock,
     title: "Appointment starting soon",
     message: "Rahul Sharma · 10:30 AM",
     time: "5 min",
@@ -255,6 +360,7 @@ const ACTIVITY_NOTIFICATIONS = [
   {
     id: 2,
     type: "report",
+    icon: FileText,
     title: "Lab report available",
     message: "Patient PT1187",
     time: "18 min",
@@ -263,6 +369,7 @@ const ACTIVITY_NOTIFICATIONS = [
   {
     id: 3,
     type: "message",
+    icon: MessageCircle,
     title: "New message received",
     message: "Dr. Priya Mehta",
     time: "42 min",
@@ -271,6 +378,7 @@ const ACTIVITY_NOTIFICATIONS = [
   {
     id: 4,
     type: "task",
+    icon: ClipboardCheck,
     title: "Task due today",
     message: "Complete patient review",
     time: "1 hr",
@@ -281,38 +389,29 @@ const ACTIVITY_NOTIFICATIONS = [
 const ACTIVITY_ROW_MIN_HEIGHT = 52;
 const ACTIVITY_ROW_GAP = 8;
 
-
-/* ---------------- component ---------------- */
-function ActivityInfoRow({ icon, title, subtitle, meta, unread = false }) {
-  return (
-    <div
-      className={"aside__activity-row" +
-        (unread ? " aside__activity-row--unread" : "")
-      }
-    >
-      <div className="aside__activity-row-icon"> {icon} </div>
-
-      <div className="aside__activity-row-content">
-        <span className="aside__activity-row-title"> {title} </span>
-        <span className="aside__activity-row-subtitle"> {subtitle} </span>
-      </div>
-
-      {meta && (<span className="aside__activity-row-meta"> {meta} </span>)}
-    </div>
-  );
-}
-
-
+// const attendanceDatas = {
+//   month: "September",
+//   percentage: 73,
+//   presentDays: 22,
+//   totalDays: 30,
+//   stats: [
+//     { count: 3, label: "half day" },
+//     { count: 3, label: "leave" },
+//     { count: 2, label: "off" },
+//   ],
+// };
 
 function DocHome() {
   const profileRef = useRef(null);
   const infoRef = useRef(null);
 
-  const [activeNavigation, setActiveNavigation] = useState("dashboard");
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeNavigation, setActiveNavigation] = useState("connect");
+  // const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState("doctor-hub");
 
-  const [notifOpen, setNotifOpen] = useState(false);
-  const notifRef = useRef(null);
+  const [activePopup, setActivePopup] = useState(null);
+  const topbarPopupRef = useRef(null);
+
 
   const [helpOpen, setHelpOpen] = useState(false);
   const [helpSubject, setHelpSubject] = useState("");
@@ -321,13 +420,21 @@ function DocHome() {
   const [ticketId, setTicketId] = useState(null);
   const [profileOpen, setProfileOpen] = useState(false);
   const [infoHeight, setInfoHeight] = useState(0);
-  const [activityMode, setActivityMode] = useState("messages");
 
   const ActiveSection = SECTION_MAP[activeTab] ?? Dashboard;
   const currentNavigation = NAVIGATION.find((navigation) => navigation.id === activeNavigation);
   const currentItems = currentNavigation?.items ?? [];
-  
+
   const visibleActivityRows = infoHeight > 0 ? Math.floor((infoHeight + ACTIVITY_ROW_GAP) / (ACTIVITY_ROW_MIN_HEIGHT + ACTIVITY_ROW_GAP)) : 0;
+
+  const unreadMessages = MESSAGES.filter((message) => message.unread).length;
+  const unreadNotifications = NOTIFICATIONS.filter((notification) => notification.unread).length;
+
+  const togglePopup = (popup) => {
+    setActivePopup((current) =>
+      current === popup ? null : popup
+    );
+  };
 
   useEffect(() => {
     if (!infoRef.current) return;
@@ -341,87 +448,246 @@ function DocHome() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        topbarPopupRef.current &&
+        !topbarPopupRef.current.contains(event.target)
+      ) {
+        setActivePopup(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
 
   return (
     <div className="doctors-home" data-entity="doctor">
 
-      {/* topbar */}
+      {/* top: logo + navigation-activity + profile */}
+      <div className="doc-topbar">
 
-      <div className="doc_logo">
-        <Hospital_Brand />
-      </div>
+        <div className="doc_logo">
+          <Hospital_Brand />
+        </div>
 
-      <div className="topbar__navigation">
-        <nav className="nav-header__menu">
+        <div className="topbar__navigation">
+          {/* BACKDROP FILTER */}
+          {activePopup && (
+            <div
+              className="topbar-popup-backdrop"
+              onClick={() => setActivePopup(null)}
+              aria-hidden="true"
+            />
+          )}
+          <nav className="nav-header__menu">
+            {NAVIGATION.map((navigation) => (
+              <button
+                key={navigation.id}
+                type="button"
+                className={
+                  "nav-header__item" +
+                  (
+                    activeNavigation === navigation.id
+                      ? " nav-header__item--active"
+                      : ""
+                  )
+                }
+                onClick={() => {
+                  setActiveNavigation(navigation.id);
+                  setActiveTab(navigation.defaultTab);
+                }}
+              >
+                {navigation.label}
+              </button>
+            ))}
+          </nav>
 
-          {NAVIGATION.map((navigation) => (
+
+          <div className="topbar__activity" ref={topbarPopupRef} >
+            {/* <div className=" serch">
+              <Search_Bar  placeholder="Search patients by name, ID or phone..."/>
+            </div> */}
+
+            {/* <button className="topbar__activity__icon-btn" aria-label="Messages">
+              <SearchIcon size={15} strokeWidth={3} />
+            </button> */}
+
+
+            {/* MESSAGE POPUP */}
             <button
-              key={navigation.id}
+              className={`topbar__activity__icon-btn ${activePopup === "messages"
+                ? "topbar__activity__icon-btn--active"
+                : ""
+                }`}
+              aria-label="Messages"
               type="button"
-              className={
-                "nav-header__item" +
-                (
-                  activeNavigation === navigation.id
-                    ? " nav-header__item--active"
-                    : ""
-                )
-              }
-              onClick={() => {
-                setActiveNavigation(navigation.id);
-                setActiveTab(navigation.defaultTab);
-              }}
+              onClick={() => togglePopup("messages")}
             >
-              {navigation.label}
-            </button>
-          ))}
+              <MessageCircle
+                size={15}
+                strokeWidth={3}
+              />
 
-        </nav>
-
-        {/* <div className=" serch">
-          <Search_Bar  placeholder="Search patients by name, ID or phone..."/>
-        </div> */}
-
-        <div className="topbar__search-activity" >
-          <button className="topbar__icon-btn" aria-label="Dark Mode">
-            <SearchIcon size={18} />
-          </button>
-          <button className="topbar__icon-btn" aria-label="Messages">
-            <MessageCircle size={18} />
-          </button>
-
-          <div className="topbar__notif-wrap" ref={notifRef}>
-            <button
-              className="topbar__icon-btn"
-              aria-label="Notifications"
-              onClick={() => setNotifOpen((o) => !o)}
-            >
-              <Bell size={18} />
-              {NOTIFICATIONS.length > 0 && (
-                <span className="topbar__icon-badge">{NOTIFICATIONS.length}</span>
+              {unreadMessages > 0 && (
+                <span className="doc_notif__icon-badge">
+                  {unreadMessages}
+                </span>
               )}
             </button>
-            {notifOpen && (
-              <div className="notif-dropdown">
-                <div className="notif-dropdown__header">Notifications</div>
-                {NOTIFICATIONS.map((n) => (
-                  <div className="notif-dropdown__row" key={n.title}>
-                    <span className="notif-dropdown__icon"><n.icon size={15} /></span>
-                    <div className="notif-dropdown__info">
-                      <span className="notif-dropdown__title">{n.title}</span>
-                      <span className="notif-dropdown__subtitle">{n.subtitle}</span>
-                    </div>
-                    <span className="notif-dropdown__time">{n.time}</span>
+            {activePopup === "messages" && (
+              <div className="topbar-popup messages-popup">
+                <div className="topbar-popup__header">
+                  <div>
+                    <h3>Messages</h3>
+                    <span>
+                      {unreadMessages > 0
+                        ? `${unreadMessages} unread`
+                        : "All caught up"}
+                    </span>
                   </div>
-                ))}
+                  {unreadMessages > 0 && (
+                    <button type="button" className="topbar-popup__action">
+                      Mark all read
+                    </button>
+                  )}
+                </div>
+
+
+                <div className="topbar-popup__body">
+                  {MESSAGES.length === 0 ? (
+                    <div className="topbar-popup__empty">
+                      <MessageCircle size={22} />
+                      <span>No messages</span>
+                    </div>
+                  ) : (
+                    MESSAGES.map((message) => (
+                      <div
+                        className={`message-row ${message.unread ? "message-row--unread" : ""}`}
+                        key={message.id}
+                      >
+                        {/* Avatar */}
+                        <div className="message-row__avatar">
+                          {message.name
+                            .split(" ")
+                            .map((word) => word[0])
+                            .slice(0, 2)
+                            .join("")
+                          }
+                        </div>
+                        {/* Message content */}
+                        <div className="message-row__content">
+                          <div className="message-row__top">
+                            <span className="message-row__name"> {message.name} </span>
+                            <span className="message-row__time"> {message.time} </span>
+                          </div>
+                          <p> {message.message} </p>
+                        </div>
+                        {/* Unread indicator */}
+                        {message.unread && (
+                          <span className="message-row__unread-dot" />
+                        )}
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                <div className="topbar-popup__footer">
+                  <button type="button">
+                    View all messages
+                    <span>→</span>
+                  </button>
+                </div>
+              </div>
+            )}
+            
+            {/* NOTIFICATION POPUP */}
+            <button
+              className={`topbar__activity__icon-btn ${activePopup === "notifications" ? "topbar__activity__icon-btn--active" : ""}`}
+              aria-label="Notifications"
+              type="button"
+              onClick={() => togglePopup("notifications")}
+            >
+              <Bell size={15} strokeWidth={3} />
+              {unreadNotifications > 0 && (
+                <span className="doc_notif__icon-badge">
+                  {unreadNotifications}
+                </span>
+              )}
+            </button>
+            {activePopup === "notifications" && (
+              <div className="topbar-popup notifications-popup">
+                <div className="topbar-popup__header">
+                  <div>
+                    <h3>Notifications</h3>
+                    <span>
+                      {unreadNotifications > 0
+                        ? `${unreadNotifications} unread`
+                        : "You're all caught up"}
+                    </span>
+                  </div>
+                  {unreadNotifications > 0 && (
+                    <button
+                      type="button"
+                      className="topbar-popup__action"
+                    >
+                      Mark all read
+                    </button>
+                  )}
+                </div>
+                <div className="topbar-popup__body">
+
+                  {NOTIFICATIONS.length === 0 ? (
+                    <div className="topbar-popup__empty">
+                      <Bell size={22} />
+                      <span>No notifications</span>
+                    </div>
+                  ) : (
+                    NOTIFICATIONS.map((notification) => {
+                      const Icon = notification.icon || Bell;
+                      return (
+                        <div
+                          key={notification.id}
+                          className={`notification-row ${notification.unread ? "notification-row--unread" : ""}`}
+                        >
+                          <div className="notification-row__icon">
+                            <Icon size={16} strokeWidth={2} />
+                          </div>
+                          <div className="notification-row__content">
+                            <div className="notification-row__top">
+                              <span className="notification-row__title">{notification.title} </span>
+                              <span className="notification-row__time"> {notification.time} </span>
+                            </div>
+                            <p> {notification.message} </p>
+                          </div>
+                          {notification.unread && (
+                            <span className="notification-row__unread-dot" />
+                          )}
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+                {/* FOOTER */}
+                <div className="topbar-popup__footer">
+                  <button type="button">
+                    View all notifications
+                    <span>→</span>
+                  </button>
+                </div>
               </div>
             )}
           </div>
         </div>
 
-      </div>
-
-      <div className="topbar__actions">
-        <ProfileMenu variant="doctor" avatar={doc} name="Dr. Rajesh Sharma" role="Cardiologist" onNavigate={setActiveTab} />
+        <div className="topbar__actions">
+          <ProfileMenu variant="doctor" avatar={doc} name="Dr. Rajesh Sharma" role="Cardiologist" onNavigate={setActiveTab} />
+        </div>
       </div>
 
       {/* left: doctor-specific nav + quick actions */}
@@ -445,10 +711,10 @@ function DocHome() {
 
                   {currentNavigation.items.map(
                     ({ id, label, icon: Icon, count, tag }) => (
-                      <button 
-                        key={id} 
-                        type="button" 
-                        onClick={() => setActiveTab(id)} 
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => setActiveTab(id)}
                         className={"sidebar-item" + (activeTab === id ? " sidebar-item--active" : "")}
                       >
                         <div className="sidebar-item__icon">
@@ -603,7 +869,8 @@ function DocHome() {
       {/* right: permanent clock + calendar  */}
       <section className="doc_aside">
         <aside className="aside-rail">
-          <div className="aside__search_msg_notif-activity">
+
+          {/* <div className="aside__search_msg_notif-activity">
             <div className="aside__activity-controls">
               <button className="aside__icon-btn" aria-label="Messages" onClick={() => setActivityMode("messages")}>
                 <MessageCircle size={15} strokeWidth={3} />
@@ -661,21 +928,26 @@ function DocHome() {
                 </div>
               )}
             </div>
-          </div>
+          </div> */}
 
-          <div className="panel--quick-actions">
-            <div className="aside-qa-grid">
-              {ASIDE_QUICK_ACTIONS.map((a) => (
-                <button className={`aside-qa-item ${a.cls}`} key={a.label}>
-                  <span className="aside-qa-icon">
-                    <a.icon size={16} strokeWidth={2} />
-                  </span>
-                  <span className="aside-qa-label">{a.label}</span>
-                </button>
-              ))}
+          <div className="aside-top-area">
+            <div className="panel--quick-actions">
+              <div className="aside-qa-grid">
+                {ASIDE_QUICK_ACTIONS.map((a) => (
+                  <button className={`aside-qa-item ${a.cls}`} key={a.label}>
+                    <span className="aside-qa-icon">
+                      <a.icon size={16} strokeWidth={2} />
+                    </span>
+                    <span className="aside-qa-label">{a.label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-          <ClockCalendarCard />
+
+          <div className="doc-calender">
+            <ClockCalendarCard />
+          </div>
         </aside>
       </section>
     </div>

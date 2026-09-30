@@ -1156,10 +1156,6 @@ function DocSchedule() {
 
       <div className="sched__toolbar">
         <div className="sched__view-switch">
-          {/* <button className={view === "day" ? "is-active" : ""} onClick={() => setView("day")}>
-            Day
-          </button> */}
-
           <button className={view === "week" ? "is-active" : ""} onClick={() => setView("week")}>
             Week
           </button>
@@ -1167,7 +1163,6 @@ function DocSchedule() {
           <button className={view === "month" ? "is-active" : ""} onClick={() => setView("month")}>
             Month
           </button>
-
         </div>
 
         <div className="sched__date-navigation">

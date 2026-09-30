@@ -1,0 +1,339 @@
+/* ===== OPD Patient Queue — table redesign, no page header ===== */
+/* Icons use Tabler Icons webfont. Add this to your index.html <head>:
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+*/
+
+.opd-card {
+  --opd-radius: 10px;
+  --opd-border: #e5e9f2;
+  --opd-text: #0f172a;
+  --opd-muted: #64748b;
+
+  --opd-success-bg: #dcfce7;
+  --opd-success-text: #15803d;
+  --opd-success-border: #86efac;
+
+  --opd-warning-bg: #fef3c7;
+  --opd-warning-text: #b45309;
+  --opd-warning-border: #fcd34d;
+
+  --opd-accent-bg: #dbeafe;
+  --opd-accent-text: #1d4ed8;
+  --opd-accent-border: #93c5fd;
+
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--opd-text);
+  box-sizing: border-box;
+}
+
+.opd-card * {
+  box-sizing: border-box;
+}
+
+/* ---------- status color helper classes ---------- */
+.opd-status-success { --status-bg: var(--opd-success-bg); --status-text: var(--opd-success-text); --status-border: var(--opd-success-border); }
+.opd-status-warning { --status-bg: var(--opd-warning-bg); --status-text: var(--opd-warning-text); --status-border: var(--opd-warning-border); }
+.opd-status-accent  { --status-bg: var(--opd-accent-bg);  --status-text: var(--opd-accent-text);  --status-border: var(--opd-accent-border); }
+
+/* ---------- Segmented filter menu ---------- */
+.opd-segment {
+  display: flex;
+  gap: 6px;
+  background: #f1f5f9;
+  border-radius: var(--opd-radius);
+  padding: 4px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.opd-segment-btn {
+  flex: 1;
+  min-width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 8px 10px;
+  cursor: pointer;
+  color: var(--opd-muted);
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.opd-segment-btn.opd-status-warning { color: var(--opd-warning-text); }
+.opd-segment-btn.opd-status-success { color: var(--opd-success-text); }
+.opd-segment-btn.opd-status-accent  { color: var(--opd-accent-text); }
+
+.opd-segment-btn.active {
+  background: #fff;
+  border: 1px solid var(--opd-border);
+  color: var(--opd-text);
+}
+
+.opd-segment-count {
+  color: var(--opd-muted);
+  font-weight: 500;
+}
+
+/* ---------- Toolbar ---------- */
+.opd-toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.opd-search {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--opd-border);
+  border-radius: var(--opd-radius);
+  padding: 0 12px;
+  height: 38px;
+}
+
+.opd-search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.85rem;
+  width: 100%;
+  height: 100%;
+}
+
+.opd-btn-ghost,
+.opd-btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: var(--opd-radius);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.opd-btn-ghost {
+  background: #fff;
+  border: 1px solid var(--opd-border);
+  color: var(--opd-text);
+}
+
+.opd-btn-ghost:hover {
+  background: #f8fafc;
+}
+
+.opd-btn-primary {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+}
+
+.opd-btn-primary:hover {
+  background: #1d4ed8;
+}
+
+/* ---------- Table ---------- */
+.opd-table-wrap {
+  background: #fff;
+  border: 1px solid var(--opd-border);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.opd-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+  font-size: 0.85rem;
+}
+
+.opd-table thead th {
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--opd-muted);
+  background: #f8fafc;
+  padding: 10px 14px;
+  white-space: nowrap;
+}
+
+.opd-table thead th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.opd-table thead th.sortable:hover {
+  color: var(--opd-text);
+}
+
+.opd-table thead th i {
+  font-size: 0.7rem;
+  margin-right: 3px;
+}
+
+.opd-table tbody tr {
+  border-top: 1px solid var(--opd-border);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.opd-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.opd-row-alt {
+  background: #fafbfd;
+}
+
+.opd-row-active {
+  background: var(--status-bg) !important;
+  border-left: 3px solid var(--status-text);
+}
+
+.opd-table tbody td {
+  padding: 9px 14px;
+  vertical-align: middle;
+}
+
+.opd-muted-cell {
+  color: var(--opd-muted);
+}
+
+.opd-patient-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.opd-avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: var(--status-bg, #e2e8f0);
+  color: var(--status-text, #475569);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.opd-patient-name {
+  margin: 0;
+  font-weight: 600;
+}
+
+.opd-patient-pid {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--opd-muted);
+}
+
+.opd-wait-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--status-text);
+  margin-top: 2px;
+}
+
+.opd-status-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--opd-radius);
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--status-bg);
+  color: var(--status-text);
+  white-space: nowrap;
+}
+
+.opd-row-active .opd-status-pill {
+  background: #fff;
+  border: 1px solid var(--status-border);
+}
+
+.opd-row-arrow {
+  text-align: right;
+  color: var(--opd-muted);
+}
+
+.opd-empty {
+  text-align: center;
+  padding: 28px;
+  color: var(--opd-muted);
+}
+
+/* ---------- Footer ---------- */
+.opd-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.opd-footer-note {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: var(--opd-muted);
+  margin: 0;
+}
+
+.opd-pagination {
+  display: flex;
+  gap: 4px;
+}
+
+.opd-pagination button {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--opd-border);
+  background: #fff;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.opd-pagination button.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+.opd-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+  .opd-segment-btn span.opd-segment-count { display: none; }
+  .opd-table { min-width: 620px; }
+}
+
+@media (max-width: 480px) {
+  .opd-segment-btn { font-size: 0.75rem; padding: 8px 6px; }
+  .opd-btn-ghost span, .opd-btn-primary span { display: none; }
+}

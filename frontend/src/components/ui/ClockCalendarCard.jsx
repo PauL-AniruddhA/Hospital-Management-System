@@ -86,7 +86,8 @@ function ClockCalendarCard() {
 
   return (
     <div className="calendar__clock">
-      <div className="clock_block">
+
+      {/* <div className="clock_block">
         <div className="clock__info">
           <div className="clock__digital">
             <span className="clock__digital--time">
@@ -114,7 +115,7 @@ function ClockCalendarCard() {
         </svg>
       </div>
 
-      <div className="cal-card__hr" />
+      <div className="cal-card__hr" /> */}
 
       <div className="calendar-nav__arrows">
         <button
@@ -182,6 +183,7 @@ function ClockCalendarCard() {
           </div>
         )}
       </div>
+
     </div>
   );
 }
