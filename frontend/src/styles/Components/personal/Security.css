@@ -1,0 +1,782 @@
+/* =========================================================
+   SECURITY SECTION
+========================================================= */
+
+.security-section {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.9rem;
+
+    min-width: 0;
+    max-height: 72vh;
+
+    padding: 1.15rem;
+
+    background: #f7f9fc;
+    color: #172033;
+
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.security-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+}
+
+.security-header-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.security-header-icon {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: #edf4ff;
+    color: #1769e0;
+}
+
+.security-header h2 {
+    margin: 0;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+
+    color: #172033;
+}
+
+.security-header p {
+    margin: 0.2rem 0 0;
+
+    font-size: 0.68rem;
+    color: #8791a3;
+}
+
+.security-status {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+
+    padding: 0.4rem 0.65rem;
+
+    border: 1px solid #dceee5;
+    border-radius: 999px;
+
+    background: #f1faf5;
+
+    color: #2d8057;
+
+    font-size: 0.62rem;
+    font-weight: 650;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SECURITY OVERVIEW
+========================================================= */
+
+.security-overview {
+    display: flex;
+    align-items: center;
+
+    gap: 0.8rem;
+
+    padding: 0.9rem 1rem;
+
+    border: 1px solid #dfe7f2;
+    border-radius: 10px;
+
+    background: #ffffff;
+}
+
+.security-overview-icon {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: #edf4ff;
+    color: #1769e0;
+}
+
+.security-overview-content {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.security-overview-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+}
+
+.security-overview-title strong {
+    font-size: 0.76rem;
+    font-weight: 700;
+
+    color: #27344a;
+}
+
+.security-overview-title span {
+    font-size: 0.62rem;
+    color: #8993a5;
+}
+
+.security-progress {
+    height: 6px;
+
+    margin-top: 0.55rem;
+
+    border-radius: 999px;
+
+    background: #e9edf2;
+
+    overflow: hidden;
+}
+
+.security-progress span {
+    display: block;
+
+    width: 88%;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: #31a66c;
+}
+
+.security-progress-label {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 0.3rem;
+
+    font-size: 0.58rem;
+}
+
+.security-progress-label span {
+    color: #919aaa;
+}
+
+.security-progress-label strong {
+    color: #31845a;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.security-card {
+    background: #ffffff;
+
+    border: 1px solid #e4e9f0;
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.security-card-header {
+    display: flex;
+    align-items: center;
+
+    gap: 0.7rem;
+
+    padding: 0.85rem 1rem;
+
+    border-bottom: 1px solid #edf0f4;
+}
+
+.security-card-icon {
+    width: 35px;
+    height: 35px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    background: #f0f5fc;
+    color: #397dcc;
+}
+
+.security-card-header h3 {
+    margin: 0;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    color: #263247;
+}
+
+.security-card-header p {
+    margin: 0.2rem 0 0;
+
+    font-size: 0.63rem;
+    color: #8993a5;
+}
+
+.security-card-body {
+    padding: 0 1rem;
+}
+
+
+/* =========================================================
+   ROW
+========================================================= */
+
+.security-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    min-height: 58px;
+
+    padding: 0.72rem 0;
+
+    border-bottom: 1px solid #edf0f4;
+}
+
+.security-row:last-child {
+    border-bottom: 0;
+}
+
+.security-row-content {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.2rem;
+}
+
+.security-row-content strong {
+    font-size: 0.73rem;
+    font-weight: 600;
+
+    color: #29354a;
+}
+
+.security-row-content span {
+    font-size: 0.62rem;
+    line-height: 1.4;
+
+    color: #8993a5;
+}
+
+
+/* =========================================================
+   TOGGLE
+========================================================= */
+
+.security-toggle {
+    position: relative;
+
+    width: 38px;
+    height: 21px;
+
+    padding: 0;
+
+    flex-shrink: 0;
+
+    border: 0;
+    border-radius: 999px;
+
+    background: #d7dde6;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.security-toggle span {
+    position: absolute;
+
+    top: 3px;
+    left: 3px;
+
+    width: 15px;
+    height: 15px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.16);
+
+    transition: transform 0.2s ease;
+}
+
+.security-toggle.active {
+    background: #2878e8;
+}
+
+.security-toggle.active span {
+    transform: translateX(17px);
+}
+
+
+/* =========================================================
+   ACTION
+========================================================= */
+
+.security-action {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 0.7rem;
+
+    padding: 0.75rem 0;
+
+    border: 0;
+    border-bottom: 1px solid #edf0f4;
+
+    background: transparent;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.security-action:last-child {
+    border-bottom: 0;
+}
+
+.security-action:hover
+.security-action-content strong {
+    color: #1769e0;
+}
+
+.security-action-icon {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    background: #f1f5fa;
+    color: #59718e;
+}
+
+.security-action-content {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.18rem;
+}
+
+.security-action-content strong {
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    color: #29354a;
+}
+
+.security-action-content span {
+    font-size: 0.62rem;
+
+    color: #8993a5;
+}
+
+.security-action-button {
+    margin-left: auto;
+
+    padding: 0.3rem 0.55rem;
+
+    border: 1px solid #dfe5ed;
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #55708e;
+
+    font-size: 0.6rem !important;
+    font-weight: 600;
+}
+
+.security-action-arrow {
+    color: #a0a9b6;
+}
+
+
+/* =========================================================
+   PASSWORD FORM
+========================================================= */
+
+.security-password-form {
+    padding: 0.85rem 0;
+}
+
+.security-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.35rem;
+
+    margin-bottom: 0.75rem;
+}
+
+.security-field label {
+    font-size: 0.66rem;
+    font-weight: 600;
+
+    color: #59667b;
+}
+
+.security-input-wrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.security-input-wrapper input {
+    width: 100%;
+
+    padding: 0.62rem 2.4rem 0.62rem 0.7rem;
+
+    border: 1px solid #dfe5ed;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #29354a;
+
+    font-size: 0.68rem;
+
+    outline: none;
+}
+
+.security-input-wrapper input:focus {
+    border-color: #73a8ed;
+
+    box-shadow:
+        0 0 0 3px rgba(40, 120, 232, 0.08);
+}
+
+.security-input-wrapper button {
+    position: absolute;
+
+    right: 0.45rem;
+
+    display: grid;
+    place-items: center;
+
+    width: 27px;
+    height: 27px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #8993a5;
+
+    cursor: pointer;
+}
+
+.security-password-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 0.45rem;
+
+    margin-top: 0.85rem;
+}
+
+.security-cancel-btn,
+.security-update-btn {
+    padding: 0.45rem 0.7rem;
+
+    border-radius: 6px;
+
+    font-size: 0.63rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.security-cancel-btn {
+    border: 1px solid #dfe4eb;
+
+    background: #ffffff;
+
+    color: #687386;
+}
+
+.security-update-btn {
+    border: 1px solid #1769e0;
+
+    background: #1769e0;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   SECURITY EVENTS
+========================================================= */
+
+.security-event {
+    display: flex;
+    align-items: center;
+
+    gap: 0.65rem;
+
+    padding: 0.7rem 0;
+
+    border-bottom: 1px solid #edf0f4;
+}
+
+.security-event:last-of-type {
+    border-bottom: 0;
+}
+
+.security-event-icon {
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 7px;
+}
+
+.security-event-icon.success {
+    background: #edf8f2;
+    color: #2f9865;
+}
+
+.security-event-icon.warning {
+    background: #fff6e5;
+    color: #b47a19;
+}
+
+.security-event-content {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.15rem;
+}
+
+.security-event-content strong {
+    font-size: 0.68rem;
+    font-weight: 600;
+
+    color: #29354a;
+}
+
+.security-event-content span {
+    font-size: 0.6rem;
+
+    color: #8993a5;
+}
+
+.security-event time {
+    margin-left: auto;
+
+    flex-shrink: 0;
+
+    font-size: 0.58rem;
+
+    color: #9aa3b0;
+}
+
+.security-view-more {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+
+    padding: 0.7rem 0;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #1769e0;
+
+    font-size: 0.63rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.security-info {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 0.65rem;
+
+    padding: 0.8rem;
+
+    border: 1px solid #dce8f8;
+    border-radius: 8px;
+
+    background: #f1f6fd;
+
+    color: #4c6584;
+}
+
+.security-info > svg {
+    flex-shrink: 0;
+
+    color: #397dcc;
+}
+
+.security-info strong {
+    display: block;
+
+    font-size: 0.68rem;
+    font-weight: 650;
+
+    color: #35597f;
+}
+
+.security-info p {
+    margin: 0.2rem 0 0;
+
+    font-size: 0.61rem;
+    line-height: 1.45;
+
+    color: #71829a;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.security-footer {
+    position: sticky;
+
+    bottom: 0;
+
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 0.5rem;
+
+    padding-top: 0.8rem;
+
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        #f7f9fc 25%
+    );
+}
+
+.security-reset-btn,
+.security-save-btn {
+    padding: 0.48rem 0.8rem;
+
+    border-radius: 7px;
+
+    font-size: 0.66rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.security-reset-btn {
+    border: 1px solid #dfe4eb;
+
+    background: #ffffff;
+
+    color: #687386;
+}
+
+.security-save-btn {
+    border: 1px solid #1769e0;
+
+    background: #1769e0;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .security-section {
+        padding: 0.9rem;
+    }
+
+    .security-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .security-overview-title {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .security-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .security-toggle {
+        align-self: flex-end;
+    }
+
+    .security-event {
+        align-items: flex-start;
+    }
+
+    .security-event time {
+        display: none;
+    }
+}

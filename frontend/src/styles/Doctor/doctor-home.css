@@ -1361,3 +1361,36 @@ ASIDE ACTIVITY PANEL
 } */
 
 
+
+/* MODEL RENDERINGS */
+
+.profile-modal {
+    width: min(900px, 94vw);
+    height: min(720px, 88vh);
+    max-width: 900px;
+}
+.settings-modal {
+    width: min(1050px, 94vw);
+    height: min(720px, 88vh);
+    max-width: 1050px;
+}
+.privacy-modal {
+    width: min(900px, 94vw);
+    height: min(720px, 88vh);
+    max-width: 900px;
+}
+.security-modal {
+    width: min(850px, 94vw);
+    height: min(720px, 88vh);
+    max-width: 850px;
+}
+.sessions-modal {
+    width: min(900px, 94vw);
+    height: min(720px, 88vh);
+    max-width: 900px;
+}
+.language-modal {
+    width: min(850px, 94vw);
+    height: min(720px, 88vh);
+    max-width: 850px;
+}

@@ -1,0 +1,583 @@
+/* =========================================
+   SESSIONS SECTION
+========================================= */
+
+.sessions-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.sessions-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid #edf0f3;
+}
+
+.sessions-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+
+    color: #1e293b;
+}
+
+.sessions-heading svg {
+    color: #2563eb;
+}
+
+.sessions-heading h2 {
+    margin: 0;
+
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.sessions-header p {
+    margin: 0.3rem 0 0;
+
+    color: #7b8492;
+    font-size: 0.78rem;
+}
+
+
+/* =========================================
+   REFRESH
+========================================= */
+
+.sessions-refresh {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    padding: 0.48rem 0.7rem;
+
+    border: 1px solid #e3e7ec;
+    border-radius: 7px;
+
+    background: #fff;
+    color: #526071;
+
+    font-size: 0.74rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.sessions-refresh:hover {
+    background: #f7f9fb;
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.session-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.session-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+
+    padding: 0.85rem;
+
+    border: 1px solid #e8ecf0;
+    border-radius: 9px;
+
+    background: #fafbfc;
+}
+
+.summary-icon {
+    display: grid;
+    place-items: center;
+
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    background: #eef3f8;
+    color: #526071;
+}
+
+.summary-icon.active {
+    background: #edf8f1;
+    color: #29935c;
+}
+
+.session-summary-card span {
+    display: block;
+
+    margin-bottom: 0.2rem;
+
+    color: #87909c;
+    font-size: 0.69rem;
+}
+
+.session-summary-card strong {
+    display: block;
+
+    color: #263342;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   BLOCK
+========================================= */
+
+.sessions-block {
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid #e6eaf0;
+    border-radius: 10px;
+
+    background: #fff;
+    overflow: hidden;
+}
+
+.sessions-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    padding: 0.9rem 1rem;
+
+    background: #fafbfc;
+    border-bottom: 1px solid #edf0f3;
+}
+
+.sessions-block-header h3 {
+    margin: 0;
+
+    color: #273444;
+    font-size: 0.83rem;
+    font-weight: 700;
+}
+
+.sessions-block-header p {
+    margin: 0.25rem 0 0;
+
+    color: #89919d;
+    font-size: 0.7rem;
+}
+
+
+/* =========================================
+   SIGN OUT OTHERS
+========================================= */
+
+.signout-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    border: 0;
+    background: transparent;
+
+    color: #c24141;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.signout-all-btn:hover {
+    color: #a52f2f;
+}
+
+
+/* =========================================
+   SESSION LIST
+========================================= */
+
+.session-list {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================
+   SESSION CARD
+========================================= */
+
+.session-card {
+    display: grid;
+    grid-template-columns: minmax(190px, 1.2fr) minmax(180px, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 0.9rem 1rem;
+
+    border-bottom: 1px solid #edf0f3;
+}
+
+.session-card:last-child {
+    border-bottom: 0;
+}
+
+.session-card.current-session {
+    background: #fbfdff;
+}
+
+.session-card.session-ended {
+    opacity: 0.6;
+}
+
+
+/* =========================================
+   DEVICE
+========================================= */
+
+.session-device {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+
+    min-width: 0;
+}
+
+.device-icon {
+    display: grid;
+    place-items: center;
+
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    background: #f0f4f8;
+    color: #506071;
+}
+
+.device-details {
+    min-width: 0;
+}
+
+.device-name-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.device-name-row h4 {
+    margin: 0;
+
+    color: #293645;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.browser-name {
+    display: block;
+
+    margin-top: 0.18rem;
+
+    color: #8a939e;
+    font-size: 0.67rem;
+}
+
+
+/* =========================================
+   BADGES
+========================================= */
+
+.current-badge,
+.ended-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 0.17rem 0.42rem;
+
+    border-radius: 4px;
+
+    font-size: 0.58rem;
+    font-weight: 700;
+}
+
+.current-badge {
+    background: #eaf7ef;
+    color: #278654;
+}
+
+.ended-badge {
+    background: #f1f2f4;
+    color: #737b85;
+}
+
+
+/* =========================================
+   SESSION INFO
+========================================= */
+
+.session-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.session-info div {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+
+    color: #78828e;
+    font-size: 0.67rem;
+}
+
+.session-info svg {
+    flex-shrink: 0;
+}
+
+
+/* =========================================
+   SIGN OUT
+========================================= */
+
+.session-signout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+
+    padding: 0.42rem 0.65rem;
+
+    border: 1px solid #e5d4d4;
+    border-radius: 6px;
+
+    background: #fff;
+
+    color: #bd4545;
+
+    font-size: 0.67rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.session-signout:hover {
+    background: #fff7f7;
+}
+
+
+/* =========================================
+   CURRENT STATUS
+========================================= */
+
+.current-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+
+    color: #278654;
+
+    font-size: 0.68rem;
+    font-weight: 600;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+    background: #32a866;
+}
+
+
+/* =========================================
+   ACTIVITY
+========================================= */
+
+.activity-block {
+    margin-top: 0.05rem;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.7rem;
+
+    padding: 0.75rem 1rem;
+
+    border-bottom: 1px solid #edf0f3;
+}
+
+.activity-item:last-child {
+    border-bottom: 0;
+}
+
+.activity-icon {
+    display: grid;
+    place-items: center;
+
+    width: 30px;
+    height: 30px;
+
+    border-radius: 7px;
+}
+
+.activity-icon.success {
+    background: #edf8f1;
+    color: #2b9560;
+}
+
+.activity-icon.info {
+    background: #eef3f8;
+    color: #657384;
+}
+
+.activity-content {
+    min-width: 0;
+}
+
+.activity-content strong {
+    display: block;
+
+    color: #344152;
+    font-size: 0.73rem;
+}
+
+.activity-content > span {
+    display: block;
+
+    margin-top: 0.12rem;
+
+    color: #7d8793;
+    font-size: 0.65rem;
+}
+
+.activity-content small {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    margin-top: 0.15rem;
+
+    color: #969da6;
+    font-size: 0.61rem;
+}
+
+.activity-item time {
+    color: #929aa5;
+    font-size: 0.62rem;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   NOTICE
+========================================= */
+
+.sessions-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+
+    padding: 0.75rem 0.85rem;
+
+    border: 1px solid #e5ebf1;
+    border-radius: 8px;
+
+    background: #f8fafc;
+    color: #647181;
+}
+
+.sessions-notice svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: #64748b;
+}
+
+.sessions-notice p {
+    margin: 0;
+
+    font-size: 0.67rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 760px) {
+
+    .session-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .session-card {
+        grid-template-columns: 1fr;
+        gap: 0.7rem;
+    }
+
+    .session-info {
+        padding-left: 2.8rem;
+    }
+
+    .session-signout {
+        width: fit-content;
+        margin-left: 2.8rem;
+    }
+
+    .current-status {
+        margin-left: 2.8rem;
+    }
+}
+
+@media (max-width: 520px) {
+
+    .sessions-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .sessions-refresh {
+        align-self: flex-start;
+    }
+
+    .sessions-block-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .activity-item {
+        grid-template-columns: auto 1fr;
+    }
+
+    .activity-item time {
+        grid-column: 2;
+    }
+}

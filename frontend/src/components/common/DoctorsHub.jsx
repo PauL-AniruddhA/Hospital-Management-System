@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   FileText, Search, MapPin, Stethoscope, ChevronDown, ChevronUp, User, Building2, Phone, BriefcaseMedical, GraduationCap, MessageCircle, MoreVertical, CalendarDays, Pill, FolderOpen, FlaskConical, UserPlus, Activity, Users,
+  Send,
 } from "lucide-react";
 import doc from "../../assets/home/doc6.png";
 
@@ -18,7 +19,10 @@ const MOCK_DOCTORS = [
     tags: ["Nephrology", "Internal Medicine", "Kidney Care", "Dialysis"],
     rating: 4.8, reviews: 320, patients: "1,284", room: "Room 304", floor: "Main Building, 3rd Floor",
     about:
-      "Dr. Binti Biswas is a highly experienced Nephrologist with special interest in chronic kidney disease, dialysis management and renal transplantation. She is committed to providing comprehensive and patient-centred kidney care.",
+      "Dr. Binti Biswas is a highly experienced Nephrologist with special interest in chronic kidney disease, dialysis management and renal transplantation .",
+    // She is committed to providing comprehensive and patient-centred kidney care.
+    contact: "abc@amshospital.org.com", designation:"Senior Consultant",consultation : "In-Person & Online",
+    
   },
   {
     id: 2, name: "Dr. Tanvir Rayhan", initials: "TR", tone: 2, photo: "",
@@ -28,6 +32,7 @@ const MOCK_DOCTORS = [
     rating: 4.7, reviews: 284, patients: "1,506", room: "Room 306", floor: "Main Building, 3rd Floor",
     about:
       "Dr. Tanvir Rayhan focuses on hypertension-related kidney disease and long-term renal follow-up, with a calm, evidence-first approach to care.",
+    contact: "def@amshospital.org.", designation:"junior Consultant",consultation : "Online" ,
   },
   {
     id: 3, name: "Dr. Akib Rahman", initials: "AR", tone: 3, photo: "",
@@ -37,6 +42,7 @@ const MOCK_DOCTORS = [
     rating: 4.6, reviews: 198, patients: "930", room: "Room 302", floor: "Main Building, 3rd Floor",
     about:
       "Dr. Akib Rahman manages acute kidney injury and dialysis programmes, working closely with the ICU and emergency teams.",
+    contact: "ghi@amshospital.org.", designation:"Multi-Senior Consultant",consultation : "In-Person" ,
   },
   {
     id: 4, name: "Dr. Shanto Shah", initials: "SS", tone: 4, photo: "",
@@ -46,6 +52,7 @@ const MOCK_DOCTORS = [
     rating: 4.5, reviews: 121, patients: "612", room: "Room 310", floor: "Main Building, 3rd Floor",
     about:
       "Dr. Shanto Shah treats electrolyte and acid-base disorders and supports inpatient nephrology consults.",
+    contact: "jkl@amshospital.org.", designation:"Consultant",consultation : "Online" ,
   },
   {
     id: 5, name: "Dr. Zerin Taslim", initials: "ZT", tone: 5, photo: "",
@@ -55,6 +62,7 @@ const MOCK_DOCTORS = [
     rating: 4.7, reviews: 240, patients: "1,020", room: "Room 308", floor: "Main Building, 3rd Floor",
     about:
       "Dr. Zerin Taslim specialises in chronic kidney disease management and patient education.",
+    contact: "mno@amshospital.org.", designation:"Senior Consultant",consultation : "In-Person" ,  
   },
   {
     id: 6, name: "Dr. Rifat Rahman", initials: "RR", tone: 2, photo: "",
@@ -64,6 +72,7 @@ const MOCK_DOCTORS = [
     rating: 4.6, reviews: 205, patients: "1,140", room: "Room 312", floor: "Main Building, 3rd Floor",
     about:
       "Dr. Rifat Rahman leads the haemodialysis unit rota and reviews complex long-term dialysis patients.",
+    contact: "pqr@amshospital.org.", designation:"Senior Consultant",consultation : "Online" ,
   },
   {
     id: 7, name: "Dr. Mousumi Kalita", initials: "MK", tone: 1, photo: "",
@@ -73,6 +82,7 @@ const MOCK_DOCTORS = [
     rating: 4.9, reviews: 167, patients: "540", room: "Room 401", floor: "Main Building, 4th Floor",
     about:
       "Dr. Mousumi Kalita works with the Kidney Transplant Unit on donor evaluation, transplant follow-up and immunosuppression plans.",
+    contact: "stu@amshospital.org.", designation:"junior Consultant",consultation : "In-Person" ,
   },
   {
     id: 8, name: "Dr. Rahul Dutta", initials: "RD", tone: 3, photo: "",
@@ -82,6 +92,7 @@ const MOCK_DOCTORS = [
     rating: 4.4, reviews: 88, patients: "410", room: "Room 405", floor: "Main Building, 4th Floor",
     about:
       "Dr. Rahul Dutta performs vascular access procedures and dialysis catheter care.",
+    contact: "vwx@amshospital.org.", designation:"Multi-senior Consultant",consultation : "Online" ,
   },
 ];
 
@@ -101,6 +112,7 @@ const MOCK_WEEK = [
   { day: "Thu", date: "Oct 01", full: "Thu, Oct 01, 2025", slots: 7, dots: ["g", "g", "g", "n"] },
   { day: "Fri", date: "Oct 02", full: "Fri, Oct 02, 2025", slots: 6, dots: ["g", "g", "g", "g"] },
   { day: "Sat", date: "Oct 03", full: "Sat, Oct 03, 2025", slots: 3, dots: ["r", "r", "o", "n"] },
+  { day: "Sun", date: "Oct 04", full: "Sat, Oct 04, 2025", slots: "NO", dots: ["r", "r", "r", "r"] },
 ];
 
 const MOCK_FOCUS = [
@@ -134,7 +146,7 @@ const MOCK_TABS = [
 ];
 
 const STATUS_META = {
-  available: { label: "Available Today", icon: null, cls: "dh-pill--available", dot: "green" },
+  available: { label: "Available ", icon: null, cls: "dh-pill--available", dot: "green" },
   limited: { label: "Available (Limited)", icon: "clock", cls: "dh-pill--limited", dot: "green" },
   unavailable: { label: "Unavailable", icon: "ban", cls: "dh-pill--unavailable", dot: "grey" },
   leave: { label: "On Leave", icon: "clock", cls: "dh-pill--leave", dot: "red" },
@@ -243,6 +255,21 @@ export default function DoctorsHub() {
       d.tags.some((t) => t.toLowerCase().includes(q))
     );
   });
+  const [openMenuId, setOpenMenuId] = useState(null);
+
+  useEffect(() => {
+    if (openMenuId === null) return;
+    const onDown = (e) => {
+      if (!e.target.closest(".dh-menu, .dh-more")) setOpenMenuId(null);
+    };
+    const onKey = (e) => { if (e.key === "Escape") setOpenMenuId(null); };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [openMenuId]);
 
   const shiftDay = (step) => setDayIdx((i) => Math.min(MOCK_WEEK.length - 1, Math.max(0, i + step)));
 
@@ -292,7 +319,6 @@ export default function DoctorsHub() {
         {/* <span className="dh-me" aria-hidden="true">AD</span> */}
       </header>
 
-
       <div className="dh-body">
         {/* ---------------- LEFT: REFERRAL DOCTORS ---------------- */}
         <aside className="dh-side">
@@ -318,7 +344,7 @@ export default function DoctorsHub() {
           <div className="dh-filters" role="tablist" aria-label="Availability filter">
             <button type="button" role="tab" aria-selected={filter === "all"}
               className={`dh-filter ${filter === "all" ? "is-active" : ""}`} onClick={() => setFilter("all")}>
-              All 
+              All
               {/* ({MOCK_DOCTORS.length}) */}
             </button>
             <button type="button" role="tab" aria-selected={filter === "available"}
@@ -335,30 +361,43 @@ export default function DoctorsHub() {
             {visibleDoctors.map((d) => {
               const s = STATUS_META[d.status];
               return (
-                <li key={d.id}>
+                <li key={d.id} className="dh-item">
                   <button
                     type="button"
                     className={`dh-row ${d.id === selectedId ? "is-selected" : ""}`}
-                    onClick={() => setSelectedId(d.id)}
+                    onClick={() => { setSelectedId(d.id); setOpenMenuId(null); }}
                   >
                     <span className="dh-row__avatar">
                       <DhAvatar doc={d} />
                       <i className={`dh-presence dh-presence--${s.dot}`} />
                     </span>
                     <span className="dh-row__info">
-                      <span className="dh-row__name">
-                        {/* <i className={`dh-dot-sm dh-dot-sm--${s.dot}`} /> */}
-                        {d.name}
-                      </span>
+                      <span className="dh-row__name">{d.name}</span>
                       <span className="dh-row__spec">{d.spec}</span>
-                      {/* <span className="dh-row__exp">{d.exp} Years Exp.</span> */}
                       <span className={`dh-pill ${s.cls}`}>
                         {s.icon && <DhIcon name={s.icon} size={13} />}
                         {s.label}
                       </span>
                     </span>
-                    <DhIcon name="right" size={16} className="dh-row__chev" />
                   </button>
+
+                  <button
+                    type="button"
+                    className="dh-more"
+                    aria-label={`More options for ${d.name}`}
+                    aria-haspopup="menu"
+                    aria-expanded={openMenuId === d.id}
+                    onClick={() => setOpenMenuId(openMenuId === d.id ? null : d.id)}
+                  >
+                    •••
+                  </button>
+
+                  {openMenuId === d.id && (
+                    <ul className="dh-menu" role="menu">
+                      <li><button type="button" role="menuitem" onClick={() => setOpenMenuId(null)}>Remove </button></li>
+                      {/* <li><button type="button" role="menuitem" onClick={() => setOpenMenuId(null)}>Book appointment</button></li> */}
+                    </ul>
+                  )}
                 </li>
               );
             })}
@@ -376,15 +415,31 @@ export default function DoctorsHub() {
               <DhAvatar doc={doctor} className="dh-hero__img" />
               <span className={`dh-hero__badge dh-hero__badge--${doctor.status}`}>
                 <i className={`dh-dot-sm dh-dot-sm--${status.dot}`} />
-                {doctor.status === "unavailable" ? "Unavailable" : doctor.status === "leave" ? "On Leave" : "Available Today"}
+                {doctor.status === "unavailable" ? "Unavailable" : doctor.status === "leave" ? "On Leave" : "Available"}
               </span>
             </div>
 
             <div className="dh-hero__info">
-              <h1 className="dh-hero__name">
-                {doctor.name}
-                <DhIcon name="badge" size={24} className="dh-verified" />
-              </h1>
+              <div className="dh-hero__name_and_refer">
+                <h1 className='dh-hero__name'>
+                  {doctor.name}
+                  <DhIcon name="badge" size={24} className="dh-verified" />
+                </h1>
+
+                <div className="dh-icon-actions">
+                  <button type="button" className={`dh-icon-btn ${saved ? "is-on" : ""}`} onClick={() => setSaved((v) => !v)} aria-pressed={saved}>
+                    <DhIcon name="heart" size={15} filled={saved} />
+                  </button>
+                  <button type="button" className="dh-icon-btn">
+                    {/* <DhIcon name="share" size={15} /> */}
+                    <Send name="users" size={15} />
+                  </button>
+                  <button type="button" className="dh-icon-btn dh-icon-btn--plain" aria-label="More options"><DhIcon name="more" size={20} /></button>
+                  {/* <span className="dh-icon-label">{saved ? "Saved" : "Save"}</span>
+                  <span className="dh-icon-label">Refer</span> */}
+                  <span />
+                </div>
+              </div>
               <p className="dh-hero__degree">{doctor.degree}</p>
 
               <ul className="dh-chips">
@@ -393,32 +448,33 @@ export default function DoctorsHub() {
 
               <ul className="dh-facts">
                 <li className="dh-fact">
-                  <span className="dh-fact__icon dh-fact__icon--gold"><DhIcon name="star" size={22} filled /></span>
+                  <span className="dh-fact__icon dh-fact__icon--gold"><DhIcon name="star" size={15} filled /></span>
                   <span><b>{doctor.rating}</b><small>({doctor.reviews} Reviews)</small></span>
                 </li>
-                <li className="dh-fact">
-                  <span className="dh-fact__icon dh-fact__icon--blue"><DhIcon name="award" size={22} /></span>
+                {/* <li className="dh-fact">
+                  <span className="dh-fact__icon dh-fact__icon--blue"><DhIcon name="award" size={15} /></span>
                   <span><b>{doctor.exp} Years</b><small>Experience</small></span>
-                </li>
+                </li> */}
                 <li className="dh-fact">
-                  <span className="dh-fact__icon dh-fact__icon--blue"><DhIcon name="users" size={22} /></span>
+                  <span className="dh-fact__icon dh-fact__icon--blue"><DhIcon name="users" size={15} /></span>
                   <span><b>{doctor.patients}</b><small>Patients Consulted</small></span>
                 </li>
                 <li className="dh-fact">
-                  <span className="dh-fact__icon dh-fact__icon--blue"><DhIcon name="pin" size={22} /></span>
+                  <span className="dh-fact__icon dh-fact__icon--blue"><DhIcon name="pin" size={15} /></span>
                   <span><b>{doctor.room}</b><small>{doctor.floor}</small></span>
                 </li>
               </ul>
 
-              <p className="dh-hero__about">{doctor.about}</p>
+              {/* <p className="dh-hero__about">{doctor.about}</p> */}
+
             </div>
 
-            <div className="dh-hero__actions">
+            {/* <div className="dh-hero__actions">
               <div className="dh-icon-actions">
                 <button type="button" className={`dh-icon-btn ${saved ? "is-on" : ""}`} onClick={() => setSaved((v) => !v)} aria-pressed={saved}>
-                  <DhIcon name="heart" size={22} filled={saved} />
+                  <DhIcon name="heart" size={15} filled={saved} />
                 </button>
-                <button type="button" className="dh-icon-btn"><DhIcon name="share" size={20} /></button>
+                <button type="button" className="dh-icon-btn"><DhIcon name="share" size={15} /></button>
                 <button type="button" className="dh-icon-btn dh-icon-btn--plain" aria-label="More options"><DhIcon name="more" size={20} /></button>
                 <span className="dh-icon-label">{saved ? "Saved" : "Save"}</span>
                 <span className="dh-icon-label">Share</span>
@@ -427,13 +483,14 @@ export default function DoctorsHub() {
 
               <div className="dh-cta">
                 <button type="button" className="dh-btn dh-btn--primary">
-                  <DhIcon name="users" size={18} /> Refer to this Doctor
+                  <Send name="users" size={15} />
                 </button>
                 <button type="button" className="dh-btn dh-btn--outline">
                   <DhIcon name="file" size={18} /> View Full Profile
                 </button>
               </div>
-            </div>
+            </div> */}
+            {/* <DhIcon name="users" size={15} /> Refer */}
           </section>
 
           {/* TABS */}
@@ -447,51 +504,193 @@ export default function DoctorsHub() {
                 className={`dh-tab ${tab === t.id ? "is-active" : ""}`}
                 onClick={() => setTab(t.id)}
               >
-                <DhIcon name={t.icon} size={18} />
+                <DhIcon name={t.icon} size={15} />
                 {t.label}
               </button>
             ))}
           </nav>
 
-          {/* ROW 1 */}
+          {/* ROW */}
           <div className="dh-grid dh-grid--top">
-            {/* Today's availability */}
-            <section className="dh-card dh-avail">
-              <header className="dh-card__head">
-                <h3 className="dh-card__title">
-                  <span className="dh-tile"><DhIcon name="calendar" size={20} /></span>
-                  Today&apos;s Availability
-                </h3>
-                <div className="dh-datenav">
-                  <button type="button" onClick={() => shiftDay(-1)} aria-label="Previous day" disabled={dayIdx === 0}><DhIcon name="left" size={16} /></button>
-                  <span>{MOCK_WEEK[dayIdx].full}</span>
-                  <button type="button" onClick={() => shiftDay(1)} aria-label="Next day" disabled={dayIdx === MOCK_WEEK.length - 1}><DhIcon name="right" size={16} /></button>
+
+            {tab === "overview" && (
+              <section className="dh-doctor-overview">
+                {/* <div className="dh-overview-header">
+                  <div>
+                    <h2>Doctor Overview</h2>
+                    <p>
+                      A brief overview of the doctor's professional profile and clinical
+                      information.
+                    </p>
+                  </div>
+
+                  <span className="dh-doctor-status">
+                    <span className="dh-status-dot"></span>
+                    Available
+                  </span>
+                </div> */}
+
+                <div className="dh-overview-content">
+
+                  {/* About */}
+                  <div className="dh-overview-block overview-about">
+                    <h3>About</h3>
+                    <p className="dh-hero__about">{doctor.about}</p>
+                  </div>
+
+                  {/* Professional Information */}
+                  <div className="dh-overview-block">
+                    <h3>Professional Information</h3>
+
+                    <div className="dh-info-grid">
+                      <div className="dh-info-item">
+                        <span>Department</span>
+                        <strong>Cardiology</strong>
+                      </div>
+
+                      <div className="dh-info-item">
+                        <span>Experience</span>
+                        <strong>{doctor.exp}</strong>
+                      </div>
+
+                      <div className="dh-info-item">
+                        <span>Designation</span>
+                        <strong>{doctor.designation}</strong>
+                      </div>
+
+                      <div className="dh-info-item">
+                        <span>Consultation</span>
+                        <strong>{doctor.consultation}</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Contact */}
+                  <div className="dh-overview-block">
+                    <h3>Contact & Location</h3>
+
+                    <div className="dh-contact-row">
+                      <div>
+                        <span>Hospital</span>
+                        <strong>AMS Hospital</strong>
+                      </div>
+
+                      <div>
+                        <span>Room</span>
+                        <strong>{doctor.room}</strong>
+                      </div>
+
+                      <div>
+                        <span>Contact</span>
+                        <strong>{doctor.contact}</strong>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
-              </header>
+              </section>
+            )}
 
-              <ul className="dh-legend">
-                <li><i className="dh-dot-sm dh-dot-sm--green" />Available</li>
-                <li><i className="dh-dot-sm dh-dot-sm--red" />Booked</li>
-                <li><i className="dh-dot-sm dh-dot-sm--grey" />Unavailable</li>
-              </ul>
-
-              <div className="dh-slots">
-                {MOCK_SLOTS.map(([time, state]) => (
-                  <button
-                    key={time}
-                    type="button"
-                    disabled={state !== "available"}
-                    className={`dh-slot dh-slot--${state} ${slot === time ? "is-picked" : ""}`}
-                    onClick={() => setSlot(time)}
-                  >
-                    {time}
+            {/* Weekly schedule */}
+            {tab === "slots" && (
+              <section className="dh-card dh-week">
+                <header className="dh-card__head">
+                  <h3 className="dh-card__title">
+                    <span className="dh-tile"><DhIcon name="calendar" size={14} /></span>
+                    Weekly Schedule
+                  </h3>
+                  <button type="button" className="dh-link">
+                    View More
                   </button>
-                ))}
-              </div>
-            </section>
+                </header>
+
+                <div className="dh-week__days">
+                  {MOCK_WEEK.map((d, i) => (
+                    <button
+                      key={d.day}
+                      type="button"
+                      className={`dh-day ${i === dayIdx ? "is-active" : ""}`}
+                      onClick={() => setDayIdx(i)}
+                    >
+                      <b>{d.day}</b>
+                      <small>{d.date}</small>
+                      <span className="dh-day__dots">
+                        {d.dots.map((c, k) => <i key={k} className={`dh-dot dh-dot--${c}`} />)}
+                      </span>
+                      <em>{d.slots} Slots</em>
+                    </button>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Referral stats */}
+            {tab === "reviews" && (
+              <section className="dh-card dh-stats">
+                <h3 className="dh-card__title">
+                  <span className="dh-tile dh-tile--plain"><DhIcon name="chart" size={20} /></span>
+                  Referral Statistics
+                </h3>
+                <div className="dh-stats__grid">
+                  {MOCK_REFERRAL_STATS.map((s) => (
+                    <div key={s.label} className={`dh-stat dh-stat--${s.tone}`}>
+                      <span className="dh-stat__icon"><DhIcon name={s.icon} size={13} /></span>
+                      <span className="dh-stat__text">
+                        <b>{s.value}</b>
+                        <small>{s.label}</small>
+                        <em><DhIcon name="up" size={11} />{s.trend}</em>
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+            )}
+
+            {/* Specialization focus */}
+            {tab === "expertise" && (
+              <section className="dh-card dh-focus">
+                <h3 className="dh-card__title">
+                  <span className="dh-tile dh-tile--round"><DhIcon name="activity" size={15} /></span>
+                  Specialization Focus
+                </h3>
+                <ul className="dh-focus__list">
+                  {MOCK_FOCUS.map((f) => (
+                    <li key={f.label} className="dh-focus__item">
+                      <span className="dh-focus__icon"><DhIcon name={f.icon} size={16} /></span>
+                      {f.label}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Departments */}
+            {tab === "pubs" && (
+              <section className="dh-card dh-collab">
+                <h3 className="dh-card__title">
+                  <span className="dh-tile dh-tile--plain"><DhIcon name="users" size={14} /></span>
+                  Departments &amp; Collaboration
+                </h3>
+                <ul className="dh-collab__list">
+                  {MOCK_COLLAB.map((c) => (
+                    <li key={c.name}>
+                      <button type="button" className="dh-collab__row">
+                        <span className="dh-collab__icon"><DhIcon name={c.icon} size={13} /></span>
+                        <span className="dh-collab__name">{c.name}</span>
+                        <span className="dh-tag">{c.tag}</span>
+                        <DhIcon name="right" size={14} className="dh-collab__chev" />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+
 
             {/* Quick referral */}
-            <section className="dh-card dh-quick">
+            {/* <section className="dh-card dh-quick">
               <h3 className="dh-card__title">
                 <span className="dh-tile"><DhIcon name="file" size={20} /></span>
                 Quick Referral
@@ -539,98 +738,47 @@ export default function DoctorsHub() {
                 <DhIcon name={sent ? "check" : "send"} size={17} />
                 {sent ? "Referral Sent" : "Send Referral Request"}
               </button>
-            </section>
+            </section> */}
 
-            {/* Specialization focus */}
-            <section className="dh-card dh-focus">
-              <h3 className="dh-card__title">
-                <span className="dh-tile dh-tile--round"><DhIcon name="activity" size={20} /></span>
-                Specialization Focus
-              </h3>
-              <ul className="dh-focus__list">
-                {MOCK_FOCUS.map((f) => (
-                  <li key={f.label} className="dh-focus__item">
-                    <span className="dh-focus__icon"><DhIcon name={f.icon} size={16} /></span>
-                    {f.label}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </div>
-
-          {/* ROW 2 */}
-          <div className="dh-grid dh-grid--bottom">
-            {/* Weekly schedule */}
-            <section className="dh-card dh-week">
+            {/* Today's availability */}
+            {/* <section className="dh-card dh-avail">
               <header className="dh-card__head">
                 <h3 className="dh-card__title">
                   <span className="dh-tile"><DhIcon name="calendar" size={20} /></span>
-                  Weekly Schedule
+                  Today&apos;s Availability
                 </h3>
-                <button type="button" className="dh-link">
-                  View Full Schedule <DhIcon name="right" size={14} />
-                </button>
+                <div className="dh-datenav">
+                  <button type="button" onClick={() => shiftDay(-1)} aria-label="Previous day" disabled={dayIdx === 0}><DhIcon name="left" size={16} /></button>
+                  <span>{MOCK_WEEK[dayIdx].full}</span>
+                  <button type="button" onClick={() => shiftDay(1)} aria-label="Next day" disabled={dayIdx === MOCK_WEEK.length - 1}><DhIcon name="right" size={16} /></button>
+                </div>
               </header>
 
-              <div className="dh-week__days">
-                {MOCK_WEEK.map((d, i) => (
+              <ul className="dh-legend">
+                <li><i className="dh-dot-sm dh-dot-sm--green" />Available</li>
+                <li><i className="dh-dot-sm dh-dot-sm--red" />Booked</li>
+                <li><i className="dh-dot-sm dh-dot-sm--grey" />Unavailable</li>
+              </ul>
+
+              <div className="dh-slots">
+                {MOCK_SLOTS.map(([time, state]) => (
                   <button
-                    key={d.day}
+                    key={time}
                     type="button"
-                    className={`dh-day ${i === dayIdx ? "is-active" : ""}`}
-                    onClick={() => setDayIdx(i)}
+                    disabled={state !== "available"}
+                    className={`dh-slot dh-slot--${state} ${slot === time ? "is-picked" : ""}`}
+                    onClick={() => setSlot(time)}
                   >
-                    <b>{d.day}</b>
-                    <small>{d.date}</small>
-                    <span className="dh-day__dots">
-                      {d.dots.map((c, k) => <i key={k} className={`dh-dot dh-dot--${c}`} />)}
-                    </span>
-                    <em>{d.slots} Slots</em>
+                    {time}
                   </button>
                 ))}
               </div>
-            </section>
+            </section> */}
 
-            {/* Referral stats */}
-            <section className="dh-card dh-stats">
-              <h3 className="dh-card__title">
-                <span className="dh-tile dh-tile--plain"><DhIcon name="chart" size={20} /></span>
-                Referral Statistics
-              </h3>
-              <div className="dh-stats__grid">
-                {MOCK_REFERRAL_STATS.map((s) => (
-                  <div key={s.label} className={`dh-stat dh-stat--${s.tone}`}>
-                    <span className="dh-stat__icon"><DhIcon name={s.icon} size={20} /></span>
-                    <span className="dh-stat__text">
-                      <b>{s.value}</b>
-                      <small>{s.label}</small>
-                      <em><DhIcon name="up" size={11} />{s.trend}</em>
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </section>
 
-            {/* Departments */}
-            <section className="dh-card dh-collab">
-              <h3 className="dh-card__title">
-                <span className="dh-tile dh-tile--plain"><DhIcon name="users" size={20} /></span>
-                Departments &amp; Collaboration
-              </h3>
-              <ul className="dh-collab__list">
-                {MOCK_COLLAB.map((c) => (
-                  <li key={c.name}>
-                    <button type="button" className="dh-collab__row">
-                      <span className="dh-collab__icon"><DhIcon name={c.icon} size={16} /></span>
-                      <span className="dh-collab__name">{c.name}</span>
-                      <span className="dh-tag">{c.tag}</span>
-                      <DhIcon name="right" size={14} className="dh-collab__chev" />
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </section>
+
           </div>
+
         </main>
       </div>
     </div>

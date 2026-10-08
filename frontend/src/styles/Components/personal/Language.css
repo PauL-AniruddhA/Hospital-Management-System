@@ -1,0 +1,470 @@
+/* =========================================
+   LANGUAGE SECTION
+========================================= */
+
+.language-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.language-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    padding-bottom: 0.9rem;
+
+    border-bottom: 1px solid #edf0f3;
+}
+
+.language-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+
+    color: #1f2937;
+}
+
+.language-heading svg {
+    color: #2563eb;
+}
+
+.language-heading h2 {
+    margin: 0;
+
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.language-header p {
+    margin: 0.3rem 0 0;
+
+    color: #818b98;
+    font-size: 0.76rem;
+}
+
+.language-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+
+    padding: 0.38rem 0.6rem;
+
+    border-radius: 6px;
+
+    background: #edf8f1;
+    color: #278654;
+
+    font-size: 0.66rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.language-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    padding: 1rem;
+
+    border: 1px solid #e6eaf0;
+    border-radius: 10px;
+
+    background: #fff;
+}
+
+.language-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+}
+
+.language-card-icon {
+    display: grid;
+    place-items: center;
+
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    background: #eef3f8;
+    color: #52657a;
+}
+
+.language-card-header h3 {
+    margin: 0;
+
+    color: #2d3948;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.language-card-header p {
+    margin: 0.25rem 0 0;
+
+    color: #8a939e;
+    font-size: 0.68rem;
+    line-height: 1.45;
+}
+
+
+/* =========================================
+   FORM GRID
+========================================= */
+
+.language-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+}
+
+.language-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.language-field label {
+    color: #5d6876;
+
+    font-size: 0.68rem;
+    font-weight: 600;
+}
+
+.language-field select {
+    width: 100%;
+
+    min-height: 36px;
+    padding: 0 0.7rem;
+
+    border: 1px solid #dfe4e9;
+    border-radius: 7px;
+
+    outline: none;
+
+    background: #fff;
+    color: #354152;
+
+    font-size: 0.72rem;
+
+    cursor: pointer;
+}
+
+.language-field select:focus {
+    border-color: #8eb2e8;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.07);
+}
+
+.field-preview {
+    color: #9aa2ac;
+    font-size: 0.6rem;
+}
+
+
+/* =========================================
+   TIMEZONE
+========================================= */
+
+.select-with-icon {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.select-with-icon > svg {
+    position: absolute;
+    left: 0.65rem;
+
+    color: #7d8996;
+
+    pointer-events: none;
+}
+
+.select-with-icon select {
+    padding-left: 2rem;
+}
+
+
+/* =========================================
+   SEGMENTED CONTROL
+========================================= */
+
+.segmented-control {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    min-height: 36px;
+
+    padding: 3px;
+
+    border: 1px solid #dfe4e9;
+    border-radius: 7px;
+
+    background: #f7f8fa;
+}
+
+.segmented-control button {
+    border: 0;
+    border-radius: 5px;
+
+    background: transparent;
+    color: #7a8591;
+
+    font-size: 0.68rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.segmented-control button.active {
+    background: #fff;
+    color: #315f9e;
+
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
+}
+
+
+/* =========================================
+   NUMBER FORMAT
+========================================= */
+
+.number-format-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.7rem;
+}
+
+.number-option {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+
+    padding: 0.75rem;
+
+    border: 1px solid #e1e6eb;
+    border-radius: 8px;
+
+    background: #fff;
+
+    text-align: left;
+    cursor: pointer;
+}
+
+.number-option:hover {
+    background: #fafbfc;
+}
+
+.number-option.active {
+    border-color: #9bbce8;
+    background: #f5f9ff;
+}
+
+.number-option strong {
+    color: #344152;
+    font-size: 0.75rem;
+}
+
+.number-option span {
+    color: #929ba6;
+    font-size: 0.62rem;
+}
+
+
+/* =========================================
+   PREVIEW
+========================================= */
+
+.language-preview {
+    padding: 0.9rem 1rem;
+
+    border: 1px solid #e3e9ef;
+    border-radius: 10px;
+
+    background: #f8fafc;
+}
+
+.preview-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+}
+
+.preview-header > svg {
+    margin-top: 2px;
+    color: #66768a;
+}
+
+.preview-header h3 {
+    margin: 0;
+
+    color: #354152;
+    font-size: 0.78rem;
+}
+
+.preview-header p {
+    margin: 0.2rem 0 0;
+
+    color: #89929d;
+    font-size: 0.65rem;
+}
+
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    margin-top: 0.8rem;
+
+    border-top: 1px solid #e6ebf0;
+}
+
+.preview-grid div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    padding: 0.65rem 0.75rem;
+
+    border-right: 1px solid #e6ebf0;
+}
+
+.preview-grid div:last-child {
+    border-right: 0;
+}
+
+.preview-grid span {
+    color: #929ba6;
+    font-size: 0.6rem;
+}
+
+.preview-grid strong {
+    color: #394655;
+    font-size: 0.69rem;
+    font-weight: 600;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.language-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-top: 0.2rem;
+}
+
+.language-reset,
+.language-save {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+
+    min-height: 34px;
+    padding: 0 0.75rem;
+
+    border-radius: 7px;
+
+    font-size: 0.69rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.language-reset {
+    border: 1px solid #e1e5e9;
+
+    background: #fff;
+    color: #6c7784;
+}
+
+.language-reset:hover {
+    background: #f8f9fa;
+}
+
+.language-save {
+    border: 1px solid #315f9e;
+
+    background: #315f9e;
+    color: #fff;
+}
+
+.language-save:hover {
+    background: #28528b;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .language-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .language-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .number-format-options {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .preview-grid div:nth-child(2) {
+        border-right: 0;
+    }
+
+    .preview-grid div:nth-child(3),
+    .preview-grid div:nth-child(4) {
+        border-top: 1px solid #e6ebf0;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .preview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-grid div {
+        border-right: 0;
+        border-bottom: 1px solid #e6ebf0;
+    }
+
+    .preview-grid div:last-child {
+        border-bottom: 0;
+    }
+}

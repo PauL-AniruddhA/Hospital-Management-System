@@ -5,6 +5,8 @@ import Hospital_Brand from "../../components/common/Hospital_Brand";
 import Search_Bar from "../../components/ui/Search";
 import ProfileMenu from "../../components/ui/ProfileMenu";
 import ClockCalendarCard from "../../components/ui/ClockCalendarCard";
+import Modal from "../../components/ui/Modal";
+
 // import Sidebar from "../../components/ui/Sidebar";
 
 import { createPortal } from "react-dom";
@@ -12,7 +14,8 @@ import {
   Cross, LayoutDashboard, Users, FileText, Stethoscope, Pill, FlaskConical,
   CalendarDays, Bell, BarChart3, UserRound, Headset, Settings as SettingsIcon,
   Menu, Search, MessageCircle, ChevronDown, CheckCircle2, Clock, ChevronLeft,
-  ChevronRight, MoreVertical, AlertTriangle, UserPlus, BedDouble, ClipboardCheck, Star, Timer, ClipboardList, PlayCircle, FileCheck2, NotebookPen, CheckSquare, Settings, CircleHelp, LogOut, Activity, X, Phone, Mail, HeartPulse, Moon, Languages, LogIn, ShieldCheck, LockKeyhole, FileSignature, BriefcaseMedical, LibraryBig, Building2, PanelLeftClose, PanelLeftOpen, PanelRightClose, PanelRightOpen, SearchIcon, UsersRound, ListChecks, UserRoundPlus, MessageSquare, Video, Send, ContactRound, BookOpenCheck, Megaphone, CalendarClock
+  ChevronRight, MoreVertical, AlertTriangle, UserPlus, BedDouble, ClipboardCheck, Star, Timer, ClipboardList, PlayCircle, FileCheck2, NotebookPen, CheckSquare, Settings, CircleHelp, LogOut, Activity, X, Phone, Mail, HeartPulse, Moon, Languages, LogIn, ShieldCheck, LockKeyhole, FileSignature, BriefcaseMedical, LibraryBig, Building2, PanelLeftClose, PanelLeftOpen, PanelRightClose, PanelRightOpen, SearchIcon, UsersRound, ListChecks, UserRoundPlus, MessageSquare, Video, Send, ContactRound, BookOpenCheck, Megaphone, CalendarClock,
+  Wallet, ChartNoAxesCombined, BadgeCheck
 } from "lucide-react";
 
 /* 
@@ -41,18 +44,29 @@ const Salary = lazy(() => import("../../components/common/Salary"));
 const Credentials = lazy(() => import("../../components/common/Credentials"));
 const Appraisals = lazy(() => import("../../components/common/Appraisals"));
 
-const Profile = lazy(() => import("../../components/personal/My_Profile"));
-const SettingsSection = lazy(() => import("../../components/common/SettingsSection"));
+import Profile from "../../components/personal/My_Profile";
+import SettingsSection from "../../components/personal/SettingsSection";
+import Privacy from "../../components/personal/Privacy";
+import Sessions from "../../components/personal/Sessions";
+import Security from "../../components/personal/Security";
+import Language from "../../components/personal/Language";
+
+// const Profile = lazy(() => import("../../components/personal/My_Profile"));
+// const SettingsSection = lazy(() => import("../../components/personal/SettingsSection"));
+// const Privacy = lazy(() => import("../../components/personal/Privacy"));
+// const Sessions = lazy(() => import("../../components/personal/Sessions"));
+// const Security = lazy(() => import("../../components/personal/Security"));
+// const Language = lazy(() => import("../../components/personal/Language"));
 
 /* key = tab id, value = component to render. Single source of truth — adding a new sidebar item later means adding ONE line here. */
 const SECTION_MAP = {
   dashboard: Dashboard,
   schedule: Schedule,
   "patient-records": Patient,
-  "patient-queue":Queue,
+  "patient-queue": Queue,
 
   workspace: Doctor_Workspace,
-  prescriptions :Prescriptions,
+  prescriptions: Prescriptions,
 
   "doctor-hub": DocHub,
   MDT: MDT_Meetings,
@@ -60,15 +74,57 @@ const SECTION_MAP = {
 
   faculty: Hospital_Faculty,
   "med-library": MedicalLibrary,
-  notices:Hospital_Notice,
+  notices: Hospital_Notice,
 
   performance: Performance,
-  salary : Salary,
-  credentials : Credentials,
-  appraisals :Appraisals,
+  salary: Salary,
+  credentials: Credentials,
+  appraisals: Appraisals,
 
-  profile: Profile,
-  settings: SettingsSection,
+  // profile: Profile,
+  // settings: SettingsSection,
+  // sessions : Sessions,
+  // privacy : Privacy,
+  // security : Security,
+  // language : Language
+};
+
+const MODAL_REGISTRY = {
+  profile: {
+    component: Profile,
+    title: "My Profile",
+    className: "profile-modal",
+  },
+
+  settings: {
+    component: SettingsSection,
+    title: "Settings",
+    className: "settings-modal",
+  },
+
+  privacy: {
+    component: Privacy,
+    title: "Privacy",
+    className: "privacy-modal",
+  },
+
+  security: {
+    component: Security,
+    title: "Security",
+    className: "security-modal",
+  },
+
+  sessions: {
+    component: Sessions,
+    title: "Sessions",
+    className: "sessions-modal",
+  },
+
+  language: {
+    component: Language,
+    title: "Language",
+    className: "language-modal",
+  },
 };
 
 // const TOP_NAVIGATION = [
@@ -270,9 +326,9 @@ const NAVIGATION = [
     items: [
       { id: "development", label: "Development", icon: Activity },
       // { id: "Leave & Attendance", label: "leave", icon: Activity },
-      { id: "salary", label: "Payroll", icon: Settings },
-      { id: "appraisals", label: "Appraisals", icon: Settings },
-      { id: "credentials", label: "Credentials", icon: Settings },
+      { id: "salary", label: "Payroll", icon: Wallet },
+      { id: "appraisals", label: "Appraisals", icon: ChartNoAxesCombined },
+      { id: "credentials", label: "Credentials", icon: BadgeCheck },
     ],
   },
 ];
@@ -405,9 +461,9 @@ function DocHome() {
   const profileRef = useRef(null);
   const infoRef = useRef(null);
 
-  const [activeNavigation, setActiveNavigation] = useState("connect");
-  // const [activeTab, setActiveTab] = useState("dashboard");
-  const [activeTab, setActiveTab] = useState("doctor-hub");
+  const [activeNavigation, setActiveNavigation] = useState("overview");
+  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeModal, setActiveModal] = useState("profile");
 
   const [activePopup, setActivePopup] = useState(null);
   const topbarPopupRef = useRef(null);
@@ -422,6 +478,8 @@ function DocHome() {
   const [infoHeight, setInfoHeight] = useState(0);
 
   const ActiveSection = SECTION_MAP[activeTab] ?? Dashboard;
+  const ActiveModal = activeModal ? MODAL_REGISTRY[activeModal] : null;
+
   const currentNavigation = NAVIGATION.find((navigation) => navigation.id === activeNavigation);
   const currentItems = currentNavigation?.items ?? [];
 
@@ -605,7 +663,7 @@ function DocHome() {
                 </div>
               </div>
             )}
-            
+
             {/* NOTIFICATION POPUP */}
             <button
               className={`topbar__activity__icon-btn ${activePopup === "notifications" ? "topbar__activity__icon-btn--active" : ""}`}
@@ -686,11 +744,36 @@ function DocHome() {
         </div>
 
         <div className="topbar__actions">
-          <ProfileMenu variant="doctor" avatar={doc} name="Dr. Rajesh Sharma" role="Cardiologist" onNavigate={setActiveTab} />
+          <ProfileMenu variant="doctor" avatar={doc} name="Dr. Rajesh Sharma" role="Cardiologist" onNavigate={setActiveModal} />
+
+          {/* PROFILE / SETTINGS MODAL */}
+          {activeModal && MODAL_REGISTRY[activeModal] && (() => {
+
+            const {
+              component: ActiveModalComponent,
+              title,
+              className,
+            } = MODAL_REGISTRY[activeModal];
+
+            return (
+              <Modal
+                isOpen={true}
+                onClose={() => setActiveModal(null)}
+                title={title}
+                className={className}
+              >
+                <ActiveModalComponent
+                  onClose={() => setActiveModal(null)}
+                />
+              </Modal>
+            );
+
+          })()}
         </div>
       </div>
 
       {/* left: doctor-specific nav + quick actions */}
+
       <aside className="doc_sidebar">
         <section className="sidebar">
           <div className="sidebar__nav-items">
@@ -950,6 +1033,7 @@ function DocHome() {
           </div>
         </aside>
       </section>
+
     </div>
   );
 }

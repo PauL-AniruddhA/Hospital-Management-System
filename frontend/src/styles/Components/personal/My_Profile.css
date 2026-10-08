@@ -1,0 +1,880 @@
+/* =========================================
+   STAFF PROFILE
+========================================= */
+
+.staff-profile {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+
+    color: #334155;
+}
+
+
+/* =========================================
+   COVER
+========================================= */
+
+.staff-profile-cover {
+    position: relative;
+
+    height: 96px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #a8c7ef 0%,
+            #cfe0f6 45%,
+            #e6effb 100%
+        );
+}
+
+.staff-cover-pattern {
+    position: absolute;
+    inset: 0;
+
+    opacity: 0.3;
+
+    background-image:
+        linear-gradient(
+            30deg,
+            transparent 45%,
+            rgba(255, 255, 255, 0.45) 46%,
+            rgba(255, 255, 255, 0.45) 54%,
+            transparent 55%
+        );
+
+    background-size: 42px 42px;
+}
+
+
+/* =========================================
+   EDIT
+========================================= */
+
+.staff-profile-edit {
+    position: absolute;
+
+    top: 0.7rem;
+    right: 0.9rem;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    padding: 0.42rem 0.85rem;
+
+    border: 0;
+    border-radius: 999px;
+
+    background: #fff;
+
+    color: #1f2b3a;
+
+    font-size: 0.66rem;
+    font-weight: 700;
+
+    box-shadow:
+        0 2px 8px rgba(30, 50, 70, 0.12);
+
+    cursor: pointer;
+}
+
+.staff-profile-edit:hover {
+    background: #f7f9fb;
+}
+
+
+/* =========================================
+   IDENTITY
+========================================= */
+
+.staff-profile-identity {
+    position: relative;
+
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+
+    padding: 0 1rem 0.75rem;
+
+    background: #fff;
+}
+
+
+/* =========================================
+   AVATAR
+========================================= */
+
+.staff-avatar-wrapper {
+    position: relative;
+
+    margin-top: -46px;
+
+    flex-shrink: 0;
+}
+
+.staff-avatar {
+    display: grid;
+    place-items: center;
+
+    width: 92px;
+    height: 92px;
+
+    border: 4px solid #fff;
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6ea3ee,
+            #3f6fc7
+        );
+
+    color: #fff;
+
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+
+    box-shadow:
+        0 2px 10px rgba(30, 50, 70, 0.16);
+}
+
+.staff-online {
+    position: absolute;
+
+    right: 6px;
+    bottom: 6px;
+
+    width: 15px;
+    height: 15px;
+
+    border: 3px solid #fff;
+    border-radius: 50%;
+
+    background: #22b455;
+}
+
+
+/* =========================================
+   IDENTITY CONTENT
+========================================= */
+
+.staff-identity-main {
+    min-width: 0;
+    flex: 1;
+}
+
+.staff-name-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.staff-name-row h1 {
+    margin: 0;
+
+    color: #111b29;
+
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.staff-verified {
+    display: inline-flex;
+}
+
+.staff-verified svg {
+    width: 17px;
+    height: 17px;
+
+    fill: #2874c6;
+    stroke: #fff;
+}
+
+.staff-designation {
+    margin: 0.2rem 0 0;
+
+    color: #6d7886;
+
+    font-size: 0.74rem;
+}
+
+.staff-identity-dot {
+    margin: 0 0.4rem;
+
+    color: #a2aab3;
+}
+
+
+/* =========================================
+   TAGS
+========================================= */
+
+.staff-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+
+    margin-top: 0.5rem;
+}
+
+.staff-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+
+    padding: 0.3rem 0.65rem;
+
+    border-radius: 8px;
+
+    background: #eef2f8;
+
+    color: #4b5a6c;
+
+    font-size: 0.64rem;
+    font-weight: 600;
+}
+
+.staff-tag.primary {
+    background: #e6effd;
+
+    color: #2f66c4;
+}
+
+
+/* =========================================
+   STATS
+========================================= */
+
+.staff-stats {
+    display: flex;
+    gap: 0.6rem;
+
+    margin-top: -34px;
+
+    flex-shrink: 0;
+}
+
+.staff-stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 98px;
+
+    padding: 0.55rem 0.4rem;
+
+    border: 1px solid #dde7f6;
+    border-radius: 12px;
+
+    background: #f4f8fe;
+
+    text-align: center;
+}
+
+.staff-stat-icon {
+    display: grid;
+    place-items: center;
+
+    width: 26px;
+    height: 26px;
+
+    margin-bottom: 0.3rem;
+
+    border-radius: 50%;
+
+    background: #e1ecfc;
+
+    color: #3b73d1;
+}
+
+.staff-stat-icon.success {
+    background: #dcf4e5;
+
+    color: #2b9a57;
+}
+
+.staff-stat-card strong {
+    color: #16202e;
+
+    font-size: 1.1rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.staff-stat-card span {
+    margin-top: 0.15rem;
+
+    color: #4b5968;
+
+    font-size: 0.6rem;
+}
+
+.staff-stat-card small {
+    color: #8a96a4;
+
+    font-size: 0.55rem;
+}
+
+
+/* =========================================
+   CONTACT STRIP
+========================================= */
+
+.staff-profile-contact-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0;
+
+    padding: 0.65rem 1rem;
+
+    border-bottom: 1px solid #e7ebef;
+
+    background: #fff;
+}
+
+.staff-contact-strip-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+
+    min-width: 0;
+
+    padding: 0 1rem;
+
+    border-left: 1px solid #e5eaf0;
+
+    color: #4b5968;
+
+    font-size: 0.68rem;
+    font-weight: 500;
+}
+
+.staff-contact-strip-item:first-child {
+    padding-left: 0;
+
+    border-left: 0;
+}
+
+.staff-contact-strip-item svg {
+    flex-shrink: 0;
+
+    color: #6b7a8b;
+}
+
+
+/* =========================================
+   TABS
+========================================= */
+
+.staff-profile-tabs {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+
+    padding: 0 1rem;
+
+    border-bottom: 1px solid #e5e9ed;
+
+    background: #fff;
+}
+
+.staff-profile-tab {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+
+    padding: 0.7rem 0.8rem;
+
+    border: 0;
+    background: transparent;
+
+    color: #8a939e;
+
+    font-size: 0.68rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.staff-profile-tab::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0.65rem;
+    right: 0.65rem;
+    bottom: -1px;
+
+    height: 2px;
+
+    border-radius: 2px 2px 0 0;
+
+    background: transparent;
+}
+
+.staff-profile-tab.active {
+    color: #315f9e;
+}
+
+.staff-profile-tab.active::after {
+    background: #315f9e;
+}
+
+.staff-profile-tab:hover {
+    color: #315f9e;
+}
+
+
+/* =========================================
+   CONTENT  (same box for every tab)
+========================================= */
+
+.staff-profile-content {
+    box-sizing: border-box;
+
+    height: 350px;
+
+    padding: 0.8rem;
+
+    overflow: hidden;
+
+    background: #f8fafc;
+}
+
+.staff-profile-overview {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+
+    height: 100%;
+}
+
+.staff-profile-overview > .staff-profile-card:first-child,
+.staff-profile-overview > .staff-profile-card:nth-child(2):last-child {
+    grid-row: 1 / span 2;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.staff-profile-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    min-height: 0;
+
+    padding: 0.8rem;
+
+    border: 1px solid #e5e9ee;
+    border-radius: 9px;
+
+    background: #fff;
+}
+
+
+/* =========================================
+   CARD HEADER
+========================================= */
+
+.staff-profile-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+}
+
+.staff-profile-card-icon {
+    display: grid;
+    place-items: center;
+
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    border-radius: 7px;
+
+    background: #eef3f8;
+
+    color: #5b6f83;
+}
+
+.staff-profile-card-header h2 {
+    margin: 0;
+
+    color: #344152;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.staff-profile-card-header p {
+    margin: 0.15rem 0 0;
+
+    color: #9199a3;
+
+    font-size: 0.62rem;
+    line-height: 1.4;
+}
+
+
+/* =========================================
+   INFORMATION GRID
+========================================= */
+
+.staff-profile-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(0, 1fr);
+    gap: 0.55rem;
+
+    flex: 1;
+    min-height: 0;
+}
+
+.staff-profile-info-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.2rem;
+
+    min-width: 0;
+
+    padding: 0.4rem 0.7rem;
+
+    border: 1px solid #edf0f3;
+    border-radius: 6px;
+
+    background: #fafbfc;
+}
+
+.staff-profile-info-item span {
+    color: #9aa2ab;
+
+    font-size: 0.57rem;
+}
+
+.staff-profile-info-item strong {
+    color: #465362;
+
+    font-size: 0.67rem;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.staff-professional-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+
+    flex: 1;
+    min-height: 0;
+}
+
+.staff-summary-item {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+
+    flex: 1;
+    min-height: 0;
+
+    padding: 0.3rem 0.6rem;
+
+    border: 1px solid #edf0f3;
+    border-radius: 6px;
+
+    background: #fafbfc;
+}
+
+.staff-summary-icon {
+    display: grid;
+    place-items: center;
+
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    border-radius: 6px;
+
+    background: #eef3f8;
+
+    color: #607386;
+}
+
+.staff-summary-item span {
+    display: block;
+
+    margin-bottom: 0.12rem;
+
+    color: #969fa9;
+
+    font-size: 0.56rem;
+}
+
+.staff-summary-item strong {
+    display: block;
+
+    color: #485565;
+
+    font-size: 0.66rem;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   BIO
+========================================= */
+
+.staff-profile-bio {
+    margin: 0;
+
+    overflow: hidden;
+
+    color: #687483;
+
+    font-size: 0.68rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   AVAILABILITY
+========================================= */
+
+.staff-availability-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(0, 1fr);
+    gap: 0.55rem;
+
+    flex: 1;
+    min-height: 0;
+}
+
+.staff-availability-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+
+    padding: 0.4rem 0.7rem;
+
+    border: 1px solid #edf0f3;
+    border-radius: 6px;
+
+    background: #fafbfc;
+}
+
+.staff-availability-item span {
+    color: #969fa9;
+
+    font-size: 0.57rem;
+}
+
+.staff-availability-item strong {
+    color: #465362;
+
+    font-size: 0.68rem;
+}
+
+
+/* =========================================
+   CONTACT DETAILS
+========================================= */
+
+.staff-contact-detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(0, 1fr);
+    gap: 0.55rem;
+
+    flex: 1;
+    min-height: 0;
+}
+
+.staff-contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    min-width: 0;
+
+    padding: 0.4rem 0.75rem;
+
+    border: 1px solid #edf0f3;
+    border-radius: 7px;
+
+    background: #fafbfc;
+}
+
+.staff-contact-detail > div:last-child {
+    min-width: 0;
+}
+
+.staff-contact-detail-icon {
+    display: grid;
+    place-items: center;
+
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    border-radius: 7px;
+
+    background: #eef3f8;
+
+    color: #607386;
+}
+
+.staff-contact-detail span {
+    display: block;
+
+    margin-bottom: 0.15rem;
+
+    color: #969fa9;
+
+    font-size: 0.57rem;
+}
+
+.staff-contact-detail strong {
+    display: block;
+
+    color: #465362;
+
+    font-size: 0.68rem;
+    font-weight: 600;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 850px) {
+
+    .staff-profile-content {
+        height: auto;
+    }
+
+    .staff-profile-overview {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+
+        height: auto;
+    }
+
+    .staff-profile-overview > .staff-profile-card:first-child,
+    .staff-profile-overview > .staff-profile-card:nth-child(2):last-child {
+        grid-row: auto;
+    }
+
+    .staff-profile-info-grid,
+    .staff-professional-summary,
+    .staff-availability-grid,
+    .staff-contact-detail-grid {
+        flex: none;
+    }
+
+    .staff-profile-card {
+        min-height: auto;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .staff-profile-cover {
+        height: 80px;
+    }
+
+    .staff-profile-identity {
+        align-items: flex-start;
+        flex-wrap: wrap;
+
+        padding-top: 0.7rem;
+    }
+
+    .staff-avatar-wrapper {
+        margin-top: -52px;
+    }
+
+    .staff-avatar {
+        width: 76px;
+        height: 76px;
+
+        font-size: 1.5rem;
+    }
+
+    .staff-identity-main {
+        width: calc(100% - 95px);
+    }
+
+    .staff-stats {
+        margin-top: 0;
+    }
+
+    .staff-profile-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .staff-profile-contact-strip {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .staff-contact-strip-item,
+    .staff-contact-strip-item:first-child {
+        padding: 0;
+
+        border-left: 0;
+    }
+
+    .staff-profile-tabs {
+        overflow-x: auto;
+    }
+
+    .staff-profile-tab {
+        flex-shrink: 0;
+    }
+
+    .staff-profile-content {
+        padding: 0.7rem;
+    }
+
+    .staff-profile-identity {
+        flex-direction: column;
+    }
+
+    .staff-identity-main {
+        width: 100%;
+    }
+}
