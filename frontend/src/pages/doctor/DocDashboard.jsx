@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from "react";
-import { Users, Video, ArrowRight } from "lucide-react";
+import { Users, Video, ArrowRight, Target, ChevronDown, CalendarDays, ChevronRight } from "lucide-react";
 import {
   ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine
 } from "recharts";
 
-import doc from "../../assets/home/doc7.png";
+import doc from "../../assets/home/doc6.png";
 import "../../styles/Doctor/Doctor-Dashboard.css";
 
 
@@ -278,21 +278,6 @@ const DEFAULT_WARDS = [
   { name: "Neurology", occupied: 8, total: 8 },
 ];
 
-const ICONS = {
-  alert: (
-    <>
-      <path d="M12 4 3 20h18L12 4Z" />
-      <path d="M12 10v4M12 17h.01" />
-    </>
-  ),
-  pill: (
-    <>
-      <rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-45 12 12)" />
-      <path d="m9.5 9.5 5 5" />
-    </>
-  ),
-};
-
 const HospitalOverview = {
   alerts: DEFAULT_ALERTS,
   kpis: DEFAULT_KPIS,
@@ -300,15 +285,31 @@ const HospitalOverview = {
   dark: false,
 };
 
-function Icon({ name }) {
-  return (
-    <svg className="ho-icon" viewBox="0 0 24 24" aria-hidden="true">
-      {ICONS[name]}
-    </svg>
-  );
-}
+// const ICONS = {
+//   alert: (
+//     <>
+//       <path d="M12 4 3 20h18L12 4Z" />
+//       <path d="M12 10v4M12 17h.01" />
+//     </>
+//   ),
+//   pill: (
+//     <>
+//       <rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-45 12 12)" />
+//       <path d="m9.5 9.5 5 5" />
+//     </>
+//   ),
+// };
+
+// function Icon({ name }) {
+//   return (
+//     <svg className="ho-icon" viewBox="0 0 24 24" aria-hidden="true">
+//       {ICONS[name]}
+//     </svg>
+//   );
+// }
 
 // normal: under 80% · high: 80–99% · full: 100%
+
 const getLevel = (pct) => (pct >= 100 ? "full" : pct >= 80 ? "high" : "normal");
 
 function AlertTile({ tone, icon, label, value, note }) {
@@ -359,12 +360,202 @@ function WardBar({ name, occupied, total }) {
 }
 
 
-// function buildArc(percentage) {
-//   const radius = 76;
-//   const circumference = Math.PI * radius;
-//   const clamped = Math.max(0, Math.min(100, percentage));
-//   const dashoffset = circumference * (1 - clamped / 100);
-//   return { circumference, dashoffset };
+
+
+
+
+const MOCK_TARGET = {
+  title: "October targets",
+  daysLeft: 9,
+};
+
+const MOCK_TARGET_METRICS = [
+  { id: "consults", label: "Consults", done: 142, goal: 200, color: "teal" },
+  { id: "procedures", label: "Procedures", done: 18, goal: 30, color: "amber" },
+  { id: "followups", label: "Follow-ups", done: 64, goal: 80, color: "blue" },
+];
+
+const ICONS = {
+  eye: (
+    <>
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+    </>
+  ),
+  pencil: (
+    <>
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+    </>
+  ),
+  hospital: (
+    <>
+      <path d="M3 21l18 0" />
+      <path d="M9 21v-4a3 3 0 0 1 6 0v4" />
+      <path d="M10 9l4 0" />
+      <path d="M12 7l0 4" />
+      <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" />
+    </>
+  ),
+  calendar: (
+    <>
+      <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12" />
+      <path d="M16 3v4" />
+      <path d="M8 3v4" />
+      <path d="M4 11h16" />
+    </>
+  ),
+  mail: (
+    <>
+      <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10" />
+      <path d="M3 7l9 6l9 -6" />
+    </>
+  ),
+  phone: (
+    <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+  ),
+  target: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5.5" />
+      <circle cx="12" cy="12" r="2" />
+
+      <path d="M12 12L21 3" />
+      <path d="M15 3H21V9" />
+    </>
+  ),
+};
+
+function Icon({ name }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {ICONS[name]}
+    </svg>
+  );
+}
+
+
+const MOCK_DOCTOR = {
+  name: "Dr. Binti Biswas",
+  staffId: "AMS_2023_01",
+  specialty: "Nephrology specialist",
+  status: "Available",
+  department: "Nephrology",
+  joined: "01 Jun 2025",
+  email: "binti@birdem.net",
+  phone: "+880 1518443329",
+  // photo: "", 
+  photo: doc,
+  targetTitle: "October targets",
+  daysLeft: 9,
+  targets: {
+    consults: { done: 142, goal: 200 },
+    procedures: { done: 18, goal: 30 },
+    followUps: { done: 64, goal: 80 },
+  },
+};
+
+const pct = (m) =>
+  m.goal > 0 ? Math.min(100, Math.round((m.done / m.goal) * 100)) : 0;
+
+const initialsOf = (name) =>
+  name
+    .replace(/^Dr\.?\s*/i, "")
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+
+/* ---------- small pieces ---------- */
+
+function InfoTile({ icon, label, value }) {
+  return (
+    <div className="dpf-info">
+      <span className="dpf-info-ic">
+        <Icon name={icon} />
+      </span>
+      <div className="dpf-info-text">
+        <div className="dpf-info-label">{label}</div>
+        <div className="dpf-info-val" title={value}>
+          {value}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StatTile({ metric }) {
+  const value = pct(metric);
+  return (
+    <div className="dpf-stat">
+      <div className="dpf-stat-value">
+        {metric.done}
+        <span>/{metric.goal}</span>
+      </div>
+      <div className="dpf-stat-label">{metric.label}</div>
+      <div
+        className="dpf-bar"
+        role="progressbar"
+        aria-label={`${metric.label} progress`}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={value}
+      >
+        <div
+          className={`dpf-bar-fill dpf-bg-${metric.color}`}
+          style={{ width: `${value}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+// function RingPair({ r, metric }) {
+//   const C = 2 * Math.PI * r;
+//   return (
+//     <>
+//       <circle className="dpf-ring-track" cx="50" cy="50" r={r} />
+//       <circle
+//         className={`dpf-ring-arc dpf-stroke-${metric.color}`}
+//         cx="50"
+//         cy="50"
+//         r={r}
+//         transform="rotate(-90 50 50)"
+//         strokeDasharray={C}
+//         strokeDashoffset={C - (C * pct(metric)) / 100}
+//       />
+//     </>
+//   );
+// }
+
+// function LegendRow({ metric }) {
+//   return (
+//     <div>
+//       <div className="dpf-legend-row">
+//         <span className={`dpf-dot dpf-bg-${metric.color}`} />
+//         <span className="dpf-legend-label">{metric.label}</span>
+//         <b className="dpf-legend-val">
+//           {metric.done}/{metric.goal}
+//         </b>
+//       </div>
+//       <div className="dpf-bar">
+//         <div
+//           className={`dpf-bar-fill dpf-bg-${metric.color}`}
+//           style={{ width: `${pct(metric)}%` }}
+//         />
+//       </div>
+//     </div>
+//   );
 // }
 
 export default function DocDashboard() {
@@ -398,12 +589,18 @@ export default function DocDashboard() {
 
     return Math.ceil(maxValue / 100) * 100;
   }, [chartData]);
-  // Week , month and year change 
+
   const handlePeriodChange = (value) => {
     setPeriod(value);
     setActiveIndex(Math.max(0, Math.floor(PERIOD_DATA[value].length * 0.6)));
   };
 
+  const consults = { ...MOCK_DOCTOR.targets.consults, label: "Consults", color: "teal" };
+  const procedures = { ...MOCK_DOCTOR.targets.procedures, label: "Procedures", color: "amber" };
+  const followups = { ...MOCK_DOCTOR.targets.followUps, label: "Follow-ups", color: "blue" };
+
+  const overall = Math.round((pct(consults) + pct(procedures) + pct(followups)) / 3);
+  const proceduresLeft = Math.max(0, procedures.goal - procedures.done);
 
   return (
     <main className="doc_homepage-body">
@@ -411,7 +608,132 @@ export default function DocDashboard() {
 
         <section className="panel profile-card">
 
-          <div className="profile-header">
+          <article className="dpf-card">
+            {/* ---------- photo hero ---------- */}
+            <div className="dpf-hero">
+              {MOCK_DOCTOR.photo ? (
+                <img className="dpf-photo" src={MOCK_DOCTOR.photo} alt={MOCK_DOCTOR.name} />
+              ) : (
+                <div className="dpf-photo dpf-photo--empty" aria-hidden="true">
+                  {initialsOf(MOCK_DOCTOR.name)}
+                </div>
+              )}
+
+              <span className="dpf-specialty">{MOCK_DOCTOR.specialty}</span>
+
+              <div className="dpf-actions">
+                <button
+                  type="button"
+                  className="dpf-icon-btn"
+                  aria-label="View profile"
+                  onClick={() => { }}
+                >
+                  <Icon name="eye" />
+                </button>
+                <button
+                  type="button"
+                  className="dpf-icon-btn"
+                  aria-label="Edit profile"
+                  onClick={() => { }}
+                >
+                  <Icon name="pencil" />
+                </button>
+              </div>
+
+              <div className="dpf-namebar">
+                <div className="dpf-id">
+                  <h3 className="dpf-name">{MOCK_DOCTOR.name}</h3>
+                  {/* <span className="dpf-staff-id">{MOCK_DOCTOR.staffId}</span> */}
+                </div>
+                <span className="dpf-status">
+                  <span className="dpf-dot dpf-bg-teal" />
+                  {MOCK_DOCTOR.status}
+                </span>
+              </div>
+            </div>
+
+            <div className="dpf-body">
+              {/* ---------- details ---------- */}
+              <div className="dpf-info-grid">
+                <InfoTile icon="hospital" label="ID" value={MOCK_DOCTOR.staffId} />
+                <InfoTile icon="calendar" label="Joined" value={MOCK_DOCTOR.joined} />
+                <InfoTile icon="mail" label="Email" value={MOCK_DOCTOR.email} />
+                <InfoTile icon="phone" label="Phone" value={MOCK_DOCTOR.phone} />
+              </div>
+
+              {/* ---------- performance targets panel ---------- */}
+              <section className="dpf-targets" aria-label="Performance targets">
+                <div className="dpf-targets-divider">
+                  <span className="dpf-targets-line" />
+                  {/* <span className="dpf-targets-icon">
+                    <Target aria-hidden="true" />
+                  </span> */}
+                  <span className="dpf-targets-label">Performance targets</span>
+                  <span className="dpf-targets-line" />
+                </div>
+
+                {/* <div className="dpf-targets-meta">
+                  <div className="dpf-targets-period">
+                    <span className="dpf-targets-calendar">
+                      <CalendarDays size={15} />
+                    </span>
+
+                    <span className="dpf-targets-title">
+                      {MOCK_DOCTOR.targetTitle}
+                    </span>
+
+                    <span className="dpf-targets-days">
+                      {MOCK_DOCTOR.daysLeft} days left
+                    </span>
+                  </div>
+
+                  <div className="dpf-targets-overall">
+                    <div
+                      className="dpf-targets-ring"
+                      style={{
+                        "--target-progress": `${Math.min(
+                          100,
+                          Math.max(0, overall)
+                        )}%`,
+                      }}
+                      role="progressbar"
+                      aria-label="Overall performance"
+                      aria-valuenow={overall}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                    >
+                      <span />
+                    </div>
+
+                    <strong className="dpf-targets-percentage">
+                      {overall}%
+                    </strong>
+
+                    <span className="dpf-targets-overall-label">
+                      overall
+                    </span>
+                  </div>
+                </div> */}
+
+                <div className="dpf-stats">
+                  <StatTile metric={consults} />
+                  <StatTile metric={procedures} />
+                  <StatTile metric={followups} />
+                </div>
+
+                <div className={proceduresLeft > 0 ? "dpf-note dpf-note--warn" : "dpf-note dpf-note--ok"}>
+                  {/* <div className="dpf-note-icon">
+                    <Icon name="target" />
+                  </div> */}
+                  {proceduresLeft > 0
+                    ? `${proceduresLeft} procedures left to hit target`
+                    : "Procedure target met"}
+                </div>
+              </section>
+            </div>
+          </article>
+
+          {/* <div className="profile-header">
             <span className="profile-eyebrow">
               Basic Information
             </span>
@@ -489,7 +811,7 @@ export default function DocDashboard() {
               <span>{doctor.phone}</span>
             </div>
 
-          </div>
+          </div> */}
 
         </section>
 
@@ -522,6 +844,15 @@ export default function DocDashboard() {
           </section> */}
 
           <section className="queue-card">
+            <button
+              type="button"
+              className="queue-card__header"
+              onClick={()=>{}}
+            >
+              Schedule
+            </button>
+
+
             <div className="queue-card__active">
               <svg className="queue-card__ring" viewBox="0 0 60 60">
                 <circle className="queue-card__ring-track" cx="30" cy="30" r="26" />
@@ -846,34 +1177,34 @@ export default function DocDashboard() {
         <section className="panel overview-card-3">
           {/* Patients */}
           {/* <section className={`ho${HospitalOverview.dark ? " ho--dark" : ""}`} aria-label="Hospital overview"> */}
-            {/* <div className="ho-alerts">
+          {/* <div className="ho-alerts">
               {HospitalOverview.alerts.map(({ id, ...a }) => (
                 <AlertTile key={id} {...a} />
               ))}
             </div> */}
 
-            {/* <div className="ho-kpis">
+          {/* <div className="ho-kpis">
               {HospitalOverview.kpis.map(({ id, ...k }) => (
                 <KpiTile key={id} {...k} />
               ))}
             </div> */}
 
-            <div className="ho-card">
-              <div className="ho-card__head">
-                <h3 className="ho-card__title">
-                  Hospital Plus
-                </h3>
-                <ul className="ho-legend">
-                  <span className="ho-card__total">{occupied}/{total}</span>
-                  {/* <li><i className="ho-fill */}
-                </ul>
-              </div>
-              <div className="ho-wards">
-                {HospitalOverview.wards.map((w) => (
-                  <WardBar key={w.name} {...w} />
-                ))}
-              </div>
+          <div className="ho-card">
+            <div className="ho-card__head">
+              <h3 className="ho-card__title">
+                Hospital Beds
+              </h3>
+              <ul className="ho-legend">
+                <span className="ho-card__total">{occupied}/{total}</span>
+                {/* <li><i className="ho-fill */}
+              </ul>
             </div>
+            <div className="ho-wards">
+              {HospitalOverview.wards.map((w) => (
+                <WardBar key={w.name} {...w} />
+              ))}
+            </div>
+          </div>
           {/* </section> */}
         </section>
 
@@ -905,14 +1236,13 @@ export default function DocDashboard() {
           </div>
         </section>
 
-        <section className="panel table-card-1">
-          {/* Patient Table */}
+        {/* <section className="panel table-card-1">
           <div className="vitals-card">
             <div className="vitals-header">
               <span className="vitals-title">
-                {/* <span className="vitals-title_icon"> 
+                <span className="vitals-title_icon"> 
                   <Users size={13} strokeWidth={2.4} /> 
-                </span>   */}
+                </span>  
                 <h3> Vitals </h3>
               </span>
               <span className="vitals-today">Today</span>
@@ -925,7 +1255,7 @@ export default function DocDashboard() {
                   {hero.value} <span className="hr-unit">{hero.unit}</span>
                 </p>
 
-                {/* {(hero.type === "ecg") && (
+                {(hero.type === "ecg") && (
                   <svg className="hr-graph" viewBox="0 0 140 40" preserveAspectRatio="none">
                     <polyline points={hero.points} fill="none" stroke={hero.color} strokeWidth="2" />
                   </svg>
@@ -943,7 +1273,7 @@ export default function DocDashboard() {
                     <rect x="4" y="14" width={132 * (hero.percent / 100)} height="8" rx="4" fill={hero.color} />
                     <circle cx={4 + 132 * (hero.percent / 100)} cy="18" r="6" fill={hero.color} />
                   </svg>
-                )} */}
+                )}
               </div>
 
               <div className="vitals-right">
@@ -964,9 +1294,28 @@ export default function DocDashboard() {
             </div>
           </div>
 
-        </section>
+          <div className="dtl-card">
+            <h4 className="dtl-title">{MOCK_TARGET.title}</h4>
 
-        <section className="panel table-card-2">
+            <div className="dtl-body">
+              <svg className="dtl-rings" viewBox="0 0 100 100" aria-hidden="true">
+                <RingPair r={44} metric={consults} />
+                <RingPair r={34} metric={procedures} />
+                <RingPair r={24} metric={followups} />
+              </svg>
+
+              <div className="dtl-legend">
+                <LegendRow metric={consults} />
+                <LegendRow metric={procedures} />
+                <LegendRow metric={followups} />
+              </div>
+            </div>
+
+            <span className="dtl-foot">{MOCK_TARGET.daysLeft} days left</span>
+          </div>
+        </section> */}
+
+        <section className="panel overview-card-5">
           {/* Patient Table */}
           {/* <div className="meeting-section"> */}
           {/* <h2 className="meeting-section-title">Meeting</h2>/ */}
@@ -1014,7 +1363,7 @@ export default function DocDashboard() {
           {/* </div> */}
         </section>
 
-        <section className="panel table-card-3">
+        <section className="panel overview-card-6">
           {/* Patient Table */}
           <div className="referrals-card">
             {/* Header */}

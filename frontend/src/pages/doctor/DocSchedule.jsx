@@ -191,14 +191,14 @@ function getWeekNumber(date) {
   );
 }
 
-function getDayAvailability( dayEvents, scheduleFilter) {
+function getDayAvailability(dayEvents, scheduleFilter) {
   const filters =
     scheduleFilter === "all"
       ? appointmentFilters
       : appointmentFilters.filter(
-          (filter) =>
-            filter.id === scheduleFilter
-        );
+        (filter) =>
+          filter.id === scheduleFilter
+      );
 
   let totalSlots = 0;
   let filledSlots = 0;
@@ -771,7 +771,7 @@ function DocSchedule() {
   //     (event) => event.type === filter
   //   );
   // }, [filter]);
- 
+
   const filteredEvents = useMemo(() => {
     if (scheduleFilter === "all") {
       return scheduleEvents;
@@ -849,7 +849,7 @@ function DocSchedule() {
     return row;
   }, [now]);
 
-/* ---------------- month events ---------------- */
+  /* ---------------- month events ---------------- */
 
   const monthEvents = useMemo(() => {
 
@@ -904,55 +904,55 @@ function DocSchedule() {
     } catch (error) {
       console.error("Schedule refresh failed:", error);
 
-      setRefreshError( "Unable to refresh schedule");
+      setRefreshError("Unable to refresh schedule");
     } finally {
       setIsRefreshing(false);
     }
   };
-  
+
 
   // after Backend connection:
 
-//   const refreshSchedule = async () => {
-//   if (isRefreshing) return;
+  //   const refreshSchedule = async () => {
+  //   if (isRefreshing) return;
 
-//   try {
-//     setIsRefreshing(true);
-//     setRefreshError(null);
+  //   try {
+  //     setIsRefreshing(true);
+  //     setRefreshError(null);
 
-//     const response = await fetch(
-//       "/api/doctor/schedule"
-//     );
+  //     const response = await fetch(
+  //       "/api/doctor/schedule"
+  //     );
 
-//     if (!response.ok) {
-//       throw new Error(
-//         "Failed to fetch schedule"
-//       );
-//     }
+  //     if (!response.ok) {
+  //       throw new Error(
+  //         "Failed to fetch schedule"
+  //       );
+  //     }
 
-//     const data = await response.json();
+  //     const data = await response.json();
 
-//     setScheduleEvents(data);
-//     setNow(new Date());
+  //     setScheduleEvents(data);
+  //     setNow(new Date());
 
-//   } catch (error) {
-//     console.error(error);
+  //   } catch (error) {
+  //     console.error(error);
 
-//     setRefreshError(
-//       "Unable to refresh schedule"
-//     );
+  //     setRefreshError(
+  //       "Unable to refresh schedule"
+  //     );
 
-//   } finally {
-//     setIsRefreshing(false);
-//   }
-// };
-  
-/* ---------------- handlers ---------------- */
+  //   } finally {
+  //     setIsRefreshing(false);
+  //   }
+  // };
+
+  /* ---------------- handlers ---------------- */
 
   const previousPeriod = () => {
     setWeekStart((current) => {
       if (view === "month") {
-        const previousMonth = new Date( current.getFullYear(), current.getMonth() - 1, 1);
+        const previousMonth = new Date(current.getFullYear(), current.getMonth() - 1, 1);
         return previousMonth;
       }
       if (view === "day") {
@@ -964,7 +964,7 @@ function DocSchedule() {
   const nextPeriod = () => {
     setWeekStart((current) => {
       if (view === "month") {
-        const nextMonth = new Date( current.getFullYear(), current.getMonth() + 1, 1);
+        const nextMonth = new Date(current.getFullYear(), current.getMonth() + 1, 1);
         return nextMonth;
       }
       if (view === "day") {
@@ -976,10 +976,10 @@ function DocSchedule() {
   const goToday = () => {
     const today = new Date();
     if (view === "month") {
-      setWeekStart( new Date( today.getFullYear(), today.getMonth(), 1));
+      setWeekStart(new Date(today.getFullYear(), today.getMonth(), 1));
       return;
     }
-    setWeekStart( getMonday(today) );
+    setWeekStart(getMonday(today));
   };
 
 
@@ -1067,61 +1067,61 @@ function DocSchedule() {
 
   }, [view]);
 
- useEffect(() => {
-  if (view !== "week") { return; }
+  useEffect(() => {
+    if (view !== "week") { return; }
 
-  const element = scrollRef.current;
+    const element = scrollRef.current;
 
-  if (!element) {
-    return;
-  }
-
-  if (!rowHeight || rowHeight <= 0) {
-    return;
-  }
-
-
-  const minutes =
-    (now.getHours() - DAY_START_HOUR) * 60 +
-    now.getMinutes();
-
-  const currentRow =
-    minutes / ROW_MIN;
-
-  const targetRow = Math.max(
-    0,
-    Math.min(
-      TOTAL_ROWS - visibleRows,
-      Math.floor(currentRow) - 2
-    )
-  );
-
-
-  element.scrollTop =
-    targetRow * rowHeight;
-
-
- }, [ view, rowHeight, visibleRows, now ]);
-
- useEffect(() => {
-  const handleOutsideClick = (event) => {
-    if (
-      filterRef.current &&
-      !filterRef.current.contains(event.target)
-    ) {
-      setFilterOpen(false);
+    if (!element) {
+      return;
     }
-  };
 
-  document.addEventListener("mousedown", handleOutsideClick);
+    if (!rowHeight || rowHeight <= 0) {
+      return;
+    }
 
-  return () => {
-    document.removeEventListener(
-      "mousedown",
-      handleOutsideClick
+
+    const minutes =
+      (now.getHours() - DAY_START_HOUR) * 60 +
+      now.getMinutes();
+
+    const currentRow =
+      minutes / ROW_MIN;
+
+    const targetRow = Math.max(
+      0,
+      Math.min(
+        TOTAL_ROWS - visibleRows,
+        Math.floor(currentRow) - 2
+      )
     );
-  };
-}, []);
+
+
+    element.scrollTop =
+      targetRow * rowHeight;
+
+
+  }, [view, rowHeight, visibleRows, now]);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(event.target)
+      ) {
+        setFilterOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener(
+        "mousedown",
+        handleOutsideClick
+      );
+    };
+  }, []);
 
 
   return (
@@ -1167,12 +1167,12 @@ function DocSchedule() {
 
         <div className="sched__date-navigation">
 
-          <button type="button" className="sched__nav-btn" onClick={previousPeriod} aria-label={ view === "month" ? "Previous month" : "Previous week"}>
-            <ChevronLeft size={17} strokeWidth={2}/>
+          <button type="button" className="sched__nav-btn" onClick={previousPeriod} aria-label={view === "month" ? "Previous month" : "Previous week"}>
+            <ChevronLeft size={17} strokeWidth={2} />
           </button>
 
           <button type="button" className="sched__date-btn" onClick={goToday} title="Go to today" >
-              <CalendarDays size={15} />
+            <CalendarDays size={15} />
             <span className="sched__date-content">
               <strong>
                 {view === "month"
@@ -1187,8 +1187,8 @@ function DocSchedule() {
             </span>
           </button>
 
-          <button className="sched__nav-btn" onClick={nextPeriod} aria-label={ view === "month" ? "Next month" : "Next week" }>
-            <ChevronRight size={17} strokeWidth={2}/>
+          <button className="sched__nav-btn" onClick={nextPeriod} aria-label={view === "month" ? "Next month" : "Next week"}>
+            <ChevronRight size={17} strokeWidth={2} />
           </button>
 
         </div>
@@ -1209,9 +1209,9 @@ function DocSchedule() {
                 {scheduleFilter === "all"
                   ? "All Schedule"
                   : appointmentFilters.find(
-                      (filter) =>
-                        filter.id === scheduleFilter
-                    )?.label
+                    (filter) =>
+                      filter.id === scheduleFilter
+                  )?.label
                 }
               </span>
 
@@ -1237,11 +1237,10 @@ function DocSchedule() {
 
                 <button
                   type="button"
-                  className={`sched__filter-option ${
-                    scheduleFilter === "all"
+                  className={`sched__filter-option ${scheduleFilter === "all"
                       ? "is-active"
                       : ""
-                  }`}
+                    }`}
                   onClick={() => {
                     setScheduleFilter("all");
                     setFilterOpen(false);
@@ -1270,11 +1269,10 @@ function DocSchedule() {
                   <button
                     key={filter.id}
                     type="button"
-                    className={`sched__filter-option ${
-                      scheduleFilter === filter.id
+                    className={`sched__filter-option ${scheduleFilter === filter.id
                         ? "is-active"
                         : ""
-                    }`}
+                      }`}
                     onClick={() => {
                       setScheduleFilter(filter.id);
                       setFilterOpen(false);
@@ -1304,9 +1302,8 @@ function DocSchedule() {
 
           <button
             type="button"
-            className={`sched__refresh-icon ${
-              isRefreshing ? "is-refreshing" : ""
-            }`}
+            className={`sched__refresh-icon ${isRefreshing ? "is-refreshing" : ""
+              }`}
             aria-label={
               isRefreshing
                 ? "Refreshing schedule"
@@ -1340,7 +1337,7 @@ function DocSchedule() {
                     <span className="sched__day-date">
                       {formatDayDate(day.date)}
                     </span>
-                    
+
                     <span className="sched__day-count">
                       <i />
                       {appointmentCounts[index]} task
@@ -1397,9 +1394,9 @@ function DocSchedule() {
                         key={columnIndex}
                         className={`sched__cell
                             ${time.isHour ? "sched__cell--hour" : ""}
-                            ${ columnIndex < todayColumn ? "sched__cell--past-day" : ""}
-                            ${ columnIndex === todayColumn ? "sched__cell--today" : ""}
-                            ${ columnIndex > todayColumn ? "sched__cell--future-day" : ""}`}
+                            ${columnIndex < todayColumn ? "sched__cell--past-day" : ""}
+                            ${columnIndex === todayColumn ? "sched__cell--today" : ""}
+                            ${columnIndex > todayColumn ? "sched__cell--future-day" : ""}`}
                         style={{
                           gridColumn: columnIndex + 2,
                           gridRow: rowIndex + 1,
@@ -1418,9 +1415,9 @@ function DocSchedule() {
                   <div
                     className="sched__now-line"
                     style={{
-                      gridColumn:todayColumn + 2,
-                      gridRow: `${Math.floor(todayRow) + 1 } / span 1`,
-                      top: `${(todayRow % 1) }px`
+                      gridColumn: todayColumn + 2,
+                      gridRow: `${Math.floor(todayRow) + 1} / span 1`,
+                      top: `${(todayRow % 1)}px`
                     }}
                   />
                 )}
@@ -1498,12 +1495,12 @@ function DocSchedule() {
                 const dayEvents = monthEvents[index];
                 const isToday = isSameDate(day, now);
                 const isCurrentMonth = isSameMonth(day, weekStart);
-                const availability = getDayAvailability( dayEvents, scheduleFilter);
+                const availability = getDayAvailability(dayEvents, scheduleFilter);
 
                 return (
                   <div
                     key={day.toISOString()}
-                    className={` month-cell ${isToday ? "month-cell--today" : ""} ${ !isCurrentMonth ? "month-cell--outside" : "" } `}
+                    className={` month-cell ${isToday ? "month-cell--today" : ""} ${!isCurrentMonth ? "month-cell--outside" : ""} `}
                   >
 
                     {/* DATE */}

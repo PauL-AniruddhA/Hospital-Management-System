@@ -1,18 +1,18 @@
 import React from 'react'
-import PublicNavbar from '../pages/public/common/PublicNavbar'
-import TopBar from '../pages/public/common/TopBar'
-import Footer from '../pages/public/common/Footer';
+import Public_Navbar from '../pages/public/common/Public_Navbar'
+import Public_TopBar from '../pages/public/common/Public_TopBar'
+import Public_Footer from '../pages/public/common/Public_Footer';
 
 function PublicLayout({children}) {
   const isHomePage = location.pathname === "/";
   return (
     <>
       <header>
-        <TopBar/>
-        <PublicNavbar/>
+        <Public_TopBar/>
+        <Public_Navbar/>
       </header>
         <main style={{paddingTop: isHomePage? 0 : "calc(var(--topbar-height) + var(--navbar-height))",}}>{children}</main>
-      <footer><Footer /></footer>
+      <footer><Public_Footer /></footer>
     </>
   );
 }

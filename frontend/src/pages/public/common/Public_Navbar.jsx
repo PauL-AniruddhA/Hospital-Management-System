@@ -4,7 +4,7 @@ import logo from "../../../assets/Logo-Animation/Colored-Logo.png";
 import departments from '../../../mock/depertment';
 import { ChevronDown, CalendarDays} from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
-function PublicNavbar() {
+function Public_Navbar() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const [scrolled, setScrolled] = useState(false);
@@ -120,4 +120,4 @@ function PublicNavbar() {
   );
 }
 
-export default PublicNavbar
+export default Public_Navbar

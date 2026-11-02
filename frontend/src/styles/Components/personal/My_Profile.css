@@ -3,12 +3,10 @@
 ========================================= */
 
 .staff-profile {
-    display: flex;
-    flex-direction: column;
-
+    display: grid;
+    grid-auto-flow: row;
     width: 100%;
     min-width: 0;
-
     color: #334155;
 }
 
@@ -19,11 +17,8 @@
 
 .staff-profile-cover {
     position: relative;
-
-    height: 96px;
-
+    height: 86px;
     overflow: hidden;
-
     background:
         linear-gradient(
             135deg,
@@ -181,8 +176,8 @@
 
     color: #111b29;
 
-    font-size: 1.2rem;
-    font-weight: 800;
+    font-size: 25px;
+    font-weight: 600;
 }
 
 .staff-verified {
@@ -581,8 +576,8 @@
 ========================================= */
 
 .staff-professional-summary {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-auto-flow: column;
     gap: 0.45rem;
 
     flex: 1;

@@ -4,15 +4,15 @@ import LoginPage from "../pages/auth/LoginPage";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import DoctorHome from "../pages/doctor/DocHome";
 // import PatientDashboard from "../pages/patient/PatientDashboard";
-import ReceptionDashboard from "../pages/receptionist/ReceptionHome";
 import RegistrationPage from "../pages/auth/RegistrationPage";
 import StaffSignUpPage from "../pages/auth/StaffSignUpPage";
-
+import ReceptionistHome from "../pages/receptionist/ReceptionistHome";
 import AdminLayout from "../layouts/AdminLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import HomePage from "../pages/public/home/HomePage";
 import BookAppointments from "../pages/public/common/BookAppointments";
 import { DoctorLayout } from "../layouts/DoctorLayout";
+import PatientHomeSection from "../pages/patient/PatientHomeSection";
 
 function AppRoutes(){
     return(
@@ -20,8 +20,9 @@ function AppRoutes(){
             <Routes>
                 {/* Public Routes */}
                 {/* <Route path="/" element={<HomePage />} /> */}
-                {/* <Route path="/" element={<ReceptionDashboard />} /> */}
                 <Route path="/" element={<DoctorHome />} />
+                <Route path="/patient" element={< PatientHomeSection />} />
+                <Route path="/receptionist" element={<ReceptionistHome />} />
                 {/* <Route path="/" element={<DoctorLayout />} /> */}
                 <Route path="/book-appointment" element={<BookAppointments />} />
                 

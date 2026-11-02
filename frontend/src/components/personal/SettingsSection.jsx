@@ -1,23 +1,16 @@
-import React, { useState } from "react";
-import {
-  Settings,
-  LayoutDashboard,
-  Monitor,
-  PanelLeft,
-  CalendarDays,
-  Clock3,
-  Stethoscope,
-  Bell,
-  Palette,
-  Accessibility,
-  RefreshCw,
-  Save,
-  RotateCcw,
-  ChevronRight,
-  Check,
-} from "lucide-react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Settings, LayoutDashboard, Monitor, PanelLeft, CalendarDays, Clock3, Stethoscope, Bell, Palette, Accessibility, Save, RotateCcw, ChevronRight, Check } from "lucide-react";
 
 import "../../styles/Components/personal/SettingsSection.css";
+
+
+/* =========================================================
+   CONSTANTS
+========================================================= */
+
+const STORAGE_KEY = "doctorDashboardSettings";
+const AUTOSAVE_DELAY = 600;   // ms
+const SAVED_FLASH = 2200;     // ms
 
 
 /* =========================================================
@@ -25,66 +18,16 @@ import "../../styles/Components/personal/SettingsSection.css";
 ========================================================= */
 
 const SETTINGS_CATEGORIES = [
-  {
-    id: "general",
-    label: "General",
-    description: "Application behavior",
-    icon: Settings,
-  },
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    description: "Cards and widgets",
-    icon: LayoutDashboard,
-  },
-  {
-    id: "workspace",
-    label: "Workspace",
-    description: "Workspace behavior",
-    icon: Monitor,
-  },
-  {
-    id: "navigation",
-    label: "Navigation",
-    description: "Sidebar and navigation",
-    icon: PanelLeft,
-  },
-  {
-    id: "schedule",
-    label: "Schedule",
-    description: "Calendar preferences",
-    icon: CalendarDays,
-  },
-  {
-    id: "appointments",
-    label: "Appointments",
-    description: "Appointment behavior",
-    icon: Clock3,
-  },
-  {
-    id: "clinical",
-    label: "Clinical Workflow",
-    description: "Consultation preferences",
-    icon: Stethoscope,
-  },
-  {
-    id: "notifications",
-    label: "Notifications",
-    description: "Alerts and reminders",
-    icon: Bell,
-  },
-  {
-    id: "appearance",
-    label: "Appearance",
-    description: "Visual preferences",
-    icon: Palette,
-  },
-  {
-    id: "accessibility",
-    label: "Accessibility",
-    description: "Accessibility options",
-    icon: Accessibility,
-  },
+  { id: "general", label: "General", description: "Application behavior", icon: Settings },
+  { id: "dashboard", label: "Dashboard", description: "Cards and widgets", icon: LayoutDashboard },
+  { id: "workspace", label: "Workspace", description: "Workspace behavior", icon: Monitor },
+  { id: "navigation", label: "Navigation", description: "Sidebar and navigation", icon: PanelLeft },
+  { id: "schedule", label: "Schedule", description: "Calendar preferences", icon: CalendarDays },
+  { id: "appointments", label: "Appointments", description: "Appointment behavior", icon: Clock3 },
+  { id: "clinical", label: "Clinical Workflow", description: "Consultation preferences", icon: Stethoscope },
+  { id: "notifications", label: "Notifications", description: "Alerts and reminders", icon: Bell },
+  { id: "appearance", label: "Appearance", description: "Visual preferences", icon: Palette },
+  { id: "accessibility", label: "Accessibility", description: "Accessibility options", icon: Accessibility },
 ];
 
 
@@ -102,7 +45,6 @@ const DEFAULT_SETTINGS = {
   refreshInterval: "60",
 
   /* Dashboard */
-  dashboardDensity: "standard",
   showAppointments: true,
   showQueue: true,
   showQuickActions: true,
@@ -160,7 +102,6 @@ const DEFAULT_SETTINGS = {
   messageAlerts: true,
   hospitalAlerts: true,
   soundAlerts: false,
-  notificationBadges: true,
 
   /* Appearance */
   theme: "light",
@@ -176,6 +117,374 @@ const DEFAULT_SETTINGS = {
   enhancedFocus: true,
 };
 
+const SETTING_KEYS = Object.keys(DEFAULT_SETTINGS);
+
+
+/* =========================================================
+   SCHEMA HELPERS
+   Every row is described once as data and rendered by one
+   component, instead of ~800 lines of copy-pasted JSX.
+   `disabled(settings)` greys out a row that depends on another.
+========================================================= */
+
+const toggle = (key, label, description, disabled) => ({
+  type: "toggle", key, label, description, disabled,
+});
+
+const select = (key, label, description, options, disabled) => ({
+  type: "select", key, label, description, options, disabled,
+});
+
+const DENSITY_OPTIONS = [
+  ["compact", "Compact"],
+  ["standard", "Standard"],
+  ["comfortable", "Comfortable"],
+];
+
+
+/* =========================================================
+   SETTINGS SCHEMA
+========================================================= */
+
+const SETTINGS_SCHEMA = {
+  general: [
+    {
+      title: "Startup",
+      description: "Control what happens when you open the doctor dashboard.",
+      rows: [
+        select(
+          "defaultPage",
+          "Default landing page",
+          "Page opened after login. Ignored while “Remember last opened page” is on.",
+          [
+            ["dashboard", "Dashboard"],
+            ["schedule", "Schedule"],
+            ["patients", "Patient Records"],
+            ["queue", "Queue"],
+          ],
+          (s) => s.rememberLastPage
+        ),
+        toggle(
+          "rememberLastPage",
+          "Remember last opened page",
+          "Return to the section you were using previously."
+        ),
+      ],
+    },
+    {
+      title: "Application Behavior",
+      description: "Configure common dashboard interactions.",
+      rows: [
+        toggle(
+          "autoSave",
+          "Auto-save settings",
+          "Save changes to these settings automatically as you make them."
+        ),
+        toggle(
+          "confirmActions",
+          "Confirm important actions",
+          "Ask for confirmation before destructive or important actions."
+        ),
+        toggle(
+          "autoRefresh",
+          "Auto-refresh data",
+          "Automatically refresh dashboard information."
+        ),
+        select(
+          "refreshInterval",
+          "Refresh interval",
+          "How frequently dashboard data should refresh.",
+          [
+            ["15", "15 seconds"],
+            ["30", "30 seconds"],
+            ["60", "1 minute"],
+            ["300", "5 minutes"],
+          ],
+          (s) => !s.autoRefresh
+        ),
+      ],
+    },
+  ],
+
+  dashboard: [
+    {
+      title: "Dashboard Widgets",
+      description: "Choose which widgets appear on your dashboard.",
+      rows: [
+        toggle("showAppointments", "Today's appointments", "Display your current appointment summary."),
+        toggle("showQueue", "Patient queue", "Display the current waiting queue."),
+        toggle("showQuickActions", "Quick actions", "Display frequently used dashboard actions."),
+        toggle("showNotifications", "Notifications", "Display recent dashboard notifications."),
+        toggle("showActivity", "Activity summary", "Display your recent activity."),
+        toggle("showRecentPatients", "Recent patients", "Display recently accessed patients."),
+        toggle("showHospitalNotices", "Hospital notices", "Display important hospital announcements."),
+      ],
+    },
+  ],
+
+  workspace: [
+    {
+      title: "Workspace Mode",
+      description: "Control the overall workspace layout.",
+      rows: [
+        select(
+          "workspaceMode",
+          "Workspace mode",
+          "Choose the amount of space used by dashboard content.",
+          [
+            ["standard", "Standard"],
+            ["focus", "Focus mode"],
+            ["fullscreen", "Fullscreen"],
+          ]
+        ),
+        toggle("stickyHeader", "Sticky header", "Keep the workspace header visible while scrolling."),
+        toggle("preserveScroll", "Preserve scroll position", "Restore your previous scroll position when returning to a section."),
+        toggle("resizablePanels", "Resizable panels", "Allow workspace panels to be resized."),
+        toggle(
+          "rememberPanelSize",
+          "Remember panel sizes",
+          "Remember your preferred panel dimensions.",
+          (s) => !s.resizablePanels
+        ),
+      ],
+    },
+  ],
+
+  navigation: [
+    {
+      title: "Sidebar",
+      description: "Configure how the Doctor Dashboard navigation behaves.",
+      rows: [
+        select(
+          "sidebarMode",
+          "Sidebar mode",
+          "Choose the default sidebar state.",
+          [
+            ["expanded", "Expanded"],
+            ["collapsed", "Collapsed"],
+          ]
+        ),
+        toggle(
+          "expandOnHover",
+          "Expand on hover",
+          "Temporarily expand a collapsed sidebar when hovering over it.",
+          (s) => s.sidebarMode !== "collapsed"
+        ),
+        toggle("showLabels", "Show navigation labels", "Display text labels alongside navigation icons."),
+        toggle("showBadges", "Show notification badges", "Display unread counts and notification indicators."),
+        toggle("showSectionHeaders", "Show section headers", "Display Workspace, Care, Doctor Hub and other navigation groups."),
+        toggle("rememberSidebar", "Remember sidebar state", "Keep your expanded or collapsed preference."),
+      ],
+    },
+  ],
+
+  schedule: [
+    {
+      title: "Calendar",
+      description: "Configure your default schedule and calendar behavior.",
+      rows: [
+        select(
+          "calendarView",
+          "Default calendar view",
+          "Choose the view shown when opening Schedule.",
+          [
+            ["day", "Day"],
+            ["week", "Week"],
+            ["month", "Month"],
+            ["agenda", "Agenda"],
+          ]
+        ),
+        select(
+          "slotDuration",
+          "Time slot duration",
+          "Choose the size of appointment blocks.",
+          [
+            ["15", "15 minutes"],
+            ["30", "30 minutes"],
+            ["60", "60 minutes"],
+          ]
+        ),
+        toggle("snapToSlot", "Snap to time slots", "Align dragged appointments to calendar intervals."),
+        toggle("highlightToday", "Highlight today", "Visually emphasize today's column."),
+        toggle("showVacantSlots", "Show vacant slots", "Display available appointment slots."),
+        toggle("showPastAppointments", "Show past appointments", "Display completed appointments in the calendar."),
+        toggle("showUnavailable", "Show unavailable periods", "Display blocked or unavailable time."),
+      ],
+    },
+  ],
+
+  appointments: [
+    {
+      title: "Appointment Defaults",
+      description: "Choose your preferred appointment behavior.",
+      rows: [
+        select(
+          "defaultAppointmentDuration",
+          "Default duration",
+          "Default duration when creating a new appointment.",
+          [
+            ["15", "15 minutes"],
+            ["30", "30 minutes"],
+            ["45", "45 minutes"],
+            ["60", "60 minutes"],
+          ]
+        ),
+        select(
+          "defaultAppointmentType",
+          "Default appointment type",
+          "Appointment type selected by default.",
+          [
+            ["consultation", "Consultation"],
+            ["followup", "Follow-up"],
+            ["online", "Online"],
+            ["emergency", "Emergency"],
+          ]
+        ),
+      ],
+    },
+    {
+      title: "Appointment Interaction",
+      description: "Control how appointments behave in Schedule.",
+      rows: [
+        toggle("confirmCancellation", "Confirm before cancellation", "Ask for confirmation before cancelling an appointment."),
+        toggle("enableDragReschedule", "Drag to reschedule", "Allow appointments to be moved by dragging them."),
+        toggle("showPatientName", "Show patient name", "Display patient names directly inside appointment cards."),
+        toggle("showAppointmentStatus", "Show appointment status", "Display status indicators inside appointment cards."),
+      ],
+    },
+  ],
+
+  clinical: [
+    {
+      title: "Clinical Workspace",
+      description: "Configure your consultation workspace.",
+      rows: [
+        toggle("autoSaveNotes", "Auto-save clinical notes", "Automatically save notes while you are working."),
+        toggle("showVitals", "Show patient vitals", "Display the latest patient vitals during consultation."),
+        toggle("showAllergies", "Show allergies", "Keep known allergies visible during consultation."),
+        toggle("showMedicalHistory", "Show medical history", "Display relevant medical history in the clinical workspace."),
+        toggle("showPreviousNotes", "Show previous notes", "Display previous consultation notes."),
+        toggle("showRecentReports", "Show recent reports", "Display recent laboratory and diagnostic reports."),
+        toggle("autoCreateVisit", "Auto-create visit", "Automatically create a visit record when consultation begins."),
+      ],
+    },
+  ],
+
+  notifications: [
+    {
+      title: "Notification Types",
+      description: "Choose which dashboard events should notify you.",
+      rows: [
+        toggle("appointmentAlerts", "Appointment alerts", "Upcoming appointments, cancellations and changes."),
+        toggle("patientUpdates", "Patient updates", "Important updates related to your patients."),
+        toggle("labAlerts", "Lab alerts", "Notify when new or critical lab results are available."),
+        toggle("messageAlerts", "Message alerts", "Notify when new messages or communication arrive."),
+        toggle("hospitalAlerts", "Hospital alerts", "Important hospital-wide notices and announcements."),
+      ],
+    },
+    {
+      title: "Notification Display",
+      description: "Control how notifications appear.",
+      rows: [
+        toggle("inAppNotifications", "In-app notifications", "Show notifications inside the dashboard."),
+        toggle(
+          "soundAlerts",
+          "Sound alerts",
+          "Play a sound when an important notification arrives.",
+          (s) => !s.inAppNotifications
+        ),
+      ],
+    },
+  ],
+
+  appearance: [
+    {
+      title: "Theme",
+      description: "Choose how your dashboard looks.",
+      rows: [
+        select(
+          "theme",
+          "Theme",
+          "Select your preferred interface theme.",
+          [
+            ["light", "Light"],
+            ["dark", "Dark"],
+            ["system", "System default"],
+          ]
+        ),
+        select(
+          "interfaceDensity",
+          "Interface density",
+          "Control the amount of information shown on screen.",
+          DENSITY_OPTIONS
+        ),
+      ],
+    },
+    {
+      title: "Visual Effects",
+      description: "Control visual elements and animations.",
+      rows: [
+        toggle("showCardShadows", "Card shadows", "Display subtle shadows around dashboard cards."),
+        toggle("roundedCards", "Rounded cards", "Use rounded corners throughout the dashboard."),
+        toggle(
+          "animations",
+          "Animations",
+          "Enable interface transitions and animations.",
+          (s) => s.reduceMotion
+        ),
+      ],
+    },
+  ],
+
+  accessibility: [
+    {
+      title: "Accessibility",
+      description: "Adjust the interface to make the dashboard easier to use.",
+      rows: [
+        toggle("highContrast", "High contrast", "Increase visual contrast between interface elements."),
+        toggle("reduceMotion", "Reduce motion", "Reduce interface animations and transitions."),
+        toggle("largerText", "Larger text", "Increase the default interface text size."),
+        toggle("enhancedFocus", "Enhanced focus indicators", "Make keyboard focus states easier to identify."),
+      ],
+    },
+  ],
+};
+
+
+/* =========================================================
+   STORAGE HELPERS
+========================================================= */
+
+function loadSettings() {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return DEFAULT_SETTINGS;
+
+    const stored = JSON.parse(raw);
+    const merged = { ...DEFAULT_SETTINGS };
+
+    // Only accept known keys so stale/removed settings never leak in.
+    SETTING_KEYS.forEach((key) => {
+      if (key in stored) merged[key] = stored[key];
+    });
+
+    return merged;
+  } catch {
+    return DEFAULT_SETTINGS;
+  }
+}
+
+function persistSettings(settings) {
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+const isSameSettings = (a, b) =>
+  SETTING_KEYS.every((key) => a[key] === b[key]);
 
 
 /* =========================================================
@@ -183,11 +492,7 @@ const DEFAULT_SETTINGS = {
 ========================================================= */
 
 function SettingsPage({ children }) {
-  return (
-    <div className="settings-page">
-      {children}
-    </div>
-  );
+  return <div className="settings-page">{children}</div>;
 }
 
 
@@ -195,1309 +500,330 @@ function SettingsPage({ children }) {
    SETTINGS CARD
 ========================================================= */
 
-function SettingsCard({
-  title,
-  description,
-  children,
-}) {
+function SettingsCard({ title, description, children }) {
   return (
     <section className="settings-card">
-
       <div className="settings-card-header">
-
-        <div>
-          <h3>{title}</h3>
-          <p>{description}</p>
-        </div>
-
+        <h3>{title}</h3>
+        <p>{description}</p>
       </div>
 
-      <div className="settings-card-body">
-        {children}
-      </div>
-
+      <div className="settings-card-body">{children}</div>
     </section>
   );
 }
 
 
 /* =========================================================
-   TOGGLE ROW
+   SETTING ROW (toggle or select)
 ========================================================= */
 
-function ToggleRow({
-  label,
-  description,
-  checked,
-  onChange,
-}) {
-  return (
-    <div className="settings-row">
+function SettingRow({ item, value, disabled, onChange }) {
+  const id = `setting-${item.key}`;
+  const labelId = `${id}-label`;
+  const descId = `${id}-desc`;
 
+  const rowClass = [
+    "settings-row",
+    item.type === "select" ? "settings-row--select" : "",
+    disabled ? "is-disabled" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <div className={rowClass}>
       <div className="settings-row-content">
-        <strong>{label}</strong>
-        <span>{description}</span>
+        <strong id={labelId}>{item.label}</strong>
+        <span id={descId}>{item.description}</span>
       </div>
 
-      <button
-        type="button"
-        className={`settings-toggle ${checked ? "active" : ""
-          }`}
-        onClick={() => onChange(!checked)}
-        aria-pressed={checked}
-      >
-        <span />
-      </button>
-
+      {item.type === "toggle" ? (
+        <button
+          type="button"
+          id={id}
+          role="switch"
+          aria-checked={value}
+          aria-labelledby={labelId}
+          aria-describedby={descId}
+          className={`settings-toggle ${value ? "active" : ""}`}
+          disabled={disabled}
+          onClick={() => onChange(item.key, !value)}
+        >
+          <span aria-hidden="true" />
+        </button>
+      ) : (
+        <select
+          id={id}
+          className="settings-select"
+          aria-labelledby={labelId}
+          aria-describedby={descId}
+          value={value}
+          disabled={disabled}
+          onChange={(event) => onChange(item.key, event.target.value)}
+        >
+          {item.options.map(([optionValue, optionLabel]) => (
+            <option key={optionValue} value={optionValue}>
+              {optionLabel}
+            </option>
+          ))}
+        </select>
+      )}
     </div>
   );
 }
-
-
-/* =========================================================
-   SELECT ROW
-========================================================= */
-
-function SelectRow({
-  label,
-  description,
-  value,
-  onChange,
-  options,
-}) {
-  return (
-    <div className="settings-row">
-
-      <div className="settings-row-content">
-        <strong>{label}</strong>
-        <span>{description}</span>
-      </div>
-
-      <select
-        className="settings-select"
-        value={value}
-        onChange={(event) =>
-          onChange(event.target.value)
-        }
-      >
-        {options.map(([optionValue, optionLabel]) => (
-          <option
-            key={optionValue}
-            value={optionValue}
-          >
-            {optionLabel}
-          </option>
-        ))}
-      </select>
-
-    </div>
-  );
-}
-
 
 
 /* =========================================================
    MAIN COMPONENT
 ========================================================= */
 
-export default function SettingsSection() {
-
+export default function SettingsSection({ onSave }) {
   const [activeCategory, setActiveCategory] = useState("general");
 
-  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+  const [savedSettings, setSavedSettings] = useState(loadSettings);
+  const [settings, setSettings] = useState(savedSettings);
+  const [justSaved, setJustSaved] = useState(false);
+  const [systemDark, setSystemDark] = useState(false);
 
-  const updateSetting = (key, value) => {
-    setSettings((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
+  const mainRef = useRef(null);
+  const flashTimer = useRef(null);
+
+  const isDirty = useMemo(
+    () => !isSameSettings(settings, savedSettings),
+    [settings, savedSettings]
+  );
+
+  const activeItem =
+    SETTINGS_CATEGORIES.find((item) => item.id === activeCategory) ||
+    SETTINGS_CATEGORIES[0];
+
+  const ActiveIcon = activeItem.icon;
+
+  /* ---------- system theme ---------- */
+
+  useEffect(() => {
+    if (!window.matchMedia) return undefined;
+
+    const query = window.matchMedia("(prefers-color-scheme: dark)");
+    const sync = () => setSystemDark(query.matches);
+
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
+
+  const resolvedTheme =
+    settings.theme === "system"
+      ? systemDark ? "dark" : "light"
+      : settings.theme;
+
+  /* ---------- actions ---------- */
+
+  const updateSetting = useCallback((key, value) => {
+    setJustSaved(false);
+    setSettings((prev) => ({ ...prev, [key]: value }));
+  }, []);
+
+  const saveSettings = useCallback(() => {
+    if (!persistSettings(settings)) return;
+
+    setSavedSettings(settings);
+    onSave?.(settings);
+
+    setJustSaved(true);
+    clearTimeout(flashTimer.current);
+    flashTimer.current = setTimeout(() => setJustSaved(false), SAVED_FLASH);
+  }, [settings, onSave]);
 
   const resetSettings = () => {
+    if (
+      settings.confirmActions &&
+      !window.confirm("Reset all settings to their defaults?")
+    ) {
+      return;
+    }
+    setJustSaved(false);
     setSettings(DEFAULT_SETTINGS);
   };
 
-  const saveSettings = () => {
-    /*
-     * Later:
-     * API call / localStorage / backend persistence
-     */
-    console.log("Dashboard settings:", settings);
-  };
+  /* ---------- auto-save ---------- */
 
-  const ActiveIcon =
-    SETTINGS_CATEGORIES.find(
-      (item) => item.id === activeCategory
-    )?.icon || Settings;
+  useEffect(() => {
+    if (!settings.autoSave || !isDirty) return undefined;
+
+    const timer = setTimeout(saveSettings, AUTOSAVE_DELAY);
+    return () => clearTimeout(timer);
+  }, [settings.autoSave, isDirty, saveSettings]);
+
+  /* ---------- cleanup + scroll reset ---------- */
+
+  useEffect(() => () => clearTimeout(flashTimer.current), []);
+
+  useEffect(() => {
+    if (mainRef.current) mainRef.current.scrollTop = 0;
+  }, [activeCategory]);
+
+  /* ---------- footer status ---------- */
+
+  let status = null;
+  if (isDirty) {
+    status = settings.autoSave ? "Saving…" : "Unsaved changes";
+  } else if (justSaved) {
+    status = (
+      <>
+        <Check size={14} aria-hidden="true" />
+        Changes saved
+      </>
+    );
+  }
 
   return (
-    <div className="settings-section">
+    <div
+      className="settings-section"
+      data-theme={resolvedTheme}
+      data-density={settings.interfaceDensity}
+      data-shadows={settings.showCardShadows ? "on" : "off"}
+      data-rounded={settings.roundedCards ? "on" : "off"}
+      data-animations={
+        settings.animations && !settings.reduceMotion ? "on" : "off"
+      }
+      data-contrast={settings.highContrast ? "high" : "normal"}
+      data-large-text={settings.largerText ? "on" : "off"}
+      data-focus={settings.enhancedFocus ? "enhanced" : "normal"}
+    >
 
       {/* =================================================
-                LEFT SETTINGS NAVIGATION
-            ================================================= */}
+          LEFT SETTINGS NAVIGATION
+      ================================================= */}
 
       <aside className="settings-sidebar">
 
-        <div className="settings-sidebar-heading">
+        {/* <div className="settings-sidebar-heading">
           <div className="settings-sidebar-icon">
-            <Settings size={17} />
+            <Settings size={17} aria-hidden="true" />
           </div>
 
           <div>
             <strong>Dashboard Settings</strong>
             <span>Customize your workspace</span>
           </div>
-        </div>
+        </div> */}
 
-
-        <nav className="settings-category-list">
-
+        <nav
+          className="settings-category-list"
+          aria-label="Settings categories"
+        >
           {SETTINGS_CATEGORIES.map((item) => {
-
             const Icon = item.icon;
-
-            const active =
-              activeCategory === item.id;
+            const active = activeCategory === item.id;
 
             return (
               <button
                 key={item.id}
                 type="button"
-                className={`settings-category ${active ? "active" : ""
-                  }`}
-                onClick={() =>
-                  setActiveCategory(item.id)
-                }
+                className={`settings-category ${active ? "active" : ""}`}
+                aria-current={active ? "page" : undefined}
+                onClick={() => setActiveCategory(item.id)}
               >
-
                 <span className="settings-category-icon">
-                  <Icon
-                    size={16}
-                    strokeWidth={1.9}
-                  />
+                  <Icon size={16} strokeWidth={1.9} aria-hidden="true" />
                 </span>
 
                 <span className="settings-category-text">
                   <strong>{item.label}</strong>
-                  <small>
-                    {item.description}
-                  </small>
+                  <small>{item.description}</small>
                 </span>
 
                 {active && (
-                  <ChevronRight
-                    size={15}
-                    className="settings-category-arrow"
-                  />
+                  <ChevronRight size={15} className="settings-category-arrow" aria-hidden="true"/>
                 )}
-
               </button>
             );
           })}
-
         </nav>
 
       </aside>
 
 
       {/* =================================================
-                RIGHT SETTINGS WORKSPACE
-            ================================================= */}
+          RIGHT SETTINGS WORKSPACE
+      ================================================= */}
 
-      <main className="settings-main">
+      <div className="settings-content">
 
-        <div className="settings-main-header">
+        <main className="settings-main" ref={mainRef}>
 
-          <div className="settings-heading">
+          <div className="settings-main-header">
+            <div className="settings-heading">
+              <div className="settings-heading-icon">
+                <ActiveIcon size={20} aria-hidden="true" />
+              </div>
 
-            <div className="settings-heading-icon">
-              <ActiveIcon size={20} />
+              <div>
+                <h2>{activeItem.label}</h2>
+                <p>{activeItem.description}</p>
+              </div>
             </div>
-
-            <div>
-              <h2>
-                {
-                  SETTINGS_CATEGORIES.find(
-                    (item) =>
-                      item.id === activeCategory
-                  )?.label
-                }
-              </h2>
-
-              <p>
-                Configure how this part of your
-                dashboard behaves.
-              </p>
-            </div>
-
           </div>
 
-        </div>
+          <SettingsPage>
+            {SETTINGS_SCHEMA[activeCategory].map((card) => (
+              <SettingsCard
+                key={card.title}
+                title={card.title}
+                description={card.description}
+              >
+                {card.rows.map((row) => (
+                  <SettingRow
+                    key={row.key}
+                    item={row}
+                    value={settings[row.key]}
+                    disabled={row.disabled ? row.disabled(settings) : false}
+                    onChange={updateSetting}
+                  />
+                ))}
+              </SettingsCard>
+            ))}
+          </SettingsPage>
+
+        </main>
 
 
         {/* =================================================
-                    GENERAL
-                ================================================= */}
-
-        {activeCategory === "general" && (
-
-          <SettingsPage>
-
-            <SettingsCard
-              title="Startup"
-              description="Control what happens when you open the doctor dashboard."
-            >
-
-              <SelectRow
-                label="Default landing page"
-                description="Choose the page opened after login."
-                value={settings.defaultPage}
-                onChange={(value) =>
-                  updateSetting(
-                    "defaultPage",
-                    value
-                  )
-                }
-                options={[
-                  ["dashboard", "Dashboard"],
-                  ["schedule", "Schedule"],
-                  ["patients", "Patient Records"],
-                  ["queue", "Queue"],
-                  ["last", "Last opened page"],
-                ]}
-              />
-
-              <ToggleRow
-                label="Remember last opened page"
-                description="Return to the section you were using previously."
-                checked={settings.rememberLastPage}
-                onChange={(value) =>
-                  updateSetting(
-                    "rememberLastPage",
-                    value
-                  )
-                }
-              />
-
-            </SettingsCard>
-
-
-            <SettingsCard
-              title="Application Behavior"
-              description="Configure common dashboard interactions."
-            >
-
-              <ToggleRow
-                label="Auto-save"
-                description="Automatically save supported changes."
-                checked={settings.autoSave}
-                onChange={(value) =>
-                  updateSetting(
-                    "autoSave",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Confirm important actions"
-                description="Ask for confirmation before destructive or important actions."
-                checked={settings.confirmActions}
-                onChange={(value) =>
-                  updateSetting(
-                    "confirmActions",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Auto-refresh data"
-                description="Automatically refresh dashboard information."
-                checked={settings.autoRefresh}
-                onChange={(value) =>
-                  updateSetting(
-                    "autoRefresh",
-                    value
-                  )
-                }
-              />
-
-              <SelectRow
-                label="Refresh interval"
-                description="How frequently dashboard data should refresh."
-                value={settings.refreshInterval}
-                onChange={(value) =>
-                  updateSetting(
-                    "refreshInterval",
-                    value
-                  )
-                }
-                options={[
-                  ["15", "15 seconds"],
-                  ["30", "30 seconds"],
-                  ["60", "1 minute"],
-                  ["300", "5 minutes"],
-                  ["manual", "Manual"],
-                ]}
-              />
-
-            </SettingsCard>
-
-          </SettingsPage>
-        )}
-
-
-        {/* =================================================
-                    DASHBOARD
-                ================================================= */}
-
-        {activeCategory === "dashboard" && (
-
-          <SettingsPage>
-
-            <SettingsCard
-              title="Dashboard Layout"
-              description="Control the density and information shown on your dashboard."
-            >
-
-              <SelectRow
-                label="Dashboard density"
-                description="Choose how much information is displayed in each area."
-                value={settings.dashboardDensity}
-                onChange={(value) =>
-                  updateSetting(
-                    "dashboardDensity",
-                    value
-                  )
-                }
-                options={[
-                  ["compact", "Compact"],
-                  ["standard", "Standard"],
-                  ["comfortable", "Comfortable"],
-                ]}
-              />
-
-            </SettingsCard>
-
-
-            <SettingsCard
-              title="Dashboard Widgets"
-              description="Choose which widgets appear on your dashboard."
-            >
-
-              <ToggleRow
-                label="Today's appointments"
-                description="Display your current appointment summary."
-                checked={settings.showAppointments}
-                onChange={(value) =>
-                  updateSetting(
-                    "showAppointments",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Patient queue"
-                description="Display the current waiting queue."
-                checked={settings.showQueue}
-                onChange={(value) =>
-                  updateSetting(
-                    "showQueue",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Quick actions"
-                description="Display frequently used dashboard actions."
-                checked={settings.showQuickActions}
-                onChange={(value) =>
-                  updateSetting(
-                    "showQuickActions",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Notifications"
-                description="Display recent dashboard notifications."
-                checked={settings.showNotifications}
-                onChange={(value) =>
-                  updateSetting(
-                    "showNotifications",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Activity summary"
-                description="Display your recent activity."
-                checked={settings.showActivity}
-                onChange={(value) =>
-                  updateSetting(
-                    "showActivity",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Recent patients"
-                description="Display recently accessed patients."
-                checked={settings.showRecentPatients}
-                onChange={(value) =>
-                  updateSetting(
-                    "showRecentPatients",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Hospital notices"
-                description="Display important hospital announcements."
-                checked={settings.showHospitalNotices}
-                onChange={(value) =>
-                  updateSetting(
-                    "showHospitalNotices",
-                    value
-                  )
-                }
-              />
-
-            </SettingsCard>
-
-          </SettingsPage>
-        )}
-
-
-        {/* =================================================
-                    WORKSPACE
-                ================================================= */}
-
-        {activeCategory === "workspace" && (
-
-          <SettingsPage>
-
-            <SettingsCard
-              title="Workspace Mode"
-              description="Control the overall workspace layout."
-            >
-
-              <SelectRow
-                label="Workspace mode"
-                description="Choose the amount of space used by dashboard content."
-                value={settings.workspaceMode}
-                onChange={(value) =>
-                  updateSetting(
-                    "workspaceMode",
-                    value
-                  )
-                }
-                options={[
-                  ["compact", "Compact"],
-                  ["standard", "Standard"],
-                  ["focus", "Focus mode"],
-                  ["fullscreen", "Fullscreen"],
-                ]}
-              />
-
-              <ToggleRow
-                label="Sticky header"
-                description="Keep the workspace header visible while scrolling."
-                checked={settings.stickyHeader}
-                onChange={(value) =>
-                  updateSetting(
-                    "stickyHeader",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Preserve scroll position"
-                description="Restore your previous scroll position when returning to a section."
-                checked={settings.preserveScroll}
-                onChange={(value) =>
-                  updateSetting(
-                    "preserveScroll",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Resizable panels"
-                description="Allow workspace panels to be resized."
-                checked={settings.resizablePanels}
-                onChange={(value) =>
-                  updateSetting(
-                    "resizablePanels",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Remember panel sizes"
-                description="Remember your preferred panel dimensions."
-                checked={settings.rememberPanelSize}
-                onChange={(value) =>
-                  updateSetting(
-                    "rememberPanelSize",
-                    value
-                  )
-                }
-              />
-
-            </SettingsCard>
-
-          </SettingsPage>
-        )}
-
-
-        {/* =================================================
-                    NAVIGATION
-                ================================================= */}
-
-        {activeCategory === "navigation" && (
-
-          <SettingsPage>
-
-            <SettingsCard
-              title="Sidebar"
-              description="Configure how the Doctor Dashboard navigation behaves."
-            >
-
-              <SelectRow
-                label="Sidebar mode"
-                description="Choose the default sidebar state."
-                value={settings.sidebarMode}
-                onChange={(value) =>
-                  updateSetting(
-                    "sidebarMode",
-                    value
-                  )
-                }
-                options={[
-                  ["expanded", "Expanded"],
-                  ["collapsed", "Collapsed"],
-                  ["hover", "Expand on hover"],
-                ]}
-              />
-
-              <ToggleRow
-                label="Expand on hover"
-                description="Temporarily expand a collapsed sidebar when hovering over it."
-                checked={settings.expandOnHover}
-                onChange={(value) =>
-                  updateSetting(
-                    "expandOnHover",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show navigation labels"
-                description="Display text labels alongside navigation icons."
-                checked={settings.showLabels}
-                onChange={(value) =>
-                  updateSetting(
-                    "showLabels",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show notification badges"
-                description="Display unread counts and notification indicators."
-                checked={settings.showBadges}
-                onChange={(value) =>
-                  updateSetting(
-                    "showBadges",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show section headers"
-                description="Display Workspace, Care, Doctor Hub and other navigation groups."
-                checked={settings.showSectionHeaders}
-                onChange={(value) =>
-                  updateSetting(
-                    "showSectionHeaders",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Remember sidebar state"
-                description="Keep your expanded or collapsed preference."
-                checked={settings.rememberSidebar}
-                onChange={(value) =>
-                  updateSetting(
-                    "rememberSidebar",
-                    value
-                  )
-                }
-              />
-
-            </SettingsCard>
-
-          </SettingsPage>
-        )}
-
-
-        {/* =================================================
-                    SCHEDULE
-                ================================================= */}
-
-        {activeCategory === "schedule" && (
-
-          <SettingsPage>
-
-            <SettingsCard
-              title="Calendar"
-              description="Configure your default schedule and calendar behavior."
-            >
-
-              <SelectRow
-                label="Default calendar view"
-                description="Choose the view shown when opening Schedule."
-                value={settings.calendarView}
-                onChange={(value) =>
-                  updateSetting(
-                    "calendarView",
-                    value
-                  )
-                }
-                options={[
-                  ["day", "Day"],
-                  ["week", "Week"],
-                  ["month", "Month"],
-                  ["agenda", "Agenda"],
-                ]}
-              />
-
-              <SelectRow
-                label="Time slot duration"
-                description="Choose the size of appointment blocks."
-                value={settings.slotDuration}
-                onChange={(value) =>
-                  updateSetting(
-                    "slotDuration",
-                    value
-                  )
-                }
-                options={[
-                  ["15", "15 minutes"],
-                  ["30", "30 minutes"],
-                  ["60", "60 minutes"],
-                ]}
-              />
-
-              <ToggleRow
-                label="Snap to time slots"
-                description="Align dragged appointments to calendar intervals."
-                checked={settings.snapToSlot}
-                onChange={(value) =>
-                  updateSetting(
-                    "snapToSlot",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Highlight today"
-                description="Visually emphasize today's column."
-                checked={settings.highlightToday}
-                onChange={(value) =>
-                  updateSetting(
-                    "highlightToday",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show vacant slots"
-                description="Display available appointment slots."
-                checked={settings.showVacantSlots}
-                onChange={(value) =>
-                  updateSetting(
-                    "showVacantSlots",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show past appointments"
-                description="Display completed appointments in the calendar."
-                checked={settings.showPastAppointments}
-                onChange={(value) =>
-                  updateSetting(
-                    "showPastAppointments",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show unavailable periods"
-                description="Display blocked or unavailable time."
-                checked={settings.showUnavailable}
-                onChange={(value) =>
-                  updateSetting(
-                    "showUnavailable",
-                    value
-                  )
-                }
-              />
-
-            </SettingsCard>
-
-          </SettingsPage>
-        )}
-
-
-        {/* =================================================
-                    APPOINTMENTS
-                ================================================= */}
-
-        {activeCategory === "appointments" && (
-
-          <SettingsPage>
-
-            <SettingsCard
-              title="Appointment Defaults"
-              description="Choose your preferred appointment behavior."
-            >
-
-              <SelectRow
-                label="Default duration"
-                description="Default duration when creating a new appointment."
-                value={settings.defaultAppointmentDuration}
-                onChange={(value) =>
-                  updateSetting(
-                    "defaultAppointmentDuration",
-                    value
-                  )
-                }
-                options={[
-                  ["15", "15 minutes"],
-                  ["30", "30 minutes"],
-                  ["45", "45 minutes"],
-                  ["60", "60 minutes"],
-                ]}
-              />
-
-              <SelectRow
-                label="Default appointment type"
-                description="Appointment type selected by default."
-                value={settings.defaultAppointmentType}
-                onChange={(value) =>
-                  updateSetting(
-                    "defaultAppointmentType",
-                    value
-                  )
-                }
-                options={[
-                  ["consultation", "Consultation"],
-                  ["followup", "Follow-up"],
-                  ["online", "Online"],
-                  ["emergency", "Emergency"],
-                ]}
-              />
-
-            </SettingsCard>
-
-
-            <SettingsCard
-              title="Appointment Interaction"
-              description="Control how appointments behave in Schedule."
-            >
-
-              <ToggleRow
-                label="Confirm before cancellation"
-                description="Ask for confirmation before cancelling an appointment."
-                checked={settings.confirmCancellation}
-                onChange={(value) =>
-                  updateSetting(
-                    "confirmCancellation",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Drag to reschedule"
-                description="Allow appointments to be moved by dragging them."
-                checked={settings.enableDragReschedule}
-                onChange={(value) =>
-                  updateSetting(
-                    "enableDragReschedule",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show patient name"
-                description="Display patient names directly inside appointment cards."
-                checked={settings.showPatientName}
-                onChange={(value) =>
-                  updateSetting(
-                    "showPatientName",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show appointment status"
-                description="Display status indicators inside appointment cards."
-                checked={settings.showAppointmentStatus}
-                onChange={(value) =>
-                  updateSetting(
-                    "showAppointmentStatus",
-                    value
-                  )
-                }
-              />
-
-            </SettingsCard>
-
-          </SettingsPage>
-        )}
-
-
-        {/* =================================================
-                    CLINICAL WORKFLOW
-                ================================================= */}
-
-        {activeCategory === "clinical" && (
-
-          <SettingsPage>
-
-            <SettingsCard
-              title="Clinical Workspace"
-              description="Configure your consultation workspace."
-            >
-
-              <ToggleRow
-                label="Auto-save clinical notes"
-                description="Automatically save notes while you are working."
-                checked={settings.autoSaveNotes}
-                onChange={(value) =>
-                  updateSetting(
-                    "autoSaveNotes",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show patient vitals"
-                description="Display the latest patient vitals during consultation."
-                checked={settings.showVitals}
-                onChange={(value) =>
-                  updateSetting(
-                    "showVitals",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show allergies"
-                description="Keep known allergies visible during consultation."
-                checked={settings.showAllergies}
-                onChange={(value) =>
-                  updateSetting(
-                    "showAllergies",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show medical history"
-                description="Display relevant medical history in the clinical workspace."
-                checked={settings.showMedicalHistory}
-                onChange={(value) =>
-                  updateSetting(
-                    "showMedicalHistory",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show previous notes"
-                description="Display previous consultation notes."
-                checked={settings.showPreviousNotes}
-                onChange={(value) =>
-                  updateSetting(
-                    "showPreviousNotes",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Show recent reports"
-                description="Display recent laboratory and diagnostic reports."
-                checked={settings.showRecentReports}
-                onChange={(value) =>
-                  updateSetting(
-                    "showRecentReports",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Auto-create visit"
-                description="Automatically create a visit record when consultation begins."
-                checked={settings.autoCreateVisit}
-                onChange={(value) =>
-                  updateSetting(
-                    "autoCreateVisit",
-                    value
-                  )
-                }
-              />
-
-            </SettingsCard>
-
-          </SettingsPage>
-        )}
-
-
-        {/* =================================================
-                    NOTIFICATIONS
-                ================================================= */}
-
-        {activeCategory === "notifications" && (
-
-          <SettingsPage>
-
-            <SettingsCard
-              title="Notification Types"
-              description="Choose which dashboard events should notify you."
-            >
-
-              <ToggleRow
-                label="Appointment alerts"
-                description="Upcoming appointments, cancellations and changes."
-                checked={settings.appointmentAlerts}
-                onChange={(value) =>
-                  updateSetting(
-                    "appointmentAlerts",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Patient updates"
-                description="Important updates related to your patients."
-                checked={settings.patientUpdates}
-                onChange={(value) =>
-                  updateSetting(
-                    "patientUpdates",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Lab alerts"
-                description="Notify when new or critical lab results are available."
-                checked={settings.labAlerts}
-                onChange={(value) =>
-                  updateSetting(
-                    "labAlerts",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Message alerts"
-                description="Notify when new messages or communication arrive."
-                checked={settings.messageAlerts}
-                onChange={(value) =>
-                  updateSetting(
-                    "messageAlerts",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Hospital alerts"
-                description="Important hospital-wide notices and announcements."
-                checked={settings.hospitalAlerts}
-                onChange={(value) =>
-                  updateSetting(
-                    "hospitalAlerts",
-                    value
-                  )
-                }
-              />
-
-            </SettingsCard>
-
-
-            <SettingsCard
-              title="Notification Display"
-              description="Control how notifications appear."
-            >
-
-              <ToggleRow
-                label="In-app notifications"
-                description="Show notifications inside the dashboard."
-                checked={settings.inAppNotifications}
-                onChange={(value) =>
-                  updateSetting(
-                    "inAppNotifications",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Sound alerts"
-                description="Play a sound when an important notification arrives."
-                checked={settings.soundAlerts}
-                onChange={(value) =>
-                  updateSetting(
-                    "soundAlerts",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Notification badges"
-                description="Display unread counts on navigation items."
-                checked={settings.notificationBadges}
-                onChange={(value) =>
-                  updateSetting(
-                    "notificationBadges",
-                    value
-                  )
-                }
-              />
-
-            </SettingsCard>
-
-          </SettingsPage>
-        )}
-
-
-        {/* =================================================
-                    APPEARANCE
-                ================================================= */}
-
-        {activeCategory === "appearance" && (
-
-          <SettingsPage>
-
-            <SettingsCard
-              title="Theme"
-              description="Choose how your dashboard looks."
-            >
-
-              <SelectRow
-                label="Theme"
-                description="Select your preferred interface theme."
-                value={settings.theme}
-                onChange={(value) =>
-                  updateSetting(
-                    "theme",
-                    value
-                  )
-                }
-                options={[
-                  ["light", "Light"],
-                  ["dark", "Dark"],
-                  ["system", "System default"],
-                ]}
-              />
-
-              <SelectRow
-                label="Interface density"
-                description="Control the amount of information shown on screen."
-                value={settings.interfaceDensity}
-                onChange={(value) =>
-                  updateSetting(
-                    "interfaceDensity",
-                    value
-                  )
-                }
-                options={[
-                  ["compact", "Compact"],
-                  ["standard", "Standard"],
-                  ["comfortable", "Comfortable"],
-                ]}
-              />
-
-            </SettingsCard>
-
-
-            <SettingsCard
-              title="Visual Effects"
-              description="Control visual elements and animations."
-            >
-
-              <ToggleRow
-                label="Card shadows"
-                description="Display subtle shadows around dashboard cards."
-                checked={settings.showCardShadows}
-                onChange={(value) =>
-                  updateSetting(
-                    "showCardShadows",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Rounded cards"
-                description="Use rounded corners throughout the dashboard."
-                checked={settings.roundedCards}
-                onChange={(value) =>
-                  updateSetting(
-                    "roundedCards",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Animations"
-                description="Enable interface transitions and animations."
-                checked={settings.animations}
-                onChange={(value) =>
-                  updateSetting(
-                    "animations",
-                    value
-                  )
-                }
-              />
-
-            </SettingsCard>
-
-          </SettingsPage>
-        )}
-
-
-        {/* =================================================
-                    ACCESSIBILITY
-                ================================================= */}
-
-        {activeCategory === "accessibility" && (
-
-          <SettingsPage>
-
-            <SettingsCard
-              title="Accessibility"
-              description="Adjust the interface to make the dashboard easier to use."
-            >
-
-              <ToggleRow
-                label="High contrast"
-                description="Increase visual contrast between interface elements."
-                checked={settings.highContrast}
-                onChange={(value) =>
-                  updateSetting(
-                    "highContrast",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Reduce motion"
-                description="Reduce interface animations and transitions."
-                checked={settings.reduceMotion}
-                onChange={(value) =>
-                  updateSetting(
-                    "reduceMotion",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Larger text"
-                description="Increase the default interface text size."
-                checked={settings.largerText}
-                onChange={(value) =>
-                  updateSetting(
-                    "largerText",
-                    value
-                  )
-                }
-              />
-
-              <ToggleRow
-                label="Enhanced focus indicators"
-                description="Make keyboard focus states easier to identify."
-                checked={settings.enhancedFocus}
-                onChange={(value) =>
-                  updateSetting(
-                    "enhancedFocus",
-                    value
-                  )
-                }
-              />
-
-            </SettingsCard>
-
-          </SettingsPage>
-        )}
-
-      </main>
-
-
-      {/* =================================================
-                FOOTER
-            ================================================= */}
-
-      <div className="settings-footer">
-
-        <button
-          type="button"
-          className="settings-reset-btn"
-          onClick={resetSettings}
-        >
-          <RotateCcw size={14} />
-          Reset
-        </button>
-
-        <button
-          type="button"
-          className="settings-save-btn"
-          onClick={saveSettings}
-        >
-          <Save size={14} />
-          Save Changes
-        </button>
+            FOOTER
+        ================================================= */}
+
+        <footer className="settings-footer">
+
+          <span
+            className="settings-status"
+            role="status"
+            aria-live="polite"
+          >
+            {status}
+          </span>
+
+          <button
+            type="button"
+            className="settings-reset-btn"
+            onClick={resetSettings}
+          >
+            <RotateCcw size={14} aria-hidden="true" />
+            Reset to defaults
+          </button>
+
+          <button
+            type="button"
+            className="settings-save-btn"
+            onClick={saveSettings}
+            disabled={!isDirty}
+          >
+            <Save size={14} aria-hidden="true" />
+            Save changes
+          </button>
+
+        </footer>
 
       </div>
 

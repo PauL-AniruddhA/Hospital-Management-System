@@ -57,7 +57,7 @@ const DOCTOR = {
 
 
 /* =========================================
-   HELPERS
+   HELPER (real function - has logic)
 ========================================= */
 
 function getInitials(name) {
@@ -79,87 +79,50 @@ function getInitials(name) {
 export default function Profile() {
 
     const [activeTab, setActiveTab] = useState("overview");
-
     const doctor = DOCTOR;
 
     return (
         <div className="staff-profile">
 
-            {/* =========================================
-                COVER
-            ========================================= */}
-
+            {/* COVER */}
             <div className="staff-profile-cover">
-
                 <div className="staff-cover-pattern" />
-
                 <button
                     type="button"
                     className="staff-profile-edit"
-                    onClick={() =>
-                        console.log("Edit profile")
-                    }
+                    onClick={() => console.log("Edit profile")}
                 >
-                    <Camera size={14} />
-                    Edit Profile
+                    <Camera size={14} /> Edit Profile
                 </button>
-
             </div>
 
 
-            {/* =========================================
-                IDENTITY
-            ========================================= */}
-
+            {/* IDENTITY */}
             <section className="staff-profile-identity">
-
                 <div className="staff-avatar-wrapper">
-
                     <div className="staff-avatar">
                         {getInitials(doctor.name)}
                     </div>
-
-                    <span
-                        className="staff-online"
-                        title="Online"
-                    />
-
+                    <span className="staff-online" title="Online" />
                 </div>
 
-
                 <div className="staff-identity-main">
-
                     <div className="staff-name-row">
-
-                        <h1>
-                            {doctor.name}
-                        </h1>
-
+                        <h1>{doctor.name}</h1>
                         {doctor.verified && (
-                            <span
-                                className="staff-verified"
-                                title="Verified Doctor"
-                            >
+                            <span className="staff-verified" title="Verified Doctor">
                                 <BadgeCheck size={15} />
                             </span>
                         )}
-
                     </div>
-
 
                     <p className="staff-designation">
                         {doctor.designation}
-
-                        <span className="staff-identity-dot">
-                            •
-                        </span>
-
+                        <span className="staff-identity-dot"> •</span>
                         {doctor.qualification}
                     </p>
 
-
                     <div className="staff-tags">
-
                         <span className="staff-tag primary">
                             <BriefcaseMedical size={13} />
                             Doctor
@@ -173,73 +136,58 @@ export default function Profile() {
                             <Building2 size={13} />
                             {doctor.department}
                         </span>
+                    </div>
+                </div>
 
+                {/* STATS */}
+                {/* <div className="staff-stats">
+                    <div className="staff-stat-card">
+                        <div className="staff-stat-icon">
+                            <CalendarDays size={14} />
+                        </div>
+                        <strong>{doctor.appointmentsThisMonth}</strong>
+                        <span>Appointments</span>
+                        <small>This Month</small>
                     </div>
 
-                </div>
-
-
-                <div className="staff-stats">
-
-                    <StatCard
-                        icon={CalendarDays}
-                        value={doctor.appointmentsThisMonth}
-                        label="Appointments"
-                        sub="This Month"
-                    />
-
-                    <StatCard
-                        icon={Users}
-                        tone="success"
-                        value={doctor.totalPatients}
-                        label="Patients"
-                        sub="Total"
-                    />
-
-                </div>
-
+                    <div className="staff-stat-card">
+                        <div className="staff-stat-icon success">
+                            <Users size={14} />
+                        </div>
+                        <strong>{doctor.totalPatients}</strong>
+                        <span>Patients</span>
+                        <small>Total</small>
+                    </div>
+                </div> */}
             </section>
 
 
-            {/* =========================================
-                CONTACT STRIP
-            ========================================= */}
+            {/* CONTACT STRIP */}
+            {/* <div className="staff-profile-contact-strip">
+                <div className="staff-contact-strip-item" title="Email">
+                    <Mail size={15} />
+                    <span>{doctor.email}</span>
+                </div>
 
-            <div className="staff-profile-contact-strip">
+                <div className="staff-contact-strip-item" title="Phone">
+                    <Phone size={15} />
+                    <span>{doctor.phone}</span>
+                </div>
 
-                <ContactItem
-                    icon={Mail}
-                    label="Email"
-                    value={doctor.email}
-                />
+                <div className="staff-contact-strip-item" title="Location">
+                    <MapPin size={15} />
+                    <span>{doctor.location}</span>
+                </div>
 
-                <ContactItem
-                    icon={Phone}
-                    label="Phone"
-                    value={doctor.phone}
-                />
-
-                <ContactItem
-                    icon={MapPin}
-                    label="Location"
-                    value={doctor.location}
-                />
-
-                <ContactItem
-                    icon={CalendarDays}
-                    label="Joined"
-                    value={`Joined ${doctor.joiningDate}`}
-                />
-
-            </div>
+                <div className="staff-contact-strip-item" title="Joined">
+                    <CalendarDays size={15} />
+                    <span>Joined {doctor.joiningDate}</span>
+                </div>
+            </div> */}
 
 
-            {/* =========================================
-                TABS
-            ========================================= */}
-
+            {/* TABS */}
             <nav className="staff-profile-tabs">
-
                 <button
                     type="button"
                     className={
@@ -247,14 +195,11 @@ export default function Profile() {
                             ? "staff-profile-tab active"
                             : "staff-profile-tab"
                     }
-                    onClick={() =>
-                        setActiveTab("overview")
-                    }
+                    onClick={() => setActiveTab("overview")}
                 >
                     <UserRound size={15} />
                     Overview
                 </button>
-
 
                 <button
                     type="button"
@@ -263,14 +208,11 @@ export default function Profile() {
                             ? "staff-profile-tab active"
                             : "staff-profile-tab"
                     }
-                    onClick={() =>
-                        setActiveTab("professional")
-                    }
+                    onClick={() => setActiveTab("professional")}
                 >
                     <Stethoscope size={15} />
                     Professional
                 </button>
-
 
                 <button
                     type="button"
@@ -279,484 +221,287 @@ export default function Profile() {
                             ? "staff-profile-tab active"
                             : "staff-profile-tab"
                     }
-                    onClick={() =>
-                        setActiveTab("contact")
-                    }
+                    onClick={() => setActiveTab("contact")}
                 >
                     <Phone size={15} />
                     Contact
                 </button>
-
             </nav>
 
 
-            {/* =========================================
-                TAB CONTENT
-            ========================================= */}
-
+            {/* TAB CONTENT */}
             <div className="staff-profile-content">
 
+                {/* ================= OVERVIEW ================= */}
                 {activeTab === "overview" && (
-                    <Overview doctor={doctor} />
+                    <div className="staff-profile-overview">
+
+                        {/* Basic Information */}
+                        <section className="staff-profile-card">
+                            <div className="staff-profile-card-header">
+                                <div className="staff-profile-card-icon">
+                                    <UserRound size={17} />
+                                </div>
+                                <div>
+                                    <h2>Basic Information</h2>
+                                    <p>Personal and hospital identification details.</p>
+                                </div>
+                            </div>
+
+                            <div className="staff-profile-info-grid">
+                                <div className="staff-profile-info-item">
+                                    <span>Full Name</span>
+                                    <strong>{doctor.name}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Role</span>
+                                    <strong>Doctor</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Employee ID</span>
+                                    <strong>{doctor.employeeId}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Department</span>
+                                    <strong>{doctor.department}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Specialization</span>
+                                    <strong>{doctor.specialization}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Qualification</span>
+                                    <strong>{doctor.qualification}</strong>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* Professional Summary */}
+                        <section className="staff-profile-card">
+                            <div className="staff-profile-card-header">
+                                <div className="staff-profile-card-icon">
+                                    <Stethoscope size={17} />
+                                </div>
+                                <div>
+                                    <h2>Professional Summary</h2>
+                                    <p>Current clinical role and experience.</p>
+                                </div>
+                            </div>
+
+                            <div className="staff-professional-summary">
+                                <div className="staff-summary-item">
+                                    <div className="staff-summary-icon">
+                                        <Award size={16} />
+                                    </div>
+                                    <div>
+                                        <span>Experience</span>
+                                        <strong>{doctor.experience}</strong>
+                                    </div>
+                                </div>
+
+                                <div className="staff-summary-item">
+                                    <div className="staff-summary-icon">
+                                        <GraduationCap size={16} />
+                                    </div>
+                                    <div>
+                                        <span>Medical College</span>
+                                        <strong>{doctor.medicalCollege}</strong>
+                                    </div>
+                                </div>
+
+                                <div className="staff-summary-item">
+                                    <div className="staff-summary-icon">
+                                        <BriefcaseMedical size={16} />
+                                    </div>
+                                    <div>
+                                        <span>License Number</span>
+                                        <strong>{doctor.licenseNumber}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* About */}
+                        <section className="staff-profile-card">
+                            <div className="staff-profile-card-header">
+                                <div className="staff-profile-card-icon">
+                                    <UserRound size={17} />
+                                </div>
+                                <div>
+                                    <h2>About</h2>
+                                    <p>Professional introduction.</p>
+                                </div>
+                            </div>
+
+                            <p className="staff-profile-bio">{doctor.bio}</p>
+                        </section>
+                    </div>
                 )}
 
+
+                {/* ================= PROFESSIONAL ================= */}
                 {activeTab === "professional" && (
-                    <Professional doctor={doctor} />
+                    <div className="staff-profile-overview">
+
+                        {/* Professional Information */}
+                        <section className="staff-profile-card">
+                            <div className="staff-profile-card-header">
+                                <div className="staff-profile-card-icon">
+                                    <Stethoscope size={17} />
+                                </div>
+                                <div>
+                                    <h2>Professional Information</h2>
+                                    <p>Clinical and employment information.</p>
+                                </div>
+                            </div>
+
+                            <div className="staff-profile-info-grid">
+                                <div className="staff-profile-info-item">
+                                    <span>Designation</span>
+                                    <strong>{doctor.designation}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Specialization</span>
+                                    <strong>{doctor.specialization}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Department</span>
+                                    <strong>{doctor.department}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Qualification</span>
+                                    <strong>{doctor.qualification}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Experience</span>
+                                    <strong>{doctor.experience}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>License Number</span>
+                                    <strong>{doctor.licenseNumber}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Medical College</span>
+                                    <strong>{doctor.medicalCollege}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Languages</span>
+                                    <strong>{doctor.languages}</strong>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* Clinical Availability */}
+                        <section className="staff-profile-card">
+                            <div className="staff-profile-card-header">
+                                <div className="staff-profile-card-icon">
+                                    <Clock3 size={17} />
+                                </div>
+                                <div>
+                                    <h2>Clinical Availability</h2>
+                                    <p>Regular consultation schedule.</p>
+                                </div>
+                            </div>
+
+                            <div className="staff-availability-grid">
+                                <div className="staff-availability-item">
+                                    <span>Working Days</span>
+                                    <strong>{doctor.workingDays}</strong>
+                                </div>
+                                <div className="staff-availability-item">
+                                    <span>Consultation Hours</span>
+                                    <strong>{doctor.consultationHours}</strong>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
                 )}
 
+
+                {/* ================= CONTACT ================= */}
                 {activeTab === "contact" && (
-                    <Contact doctor={doctor} />
+                    <div className="staff-profile-overview">
+
+                        {/* Contact Information */}
+                        <section className="staff-profile-card">
+                            <div className="staff-profile-card-header">
+                                <div className="staff-profile-card-icon">
+                                    <Mail size={17} />
+                                </div>
+                                <div>
+                                    <h2>Contact Information</h2>
+                                    <p>Contact details associated with your hospital profile.</p>
+                                </div>
+                            </div>
+
+                            <div className="staff-contact-detail-grid">
+                                <div className="staff-contact-detail">
+                                    <div className="staff-contact-detail-icon">
+                                        <Mail size={17} />
+                                    </div>
+                                    <div>
+                                        <span>Email Address</span>
+                                        <strong>{doctor.email}</strong>
+                                    </div>
+                                </div>
+
+                                <div className="staff-contact-detail">
+                                    <div className="staff-contact-detail-icon">
+                                        <Phone size={17} />
+                                    </div>
+                                    <div>
+                                        <span>Phone Number</span>
+                                        <strong>{doctor.phone}</strong>
+                                    </div>
+                                </div>
+
+                                <div className="staff-contact-detail">
+                                    <div className="staff-contact-detail-icon">
+                                        <MapPin size={17} />
+                                    </div>
+                                    <div>
+                                        <span>Location</span>
+                                        <strong>{doctor.location}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* Hospital Information */}
+                        <section className="staff-profile-card">
+                            <div className="staff-profile-card-header">
+                                <div className="staff-profile-card-icon">
+                                    <CalendarDays size={17} />
+                                </div>
+                                <div>
+                                    <h2>Hospital Information</h2>
+                                    <p>Employment details.</p>
+                                </div>
+                            </div>
+
+                            <div className="staff-profile-info-grid">
+                                <div className="staff-profile-info-item">
+                                    <span>Employee ID</span>
+                                    <strong>{doctor.employeeId}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Department</span>
+                                    <strong>{doctor.department}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Joining Date</span>
+                                    <strong>{doctor.joiningDate}</strong>
+                                </div>
+                                <div className="staff-profile-info-item">
+                                    <span>Role</span>
+                                    <strong>Doctor</strong>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
                 )}
 
             </div>
-
-        </div>
-    );
-}
-
-
-/* =========================================
-   OVERVIEW
-========================================= */
-
-function Overview({ doctor }) {
-
-    return (
-        <div className="staff-profile-overview">
-
-            {/* BASIC INFORMATION */}
-
-            <section className="staff-profile-card">
-
-                <CardHeader
-                    icon={UserRound}
-                    title="Basic Information"
-                    subtitle="Personal and hospital identification details."
-                />
-
-
-                <div className="staff-profile-info-grid">
-
-                    <InfoItem
-                        label="Full Name"
-                        value={doctor.name}
-                    />
-
-                    <InfoItem
-                        label="Role"
-                        value="Doctor"
-                    />
-
-                    <InfoItem
-                        label="Employee ID"
-                        value={doctor.employeeId}
-                    />
-
-                    <InfoItem
-                        label="Department"
-                        value={doctor.department}
-                    />
-
-                    <InfoItem
-                        label="Specialization"
-                        value={doctor.specialization}
-                    />
-
-                    <InfoItem
-                        label="Qualification"
-                        value={doctor.qualification}
-                    />
-
-                </div>
-
-            </section>
-
-
-            {/* PROFESSIONAL SUMMARY */}
-
-            <section className="staff-profile-card">
-
-                <CardHeader
-                    icon={Stethoscope}
-                    title="Professional Summary"
-                    subtitle="Current clinical role and experience."
-                />
-
-
-                <div className="staff-professional-summary">
-
-                    <SummaryItem
-                        icon={Award}
-                        label="Experience"
-                        value={doctor.experience}
-                    />
-
-                    <SummaryItem
-                        icon={GraduationCap}
-                        label="Medical College"
-                        value={doctor.medicalCollege}
-                    />
-
-                    <SummaryItem
-                        icon={BriefcaseMedical}
-                        label="License Number"
-                        value={doctor.licenseNumber}
-                    />
-
-                </div>
-
-            </section>
-
-
-            {/* ABOUT */}
-
-            <section className="staff-profile-card">
-
-                <CardHeader
-                    icon={UserRound}
-                    title="About"
-                    subtitle="Professional introduction."
-                />
-
-                <p className="staff-profile-bio">
-                    {doctor.bio}
-                </p>
-
-            </section>
-
-        </div>
-    );
-}
-
-
-/* =========================================
-   PROFESSIONAL
-========================================= */
-
-function Professional({ doctor }) {
-
-    return (
-        <div className="staff-profile-overview">
-
-            <section className="staff-profile-card">
-
-                <CardHeader
-                    icon={Stethoscope}
-                    title="Professional Information"
-                    subtitle="Clinical and employment information."
-                />
-
-                <div className="staff-profile-info-grid">
-
-                    <InfoItem
-                        label="Designation"
-                        value={doctor.designation}
-                    />
-
-                    <InfoItem
-                        label="Specialization"
-                        value={doctor.specialization}
-                    />
-
-                    <InfoItem
-                        label="Department"
-                        value={doctor.department}
-                    />
-
-                    <InfoItem
-                        label="Qualification"
-                        value={doctor.qualification}
-                    />
-
-                    <InfoItem
-                        label="Experience"
-                        value={doctor.experience}
-                    />
-
-                    <InfoItem
-                        label="License Number"
-                        value={doctor.licenseNumber}
-                    />
-
-                    <InfoItem
-                        label="Medical College"
-                        value={doctor.medicalCollege}
-                    />
-
-                    <InfoItem
-                        label="Languages"
-                        value={doctor.languages}
-                    />
-
-                </div>
-
-            </section>
-
-
-            <section className="staff-profile-card">
-
-                <CardHeader
-                    icon={Clock3}
-                    title="Clinical Availability"
-                    subtitle="Regular consultation schedule."
-                />
-
-                <div className="staff-availability-grid">
-
-                    <div className="staff-availability-item">
-
-                        <span>
-                            Working Days
-                        </span>
-
-                        <strong>
-                            {doctor.workingDays}
-                        </strong>
-
-                    </div>
-
-
-                    <div className="staff-availability-item">
-
-                        <span>
-                            Consultation Hours
-                        </span>
-
-                        <strong>
-                            {doctor.consultationHours}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-        </div>
-    );
-}
-
-
-/* =========================================
-   CONTACT
-========================================= */
-
-function Contact({ doctor }) {
-
-    return (
-        <div className="staff-profile-overview">
-
-            <section className="staff-profile-card">
-
-                <CardHeader
-                    icon={Mail}
-                    title="Contact Information"
-                    subtitle="Contact details associated with your hospital profile."
-                />
-
-                <div className="staff-contact-detail-grid">
-
-                    <ContactDetail
-                        icon={Mail}
-                        label="Email Address"
-                        value={doctor.email}
-                    />
-
-                    <ContactDetail
-                        icon={Phone}
-                        label="Phone Number"
-                        value={doctor.phone}
-                    />
-
-                    <ContactDetail
-                        icon={MapPin}
-                        label="Location"
-                        value={doctor.location}
-                    />
-
-                </div>
-
-            </section>
-
-
-            <section className="staff-profile-card">
-
-                <CardHeader
-                    icon={CalendarDays}
-                    title="Hospital Information"
-                    subtitle="Employment details."
-                />
-
-                <div className="staff-profile-info-grid">
-
-                    <InfoItem
-                        label="Employee ID"
-                        value={doctor.employeeId}
-                    />
-
-                    <InfoItem
-                        label="Department"
-                        value={doctor.department}
-                    />
-
-                    <InfoItem
-                        label="Joining Date"
-                        value={doctor.joiningDate}
-                    />
-
-                    <InfoItem
-                        label="Role"
-                        value="Doctor"
-                    />
-
-                </div>
-
-            </section>
-
-        </div>
-    );
-}
-
-
-/* =========================================
-   REUSABLE COMPONENTS
-========================================= */
-
-function CardHeader({
-    icon: Icon,
-    title,
-    subtitle,
-}) {
-    return (
-        <div className="staff-profile-card-header">
-
-            <div className="staff-profile-card-icon">
-                <Icon size={17} />
-            </div>
-
-            <div>
-                <h2>{title}</h2>
-
-                <p>
-                    {subtitle}
-                </p>
-            </div>
-
-        </div>
-    );
-}
-
-
-function InfoItem({
-    label,
-    value,
-}) {
-    return (
-        <div className="staff-profile-info-item">
-
-            <span>
-                {label}
-            </span>
-
-            <strong>
-                {value}
-            </strong>
-
-        </div>
-    );
-}
-
-
-function SummaryItem({
-    icon: Icon,
-    label,
-    value,
-}) {
-    return (
-        <div className="staff-summary-item">
-
-            <div className="staff-summary-icon">
-                <Icon size={16} />
-            </div>
-
-            <div>
-                <span>{label}</span>
-                <strong>{value}</strong>
-            </div>
-
-        </div>
-    );
-}
-
-
-function ContactItem({
-    icon: Icon,
-    label,
-    value,
-}) {
-    return (
-        <div
-            className="staff-contact-strip-item"
-            title={label}
-        >
-
-            <Icon size={15} />
-
-            <span>{value}</span>
-
-        </div>
-    );
-}
-
-
-function StatCard({
-    icon: Icon,
-    tone,
-    value,
-    label,
-    sub,
-}) {
-    return (
-        <div className="staff-stat-card">
-
-            <div
-                className={
-                    tone
-                        ? `staff-stat-icon ${tone}`
-                        : "staff-stat-icon"
-                }
-            >
-                <Icon size={14} />
-            </div>
-
-            <strong>{value}</strong>
-
-            <span>{label}</span>
-
-            <small>{sub}</small>
-
-        </div>
-    );
-}
-
-
-function ContactDetail({
-    icon: Icon,
-    label,
-    value,
-}) {
-    return (
-        <div className="staff-contact-detail">
-
-            <div className="staff-contact-detail-icon">
-                <Icon size={17} />
-            </div>
-
-            <div>
-                <span>{label}</span>
-                <strong>{value}</strong>
-            </div>
-
         </div>
     );
 }

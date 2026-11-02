@@ -3,13 +3,88 @@ import "../../../styles/Public/footer.css";
 import { TfiEmail } from "react-icons/tfi";
 import { MdEmail } from "react-icons/md";
 
-const FOOTER_LINKS = {
+const FULL_FOOTER_LINKS = {
   Services: ["Cardiology", "Neurology", "Orthopedics", "Pediatrics", "Oncology", "Ophthalmology"],
   "Patient Portal": ["Book Appointment", "View Reports", "Billing", "Medical Records", "Pharmacy", "Insurance"],
   Hospital: ["About Us", "Our Doctors", "Careers", "News & Events", "Research", "CSR"],
 };
 
-export default function Footer() {
+// const COMPACT_FOOTER_LINKS = [
+//   { label: "Departments", href: "/departments" },
+//   { label: "Our Doctors", href: "/doctors" },
+//   { label: "Contact", href: "/contact" },
+//   { label: "Privacy", href: "/privacy" },
+//   { label: "Help Center", href: "/help" },
+// ];
+
+// function CompactFooter() {
+//   return (
+//     <footer className="ams-footer">
+//       <div className="ams-footer__inner">
+//         {/* Brand */}
+//         <div className="ams-footer__brand">
+//           {/* <img
+//             className="ams-footer__logo"
+//             src="/assets/ams-logo.png" 
+//             alt="AMS Hospital logo"
+//           /> */}
+//           <div className="ams-footer__brand-text">
+//             <h3 className="ams-footer__name">AMS Hospital</h3>
+//             <p className="ams-footer__tagline">Care • Compassion • Excellence</p>
+//           </div>
+//         </div>
+
+//         <span className="ams-footer__divider" aria-hidden="true" />
+
+//         {/* Links */}
+//         <nav className="ams-footer__nav" aria-label="Footer">
+//           {COMPACT_FOOTER_LINKS.map((l) => (
+//             <a key={l.label} href={l.href} className="ams-footer__link">
+//               {l.label}
+//             </a>
+//           ))}
+//         </nav>
+
+//         <span className="ams-footer__divider" aria-hidden="true" />
+
+//         {/* Right side */}
+//         <div className="ams-footer__meta">
+//           <span className="ams-footer__copy">© 2026 AMS Hospital</span>
+//           <span className="ams-footer__divider ams-footer__divider--short" aria-hidden="true" />
+//           <span className="ams-footer__secure">
+//             <svg
+//               className="ams-footer__shield"
+//               viewBox="0 0 24 24"
+//               width="20"
+//               height="20"
+//               fill="none"
+//               stroke="currentColor"
+//               strokeWidth="1.6"
+//               strokeLinecap="round"
+//               strokeLinejoin="round"
+//               aria-hidden="true"
+//             >
+//               <path d="M12 2.5 4.5 5.5v6c0 4.7 3.1 8.6 7.5 10 4.4-1.4 7.5-5.3 7.5-10v-6L12 2.5Z" />
+//               <path d="m8.6 12.2 2.4 2.4 4.4-4.6" />
+//             </svg>
+//             Secure Patient Portal
+//           </span>
+//         </div>
+//       </div>
+//     </footer>
+//   );
+// }
+
+
+// export default function Footer({ variant = "full" }) {
+//   return variant === "compact" ? (
+//     <CompactFooter />
+//   ) : (
+//     <FullFooter />
+//   );
+// }
+
+function FullFooter() {
   return (
     <footer className="footer" id="contact">
       <div className="container">
@@ -51,7 +126,7 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          {Object.entries(FOOTER_LINKS).map(([group, links]) => (
+          {Object.entries(FULL_FOOTER_LINKS).map(([group, links]) => (
             <div key={group} className="footer__link-group">
               <h4 className="footer__link-title">{group}</h4>
               <ul className="footer__links">
@@ -75,7 +150,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="footer__bottom">
           <p className="footer__copy">
-            © {new Date().getFullYear()} © 2026 AMS Hospital. All Rights Reserved.
+            © {new Date().getFullYear()} AMS Hospital. All Rights Reserved.
           </p>
           <div className="footer__legal">
             <a href="#">Privacy Policy</a>
@@ -86,5 +161,12 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+
+export default function Footer() {
+  return  (
+    <FullFooter/>
   );
 }

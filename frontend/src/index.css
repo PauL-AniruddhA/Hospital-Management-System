@@ -7,6 +7,7 @@
 html {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100%;
+  
 }
 body {
   min-height: 100dvh;
@@ -60,7 +61,7 @@ body {
   --topbar-height: calc(38px * var(--scale));
   --navbar-height: calc(57px * var(--scale));  /* used by public and public patient */
 
-  --portal-width:min(92vw,1600px);
+  --portal-width:min(92vw,1700px);
   --patient-overlap:clamp(35px,4vw,60px);
   --hero-height:clamp(360px,36vw,520px);
   --hero-scale:clamp(1.02,1vw + .98,1.10);

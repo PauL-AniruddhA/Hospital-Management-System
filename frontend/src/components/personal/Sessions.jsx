@@ -317,14 +317,8 @@ export default function Sessions (){
                 <div className="activity-list">
 
                     {RECENT_ACTIVITY.map((activity) => (
-                        <div
-                            className="activity-item"
-                            key={activity.id}
-                        >
-
-                            <div
-                                className={`activity-icon ${activity.type}`}
-                            >
+                        <div className="activity-item" key={activity.id} >
+                            <div className={`activity-icon ${activity.type}`} >
                                 {activity.type === "success" ? (
                                     <CheckCircle2 size={16} />
                                 ) : (

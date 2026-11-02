@@ -40,8 +40,8 @@ const Hospital_Notice = lazy(() => import("../../components/common/Hospital_Noti
 const MedicalLibrary = lazy(() => import("../../components/common/Medical_Library"));
 
 const Performance = lazy(() => import("../doctor/DocPerformance"));
-const Salary = lazy(() => import("../../components/common/Salary"));
-const Credentials = lazy(() => import("../../components/common/Credentials"));
+const Salary = lazy(() => import("../../components/personal/Salary"));
+const Credentials = lazy(() => import("../../components/personal/Credentials"));
 const Appraisals = lazy(() => import("../../components/common/Appraisals"));
 
 import Profile from "../../components/personal/My_Profile";
@@ -463,7 +463,7 @@ function DocHome() {
 
   const [activeNavigation, setActiveNavigation] = useState("overview");
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [activeModal, setActiveModal] = useState("profile");
+  const [activeModal, setActiveModal] = useState(null);
 
   const [activePopup, setActivePopup] = useState(null);
   const topbarPopupRef = useRef(null);

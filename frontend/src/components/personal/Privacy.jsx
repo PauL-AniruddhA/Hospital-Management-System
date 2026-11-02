@@ -56,7 +56,7 @@ const DEFAULT_PRIVACY = {
    MAIN COMPONENT
 ========================================================= */
 
-export default function Privacy () {
+export default function Privacy() {
 
     const [privacy, setPrivacy] = useState(DEFAULT_PRIVACY);
 
@@ -448,21 +448,16 @@ function PrivacyCard({
         <section className="privacy-card">
 
             <div className="privacy-card-header">
-
                 <div className="privacy-card-icon">
                     <Icon size={18} strokeWidth={1.8} />
                 </div>
-
                 <div>
                     <h3>{title}</h3>
                     <p>{description}</p>
                 </div>
-
             </div>
 
-            <div className="privacy-card-body">
-                {children}
-            </div>
+            <div className="privacy-card-body"> {children} </div>
 
         </section>
     );
@@ -481,22 +476,14 @@ function PrivacyToggle({
 }) {
     return (
         <div className="privacy-row">
-
             <div className="privacy-row-content">
-
                 <strong>{label}</strong>
-
-                <span>
-                    {description}
-                </span>
-
+                <span> {description}</span>
             </div>
 
             <button
                 type="button"
-                className={`privacy-toggle ${
-                    checked ? "active" : ""
-                }`}
+                className={`privacy-toggle ${checked ? "active" : ""}`}
                 onClick={() => onChange(!checked)}
                 aria-pressed={checked}
             >
